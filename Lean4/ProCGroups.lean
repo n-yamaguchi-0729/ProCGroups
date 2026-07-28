@@ -39,5 +39,5 @@ corresponding finite-group object property is isomorphism-invariant without extr
 
 This public aggregate imports every maintained Pro-C Groups component, including the
 Reidemeister--Schreier, completed group algebra, Fox differential, and Crowell exact-sequence
-layers. Local class field theory remains a separate public library.
+layers.
 -/

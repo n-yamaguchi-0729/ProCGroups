@@ -162,10 +162,16 @@ def decorate_site(staging: Path, config: dict[str, Any]) -> None:
     release_and_notice = f"""\
 {title_marker}
   <p class="release-line"><span class="release-badge">{escape(config["version"])}</span><span>Standalone ProCGroups release</span></p>
-  <aside class="responsibility-notice" lang="ja" role="note" aria-labelledby="responsibility-title">
+  <aside class="responsibility-notice" role="note" aria-labelledby="responsibility-title">
     <h2 id="responsibility-title">ご利用にあたって</h2>
-    <p><strong>作者はこの分野の専門家ではなく、AIをアシスタントとして利用しています。</strong></p>
-    <p>内容の正確性や完全性は保証されません。利用・検証はご自身の責任で行ってください。質問にはお答えできません。</p>
+    <div lang="ja">
+      <p><strong>作者はこの分野の専門家ではなく、AIをアシスタントとして利用しています。</strong></p>
+      <p>内容の正確性や完全性は保証されません。利用・検証はご自身の責任で行ってください。質問にはお答えできません。</p>
+    </div>
+    <div lang="en">
+      <p><strong>The author is not a subject-matter expert and used AI assistants while preparing this material.</strong></p>
+      <p>Accuracy and completeness are not guaranteed. Verify and use the material at your own risk. The author cannot answer questions or provide individual support.</p>
+    </div>
   </aside>"""
     index = index.replace(title_marker, release_and_notice)
     index_path.write_text(index, encoding="utf-8", newline="\n")
@@ -314,9 +320,13 @@ def validate_site(
         "AIをアシスタントとして利用しています",
         "ご自身の責任",
         "質問にはお答えできません",
+        "The author is not a subject-matter expert",
+        "used AI assistants",
+        "at your own risk",
+        "cannot answer questions",
     )
     if any(text not in index for text in required_notice):
-        raise ValueError("the Japanese responsibility notice is incomplete")
+        raise ValueError("the bilingual responsibility notice is incomplete")
     if config["version"] not in index:
         raise ValueError("the homepage does not display the v2 release label")
 

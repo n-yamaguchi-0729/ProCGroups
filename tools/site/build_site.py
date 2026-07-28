@@ -3143,12 +3143,12 @@ def render_index(
         )
         meta = (
             f"{count_label(len(top_level_groups), 'top-level group')} | "
-            f"{count_label(len(library_content_modules), 'file')} | "
+            f"{count_label(len(library_modules), 'module')} | "
             f"{count_label(len(library_decls), 'declaration')}"
         )
         if frontier_bits:
             meta += " | " + " | ".join(frontier_bits)
-        sections.append(f'''<section id="library-{escape(lib)}" class="module-head" data-sort-item data-order="{len(sections)}" data-name="{escape(display_name)}" data-updated="{updated_at}" data-files="{len(top_level_groups)}" data-decls="{len(library_decls)}" data-theorems="{count_decls(library_decls, {"theorem", "lemma"})}">
+        sections.append(f'''<section id="library-{escape(lib)}" class="module-head" data-sort-item data-order="{len(sections)}" data-name="{escape(display_name)}" data-updated="{updated_at}" data-files="{len(library_modules)}" data-decls="{len(library_decls)}" data-theorems="{count_decls(library_decls, {"theorem", "lemma"})}">
   <div class="module-head-top">
     <div>
       <div class="eyebrow">Library</div>
@@ -3162,7 +3162,7 @@ def render_index(
     content = f'''<section>
   <h1 class="page-title">{escape(title)}</h1>
   <p>{escape(DOCUMENTATION_DESCRIPTION)}</p>
-  <div class="stats"><span>{count_label(len(grouped), "library", "libraries")}</span><span>{count_label(len(content_modules), "file")}</span><span>{count_label(total, "declaration")}</span></div>
+  <div class="stats"><span>{count_label(len(grouped), "library", "libraries")}</span><span>{count_label(len(modules), "module")}</span><span>{count_label(total, "declaration")}</span></div>
   {repo_note}
 </section>
 <section class="sort-bar" aria-label="Sort libraries">
