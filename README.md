@@ -41,17 +41,7 @@ Or import a narrower aggregate, for example:
 import ProCGroups.CrowellExactSequence
 ```
 
-## Disclaimer
-
-作者はこの分野の専門家ではありません。本ライブラリの作成には AI
-アシスタントを使用しています。内容の正確性・完全性は保証されないため、利用者自身で
-検証し、自己責任で使用してください。作者は数学的内容、Lean コード、利用方法に関する
-質問への回答や個別サポートを提供できません。
-
-The author is not a subject-matter expert and used AI assistants while developing
-this library. No guarantee is made about correctness or completeness. Verify
-the material independently and use it at your own risk. The author cannot
-answer questions or provide individual support.
+This library was developed with AI assistance by a non-specialist; please review the material independently.
 
 ## License
 

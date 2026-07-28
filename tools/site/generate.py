@@ -24,9 +24,9 @@ COMPONENT = "ProCGroups"
 SEARCH_PREFIX = "window.LEAN_DOCS_INDEX="
 TREE_PREFIX = "window.LEAN_DOCS_TREE="
 
-NOTICE_CSS = """
+RELEASE_CSS = """
 
-/* ProCGroups release identity and responsibility notice. */
+/* ProCGroups release identity. */
 .release-line {
   display: flex;
   align-items: center;
@@ -46,29 +46,6 @@ NOTICE_CSS = """
   font-size: .86rem;
   font-weight: 700;
   letter-spacing: .04em;
-}
-.responsibility-notice {
-  margin: 0 0 1.5rem;
-  padding: 1rem 1.1rem;
-  border: 1px solid #d7a72d;
-  border-left-width: .35rem;
-  border-radius: .45rem;
-  background: #fff8df;
-  color: #3d3218;
-}
-.responsibility-notice h2 {
-  margin: 0 0 .45rem;
-  font-size: 1.05rem;
-}
-.responsibility-notice p {
-  margin: .35rem 0 0;
-}
-@media (prefers-color-scheme: dark) {
-  .responsibility-notice {
-    border-color: #b88a24;
-    background: #312a18;
-    color: #f5e8c4;
-  }
 }
 """
 
@@ -159,25 +136,14 @@ def decorate_site(staging: Path, config: dict[str, Any]) -> None:
     title_marker = f'<h1 class="page-title">{escape(config["title"])}</h1>'
     if index.count(title_marker) != 1:
         raise ValueError("cannot locate the generated homepage title")
-    release_and_notice = f"""\
+    release_line = f"""\
 {title_marker}
-  <p class="release-line"><span class="release-badge">{escape(config["version"])}</span><span>Standalone ProCGroups release</span></p>
-  <aside class="responsibility-notice" role="note" aria-labelledby="responsibility-title">
-    <h2 id="responsibility-title">ご利用にあたって</h2>
-    <div lang="ja">
-      <p><strong>作者はこの分野の専門家ではなく、AIをアシスタントとして利用しています。</strong></p>
-      <p>内容の正確性や完全性は保証されません。利用・検証はご自身の責任で行ってください。質問にはお答えできません。</p>
-    </div>
-    <div lang="en">
-      <p><strong>The author is not a subject-matter expert and used AI assistants while preparing this material.</strong></p>
-      <p>Accuracy and completeness are not guaranteed. Verify and use the material at your own risk. The author cannot answer questions or provide individual support.</p>
-    </div>
-  </aside>"""
-    index = index.replace(title_marker, release_and_notice)
+  <p class="release-line"><span class="release-badge">{escape(config["version"])}</span><span>Standalone ProCGroups release</span></p>"""
+    index = index.replace(title_marker, release_line)
     index_path.write_text(index, encoding="utf-8", newline="\n")
 
     stylesheet = staging / "assets" / "site.css"
-    css = stylesheet.read_text(encoding="utf-8").rstrip() + NOTICE_CSS
+    css = stylesheet.read_text(encoding="utf-8").rstrip() + RELEASE_CSS
     stylesheet.write_text(css.rstrip() + "\n", encoding="utf-8", newline="\n")
 
 
@@ -315,18 +281,6 @@ def validate_site(
         )
 
     index = (staging / "index.html").read_text(encoding="utf-8")
-    required_notice = (
-        "作者はこの分野の専門家ではなく",
-        "AIをアシスタントとして利用しています",
-        "ご自身の責任",
-        "質問にはお答えできません",
-        "The author is not a subject-matter expert",
-        "used AI assistants",
-        "at your own risk",
-        "cannot answer questions",
-    )
-    if any(text not in index for text in required_notice):
-        raise ValueError("the bilingual responsibility notice is incomplete")
     if config["version"] not in index:
         raise ValueError("the homepage does not display the v2 release label")
 
