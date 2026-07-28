@@ -1,0 +1,15 @@
+{
+  "schema_version": 1,
+  "title": "ProCGroups Documentation",
+  "version": "v2",
+  "source_repository": "https://github.com/n-yamaguchi-0729/ProCGroups",
+  "source_commit": "dfde0b00544e4d3ba6f2f6e9e4ea6359c6387799",
+  "generated_at": "2026-07-28T15:01:31+09:00",
+  "source_root": "../../Lean4",
+  "output_root": "../../../n-yamaguchi-0729.github.io/ProCGroups_pages",
+  "documentation_url": "https://n-yamaguchi-0729.github.io/ProCGroups_pages/",
+  "library_id": "ProCGroups",
+  "library_name": "ProCGroups",
+  "root_import": "ProCGroups",
+  "expected_module_count": 574
+}
