@@ -1,8 +1,11 @@
-# ProCGroups v2
+# ProCGroups
 
-`ProCGroups` is a standalone Lean 4 library for profinite groups and pro-\(\mathcal C\)
-groups. Version 2 separates this library from the former monolithic
-`YamaLean4Lib` project; local class field theory is not part of this repository.
+This repository is the standalone Lean 4 source project for `ProCGroups`, a
+library for profinite groups and pro-\(\mathcal C\) groups. Local class field
+theory is maintained separately.
+
+Documentation and the library catalog are published through the
+[Yamaguchi Lean 4 Library](https://n-yamaguchi-0729.github.io/YamaLean4Lib_pages/).
 
 ## Contents
 
