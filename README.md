@@ -5,7 +5,7 @@
 
 A Lean 4 library for profinite groups and pro-\(\mathcal C\) groups,
 with Mathlib as its external Lean dependency.
-Documentation and the library catalog: [YamaLeanLib](https://n-yamaguchi-0729.github.io/YamaLean4Lib_pages/).
+Documentation and the library catalog: [Yamaguchi Lean 4 Library](https://n-yamaguchi-0729.github.io/YamaLean4Lib_pages/).
 
 ## Contents
 
