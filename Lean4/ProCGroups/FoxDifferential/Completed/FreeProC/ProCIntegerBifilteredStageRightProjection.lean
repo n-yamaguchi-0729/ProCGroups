@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Completed.FreeProC.ProCIntegerBifilteredStageProjection
 import ProCGroups.FoxDifferential.Completed.FreeProC.QuotientKernelBasis
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — free pro-\(C\) — pro c integer bifiltered stage right projection
 
@@ -192,11 +194,28 @@ theorem zcCompletedGroupAlgebraBifilteredStageRightMap_transition
           (C := C) (X := X) (H := H) Nstage zcIndex qmap j h) =
       zcCompletedGroupAlgebraBifilteredStageRightMap
         (C := C) (X := X) (H := H) Nstage zcIndex qmap i h := by
-  simpa [zcCompletedGroupAlgebraBifilteredStageRightMap,
-    OpenNormalSubgroupInClass.map] using
+  change
+    foxAlgebraicStageTargetQuotientMap (X := X) (hN hij)
+        (qmap j (QuotientGroup.mk h :
+          CompletedGroupAlgebraQuotientInClass H C (zcIndex j).2)) =
+      qmap i (QuotientGroup.mk h :
+        CompletedGroupAlgebraQuotientInClass H C (zcIndex i).2)
+  have hmap :
+      OpenNormalSubgroupInClass.map
+          (C := C) (G := H)
+          (U := OrderDual.ofDual (zcIndex i).2)
+          (V := OrderDual.ofDual (zcIndex j).2)
+          (hzcIndex hij).2
+          (QuotientGroup.mk h :
+            CompletedGroupAlgebraQuotientInClass H C (zcIndex j).2) =
+        (QuotientGroup.mk h :
+          CompletedGroupAlgebraQuotientInClass H C (zcIndex i).2) := by
+    rfl
+  exact
     (hqmap_transition hij
       (QuotientGroup.mk h :
-        CompletedGroupAlgebraQuotientInClass H C (zcIndex j).2)).symm
+        CompletedGroupAlgebraQuotientInClass H C (zcIndex j).2)).symm.trans
+      (congrArg (qmap i) hmap)
 
 
 omit [DecidableEq X] [TopologicalSpace (ZCCompletedFoxSemidirect C X H)] [IsTopologicalGroup

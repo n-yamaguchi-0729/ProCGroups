@@ -2,6 +2,8 @@ import ProCGroups.CompletedGroupAlgebra.AllFiniteAugmentation.InClassComparison
 import ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.Surjectivity
 import ProCGroups.CompletedGroupAlgebra.Augmentation.AugmentationIdeal
 
+set_option autoImplicit false
+
 /-!
 # The canonical augmentation ideal
 

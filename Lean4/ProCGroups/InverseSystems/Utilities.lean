@@ -1,5 +1,7 @@
 import Mathlib.Topology.Homeomorph.Lemmas
 
+set_option autoImplicit false
+
 /-!
 # Order-theoretic utilities for inverse systems
 

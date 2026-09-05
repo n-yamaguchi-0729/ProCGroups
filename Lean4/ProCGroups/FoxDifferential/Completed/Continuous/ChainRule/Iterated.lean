@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.Continuous.ChainRule.Basic
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — continuous — chain rule — iterated
 

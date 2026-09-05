@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.Continuous.Free.Rules
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — continuous — chain rule — basic
 
@@ -225,16 +227,19 @@ theorem allFinite_freeProCZCCompletedFoxRightHom_comp
   have hHtarget :
       ProCGroups.ProC.HasOpenNormalBasisInClass ProCGroups.FiniteGroupClass.allFinite H :=
     ProCGrp.allFinite_property (ProfiniteGrp.of H)
+  change
+    freeProCZCCompletedFoxRightHom
+        (C := ProCGroups.FiniteGroupClass.allFinite) hι htargetX φX hφX =
+      (freeProCZCCompletedFoxRightHom
+        (C := ProCGroups.FiniteGroupClass.allFinite) hκ htargetY φ hφY).comp η
   apply hι.hom_ext hHtarget
   · exact continuous_freeProCZCCompletedFoxRightHom
       (C := ProCGroups.FiniteGroupClass.allFinite) X H hι htargetX φX hφX
   · exact (continuous_freeProCZCCompletedFoxRightHom
       (C := ProCGroups.FiniteGroupClass.allFinite) Y H hκ htargetY φ hφY).comp hη_continuous
   · intro x
-    simp only [freeProCZCCompletedFoxRightHom_apply, freeProCZCCompletedFoxSemidirectLift_generator,
-  freeProCZCCompletedFoxSemidirectGenerator_right,
-      allFinite_freeProCZCCompletedFoxPullbackGenerator,
-  MonoidHom.coe_comp, Function.comp_apply]
+    rw [freeProCZCCompletedFoxRightHom_generator]
+    rfl
 
 /-- Completed pro-\(C\) Fox chain rule in vector form. -/
 theorem allFinite_freeProCZCCompletedFoxDerivativeVector_comp

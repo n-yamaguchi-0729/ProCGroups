@@ -1,5 +1,7 @@
 import ProCGroups.InverseSystems.CompatibilityAndSurjectivity
 
+set_option autoImplicit false
+
 /-!
 # Cofinal reindexing, density, and projection neighborhoods
 
@@ -147,12 +149,12 @@ noncomputable def homeomorph_reindex_cofinal {K : Type w} [Preorder K]
         simpa [R, reindex] using congrArg (S.map (hτ i)) ((R.projection_compatible x (τ i) ℓ
             hτℓ).symm)
       _ = S.map ((hτ i).trans (hσ hτℓ)) (R.projection ℓ x) := by
-        rw [S.map_comp_apply (hτ i) (hσ hτℓ)]
+        exact S.map_comp_apply (hτ i) (hσ hτℓ) (R.projection ℓ x)
       _ = S.map (hik.trans (hσ hkℓ)) (R.projection ℓ x) := by
         have hproof : (hτ i).trans (hσ hτℓ) = hik.trans (hσ hkℓ) := Subsingleton.elim _ _
         rw [hproof]
       _ = S.map hik (S.map (hσ hkℓ) (R.projection ℓ x)) := by
-        rw [S.map_comp_apply hik (hσ hkℓ)]
+        exact (S.map_comp_apply hik (hσ hkℓ) (R.projection ℓ x)).symm
       _ = S.map hik (R.projection k x) := by
         simpa [R, reindex] using congrArg (S.map hik) (R.projection_compatible x k ℓ hkℓ)
   have hcompatψ : S.CompatibleMaps ψ := by
@@ -161,7 +163,7 @@ noncomputable def homeomorph_reindex_cofinal {K : Type w} [Preorder K]
     calc
       S.map hij (ψ j x) = S.map hij (S.map (hτ j) (R.projection (τ j) x)) := rfl
       _ = S.map (hij.trans (hτ j)) (R.projection (τ j) x) := by
-        rw [S.map_comp_apply hij (hτ j)]
+        exact S.map_comp_apply hij (hτ j) (R.projection (τ j) x)
       _ = ψ i x := by
         symm
         exact hψ_eq (k := τ j) (hik := hij.trans (hτ j)) x
@@ -191,19 +193,14 @@ noncomputable def homeomorph_reindex_cofinal {K : Type w} [Preorder K]
       _ = S.projection i x := S.projection_compatible x i (σ (τ i)) (hτ i)
   · apply R.ext
     intro k
-    calc
-      R.projection k (r (s x)) = S.projection (σ k) (s x) := by
-        have hrproj :=
-          R.projection_inverseLimitLift_apply
-            (fun k => S.projection (σ k)) hcompatR k (s x)
-        change R.projection k (r (s x)) = S.projection (σ k) (s x) at hrproj
-        exact hrproj
-      _ = ψ (σ k) x := by
-        rfl
-      _ = S.map (le_rfl : σ k ≤ σ k) (R.projection k x) := by
-        exact hψ_eq (k := k) (hik := le_rfl) x
-      _ = (show S.X (σ k) from R.projection k x) := by
-        exact S.map_id_apply (σ k) (R.projection k x)
+    have hrproj :=
+      R.projection_inverseLimitLift_apply
+        (fun k => S.projection (σ k)) hcompatR k (s x)
+    change R.projection k (r (s x)) = S.projection (σ k) (s x) at hrproj
+    have hsproj : S.projection (σ k) (s x) = ψ (σ k) x := rfl
+    exact hrproj.trans (hsproj.trans
+      ((hψ_eq (k := k) (hik := le_rfl) x).trans
+        (S.map_id_apply (σ k) (R.projection k x))))
 
 /--
 After cofinal reindexing, the projection to \(k\) composed with the reindexing homeomorphism is
@@ -292,11 +289,11 @@ theorem surjective_π [∀ i, CompactSpace (S.X i)] [∀ i, T2Space (S.X i)]
       funext x
       apply Subtype.ext
       simp only [Function.comp_apply, S.map_comp_apply hab hbc]}
-  letI : ∀ k, Nonempty (T.X k) := fun k => by
+  let : ∀ k, Nonempty (T.X k) := fun k => by
     rcases hsurj k.2 xj with ⟨x, hx⟩
     exact ⟨⟨x, hx⟩⟩
-  letI : ∀ k, T2Space (T.X k) := fun _ => inferInstance
-  letI : ∀ k, CompactSpace (T.X k) := fun k => by
+  let : ∀ k, T2Space (T.X k) := fun _ => inferInstance
+  let : ∀ k, CompactSpace (T.X k) := fun k => by
     let hs : IsClosed {x : S.X k.1 | S.map k.2 x = xj} :=
       isClosed_eq (S.continuous_map k.2) continuous_const
     change CompactSpace {x : S.X k.1 // S.map k.2 x = xj}

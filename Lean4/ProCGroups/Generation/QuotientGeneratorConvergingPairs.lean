@@ -2,6 +2,8 @@ import ProCGroups.Generation.Convergence
 import ProCGroups.Generation.GeneratorConvergingPairs
 import ProCGroups.ProC.Quotients.ClosedNormal
 
+set_option autoImplicit false
+
 /-!
 # Converging generators constructed through quotient refinements
 
@@ -133,8 +135,8 @@ instance instPreorderQuotientGeneratorConvergingPair :
     · intro y
       simp only [QuotientGeneratorConvergingPair.sourceOfY, Subtype.coe_prop]
     · simp only [QuotientGeneratorConvergingPair.yImage, QuotientGeneratorConvergingPair.sourceOfY,
-  Subtype.range_coe_subtype, setOf_mem_eq, sdiff_self, leftQuotientProjection_id, id_eq,
-  setOf_eq_eq_singleton, subset_singleton_iff, mem_empty_iff_false, IsEmpty.forall_iff,
+  Subtype.range_coe_subtype, ofPred_mem_eq, sdiff_self, leftQuotientProjection_id, id_eq,
+  ofPred_eq_eq_singleton, subset_singleton_iff, mem_empty_iff_false, IsEmpty.forall_iff,
       implies_true]
   le_trans A B C hAB hBC := by
     classical
@@ -482,7 +484,7 @@ theorem ConvergesToOneAlongOpenSubgroups.range_subtype_pointed
     have hEq : {x : X | e x ∈ X ∧ e x ∉ (V : Set G)} = {x : X | (x : G) ∉ (V : Set G)} := by
       ext x
       simp only [Function.Embedding.coeFn_mk, Subtype.coe_prop, SetLike.mem_coe, true_and,
-          mem_setOf_eq, e]
+          mem_ofPred_eq, e]
     exact hEq ▸ hfinite'
   exact hfinite_pre.image g |>.subset hsubset
 
@@ -549,10 +551,10 @@ theorem quotientGeneratorPair_exists_liftToInf
           a.1.le_map hab) ∧
       σ a.1.sourceOne = 1 := by
   classical
-  let K : Subgroup G := iInf fun p : c => p.1.N
-  letI : K.Normal := Subgroup.normal_iInf_normal fun p : c => p.1.normal_N
+  intro K
+  have : K.Normal := Subgroup.normal_iInf_normal fun p : c => p.1.normal_N
   let Tail := {b : c // a.1 ≤ b.1}
-  letI : Nonempty Tail := ⟨⟨a, le_rfl⟩⟩
+  have : Nonempty Tail := ⟨⟨a, le_rfl⟩⟩
   let L : Tail → ClosedSubgroup G := fun b =>
     ⟨b.1.1.N, b.1.1.closed_N⟩
   have hL : ∀ {i j : Tail}, i ≤ j → (L j : Subgroup G) ≤ (L i : Subgroup G) := by
@@ -625,7 +627,7 @@ theorem quotientGeneratorPair_exists_liftToInf
     · refine le_iInf ?_
       intro b
       exact iInf_le (fun p : c => p.1.N) b.1
-  letI : H.Normal := by
+  have : H.Normal := by
     exact Subgroup.normal_iInf_normal fun b : Tail => b.1.1.normal_N
   have hGoal :
       ∃ σ : a.1.Source → G ⧸ H,
@@ -751,8 +753,7 @@ theorem quotientGeneratorPair_exists_strictExtension
       have htN' : t ∈ N' := (QuotientGroup.eq_one_iff (N := N') t).1 hq1
       exact (hTsub ht).2 htN'
   have hY'conv : ConvergesToOneAlongOpenSubgroups (G := G ⧸ N') Y' := by
-    letI : IsClosed (p.N : Set G) := p.closed_N
-    letI : TotallyDisconnectedSpace (G ⧸ p.N) :=
+    have : TotallyDisconnectedSpace (G ⧸ p.N) :=
       ProCGroups.totallyDisconnectedSpace_quotient_closedNormal p.N p.closed_N
     intro V
     have hσconv :
@@ -816,7 +817,10 @@ theorem closedNormalQuotientSection_bot_eq
       quotientBotContinuousMulEquiv (G := G)
         (closedNormalQuotientSection (G := G)
           (N := (⊥ : Subgroup G)) hbotClosed q) = q := by
-    simpa [quotientBotContinuousMulEquiv] using
+    change quotientBotHomeomorph (G := G)
+      (closedNormalQuotientSection (G := G) (N := (⊥ : Subgroup G)) hbotClosed q) = q
+    exact (quotientBotHomeomorph_apply (G := G)
+      (closedNormalQuotientSection (G := G) (N := (⊥ : Subgroup G)) hbotClosed q)).trans
       (closedNormalQuotientSection_rightInverse (G := G)
         (N := (⊥ : Subgroup G)) hbotClosed q)
   have h2 :
@@ -851,8 +855,7 @@ theorem QuotientGeneratorConvergingPair.toAmbientSet_generatesAndConvergesToOneA
     rw [QuotientGeneratorConvergingPair.toAmbientSet,
       closedNormalQuotientSection_bot_eq (G := G) hbotClosed]
     simpa using hgen
-  · letI : IsClosed (((⊥ : Subgroup G) : Set G)) := hbotClosed
-    letI : TotallyDisconnectedSpace (G ⧸ (⊥ : Subgroup G)) :=
+  · have : TotallyDisconnectedSpace (G ⧸ (⊥ : Subgroup G)) :=
       ProCGroups.totallyDisconnectedSpace_quotient_closedNormal
         (⊥ : Subgroup G) hbotClosed
     have hconv :
@@ -883,11 +886,10 @@ theorem quotientGeneratorPair_exists_upperBound_of_chain
     ∃ ub : QuotientGeneratorConvergingPair (G := G), ∀ a ∈ c, a ≤ ub := by
   classical
   let K : Subgroup G := iInf fun p : c => p.1.N
-  letI : K.Normal := Subgroup.normal_iInf_normal fun p : c => p.1.normal_N
+  have : K.Normal := Subgroup.normal_iInf_normal fun p : c => p.1.normal_N
   have hKclosed : IsClosed (K : Set G) := by
     simpa [K] using isClosed_iInter (fun p : c => p.1.closed_N)
-  letI : IsClosed (K : Set G) := hKclosed
-  letI : TotallyDisconnectedSpace (G ⧸ K) :=
+  have : TotallyDisconnectedSpace (G ⧸ K) :=
     ProCGroups.totallyDisconnectedSpace_quotient_closedNormal K hKclosed
   let lift : (a : c) → a.1.Source → G ⧸ K := fun a =>
     Classical.choose (quotientGeneratorPair_exists_liftToInf (G := G) hc a)
@@ -1135,8 +1137,7 @@ theorem quotientGeneratorPair_exists_upperBound_of_chain
     rcases exists_quotientPair_le_openSubgroup_of_chain_iInf_le
         (G := G) hc hcn V (by simpa [K] using hKV) with ⟨a, haV⟩
     have hstageconv : ConvergesToOneAlongOpenSubgroups (G := G ⧸ K) (stageImage a) := by
-      letI : IsClosed (a.1.N : Set G) := a.1.closed_N
-      letI : TotallyDisconnectedSpace (G ⧸ a.1.N) :=
+      have : TotallyDisconnectedSpace (G ⧸ a.1.N) :=
         ProCGroups.totallyDisconnectedSpace_quotient_closedNormal
           a.1.N a.1.closed_N
       have hconv :=
@@ -1178,7 +1179,9 @@ theorem quotientGeneratorPair_exists_upperBound_of_chain
               simpa [leftQuotientProjection_mk] using
                 (QuotientGroup.eq_one_iff (N := a.1.N) g).1 hq1
             have hgV : g ∈ (V : Subgroup G) := haV hgA
-            simpa [V, OpenSubgroup.mem_comap] using hgV
+            exact (OpenSubgroup.mem_comap
+              (H := W) (f := QuotientGroup.mk' K)
+              (hf := QuotientGroup.continuous_mk) (x := g)).1 hgV
           exact False.elim (hqW hqWin)
     exact (hstageconv W).subset hsubset
   have hYgen : TopologicallyGenerates (G := G ⧸ K) Y := by
@@ -1305,16 +1308,17 @@ theorem quotientGeneratorPair_exists_upperBound_of_chain
           exact topologicallyGenerates_image_of_continuousSurjective
             (G := G ⧸ a.1.N) (H := G ⧸ (V : Subgroup G)) fV
             (by
-              simpa [fV] using
-                (continuous_leftQuotientProjection
-                  (G := G) (K := a.1.N) (H := (V : Subgroup G)) haV))
+              change Continuous (leftQuotientProjection a.1.N (V : Subgroup G) haV)
+              exact continuous_leftQuotientProjection
+                (G := G) (K := a.1.N) (H := (V : Subgroup G)) haV)
             (by
-              simpa [fV] using
-                (surjective_leftQuotientProjection
-                  (G := G) (K := a.1.N) (H := (V : Subgroup G)) haV))
+              change Function.Surjective (leftQuotientProjection a.1.N (V : Subgroup G) haV)
+              exact surjective_leftQuotientProjection
+                (G := G) (K := a.1.N) (H := (V : Subgroup G)) haV)
             a.1.generates
         rw [hstageImgEq]
-        simpa [fV] using hgenV
+        change TopologicallyGenerates (G := G ⧸ (V : Subgroup G)) (fV '' a.1.Y)
+        exact hgenV
       have hquotProj0 :
           ∀ y : G ⧸ K,
             e0 ((QuotientGroup.mk' QV) y) =
@@ -1411,7 +1415,7 @@ theorem exists_generatorsConvergingToOne :
     ∃ X : Set G, GeneratesAndConvergesToOneAlongOpenSubgroups (G := G) X := by
   classical
   let Pair := QuotientGeneratorConvergingPair (G := G)
-  letI : Nonempty Pair := ⟨quotientGeneratorPairTop (G := G)⟩
+  have : Nonempty Pair := ⟨quotientGeneratorPairTop (G := G)⟩
   obtain ⟨m, hmmax⟩ := zorn_le_nonempty (α := Pair) <| by
     intro c hc hcn
     rcases quotientGeneratorPair_exists_upperBound_of_chain (G := G) c hc hcn with

@@ -1,5 +1,7 @@
 import ProCGroups.CrowellExactSequence.Discrete.SequenceMaps
 
+set_option autoImplicit false
+
 /-!
 # Discrete Crowell exactness
 
@@ -32,7 +34,7 @@ theorem crowellExactSequence_of_surjective
         (toGroupRing psi) ∧
       Function.Exact (toGroupRing psi) (augmentation H) ∧
       Function.Surjective (augmentation H) := by
-  letI := kernelAbelianizationModuleOfSurjective psi hpsi
+  let := kernelAbelianizationModuleOfSurjective psi hpsi
   refine ⟨?_, ?_, exact_toGroupRing_augmentation (H := H) psi hpsi,
     augmentation_surjective (H := H)⟩
   · exact FoxDifferential.kernelAbelianizationBoundaryLinearOfSurjective_injective
@@ -52,7 +54,7 @@ theorem freeGroupPresentation_blanchfieldLyndonExactSequence
         (FoxCalculus.freeGroupPresentationBlanchfieldLyndonTailMap (H := H) r psi)
         (augmentation H) ∧
       Function.Surjective (augmentation H) := by
-  letI := kernelAbelianizationModuleOfSurjective psi hpsi
+  let := kernelAbelianizationModuleOfSurjective psi hpsi
   let e : DifferentialModule psi ≃ₗ[GroupRing H] (Fin r → GroupRing H) :=
     FoxCalculus.freeGroupPresentationMiddleCoordinateEquiv (H := H) r psi
   let generators : Fin r → GroupRing H :=

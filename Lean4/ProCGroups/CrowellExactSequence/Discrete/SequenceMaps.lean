@@ -3,6 +3,8 @@ import ProCGroups.FoxDifferential.Discrete.KernelBoundary.Quotient
 import ProCGroups.FoxDifferential.Discrete.KernelBoundary.MagnusKernel
 import ProCGroups.FoxDifferential.Discrete.FoxCalculus.Coordinates
 
+set_option autoImplicit false
+
 /-!
 # Discrete Crowell sequence maps
 
@@ -74,7 +76,7 @@ theorem freeGroupPresentationRelativeDerivativeHeadMap_of
     freeGroupPresentationRelativeDerivativeHeadMap (H := H) r ψ hψ
         (Additive.ofMul (Abelianization.of n)) =
       FoxDifferential.FoxCalculus.relativeFreeGroupFoxDerivative (H := H) (Fin r) ψ n.1 := by
-  letI := kernelAbelianizationModuleOfSurjective ψ hψ
+  let := kernelAbelianizationModuleOfSurjective ψ hψ
   change
     (freeGroupPresentationMiddleCoordinateEquiv (H := H) r ψ).toLinearMap
         (kernelAbelianizationBoundaryLinearOfSurjective ψ hψ

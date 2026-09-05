@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.CoeffMap.Target
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — finite stage — coeff map — source
 
@@ -151,7 +153,7 @@ theorem foxAlgebraicStagePowerSourceGroupAlgebraMap_single_apply
       MonoidAlgebra.single
         (foxAlgebraicStagePowerSourceQuotientMap (X := X) N hnm q)
         (modNCompletedCoeffMap (n := n₀) (m := m₀) hnm a) := by
-  letI : Algebra (ModNCompletedCoeff m₀) (ModNCompletedCoeff n₀) :=
+  let : Algebra (ModNCompletedCoeff m₀) (ModNCompletedCoeff n₀) :=
     ZMod.algebra' (R := ModNCompletedCoeff n₀) (m := n₀) (n := m₀) hnm
   have hcoeff :
       algebraMap (ModNCompletedCoeff m₀) (ModNCompletedCoeff n₀) a =
@@ -200,7 +202,7 @@ theorem foxAlgebraicStagePowerSourceGroupAlgebraMap_rfl
   apply RingHom.ext
   intro x
   refine MonoidAlgebra.induction_on
-    (p := fun x =>
+    (motive := fun x =>
       foxAlgebraicStagePowerSourceGroupAlgebraMap (X := X) (n₀ := n₀) (m₀ := n₀) N
           dvd_rfl x = x)
     x ?_ ?_ ?_
@@ -216,7 +218,7 @@ theorem foxAlgebraicStagePowerSourceGroupAlgebraMap_rfl
     simp only [foxAlgebraicStagePowerSourceGroupAlgebraMap,
         foxAlgebraicStageSameSourceGroupAlgebraCoeffMap,
   modNCompletedGroupRingCoeffMap, AlgHom.toRingHom_eq_coe, MonoidAlgebra.mapDomainRingHom,
-  foxAlgebraicStagePowerSourceQuotientMap, QuotientGroup.map_id, MonoidHom.coe_id, map_intCast]
+  foxAlgebraicStagePowerSourceQuotientMap, map_intCast]
 
 omit [DecidableEq X] [Fact (0 < n₀)] [Fact (0 < m₀)] in
 /-- Finite Fox source group-algebra transitions compose along divisibility. -/
@@ -230,7 +232,7 @@ theorem foxAlgebraicStagePowerSourceGroupAlgebraMap_comp
   apply RingHom.ext
   intro x
   refine MonoidAlgebra.induction_on
-    (p := fun x =>
+    (motive := fun x =>
       ((foxAlgebraicStagePowerSourceGroupAlgebraMap (X := X) N hnm).comp
           (foxAlgebraicStagePowerSourceGroupAlgebraMap (X := X) N hmk)) x =
         foxAlgebraicStagePowerSourceGroupAlgebraMap (X := X) N (dvd_trans hnm hmk) x)
@@ -267,7 +269,7 @@ theorem foxAlgebraicStageGroupAlgebraMap_powerSourceGroupAlgebraMap
       foxCommutatorPowerGroupAlgebraMap (F := FreeGroup X) N n₀
         (foxAlgebraicStagePowerSourceGroupAlgebraMap (X := X) N hnm x) := by
   refine MonoidAlgebra.induction_on
-    (p := fun x =>
+    (motive := fun x =>
       foxAlgebraicStageTargetGroupAlgebraCoeffMap (X := X) N hnm
           (foxCommutatorPowerGroupAlgebraMap (F := FreeGroup X) N m₀ x) =
         foxCommutatorPowerGroupAlgebraMap (F := FreeGroup X) N n₀

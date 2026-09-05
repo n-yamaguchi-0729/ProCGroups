@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Discrete.KernelBoundary.Basic
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: discrete — kernel boundary — quotient
 
@@ -76,7 +78,7 @@ theorem toIdentityDifferentialModule_kernelAbelianizationBoundaryLinearOfSurject
     (ψ : G →* H) (hψ : Function.Surjective ψ) (x : KernelAbelianizationAdd ψ) :
     toIdentityDifferentialModule ψ
       (kernelAbelianizationBoundaryLinearOfSurjective ψ hψ x) = 0 := by
-  letI := kernelAbelianizationModuleOfSurjective ψ hψ
+  let := kernelAbelianizationModuleOfSurjective ψ hψ
   rw [kernelAbelianizationBoundaryLinearOfSurjective_apply]
   change
     (fun y : Abelianization ψ.ker =>
@@ -155,7 +157,7 @@ private theorem headQuotientSectionOfSurjective_map_mul
       _ = 1 := by simp only [mul_assoc, mul_inv_cancel_left, mul_inv_cancel]⟩
   have hn_zero : q.mkQ (universalDifferential ψ n.1) = 0 := by
     have hn_mem : universalDifferential ψ n.1 ∈ q := by
-      letI := kernelAbelianizationModuleOfSurjective ψ hψ
+      let := kernelAbelianizationModuleOfSurjective ψ hψ
       rw [← kernelAbelianizationBoundaryLinearOfSurjective_of (ψ := ψ) (hψ := hψ) n]
       exact LinearMap.mem_range_self _ _
     exact (Submodule.Quotient.mk_eq_zero (p := q) (x := universalDifferential ψ n.1)).2 hn_mem
@@ -259,7 +261,7 @@ theorem fromIdentityDifferentialModuleOfSurjective_comp_toIdentityDifferentialMo
         mul_inv_cancel, s]⟩
   have hn_zero : q.mkQ (universalDifferential ψ n.1) = 0 := by
     have hn_mem : universalDifferential ψ n.1 ∈ q := by
-      letI := kernelAbelianizationModuleOfSurjective ψ hψ
+      let := kernelAbelianizationModuleOfSurjective ψ hψ
       rw [← kernelAbelianizationBoundaryLinearOfSurjective_of (ψ := ψ) (hψ := hψ) n]
       exact LinearMap.mem_range_self _ _
     exact (Submodule.Quotient.mk_eq_zero (p := q) (x := universalDifferential ψ n.1)).2 hn_mem

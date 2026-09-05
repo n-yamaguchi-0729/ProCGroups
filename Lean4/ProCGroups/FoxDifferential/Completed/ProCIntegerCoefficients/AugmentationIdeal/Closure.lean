@@ -2,6 +2,8 @@ import ProCGroups.FoxDifferential.Completed.Continuous.Topology
 import ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.AugmentationIdeal.FiniteStage
 import ProCGroups.InverseSystems.ProjectionImageSystems
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — \(\mathbb{Z}_C\) coefficients — augmentation ideal — closure
 
@@ -60,7 +62,7 @@ theorem zcCompletedGroupAlgebraStageAugmentationIdeal_mem_projection_standard
     refine ⟨zcGroupLike C H h - 1,
       zcGroupLike_sub_one_mem_standardAugmentationIdeal C H h, ?_⟩
     simp only [zcCompletedGroupAlgebraProjection_sub, zcCompletedGroupAlgebraProjection_groupLike,
-  MonoidAlgebra.of_apply, zcCompletedGroupAlgebraProjection_one,
+  zcCompletedGroupAlgebraProjection_one,
   zcCompletedGroupAlgebraStageAugmentationGeneratorSubtype,
       zcCompletedGroupAlgebraStageAugmentationGenerator,
   QuotientGroup.mk'_apply]
@@ -95,19 +97,19 @@ theorem closure_zcCompletedGroupAlgebraStandardAugmentationIdeal_eq_augmentation
   let Z : Set (ZCCompletedGroupAlgebra C H) :=
     (zcCompletedGroupAlgebraAugmentationIdeal C H :
       Set (ZCCompletedGroupAlgebra C H))
-  letI : Nonempty (ZCCompletedGroupAlgebraIndex C H) :=
+  let : Nonempty (ZCCompletedGroupAlgebraIndex C H) :=
     ⟨(ProCIntegerIndex.terminal (C := C) inferInstance, zcCompletedGroupAlgebraTopIndex C H)⟩
-  letI : ∀ i : ZCCompletedGroupAlgebraIndex C H, TopologicalSpace (S.X i) := fun _ =>
+  let : ∀ i : ZCCompletedGroupAlgebraIndex C H, TopologicalSpace (S.X i) := fun _ =>
     inferInstance
-  letI : ∀ i : ZCCompletedGroupAlgebraIndex C H, CompactSpace (S.X i) := fun i => by
+  let : ∀ i : ZCCompletedGroupAlgebraIndex C H, CompactSpace (S.X i) := fun i => by
     dsimp [S, zcCompletedGroupAlgebraSystem]
     change @CompactSpace (ZCCompletedGroupAlgebraStage C H i) ⊥
-    letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
-    letI : Finite (ZCCompletedGroupAlgebraStage C H i) :=
+    let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+    let : Finite (ZCCompletedGroupAlgebraStage C H i) :=
       finite_modNCompletedGroupAlgebraStageInClass
         (n := i.1.modulus) (G := H) C i.2
     exact Finite.compactSpace
-  letI : ∀ i : ZCCompletedGroupAlgebraIndex C H, T2Space (S.X i) := fun i => by
+  let : ∀ i : ZCCompletedGroupAlgebraIndex C H, T2Space (S.X i) := fun i => by
     dsimp [S, zcCompletedGroupAlgebraSystem]
     change @T2Space (ZCCompletedGroupAlgebraStage C H i) ⊥
     exact @DiscreteTopology.toT2Space _ ⊥ ⟨rfl⟩

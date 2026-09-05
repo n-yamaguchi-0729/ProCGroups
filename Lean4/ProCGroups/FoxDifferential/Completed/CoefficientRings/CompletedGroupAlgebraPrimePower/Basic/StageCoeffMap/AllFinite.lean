@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraModN.System.CompletionMap
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: prime-power completed group algebra — basic — stage coeff map — all finite
 
@@ -66,7 +68,7 @@ theorem modNCompletedGroupAlgebraStageCoeffMap_rfl
   apply RingHom.ext
   intro x
   refine MonoidAlgebra.induction_on
-    (p := fun x =>
+    (motive := fun x =>
       modNCompletedGroupAlgebraStageCoeffMap (n := n) (m := n) (G := G) U dvd_rfl x = x)
     x ?_ ?_ ?_
   · intro q
@@ -92,7 +94,7 @@ theorem modNCompletedGroupAlgebraStageCoeffMap_comp
   apply RingHom.ext
   intro x
   refine MonoidAlgebra.induction_on
-    (p := fun x =>
+    (motive := fun x =>
       ((modNCompletedGroupAlgebraStageCoeffMap (n := n) (m := m) (G := G) U hnm).comp
           (modNCompletedGroupAlgebraStageCoeffMap (n := m) (m := k) (G := G) U hmk)) x =
         modNCompletedGroupAlgebraStageCoeffMap (n := n) (m := k) (G := G) U
@@ -122,7 +124,7 @@ theorem modNCompletedGroupAlgebraStageCoeffMap_compatible
   apply RingHom.ext
   intro x
   refine MonoidAlgebra.induction_on
-    (p := fun x =>
+    (motive := fun x =>
       ((modNCompletedGroupAlgebraStageCoeffMap (n := n) (m := m) (G := G) U hnm).comp
           (modNCompletedGroupAlgebraTransition m G hUV)) x =
         ((modNCompletedGroupAlgebraTransition n G hUV).comp
@@ -138,36 +140,16 @@ theorem modNCompletedGroupAlgebraStageCoeffMap_compatible
       (modNCompletedGroupAlgebraTransition n G hUV)
         ((modNCompletedGroupAlgebraStageCoeffMap (n := n) (m := m) (G := G) V hnm)
           (MonoidAlgebra.of (ModNCompletedCoeff m) _ q))
-    rw [modNCompletedGroupAlgebraStageCoeffMap_of, modNCompletedGroupAlgebraStageCoeffMap_of,
-      modNCompletedGroupAlgebraTransition_of]
+    erw [modNCompletedGroupAlgebraStageCoeffMap_of]
+    erw [modNCompletedGroupAlgebraStageCoeffMap_of]
+    erw [modNCompletedGroupAlgebraTransition_of]
     rfl
   · intro x y hx hy
     simp only [RingHom.map_add, hx, RingHom.coe_comp, Function.comp_apply, hy]
   · intro a x hx
     rw [Algebra.smul_def, RingHom.map_mul, RingHom.map_mul, hx]
-    have hcoeff :
-        ((modNCompletedGroupAlgebraStageCoeffMap (n := n) (m := m) (G := G) U hnm).comp
-            (modNCompletedGroupAlgebraTransition m G hUV))
-            (algebraMap (ModNCompletedCoeff m) (ModNCompletedGroupAlgebraStage m G V) a) =
-          ((modNCompletedGroupAlgebraTransition n G hUV).comp
-            (modNCompletedGroupAlgebraStageCoeffMap (n := n) (m := m) (G := G) V hnm))
-            (algebraMap (ModNCompletedCoeff m) (ModNCompletedGroupAlgebraStage m G V) a) := by
-      simpa [Algebra.smul_def] using
-        (show
-          ((modNCompletedGroupAlgebraStageCoeffMap (n := n) (m := m) (G := G) U hnm).comp
-              (modNCompletedGroupAlgebraTransition m G hUV))
-              (algebraMap (ModNCompletedCoeff m) (ModNCompletedGroupAlgebraStage m G V) a) =
-            ((modNCompletedGroupAlgebraTransition n G hUV).comp
-              (modNCompletedGroupAlgebraStageCoeffMap (n := n) (m := m) (G := G) V hnm))
-              (algebraMap (ModNCompletedCoeff m) (ModNCompletedGroupAlgebraStage m G V) a) by
-          simp only [modNCompletedGroupAlgebraStageCoeffMap, modNCompletedGroupRingCoeffMap,
-            AlgHom.toRingHom_eq_coe, modNCompletedGroupAlgebraTransition,
-                MonoidAlgebra.coe_algebraMap,
-            Algebra.algebraMap_self, RingHom.coe_id, Function.comp_apply, id_eq, RingHom.comp_apply,
-            MonoidAlgebra.mapDomainRingHom_apply, MonoidAlgebra.mapDomain_single, map_one,
-                RingHom.coe_coe,
-            MonoidAlgebra.one_def, MonoidAlgebra.lift_single, MonoidAlgebra.smul_single])
-    rw [hcoeff]
+    rcases ZMod.intCast_surjective a with ⟨t, rfl⟩
+    simp only [map_intCast]
 
 omit [Fact (0 < n)] [Fact (0 < m)] in
 /--
@@ -181,7 +163,7 @@ theorem modNCompletedGroupAlgebraStageCoeffMap_single_apply
     modNCompletedGroupAlgebraStageCoeffMap (n := n) (m := m) (G := G) U hnm
         (MonoidAlgebra.single q a) =
       MonoidAlgebra.single q (modNCompletedCoeffMap (n := n) (m := m) hnm a) := by
-  letI : Algebra (ModNCompletedCoeff m) (ModNCompletedCoeff n) :=
+  let : Algebra (ModNCompletedCoeff m) (ModNCompletedCoeff n) :=
     ZMod.algebra' (R := ModNCompletedCoeff n) (m := n) (n := m) hnm
   have hcoeff :
       algebraMap (ModNCompletedCoeff m) (ModNCompletedCoeff n) a =

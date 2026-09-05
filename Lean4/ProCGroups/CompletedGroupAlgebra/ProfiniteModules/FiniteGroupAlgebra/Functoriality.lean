@@ -1,6 +1,8 @@
 import Mathlib.Data.ZMod.Basic
 import ProCGroups.CompletedGroupAlgebra.ProfiniteModules.FiniteGroupAlgebra.Topology
 
+set_option autoImplicit false
+
 /-!
 # Functoriality of finite group algebras
 
@@ -24,10 +26,10 @@ theorem finiteGroupAlgebra_mapDomainRingHom_continuous
     letI : TopologicalSpace (MonoidAlgebra R H) := finiteGroupAlgebraTopology R H
     Continuous (MonoidAlgebra.mapDomainRingHom R φ : MonoidAlgebra R G → MonoidAlgebra R H) := by
   classical
-  letI : Fintype G := Fintype.ofFinite G
-  letI : Fintype H := Fintype.ofFinite H
-  letI : TopologicalSpace (MonoidAlgebra R G) := finiteGroupAlgebraTopology R G
-  letI : TopologicalSpace (MonoidAlgebra R H) := finiteGroupAlgebraTopology R H
+  let : Fintype G := Fintype.ofFinite G
+  let : Fintype H := Fintype.ofFinite H
+  let : TopologicalSpace (MonoidAlgebra R G) := finiteGroupAlgebraTopology R G
+  let : TopologicalSpace (MonoidAlgebra R H) := finiteGroupAlgebraTopology R H
   let e : MonoidAlgebra R H ≃ (H → R) :=
     (MonoidAlgebra.coeffEquiv (R := R) (M := H)).trans Finsupp.equivFunOnFinite
   have he : Topology.IsInducing (e : MonoidAlgebra R H → H → R) :=
@@ -340,7 +342,7 @@ theorem finiteCyclicReduction_fiber_card
   have hMne : M ≠ 0 := by
     intro hM
     exact NeZero.ne (K * M) (by simp only [hM, mul_zero])
-  letI : NeZero M := ⟨hMne⟩
+  let : NeZero M := ⟨hMne⟩
   let f : Multiplicative (ZMod (K * M)) →* Multiplicative (ZMod M) :=
     finiteCyclicReduction M K
   have hsurj : Function.Surjective f := by
@@ -548,7 +550,7 @@ theorem
       (finiteProductCyclicReduction Q M K) y).coeff i =
       K • y.coeff t0 := by
   classical
-  letI : Fintype Q := Fintype.ofFinite Q
+  let : Fintype Q := Fintype.ofFinite Q
   rw [mapDomain_coeff_eq_nsmul_of_fiber_const
     (finiteProductCyclicReduction Q M K) y i (y.coeff t0)]
   · rw [finiteProductCyclicReduction_fiber_card (Q := Q) (M := M) (K := K) (i := i)]
@@ -571,11 +573,11 @@ theorem finiteProductCyclicGroupAlgebra_projection_eq_zero_of_int_sub_one_mul_eq
           (1, Multiplicative.ofAdd (n : ZMod (K * M))) - 1) * y = 0) :
     MonoidAlgebra.mapDomainRingHom (ZMod K) (finiteProductCyclicReduction Q M K) y = 0 := by
   classical
-  letI : Fintype Q := Fintype.ofFinite Q
+  let : Fintype Q := Fintype.ofFinite Q
   have hMne : M ≠ 0 := by
     intro hM
     exact NeZero.ne (K * M) (by simp only [hM, mul_zero])
-  letI : NeZero M := ⟨hMne⟩
+  let : NeZero M := ⟨hMne⟩
   let projectionCoeff :=
     finiteProductCyclicGroupAlgebra_projection_coeff_eq_K_nsmul_of_int_sub_one_mul_eq_zero_of_gcd
       (R := ZMod K) (Q := Q) (M := M) (K := K)
@@ -616,7 +618,7 @@ theorem finiteProductCyclicGroupAlgebra_projection_eq_zero_of_pair_relation_of_o
           (a, Multiplicative.ofAdd (n : ZMod (K * M))) - 1) * y = 0) :
     MonoidAlgebra.mapDomainRingHom (ZMod K) (finiteProductCyclicReduction Q M K) y = 0 := by
   classical
-  letI : Fintype Q := Fintype.ofFinite Q
+  let : Fintype Q := Fintype.ofFinite Q
   let g : Q × Multiplicative (ZMod (K * M)) :=
     (a, Multiplicative.ofAdd (n : ZMod (K * M)))
   have hpowrel :

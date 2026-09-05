@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraModN.InClass.StageCoeffMap
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: coefficient rings — mod-\(n\) completed group algebra — in class — augmentation
 
@@ -96,25 +98,12 @@ theorem modNCompletedGroupAlgebraStageAugmentationInClass_compatible
   | add x y hx hy =>
       simp only [map_add, hx, hy]
   | single q a =>
-      rw [RingHom.comp_apply]
-      change
-        MonoidAlgebra.lift (ModNCompletedCoeff n) (ModNCompletedCoeff n)
-            (CompletedGroupAlgebraQuotientInClass G C U)
-            (1 : CompletedGroupAlgebraQuotientInClass G C U →*
-              ModNCompletedCoeff n)
-            (MonoidAlgebra.mapDomain
-              (OpenNormalSubgroupInClass.map
-                (C := C) (G := G)
-                (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) hUV)
-              (MonoidAlgebra.single q a)) =
-          MonoidAlgebra.lift (ModNCompletedCoeff n) (ModNCompletedCoeff n)
-            (CompletedGroupAlgebraQuotientInClass G C V)
-            (1 : CompletedGroupAlgebraQuotientInClass G C V →*
-              ModNCompletedCoeff n)
-            (MonoidAlgebra.single q a)
-      rw [MonoidAlgebra.mapDomain_single, MonoidAlgebra.lift_single,
-        MonoidAlgebra.lift_single, MonoidHom.one_apply, smul_eq_mul, mul_one]
-      simp
+      erw [RingHom.comp_apply,
+        modNCompletedGroupAlgebraTransitionInClass_single]
+      unfold modNCompletedGroupAlgebraStageAugmentationInClass
+      erw [MonoidAlgebra.lift_single, MonoidAlgebra.lift_single]
+      change a • (1 : ModNCompletedCoeff n) = a • (1 : ModNCompletedCoeff n)
+      rfl
 
 omit [Fact (0 < n)] in
 /--
@@ -136,17 +125,14 @@ theorem modNCompletedGroupAlgebraStageAugmentationInClass_comp_stageMap
   | add x y hx hy =>
       simp only [map_add, hx, hy]
   | single g a =>
-      rw [RingHom.comp_apply]
-      change
-        modNCompletedGroupAlgebraStageAugmentationInClass n G C U
-            (MonoidAlgebra.mapDomain
-              (openNormalSubgroupInClassProj (C := C) (G := G) U)
-              (MonoidAlgebra.single g a)) =
-          MonoidAlgebra.lift (ModNCompletedCoeff n) (ModNCompletedCoeff n) G
-            (1 : G →* ModNCompletedCoeff n) (MonoidAlgebra.single g a)
-      rw [MonoidAlgebra.mapDomain_single,
-        modNCompletedGroupAlgebraStageAugmentationInClass_single,
-        MonoidAlgebra.lift_single, MonoidHom.one_apply, smul_eq_mul, mul_one]
+      erw [RingHom.comp_apply]
+      unfold modNCompletedGroupAlgebraStageMapInClass
+      erw [MonoidAlgebra.mapDomainRingHom_apply,
+        MonoidAlgebra.mapDomain_single]
+      unfold modNCompletedGroupAlgebraStageAugmentationInClass
+      erw [MonoidAlgebra.lift_single, MonoidAlgebra.lift_single]
+      change a * (1 : ModNCompletedCoeff n) = a * (1 : ModNCompletedCoeff n)
+      rfl
 
 omit [Fact (0 < n)] in
 /--

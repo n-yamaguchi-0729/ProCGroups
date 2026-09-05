@@ -1,6 +1,8 @@
 import Mathlib.Topology.Algebra.ContinuousMonoidHom
 import ProCGroups.InverseSystems.CompatibilityAndSurjectivity
 
+set_option autoImplicit false
+
 /-!
 # Exact sequences of group-valued inverse systems
 

@@ -1,6 +1,8 @@
 import ProCGroups.InverseSystems.Basic
 import ProCGroups.InverseSystems.Utilities
 
+set_option autoImplicit false
+
 /-!
 # Morphisms of inverse systems and maps on their limits
 
@@ -40,7 +42,7 @@ For a fixed stage `j`, the product families whose earlier coordinates are determ
 -/
 private theorem isClosed_setOf_compatibleUpTo [∀ i, T2Space (S.X i)] (j : I) :
     IsClosed {x : ∀ i, S.X i | S.CompatibleUpTo j x} := by
-  simp only [CompatibleUpTo, setOf_forall]
+  simp only [CompatibleUpTo, Set.ofPred_forall]
   refine isClosed_iInter fun k => isClosed_iInter fun hkj => ?_
   exact isClosed_eq ((S.continuous_map hkj).comp (continuous_apply j)) (continuous_apply k)
 
@@ -96,8 +98,6 @@ theorem nonempty_inverseLimit [∀ i, Nonempty (S.X i)] [∀ i, CompactSpace (S.
 theorem nonempty_inverseLimit_of_finite [∀ i, Finite (S.X i)] [∀ i, Nonempty (S.X i)]
     [∀ i, DiscreteTopology (S.X i)] (hdir : Directed (· ≤ ·) (id : I → I)) :
     Nonempty S.inverseLimit := by
-  letI : ∀ i, CompactSpace (S.X i) := fun _ => inferInstance
-  letI : ∀ i, T2Space (S.X i) := fun _ => inferInstance
   exact S.nonempty_inverseLimit hdir
 
 /-- A morphism of inverse systems over the same directed preorder. -/
@@ -288,16 +288,17 @@ theorem surjective_limMap {T : InverseSystem (I := I)} [∀ i, CompactSpace (S.X
     map_id := fun i => by
       funext x
       apply Subtype.ext
-      simp only [projection_apply, map_id_apply, id_eq]
+      change S.map (le_rfl : i ≤ i) x.val = x.val
+      exact S.map_id_apply i x.val
     map_comp := fun {i j k} hij hjk => by
       funext x
       apply Subtype.ext
-      simp only [projection_apply, Function.comp_apply, S.map_comp_apply hij hjk]}
-  letI : ∀ i, Nonempty (F.X i) := fun i => by
+      change S.map hij (S.map hjk x.val) = S.map (hij.trans hjk) x.val
+      exact S.map_comp_apply hij hjk x.val}
+  let : ∀ i, Nonempty (F.X i) := fun i => by
     rcases hsurj i (T.projection i xlim) with ⟨x, hx⟩
     exact ⟨⟨x, hx⟩⟩
-  letI : ∀ i, T2Space (F.X i) := fun _ => inferInstance
-  letI : ∀ i, CompactSpace (F.X i) := fun i => by
+  let : ∀ i, CompactSpace (F.X i) := fun i => by
     let hs : IsClosed {x : S.X i | Θ.map i x = T.projection i xlim} :=
       isClosed_eq (Θ.continuous_map i) continuous_const
     exact hs.isClosedEmbedding_subtypeVal.compactSpace
@@ -358,7 +359,7 @@ theorem exists_injective_projection_of_finite_inverseLimit [Nonempty I]
     (hdir : Directed (· ≤ ·) (id : I → I)) [Finite S.inverseLimit] :
     ∃ k, Function.Injective (S.projection k) := by
   classical
-  letI : Fintype S.inverseLimit := Fintype.ofFinite S.inverseLimit
+  let : Fintype S.inverseLimit := Fintype.ofFinite S.inverseLimit
   let pairs : Finset (S.inverseLimit × S.inverseLimit) :=
     Finset.univ.filter fun p => p.1 ≠ p.2
   have hseparate :

@@ -1,5 +1,7 @@
 import ProCGroups.FiniteGeneration.CharacteristicChainsAndIndices
 
+set_option autoImplicit false
+
 /-!
 # Reidemeister Schreier / Profinite / Open Subgroups / Finite Permutation Targets
 
@@ -206,7 +208,6 @@ instance openSubgroupIndexActionRange_leftQuotientContinuousSMul
     {G : Type u} [Group G] [TopologicalSpace G] [IsTopologicalGroup G] [CompactSpace G]
     (H : OpenSubgroup G) {n : ℕ} (hn : Nat.card (G ⧸ (H : Subgroup G)) = n) :
     ContinuousSMul (openSubgroupIndexActionRange (G := G) H hn) (G ⧸ (H : Subgroup G)) := by
-  letI : DiscreteTopology (G ⧸ (H : Subgroup G)) := inferInstance
   exact ⟨continuous_of_discreteTopology⟩
 
 /-- The lifted finite permutation action sends the basepoint coset to the expected coset. -/

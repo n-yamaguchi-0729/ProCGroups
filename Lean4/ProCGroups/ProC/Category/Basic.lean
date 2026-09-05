@@ -1,6 +1,8 @@
 import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Limits
 import ProCGroups.ProC.Subgroups.Closed
 
+set_option autoImplicit false
+
 /-!
 # The category of pro-\(C\) groups
 

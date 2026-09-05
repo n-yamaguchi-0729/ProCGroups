@@ -1,6 +1,8 @@
 import ProCGroups.FiniteStepSolvableQuotients.Commutators.DerivedSeriesAndQuotients
 import ProCGroups.ProC.GroupPredicates.Abelian
 
+set_option autoImplicit false
+
 /-!
 # The topological commutator subgroup
 
@@ -118,9 +120,8 @@ theorem topDerivedTop_eq_bot_of_procyclic
   have hcomm : ∀ a b : G, a * b = b * a :=
     ProCGroups.ProC.HasAbelianOpenNormalBasis.isAbelian (G := G)
       (ProCGroups.ProC.HasCyclicOpenNormalBasis.hasAbelianOpenNormalBasis (G := G) hG)
-  let base : Group G := inferInstance
-  letI : CommGroup G := { base with mul_comm := hcomm }
-  exact topDerivedTop_eq_bot_of_commGroup hm
+  have : IsMulCommutative G := (isMulCommutative_iff (M := G)).mpr hcomm
+  exact (open scoped IsMulCommutative in topDerivedTop_eq_bot_of_commGroup (G := G) hm)
 
 /--
 Images of a topologically cyclic source in a discrete quotient of a maximal solvable quotient

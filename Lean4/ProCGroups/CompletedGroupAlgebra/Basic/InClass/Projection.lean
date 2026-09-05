@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.Basic.InClass.LimitAlgebra
 
+set_option autoImplicit false
+
 /-!
 # Completed Group Algebra / Basic / Within a Class / Projection
 
@@ -91,7 +93,7 @@ theorem continuous_completedGroupAlgebraProjectionInClass
     letI : TopologicalSpace (CompletedGroupAlgebraStageInClass C R G U) :=
       (completedGroupAlgebraSystemInClass C R G).topologicalSpace U
     Continuous (completedGroupAlgebraProjectionInClass C R G U) := by
-  letI : TopologicalSpace (CompletedGroupAlgebraStageInClass C R G U) :=
+  let : TopologicalSpace (CompletedGroupAlgebraStageInClass C R G U) :=
     (completedGroupAlgebraSystemInClass C R G).topologicalSpace U
   exact (completedGroupAlgebraSystemInClass C R G).continuous_projection U
 

@@ -3,6 +3,8 @@ import ProCGroups.FreeProC.FiniteRankSourceData
 import ProCGroups.FiniteStepSolvableQuotients.Abelianization
 import ProCGroups.ProC.InverseLimits.Predicates
 
+set_option autoImplicit false
+
 /-!
 # `ProCGroups.CrowellExactSequence.Applications.FiniteRank`
 
@@ -69,11 +71,11 @@ theorem mem_topDerivedTop_two_of_finiteRank_topologicalAbelianization_sepCoordin
           (ProCGroups.FiniteGroupClass.sigmaGroup sigma)
           (TopologicalAbelianization.mkₜ F).toMonoidHom a) = 0) :
     a ∈ topDerivedTop F 2 := by
-  letI :
+  let :
       ProCGroups.FiniteGroupClass.ContainsTrivialQuotients
         (ProCGroups.FiniteGroupClass.sigmaGroup sigma) :=
     (ProCGroups.FiniteGroupClass.sigmaGroup_fullFormation sigma).containsTrivialQuotients
-  letI : TotallyDisconnectedSpace (TopologicalAbelianization F) :=
+  let : TotallyDisconnectedSpace (TopologicalAbelianization F) :=
     ProCGroups.totallyDisconnectedSpace_quotient_closedNormal
       (Subgroup.closedCommutator F) (Subgroup.isClosed_closedCommutator F)
   let sourceData := finiteRank_epimorphicallyFreeProCSourceData (F := F) (sigma := sigma) X hFree

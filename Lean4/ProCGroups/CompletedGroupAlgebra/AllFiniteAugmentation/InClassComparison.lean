@@ -1,6 +1,8 @@
 import ProCGroups.CompletedGroupAlgebra.AllFiniteAugmentation.CanonicalAugmentation
 import ProCGroups.CompletedGroupAlgebra.Augmentation.CanonicalAugmentation
 
+set_option autoImplicit false
+
 /-!
 # Comparing all-finite and in-class augmentations
 

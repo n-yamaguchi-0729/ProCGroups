@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Basic
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: prime power — system — limit — basic
 

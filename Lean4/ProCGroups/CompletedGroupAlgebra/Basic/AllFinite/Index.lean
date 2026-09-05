@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.Basic.InClass.Index
 
+set_option autoImplicit false
+
 /-!
 # Completed Group Algebra / Basic / All Finite / Index
 
@@ -94,7 +96,7 @@ instance terminalCompletedGroupAlgebraQuotient_subsingleton :
 def terminalCompletedGroupAlgebraSubgroupInClass :
     OpenNormalSubgroupInClass ProCGroups.FiniteGroupClass.allFinite G := by
   refine ⟨terminalCompletedGroupAlgebraOpenNormalSubgroup G, ?_⟩
-  letI : Subsingleton
+  let : Subsingleton
       (G ⧸ ((terminalCompletedGroupAlgebraOpenNormalSubgroup G : OpenNormalSubgroup G) :
         Subgroup G)) :=
     terminalCompletedGroupAlgebraQuotient_subsingleton (G := G)

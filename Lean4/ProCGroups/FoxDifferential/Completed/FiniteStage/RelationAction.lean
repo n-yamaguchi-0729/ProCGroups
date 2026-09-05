@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.RelationModule
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — finite stage — relation action
 

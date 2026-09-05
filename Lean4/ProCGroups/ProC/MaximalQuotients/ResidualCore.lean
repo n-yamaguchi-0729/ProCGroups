@@ -1,6 +1,8 @@
 import Mathlib.Topology.Algebra.Group.Quotient
 import ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
 
+set_option autoImplicit false
+
 /-!
 # Closed kernels and the pro-\(C\) residual core
 

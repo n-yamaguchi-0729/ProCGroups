@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.InClass.System.Ring.Projection
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: coefficient rings — prime-power completed group algebra — in class — map
 
@@ -117,7 +119,7 @@ theorem primePowerCompletedGroupAlgebraMapStageInClass_compatible
   apply RingHom.ext
   intro x
   refine MonoidAlgebra.induction_on
-    (p := fun x =>
+    (motive := fun x =>
       ((primePowerCompletedGroupAlgebraTransitionInClass (ℓ := ℓ) (G := H0) C hij).comp
           (primePowerCompletedGroupAlgebraMapStageInClass (ℓ := ℓ) C hC ψ j)) x =
         ((primePowerCompletedGroupAlgebraMapStageInClass (ℓ := ℓ) C hC ψ i).comp
@@ -155,7 +157,7 @@ theorem primePowerCompletedGroupAlgebraMapStageInClass_compatible
                 (completedGroupAlgebraComapIndexInClass (G := G0) (H := H0) C hC ψ j.2))
               (completedGroupAlgebraComapIndexInClass_mono
                 (G := G0) (H := H0) C hC ψ hij.2)) q))
-    rw [primePowerCompletedGroupAlgebraMapStageInClass_of]
+    erw [primePowerCompletedGroupAlgebraMapStageInClass_of]
     exact congrArg (MonoidAlgebra.of (ModNCompletedCoeff (ℓ ^ i.1))
       (CompletedGroupAlgebraQuotientInClass H0 C i.2))
       (congrFun

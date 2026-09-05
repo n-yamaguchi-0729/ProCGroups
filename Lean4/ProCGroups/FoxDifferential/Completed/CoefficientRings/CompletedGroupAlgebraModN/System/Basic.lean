@@ -1,6 +1,8 @@
 import ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.Index
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraModN.InClass.Augmentation
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: coefficient rings — mod-\(n\) completed group algebra — system — basic
 
@@ -46,17 +48,17 @@ instance instFiniteModNCompletedGroupAlgebraStage (U :
     _root_.CompletedGroupAlgebra.CompletedGroupAlgebraIndex G) :
     Finite (ModNCompletedGroupAlgebraStage n G U) := by
   classical
-  letI : Finite (_root_.CompletedGroupAlgebra.CompletedGroupAlgebraQuotient G U) :=
+  let : Finite (_root_.CompletedGroupAlgebra.CompletedGroupAlgebraQuotient G U) :=
       (OrderDual.ofDual U).2
-  letI : Fintype (_root_.CompletedGroupAlgebra.CompletedGroupAlgebraQuotient G U) :=
+  let : Fintype (_root_.CompletedGroupAlgebra.CompletedGroupAlgebraQuotient G U) :=
       Fintype.ofFinite _
-  letI : DecidableEq (_root_.CompletedGroupAlgebra.CompletedGroupAlgebraQuotient G U) :=
+  let : DecidableEq (_root_.CompletedGroupAlgebra.CompletedGroupAlgebraQuotient G U) :=
       Classical.decEq _
-  letI : NeZero n := ⟨Nat.ne_of_gt (show 0 < n from Fact.out)⟩
-  letI : Fintype (ModNCompletedCoeff n) := Fintype.ofEquiv (Fin n) (ZMod.finEquiv n)
-  letI : Finite (_root_.CompletedGroupAlgebra.CompletedGroupAlgebraQuotient G U →
+  let : NeZero n := ⟨Nat.ne_of_gt (show 0 < n from Fact.out)⟩
+  let : Fintype (ModNCompletedCoeff n) := Fintype.ofEquiv (Fin n) (ZMod.finEquiv n)
+  let : Finite (_root_.CompletedGroupAlgebra.CompletedGroupAlgebraQuotient G U →
       ModNCompletedCoeff n) := by
-    letI : Fintype (_root_.CompletedGroupAlgebra.CompletedGroupAlgebraQuotient G U →
+    let : Fintype (_root_.CompletedGroupAlgebra.CompletedGroupAlgebraQuotient G U →
         ModNCompletedCoeff n) := inferInstance
     exact Finite.of_fintype _
   let f :
@@ -127,7 +129,7 @@ theorem modNCompletedGroupAlgebraTransition_comp
     (modNCompletedGroupAlgebraTransition n G hUV).comp
         (modNCompletedGroupAlgebraTransition n G hVW) =
       modNCompletedGroupAlgebraTransition n G (hUV.trans hVW) := by
-  rw [modNCompletedGroupAlgebraTransition, modNCompletedGroupAlgebraTransition,
+  erw [modNCompletedGroupAlgebraTransition, modNCompletedGroupAlgebraTransition,
     modNCompletedGroupAlgebraTransition, ← MonoidAlgebra.mapDomainRingHom_comp]
   congr 1
   exact OpenNormalSubgroupInClass.map_comp
@@ -180,8 +182,25 @@ theorem modNCompletedGroupAlgebraTransition_surjective
         ⟨q', hq'⟩
       rcases ih with ⟨y, hy⟩
       refine ⟨(MonoidAlgebra.single q' a : ModNCompletedGroupAlgebraStage n G V) + y, ?_⟩
-      rw [map_add, modNCompletedGroupAlgebraTransition_single_apply, hy, hq']
-      rfl
+      have hsingle :
+          modNCompletedGroupAlgebraTransition n G hUV
+              (MonoidAlgebra.single q' a) =
+            MonoidAlgebra.single (OpenNormalSubgroupInClass.map hUV q') a := by
+        exact modNCompletedGroupAlgebraTransition_single_apply
+          (n := n) (G := G) hUV q' a
+      have hsingleTarget :
+          modNCompletedGroupAlgebraTransition n G hUV
+              (MonoidAlgebra.single q' a) =
+            (MonoidAlgebra.single q a : ModNCompletedGroupAlgebraStage n G U) :=
+        hsingle.trans (congrArg (fun q₀ => MonoidAlgebra.single q₀ a) hq')
+      calc
+        modNCompletedGroupAlgebraTransition n G hUV
+              ((MonoidAlgebra.single q' a : ModNCompletedGroupAlgebraStage n G V) + y) =
+            modNCompletedGroupAlgebraTransition n G hUV (MonoidAlgebra.single q' a) +
+              modNCompletedGroupAlgebraTransition n G hUV y := map_add _ _ _
+        _ = MonoidAlgebra.single q a + x :=
+          congrArg₂ (fun u v : ModNCompletedGroupAlgebraStage n G U => u + v)
+            hsingleTarget hy
 
 omit [Fact (0 < n)] in
 /-- The quotient map \((\mathbb{Z}/n\mathbb{Z})[G] \to (\mathbb{Z}/n\mathbb{Z})[G/U]\). -/
@@ -222,7 +241,7 @@ theorem modNCompletedGroupAlgebraStageMap_compatible
     (modNCompletedGroupAlgebraTransition n G hUV).comp
         (modNCompletedGroupAlgebraStageMap n G V) =
       modNCompletedGroupAlgebraStageMap n G U := by
-  rw [modNCompletedGroupAlgebraTransition, modNCompletedGroupAlgebraStageMap,
+  erw [modNCompletedGroupAlgebraTransition, modNCompletedGroupAlgebraStageMap,
     modNCompletedGroupAlgebraStageMap, ← MonoidAlgebra.mapDomainRingHom_comp]
   congr 1
 
@@ -235,9 +254,9 @@ def modNCompletedGroupAlgebraSystem :
   map := fun {U V} hUV => modNCompletedGroupAlgebraTransition n G hUV
   continuous_map := by
     intro U V hUV
-    letI : TopologicalSpace (ModNCompletedGroupAlgebraStage n G U) := ⊥
-    letI : TopologicalSpace (ModNCompletedGroupAlgebraStage n G V) := ⊥
-    letI : DiscreteTopology (ModNCompletedGroupAlgebraStage n G V) := ⟨rfl⟩
+    let : TopologicalSpace (ModNCompletedGroupAlgebraStage n G U) := ⊥
+    let : TopologicalSpace (ModNCompletedGroupAlgebraStage n G V) := ⊥
+    let : DiscreteTopology (ModNCompletedGroupAlgebraStage n G V) := ⟨rfl⟩
     exact continuous_of_discreteTopology
   map_id := by
     intro U

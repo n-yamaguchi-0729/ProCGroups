@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.DifferentialModule.Map.Limit
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — differential module — map — group like
 
@@ -41,10 +43,10 @@ theorem primePowerCompletedGroupAlgebraMap_of
         (primePowerCompletedGroupAlgebraOf (ell := ℓ) (H := G) g)) =
     primePowerCompletedGroupAlgebraProjection (ℓ := ℓ) (G := H) i
       (primePowerCompletedGroupAlgebraOf (ell := ℓ) (H := H) (ψ g))
-  rw [primePowerCompletedGroupAlgebraProjection_map,
-    primePowerCompletedGroupAlgebraProjection_of,
-    primePowerCompletedGroupAlgebraMapStage_of,
-    primePowerCompletedGroupAlgebraProjection_of]
+  erw [primePowerCompletedGroupAlgebraProjection_map]
+  erw [primePowerCompletedGroupAlgebraProjection_of]
+  erw [primePowerCompletedGroupAlgebraMapStage_of]
+  erw [primePowerCompletedGroupAlgebraProjection_of]
   rfl
 
 

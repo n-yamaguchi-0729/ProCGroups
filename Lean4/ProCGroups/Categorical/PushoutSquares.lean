@@ -4,6 +4,8 @@ import Mathlib.GroupTheory.Coprod.Basic
 import ProCGroups.Profinite.Basic
 import ProCGroups.Topologies.ContinuousMulEquiv
 
+set_option autoImplicit false
+
 /-!
 # Pro C Groups / Categorical / Pushout Squares
 
@@ -110,11 +112,9 @@ noncomputable def concretePushoutDesc
     (hφ : φ₁.comp β₁ = φ₂.comp β₂) :
     (concretePushoutDesc β₁ β₂ φ₁ φ₂ hφ).comp (inl β₁ β₂) = φ₁ := by
   ext x
-  change concretePushoutDesc β₁ β₂ φ₁ φ₂ hφ
-      (QuotientGroup.mk' (pushoutNormalClosure β₁ β₂)
-        (Monoid.Coprod.inl x : PushoutFreeProduct H₁ H₂)) = φ₁ x
-  simp only [concretePushoutDesc, QuotientGroup.mk'_apply, QuotientGroup.lift_mk,
-      Monoid.Coprod.lift_apply_inl]
+  change (Monoid.Coprod.lift φ₁ φ₂)
+    (Monoid.Coprod.inl x : PushoutFreeProduct H₁ H₂) = φ₁ x
+  exact Monoid.Coprod.lift_apply_inl φ₁ φ₂ x
 
 /-- The concrete pushout descent map is compatible with the right inclusion. -/
 @[simp 900] theorem concretePushoutDesc_inr
@@ -124,11 +124,9 @@ noncomputable def concretePushoutDesc
     (hφ : φ₁.comp β₁ = φ₂.comp β₂) :
     (concretePushoutDesc β₁ β₂ φ₁ φ₂ hφ).comp (inr β₁ β₂) = φ₂ := by
   ext x
-  change concretePushoutDesc β₁ β₂ φ₁ φ₂ hφ
-      (QuotientGroup.mk' (pushoutNormalClosure β₁ β₂)
-        (Monoid.Coprod.inr x : PushoutFreeProduct H₁ H₂)) = φ₂ x
-  simp only [concretePushoutDesc, QuotientGroup.mk'_apply, QuotientGroup.lift_mk,
-      Monoid.Coprod.lift_apply_inr]
+  change (Monoid.Coprod.lift φ₁ φ₂)
+    (Monoid.Coprod.inr x : PushoutFreeProduct H₁ H₂) = φ₂ x
+  exact Monoid.Coprod.lift_apply_inr φ₁ φ₂ x
 
 end AlgebraicPushout
 

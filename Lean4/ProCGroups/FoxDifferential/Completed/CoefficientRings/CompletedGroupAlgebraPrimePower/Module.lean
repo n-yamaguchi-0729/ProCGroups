@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.Coeff.Projection
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — coefficient rings — prime-power completed group algebra — module
 

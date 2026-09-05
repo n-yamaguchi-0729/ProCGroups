@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Basic
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: finite stage — prime power — system — semidirect
 
@@ -112,9 +114,9 @@ def foxAlgebraicStagePrimePowerSemidirectSystem
     foxAlgebraicStagePrimePowerSemidirectTransition (ℓ := ℓ) (X := X) N hab
   continuous_map := by
     intro a b hab
-    letI : TopologicalSpace (FoxAlgebraicStageSemidirect (X := X) N (ℓ ^ a)) := ⊥
-    letI : TopologicalSpace (FoxAlgebraicStageSemidirect (X := X) N (ℓ ^ b)) := ⊥
-    letI : DiscreteTopology (FoxAlgebraicStageSemidirect (X := X) N (ℓ ^ b)) := ⟨rfl⟩
+    let : TopologicalSpace (FoxAlgebraicStageSemidirect (X := X) N (ℓ ^ a)) := ⊥
+    let : TopologicalSpace (FoxAlgebraicStageSemidirect (X := X) N (ℓ ^ b)) := ⊥
+    let : DiscreteTopology (FoxAlgebraicStageSemidirect (X := X) N (ℓ ^ b)) := ⟨rfl⟩
     exact continuous_of_discreteTopology
   map_id := by
     intro a

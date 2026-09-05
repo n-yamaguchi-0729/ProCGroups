@@ -1,5 +1,7 @@
 import ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.Presentation
 
+set_option autoImplicit false
+
 
 /-!
 # `ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.TargetPresentation.Core`

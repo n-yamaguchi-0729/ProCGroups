@@ -2,6 +2,8 @@ import ProCGroups.FoxDifferential.Completed.Continuous.Free.DiscreteGenerators
 import ProCGroups.FoxDifferential.Completed.Continuous.Free.Rules
 import ProCGroups.FoxDifferential.Completed.Continuous.Topology
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — continuous — universal — basic
 
@@ -398,7 +400,7 @@ theorem continuous_zcCompletedDifferentialModuleLift_freeTopology_iff
       Continuous (zcFreeCrossedDifferentialCoordinateLift (H := H) C delta) := by
   constructor
   · intro h
-    letI : TopologicalSpace (ZCCompletedDifferentialModule C ψ) :=
+    let : TopologicalSpace (ZCCompletedDifferentialModule C ψ) :=
       zcCompletedDifferentialModuleFreeTopology C ψ
     have h' : Continuous (crossedHomModuleLift (A := A)
         (zcCompletedGroupAlgebraScalar C ψ) delta) := h
@@ -409,7 +411,7 @@ theorem continuous_zcCompletedDifferentialModuleLift_freeTopology_iff
         (A := A) C ψ delta
     simpa [heq, LinearMap.comp_apply] using h'.comp hcoord
   · intro h
-    letI : TopologicalSpace (ZCCompletedDifferentialModule C ψ) :=
+    let : TopologicalSpace (ZCCompletedDifferentialModule C ψ) :=
       zcCompletedDifferentialModuleFreeTopology C ψ
     have hcoord :=
       continuous_zcDifferentialToFreeFoxCoordinates_freeTopology (X := X) (H := H) C ψ

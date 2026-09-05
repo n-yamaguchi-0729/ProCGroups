@@ -2,6 +2,8 @@ import ProCGroups.Generation.Basic
 import ProCGroups.ProC.OpenNormalSubgroups.BasisAtOne
 import ProCGroups.Profinite.Basic
 
+set_option autoImplicit false
+
 /-!
 # Finite word products and subgroup closure
 
@@ -176,7 +178,7 @@ theorem exists_openNormalSubgroup_inf_eq_bot_of_finite
     (K : Subgroup G) [Finite K] :
     ∃ U : OpenNormalSubgroup G, ((U : Subgroup G) ⊓ K) = ⊥ := by
   classical
-  letI : Fintype K := Fintype.ofFinite K
+  let : Fintype K := Fintype.ofFinite K
   let topU : OpenNormalSubgroup G :=
     { toSubgroup := ⊤
       isOpen' := isOpen_univ

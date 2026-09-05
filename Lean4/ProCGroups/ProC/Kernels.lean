@@ -2,6 +2,8 @@ import Mathlib.GroupTheory.Abelianization.Defs
 import ProCGroups.Abelian.TopologicalAbelianization
 import ProCGroups.ProC.Subgroups.Closed
 
+set_option autoImplicit false
+
 /-!
 # Profinite kernels and their abelianizations
 
@@ -133,11 +135,8 @@ theorem HasOpenNormalBasisInClass.profiniteKernelAbelianization
     [T1Space H] (psi : ContinuousMonoidHom G H) :
     HasOpenNormalBasisInClass C (ProfiniteKernelAbelianization psi) := by
   let N : Subgroup G := ProfiniteKernelSubgroup psi
-  letI : IsClosed (N : Set G) := isClosed_profiniteKernelSubgroup psi
-  letI : CompactSpace N :=
-    (show IsClosed (N : Set G) from inferInstance).isClosedEmbedding_subtypeVal.compactSpace
-  letI : T2Space N := by infer_instance
-  letI : TotallyDisconnectedSpace N := by infer_instance
+  have : CompactSpace N :=
+    (isClosed_profiniteKernelSubgroup psi).isClosedEmbedding_subtypeVal.compactSpace
   have hN : HasOpenNormalBasisInClass C N :=
     HasOpenNormalBasisInClass.profiniteKernelSubgroup hC.hereditary hG psi
   change HasOpenNormalBasisInClass C (N ⧸ Subgroup.closedCommutator N)

@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.CoeffMap.Augmentation
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — finite stage — coeff map — semidirect
 
@@ -123,7 +125,7 @@ theorem foxAlgebraicStageGroupAlgebraDerivative_powerCoeff_natural
       foxAlgebraicStageGroupAlgebraDerivative (X := X) N n₀ i
         (foxAlgebraicStagePowerSourceGroupAlgebraMap (X := X) N hnm x) := by
   refine MonoidAlgebra.induction_on
-    (p := fun x =>
+    (motive := fun x =>
       foxAlgebraicStageTargetGroupAlgebraCoeffMap (X := X) N hnm
           (foxAlgebraicStageGroupAlgebraDerivative (X := X) N m₀ i x) =
         foxAlgebraicStageGroupAlgebraDerivative (X := X) N n₀ i

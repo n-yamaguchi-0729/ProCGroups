@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.RelationAction
 import ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Source
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — finite stage — relation ideal
 
@@ -125,7 +127,7 @@ theorem foxCommutatorPowerGroupAlgebraMap_section
         (foxAlgebraicStageTargetGroupAlgebraSection (X := X) N n y) = y := by
   classical
   refine MonoidAlgebra.induction_on
-    (p := fun y : foxAlgebraicStageTargetGroupAlgebra (X := X) N n =>
+    (motive := fun y : foxAlgebraicStageTargetGroupAlgebra (X := X) N n =>
       foxCommutatorPowerGroupAlgebraMap (F := FreeGroup X) N n
         (foxAlgebraicStageTargetGroupAlgebraSection (X := X) N n y) = y)
     y ?single ?add ?smul
@@ -212,7 +214,7 @@ theorem foxAlgebraicStage_sub_section_map_mem_relationAugmentationIdeal
       foxAlgebraicStageRelationAugmentationIdeal (X := X) N n := by
   classical
   refine MonoidAlgebra.induction_on
-    (p := fun x : foxAlgebraicStageSourceGroupAlgebra (X := X) N n =>
+    (motive := fun x : foxAlgebraicStageSourceGroupAlgebra (X := X) N n =>
       x - foxAlgebraicStageTargetGroupAlgebraSection (X := X) N n
           (foxCommutatorPowerGroupAlgebraMap (F := FreeGroup X) N n x) ∈
         foxAlgebraicStageRelationAugmentationIdeal (X := X) N n)

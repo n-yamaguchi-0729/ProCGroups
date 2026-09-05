@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraModN.AugmentationIdeal
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.Basic.StageCoeffMap.AllFinite
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: coefficient rings — prime-power completed group algebra — basic — augmentation
 
@@ -80,7 +82,7 @@ theorem modNCompletedGroupAlgebraStageAugmentation_comp_coeffMap
   apply RingHom.ext
   intro x
   refine MonoidAlgebra.induction_on
-    (p := fun x =>
+    (motive := fun x =>
       ((modNCompletedGroupAlgebraStageAugmentation n G U).comp
           (modNCompletedGroupAlgebraStageCoeffMap (n := n) (m := m) (G := G) U hnm)) x =
         ((modNCompletedCoeffMap (n := n) (m := m) hnm).comp
@@ -95,7 +97,7 @@ theorem modNCompletedGroupAlgebraStageAugmentation_comp_coeffMap
   · intro x y hx hy
     simp only [RingHom.map_add, hx, RingHom.coe_comp, Function.comp_apply, hy]
   · intro a x hx
-    letI : Algebra (ModNCompletedCoeff m) (ModNCompletedCoeff n) :=
+    let : Algebra (ModNCompletedCoeff m) (ModNCompletedCoeff n) :=
       ZMod.algebra' (R := ModNCompletedCoeff n) (m := n) (n := m) hnm
     rw [Algebra.smul_def, RingHom.map_mul, RingHom.map_mul, hx]
     have hcoeff :
@@ -146,7 +148,7 @@ theorem modNCompletedGroupAlgebraStageAugmentationInClass_comp_coeffMap
   apply RingHom.ext
   intro x
   refine MonoidAlgebra.induction_on
-    (p := fun x =>
+    (motive := fun x =>
       ((modNCompletedGroupAlgebraStageAugmentationInClass n G C U).comp
           (modNCompletedGroupAlgebraStageCoeffMapInClass
             (n := n) (m := m) (G := G) C U hnm)) x =
@@ -162,7 +164,7 @@ theorem modNCompletedGroupAlgebraStageAugmentationInClass_comp_coeffMap
   · intro x y hx hy
     simp only [RingHom.map_add, hx, RingHom.coe_comp, Function.comp_apply, hy]
   · intro a x hx
-    letI : Algebra (ModNCompletedCoeff m) (ModNCompletedCoeff n) :=
+    let : Algebra (ModNCompletedCoeff m) (ModNCompletedCoeff n) :=
       ZMod.algebra' (R := ModNCompletedCoeff n) (m := n) (n := m) hnm
     rw [Algebra.smul_def, RingHom.map_mul, RingHom.map_mul, hx]
     have hcoeff :

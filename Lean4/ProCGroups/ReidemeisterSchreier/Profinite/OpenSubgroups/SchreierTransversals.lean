@@ -2,6 +2,8 @@ import ProCGroups.FreeProC.Basic
 import ProCGroups.WreathProducts
 import ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.RightQuotient
 
+set_option autoImplicit false
+
 /-!
 # Schreier sections and oriented cocycles
 
@@ -406,8 +408,8 @@ theorem natCard_generatorSet_le
     (S : FiniteSchreierCocycleData (F := F) (X := X) H) (ι : X → F) :
     Nat.card (S.cocycleData.generatorSet ι) ≤
       Nat.card S.cocycleData.Q * Nat.card X := by
-  letI : Finite X := S.finiteGeneratorIndex
-  letI : Finite S.cocycleData.Q := S.finiteQuotient
+  let : Finite X := S.finiteGeneratorIndex
+  let : Finite S.cocycleData.Q := S.finiteQuotient
   exact S.cocycleData.natCard_generatorSet_le ι
 
 end FiniteSchreierCocycleData
@@ -492,6 +494,8 @@ instance instMulActionOpenSubgroupRightQuotient :
     MulAction F (OpenSubgroupRightQuotient H) :=
   rightCosetMulAction (H : Subgroup F)
 
+attribute [-instance] instMulActionOpenSubgroupRightQuotient
+
 /--
 The next right Schreier coset is obtained by acting on the current right coset by the inverse of
 the chosen generator image.
@@ -571,8 +575,6 @@ theorem continuous_rightSchreierNextCoset
     (hιcont : Continuous ι) :
     Continuous (fun p : OpenSubgroupRightQuotient H × X =>
       rightSchreierNextCoset (F := F) H ι p.1 p.2) := by
-  letI : MulAction F (OpenSubgroupRightQuotient H) :=
-    rightCosetMulAction (H : Subgroup F)
   refine (continuous_prod_of_discrete_left).2 ?_
   intro q
   have hqcont :
@@ -628,7 +630,7 @@ theorem continuous_rightSchreierGenerator
     (hτcont : Continuous τ) (hιcont : Continuous ι) :
     Continuous (fun p : OpenSubgroupRightQuotient H × X =>
       rightSchreierGenerator (F := F) (H := H) (τ := τ) (hτ := hτ) (ι := ι) p.1 p.2) := by
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (rightSchreierSection (F := F) (H := H) (τ := τ) (hτ := hτ) :
         SchreierCocycleData (F := F) (X := X) H).Q :=
     inferInstanceAs (TopologicalSpace (OpenSubgroupRightQuotient H))

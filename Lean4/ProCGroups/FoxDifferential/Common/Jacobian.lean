@@ -1,6 +1,8 @@
 import Mathlib.Algebra.Module.LinearMap.Basic
 import Mathlib.Data.Matrix.Mul
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: common — jacobian
 
@@ -165,7 +167,10 @@ theorem foxJacobianMatrix_comp
         foxJacobianMatrix (R := R) (X := Y) (Y := Z) jacYZ := by
   apply Matrix.ext
   intro x z
-  simp only [foxJacobianMatrix, Matrix.mul_apply]
+  exact
+    (Matrix.mul_apply
+      (M := foxJacobianMatrix (R := R) (X := X) (Y := Y) jacXY)
+      (N := foxJacobianMatrix (R := R) (X := Y) (Y := Z) jacYZ)).symm
 
 /--
 A Fox-Jacobian linear map sends a standard source coordinate to the corresponding Jacobian row.
@@ -193,7 +198,7 @@ theorem linearMap_ext_pi_single
     (h : ∀ x : X, L₁ (Pi.single x (1 : R)) = L₂ (Pi.single x (1 : R))) :
     L₁ = L₂ := by
   classical
-  letI := Fintype.ofFinite X
+  let : Fintype X := Fintype.ofFinite X
   apply LinearMap.ext
   intro v
   have hv : v = ∑ x : X, v x • (Pi.single x (1 : R) : X → R) := by

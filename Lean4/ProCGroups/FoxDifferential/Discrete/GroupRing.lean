@@ -2,6 +2,8 @@ import ProCGroups.FoxDifferential.Discrete.DifferentialModule.Boundary
 import Mathlib.Algebra.MonoidAlgebra.Basic
 import Mathlib.RingTheory.Ideal.Maps
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: discrete — group ring
 
@@ -101,7 +103,7 @@ generators.
 theorem exists_mem_augmentationGeneratorIdeal_add (x : GroupRing H) :
     ∃ y ∈ augmentationGeneratorIdeal H, x = y + (augmentation H x : GroupRing H) := by
   refine (MonoidAlgebra.induction_on
-    (p := fun x =>
+    (motive := fun x =>
       ∃ y ∈ augmentationGeneratorIdeal H, x = y + (augmentation H x : GroupRing H))
     x ?_ ?_ ?_)
   · intro h

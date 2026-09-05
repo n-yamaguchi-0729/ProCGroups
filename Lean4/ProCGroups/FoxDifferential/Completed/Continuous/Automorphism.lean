@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.Continuous.ChainRule.Iterated
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — continuous — automorphism
 
@@ -153,6 +155,13 @@ theorem allFinite_freeProCZCCompletedFoxAutomorphism_pullback_symm
       (C := ProCGroups.FiniteGroupClass.allFinite) hι htarget φe hφe
       (e.symm (ι x)) = φ x
   have happ := congrFun (congrArg DFunLike.coe hρ) (e.symm (ι x))
+  change
+    freeProCZCCompletedFoxRightHom
+        (C := ProCGroups.FiniteGroupClass.allFinite) hι htarget φe hφe
+        (e.symm (ι x)) =
+      ((freeProCZCCompletedFoxRightHom
+        (C := ProCGroups.FiniteGroupClass.allFinite) hι htarget φ hφ).comp
+        e.toMonoidHom) (e.symm (ι x)) at happ
   calc
     freeProCZCCompletedFoxRightHom
         (C := ProCGroups.FiniteGroupClass.allFinite) hι htarget φe hφe
@@ -160,7 +169,7 @@ theorem allFinite_freeProCZCCompletedFoxAutomorphism_pullback_symm
         ((freeProCZCCompletedFoxRightHom
           (C := ProCGroups.FiniteGroupClass.allFinite) hι htarget φ hφ).comp
           e.toMonoidHom) (e.symm (ι x)) := by
-          simpa [φe, htarget, hφ, hφe] using happ
+          exact happ
     _ = freeProCZCCompletedFoxRightHom
         (C := ProCGroups.FiniteGroupClass.allFinite) hι htarget φ hφ (ι x) := by
           simp only [MulEquiv.toMonoidHom_eq_coe, MonoidHom.coe_comp, MonoidHom.coe_coe,
@@ -198,7 +207,12 @@ theorem allFinite_freeProCZCCompletedFoxAutomorphismJacobianLinearMap_comp_inver
       allFinite_freeProCZCCompletedFoxAutomorphismJacobianLinearMapInverse,
       allFinite_freeProCZCCompletedFoxJacobianLinearMap,
       allFinite_freeProCZCCompletedFoxJacobian]
-  all_goals rfl
+  all_goals try rfl
+  exact (freeProCZCCompletedFoxDerivativeVector_generator
+    (C := ProCGroups.FiniteGroupClass.allFinite) hι
+    (ProCGrp.allFinite_property (ProfiniteGrp.of _)) φ
+    (continuous_freeProCZCCompletedFoxSemidirectGenerator_of_discrete
+      (C := ProCGroups.FiniteGroupClass.allFinite) X H φ) x).symm
 
 /--
 Composing the named inverse for the completed Fox-Jacobian linear map of a continuous
@@ -395,7 +409,7 @@ def allFinite_freeProCZCCompletedFoxAutomorphismJacobianLinearEquiv
     ZCFreeFoxCoordinates ProCGroups.FiniteGroupClass.allFinite (X := X) (H := H)
         ≃ₗ[ZCCompletedGroupAlgebra ProCGroups.FiniteGroupClass.allFinite H]
       ZCFreeFoxCoordinates ProCGroups.FiniteGroupClass.allFinite (X := X) (H := H) := by
-  refine LinearEquiv.ofLinear
+  refine LinearEquiv.ofLinearMap
     (allFinite_freeProCZCCompletedFoxJacobianLinearMap
       (X := X) (Y := X) (F := F) (F' := F) hι e.toMonoidHom φ ι)
     (allFinite_freeProCZCCompletedFoxAutomorphismJacobianLinearMapInverse

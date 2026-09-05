@@ -1,5 +1,7 @@
 import ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.CleanedRelators
 
+set_option autoImplicit false
+
 
 /-!
 # Reidemeister Schreier / Discrete / Reidemeister Schreier / Finite Quotient / Kernel

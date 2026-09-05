@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.Augmentation.AugmentationIdeal
 
+set_option autoImplicit false
+
 /-!
 # Functoriality of augmentation
 

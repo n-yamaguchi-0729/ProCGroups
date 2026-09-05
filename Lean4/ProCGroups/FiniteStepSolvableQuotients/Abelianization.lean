@@ -2,6 +2,8 @@ import ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
 import ProCGroups.FiniteStepSolvableQuotients.Commutators.Basic
 import ProCGroups.ProC.Kernels
 
+set_option autoImplicit false
+
 /-!
 # Abelianizations inside finite-step solvable quotients
 
@@ -103,7 +105,7 @@ theorem isMulTorsionFree_topologicalAbelianization_of_isAbTorsionFree
     (hG : IsAbTorsionFree G) :
     IsMulTorsionFree (TopologicalAbelianization G) := by
   let e := topologicalAbelianizationTopMulEquiv (G := G)
-  letI :
+  let :
       IsMulTorsionFree (TopologicalAbelianization ↥((⊤ : OpenSubgroup G) : Subgroup G)) := hG ⊤
   exact e.isMulTorsionFree
 
@@ -115,7 +117,7 @@ theorem isMulTorsionFree_of_isAbTorsionFree_commGroup
     {G : Type u} [TopologicalSpace G] [CommGroup G] [IsTopologicalGroup G] [T1Space G]
     (hG : IsAbTorsionFree G) :
     IsMulTorsionFree G := by
-  letI : IsMulTorsionFree (TopologicalAbelianization G) :=
+  let : IsMulTorsionFree (TopologicalAbelianization G) :=
     isMulTorsionFree_topologicalAbelianization_of_isAbTorsionFree (G := G) hG
   exact (TopologicalAbelianization.continuousMulEquivOfCommGroup G).isMulTorsionFree
 

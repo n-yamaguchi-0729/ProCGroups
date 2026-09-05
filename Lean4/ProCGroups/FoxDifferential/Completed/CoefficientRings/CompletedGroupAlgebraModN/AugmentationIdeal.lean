@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraModN.Augmentation
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — coefficient rings — mod-\(n\) completed group algebra — augmentation ideal
 
@@ -136,9 +138,9 @@ def modNCompletedGroupAlgebraAugmentationIdealSystem :
     (n := n) (G := G) hUV
   continuous_map := by
     intro U V hUV
-    letI : TopologicalSpace (modNCompletedGroupAlgebraStageAugmentationIdeal n G U) := ⊥
-    letI : TopologicalSpace (modNCompletedGroupAlgebraStageAugmentationIdeal n G V) := ⊥
-    letI : DiscreteTopology (modNCompletedGroupAlgebraStageAugmentationIdeal n G V) := ⟨rfl⟩
+    let : TopologicalSpace (modNCompletedGroupAlgebraStageAugmentationIdeal n G U) := ⊥
+    let : TopologicalSpace (modNCompletedGroupAlgebraStageAugmentationIdeal n G V) := ⊥
+    let : DiscreteTopology (modNCompletedGroupAlgebraStageAugmentationIdeal n G V) := ⟨rfl⟩
     exact continuous_of_discreteTopology
   map_id := by
     intro U

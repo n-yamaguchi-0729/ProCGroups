@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Limit.Mul
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: prime power — system — limit — coeff map
 
@@ -51,7 +53,7 @@ theorem foxAlgebraicStagePrimePowerTargetStageMap_coeffMap
         (foxAlgebraicStageTargetQuotient (X := X) N) U
         (foxAlgebraicStagePrimePowerTargetTransition (ℓ := ℓ) (X := X) N hab x) := by
   refine MonoidAlgebra.induction_on
-    (p := fun x =>
+    (motive := fun x =>
       modNCompletedGroupAlgebraStageCoeffMap
           (n := ℓ ^ a) (m := ℓ ^ b)
           (G := foxAlgebraicStageTargetQuotient (X := X) N) U
@@ -81,10 +83,10 @@ theorem foxAlgebraicStagePrimePowerTargetStageMap_coeffMap
         (foxAlgebraicStagePrimePowerTargetTransition (ℓ := ℓ) (X := X) N hab
           (MonoidAlgebra.of (ModNCompletedCoeff (ℓ ^ b))
             (foxAlgebraicStageTargetQuotient (X := X) N) (QuotientGroup.mk' N w)))
-    rw [modNCompletedGroupAlgebraStageCoeffMap_of,
-      foxAlgebraicStagePrimePowerTargetTransition_of,
-      modNCompletedGroupAlgebraStageMap_of]
-    rw [MonoidAlgebra.of_apply]
+    erw [modNCompletedGroupAlgebraStageCoeffMap_of]
+    erw [foxAlgebraicStagePrimePowerTargetTransition_of]
+    erw [modNCompletedGroupAlgebraStageMap_of]
+    erw [MonoidAlgebra.of_apply]
     rfl
   · intro x y hx hy
     simp only [map_add, hx, hy]

@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.Carrier
 
+set_option autoImplicit false
+
 /-!
 # Completed Group Algebra / Basic / All Finite / Ring Maps
 
@@ -96,9 +98,12 @@ theorem completedGroupAlgebraTransition_algebraMap
     completedGroupAlgebraTransition R G hUV
         (algebraMap R (CompletedGroupAlgebraStage R G V) r) =
       algebraMap R (CompletedGroupAlgebraStage R G U) r := by
-  simp only [completedGroupAlgebraTransition, MonoidAlgebra.coe_algebraMap,
-    Algebra.algebraMap_self, RingHom.coe_id, Function.comp_apply, id_eq,
-    MonoidAlgebra.mapDomainRingHom_apply, MonoidAlgebra.mapDomain_single, map_one]
+  change
+    MonoidAlgebra.mapDomain
+        (OpenNormalSubgroupInClass.map hUV)
+        (MonoidAlgebra.single 1 r) =
+      MonoidAlgebra.single 1 r
+  rw [MonoidAlgebra.mapDomain_single, map_one]
 
 /-- The coefficient-ring map is the inverse-limit lift of the finite-stage algebra maps. -/
 def completedGroupAlgebraAlgebraMap

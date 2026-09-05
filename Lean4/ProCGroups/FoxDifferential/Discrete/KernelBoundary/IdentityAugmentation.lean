@@ -2,6 +2,8 @@ import ProCGroups.FoxDifferential.Discrete.GroupRing
 import Mathlib.RepresentationTheory.Homological.GroupHomology.Functoriality
 import Mathlib.RepresentationTheory.Homological.GroupHomology.Shapiro
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: discrete — kernel boundary — identity augmentation
 
@@ -38,7 +40,7 @@ def coinvariantsLEquivOfSubsingleton
     {k G V : Type*} [CommRing k] [Monoid G] [Subsingleton G]
     [AddCommGroup V] [Module k V] (ρ : Representation k G V) :
     Representation.Coinvariants ρ ≃ₗ[k] V := by
-  refine LinearEquiv.ofLinear
+  refine LinearEquiv.ofLinearMap
     (Representation.Coinvariants.lift ρ LinearMap.id ?_)
     (Representation.Coinvariants.mk ρ)
     ?_ ?_
@@ -386,9 +388,8 @@ theorem indBottomTrivialUnderlyingEquiv_mk (h : H) (n : ℤ) :
             ext y
             have : x = (1 : (⊥ : Subgroup H)) := Subsingleton.elim _ _
             subst this
-            simp only [Function.comp_apply, map_one, LinearMap.id_comp, LinearMap.coe_comp,
-  AlgebraTensorModule.curry_apply, LinearMap.restrictScalars_self, curry_apply,
-  Module.End.one_apply, LinearMap.id_coe, id_eq]))
+            simp only [map_one, LinearMap.id_comp, Module.End.one_apply, LinearMap.id_coe,
+              id_eq]))
         (Representation.Coinvariants.mk _ (MonoidAlgebra.single h 1 ⊗ₜ[ℤ] n))) = _
   rw [Representation.Coinvariants.lift_mk]
   simp only [LinearMap.id_coe, id_eq, rid_tmul, MonoidAlgebra.smul_single, Int.zsmul_eq_mul,
@@ -462,7 +463,7 @@ theorem rightRegular_cycles₁_eq_boundaries₁ :
   apply le_antisymm
   · intro x hx
     let hzero := rightRegular_H1_isZero H
-    haveI : Subsingleton (groupHomology (rightRegularRep H) 1) :=
+    have : Subsingleton (groupHomology (rightRegularRep H) 1) :=
       ModuleCat.subsingleton_of_isZero hzero
     let z : groupHomology.cycles₁ (rightRegularRep H) := ⟨x, hx⟩
     exact (groupHomology.H1π_eq_zero_iff (A := rightRegularRep H) z).1 (Subsingleton.elim _ _)

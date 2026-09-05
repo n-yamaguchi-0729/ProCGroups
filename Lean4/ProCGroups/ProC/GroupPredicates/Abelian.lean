@@ -1,5 +1,7 @@
 import ProCGroups.ProC.InverseLimits.Predicates
 
+set_option autoImplicit false
+
 /-!
 # Abelian open-normal quotient bases
 

@@ -3,6 +3,8 @@ import ProCGroups.Generation.Basic
 import ProCGroups.ProC.OpenNormalSubgroups.BasisAtOne
 import ProCGroups.Profinite.Basic
 
+set_option autoImplicit false
+
 /-!
 # Convergence of generating sets in profinite groups
 
@@ -259,7 +261,6 @@ noncomputable def closure_generatorsConvergingToOne_homeomorph_onePoint
     · simp only [mem_sdiff, mem_singleton_iff, hx, not_false_eq_true, and_true]
   have hdiscX : IsDiscrete X := by
     simpa [hdiff] using hdisc
-  letI : DiscreteTopology X := (isDiscrete_iff_discreteTopology).1 hdiscX
   have h1closure : (1 : G) ∈ closure X := by
     have : (1 : G) ∈ X ∪ ({1} : Set G) := by simp only [union_singleton, mem_insert_iff, true_or]
     rw [hclosure hXinfinite]
@@ -299,6 +300,7 @@ noncomputable def closure_generatorsConvergingToOne_homeomorph_onePoint
       left_inv := hleft
       right_inv := hright }
   have hcont : Continuous e := by
+    have : DiscreteTopology X := (isDiscrete_iff_discreteTopology).1 hdiscX
     rw [OnePoint.continuous_iff_from_discrete]
     rw [tendsto_subtype_rng]
     change Filter.Tendsto (fun x : X => ((toClosure (x : OnePoint X) : closure X) : G))

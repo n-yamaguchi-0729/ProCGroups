@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.Augmentation.StageAugmentation
 
+set_option autoImplicit false
+
 /-!
 # Canonical augmentation of the in-class completion
 
@@ -213,9 +215,9 @@ theorem continuous_completedGroupAlgebraCanonicalAugmentationInClass
     [ProCGroups.FiniteGroupClass.ContainsTrivialQuotients C] :
     Continuous (completedGroupAlgebraCanonicalAugmentationInClass (R := R) (G := G) C ) := by
   let U := terminalCompletedGroupAlgebraIndexInClass (G := G) C
-  letI : Finite (CompletedGroupAlgebraQuotientInClass G C U) :=
+  let : Finite (CompletedGroupAlgebraQuotientInClass G C U) :=
     finite_completedGroupAlgebraQuotientInClass G C U
-  letI : TopologicalSpace (CompletedGroupAlgebraStageInClass C R G U) :=
+  let : TopologicalSpace (CompletedGroupAlgebraStageInClass C R G U) :=
     (completedGroupAlgebraSystemInClass C R G).topologicalSpace U
   change Continuous fun x : CompletedGroupAlgebraInClass C R G =>
     completedGroupAlgebraStageAugmentationInClass C R G U

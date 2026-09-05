@@ -4,6 +4,8 @@ import Mathlib.Algebra.Category.Grp.FiniteGrp
 import Mathlib.CategoryTheory.ObjectProperty.ClosedUnderIsomorphisms
 import Mathlib.GroupTheory.QuotientGroup.Basic
 
+set_option autoImplicit false
+
 /-!
 # Finite-group classes and their closure properties
 
@@ -61,7 +63,7 @@ theorem finite_of_memAcrossUniverses {C : FiniteGroupClass.{u}}
 /-- Native membership gives cross-universe membership in the class's own universe. -/
 theorem memAcrossUniverses_of_mem {C : FiniteGroupClass.{u}}
     {G : Type u} [Group G] (hG : C G) : C.MemAcrossUniverses G := by
-  letI : Finite G := C.finite hG
+  let : Finite G := C.finite hG
   exact ⟨FiniteGrp.of G, hG, ⟨MulEquiv.refl G⟩⟩
 
 /-- In the class's own universe, cross-universe membership reduces to native membership. -/
@@ -270,9 +272,6 @@ asserting that the trivial group belongs to the class is needed.
 theorem Formation.one_mem {C : FiniteGroupClass.{u}} (hForm : Formation C) :
     C PUnit := by
   let G : PEmpty → Type u := fun _ => PUnit
-  letI : ∀ i : PEmpty, Group (G i) := by
-    intro i
-    cases i
   let e : ((i : PEmpty) → G i) ≃* PUnit := by
     refine
       { toFun := fun _ => PUnit.unit
@@ -317,7 +316,6 @@ theorem containsTrivialQuotients_of_isomClosed_one_mem {C : FiniteGroupClass.{u}
     ContainsTrivialQuotients C := by
   refine ⟨?_⟩
   intro Q _ hQ
-  letI : Subsingleton Q := hQ
   let e : PUnit ≃* Q :=
     { toFun := fun _ => 1
       invFun := fun _ => PUnit.unit
@@ -327,10 +325,10 @@ theorem containsTrivialQuotients_of_isomClosed_one_mem {C : FiniteGroupClass.{u}
         rfl
       right_inv := by
         intro q
-        exact Subsingleton.elim _ _
+        exact Subsingleton.elim (h := hQ) _ _
       map_mul' := by
         intro x y
-        exact Subsingleton.elim _ _ }
+        exact Subsingleton.elim (h := hQ) _ _ }
   exact hIso ⟨e⟩ hOne
 
 /-- A formation contains the trivial quotients required by the pro-\(C\) construction. -/
@@ -364,9 +362,6 @@ theorem variety_one_mem_of_isomClosed {C : FiniteGroupClass.{u}}
     (hVar : Variety C) (hIso : IsomClosed C) :
     C PUnit := by
   let G : PEmpty → Type u := fun _ => PUnit
-  letI : ∀ i : PEmpty, Group (G i) := by
-    intro i
-    cases i
   let e : ((i : PEmpty) → G i) ≃* PUnit := by
     classical
     refine
@@ -551,7 +546,7 @@ theorem MelnikovFormation.quotient_inf_mem {C : FiniteGroupClass.{u}}
     C (G ⧸ (N₁ ⊓ N₂)) := by
   let E : Type u := G ⧸ (N₁ ⊓ N₂)
   let L : Subgroup E := Subgroup.map (QuotientGroup.mk' (N₁ ⊓ N₂)) N₁
-  letI : L.Normal := by
+  let : L.Normal := by
     dsimp [L]
     exact Subgroup.Normal.map (show N₁.Normal by infer_instance)
       (QuotientGroup.mk' (N₁ ⊓ N₂))
@@ -561,7 +556,7 @@ theorem MelnikovFormation.quotient_inf_mem {C : FiniteGroupClass.{u}}
       QuotientGroup.quotientQuotientEquivQuotient (N₁ ⊓ N₂) N₁ inf_le_left
     exact hC.isomClosed ⟨e.symm⟩ h₁
   let K₂ : Subgroup (G ⧸ N₂) := Subgroup.map (QuotientGroup.mk' N₂) N₁
-  letI : K₂.Normal := by
+  let : K₂.Normal := by
     dsimp [K₂]
     exact Subgroup.Normal.map (show N₁.Normal by infer_instance)
       (QuotientGroup.mk' N₂)
@@ -629,7 +624,7 @@ theorem Formation.quotient_inf_mem {C : FiniteGroupClass.{u}}
   let H : ULift Bool → Type u
     | ⟨false⟩ => G ⧸ N₁
     | ⟨true⟩ => G ⧸ N₂
-  letI : ∀ b : ULift Bool, Group (H b) := by
+  let : ∀ b : ULift Bool, Group (H b) := by
     intro b
     cases b with
     | up b =>
@@ -654,6 +649,16 @@ theorem Formation.quotient_inf_mem {C : FiniteGroupClass.{u}}
                 exact (QuotientGroup.map (N₁ ⊓ N₂) N₁ (MonoidHom.id G) inf_le_left).map_mul x y
             | true =>
                 exact (QuotientGroup.map (N₁ ⊓ N₂) N₂ (MonoidHom.id G) inf_le_right).map_mul x y }
+  have hfalse_eval (g : G) :
+      f (QuotientGroup.mk' (N₁ ⊓ N₂) g) ⟨false⟩ = QuotientGroup.mk' N₁ g := by
+    change QuotientGroup.map (N₁ ⊓ N₂) N₁ (MonoidHom.id G) inf_le_left
+      (QuotientGroup.mk' (N₁ ⊓ N₂) g) = QuotientGroup.mk' N₁ g
+    exact QuotientGroup.map_mk' (N₁ ⊓ N₂) N₁ (MonoidHom.id G) inf_le_left g
+  have htrue_eval (g : G) :
+      f (QuotientGroup.mk' (N₁ ⊓ N₂) g) ⟨true⟩ = QuotientGroup.mk' N₂ g := by
+    change QuotientGroup.map (N₁ ⊓ N₂) N₂ (MonoidHom.id G) inf_le_right
+      (QuotientGroup.mk' (N₁ ⊓ N₂) g) = QuotientGroup.mk' N₂ g
+    exact QuotientGroup.map_mk' (N₁ ⊓ N₂) N₂ (MonoidHom.id G) inf_le_right g
   refine hC.finiteSubdirectProductClosed (ι := ULift Bool) (H := H) f ?_ ?_ ?_
   · intro x y hxy
     rcases QuotientGroup.mk'_surjective (N₁ ⊓ N₂) x with ⟨gx, rfl⟩
@@ -664,12 +669,14 @@ theorem Formation.quotient_inf_mem {C : FiniteGroupClass.{u}}
           f (QuotientGroup.mk' (N₁ ⊓ N₂) gx) ⟨false⟩ =
             f (QuotientGroup.mk' (N₁ ⊓ N₂) gy) ⟨false⟩ :=
         congrArg (fun z : ∀ b : ULift Bool, H b => z ⟨false⟩) hxy
-      exact QuotientGroup.eq.1 (by simpa [f, H] using hfalse)
+      exact QuotientGroup.eq.1
+        ((hfalse_eval gx).symm.trans (hfalse.trans (hfalse_eval gy)))
     · have htrue :
           f (QuotientGroup.mk' (N₁ ⊓ N₂) gx) ⟨true⟩ =
             f (QuotientGroup.mk' (N₁ ⊓ N₂) gy) ⟨true⟩ :=
         congrArg (fun z : ∀ b : ULift Bool, H b => z ⟨true⟩) hxy
-      exact QuotientGroup.eq.1 (by simpa [f, H] using htrue)
+      exact QuotientGroup.eq.1
+        ((htrue_eval gx).symm.trans (htrue.trans (htrue_eval gy)))
   · intro b
     cases b with
     | up b =>
@@ -678,16 +685,12 @@ theorem Formation.quotient_inf_mem {C : FiniteGroupClass.{u}}
             intro x
             rcases QuotientGroup.mk'_surjective N₁ x with ⟨g, rfl⟩
             refine ⟨QuotientGroup.mk' (N₁ ⊓ N₂) g, ?_⟩
-            simp only [QuotientGroup.mk'_apply, MonoidHom.coe_mk, OneHom.coe_mk,
-                QuotientGroup.map_mk, MonoidHom.id_apply,
-  H, f]
+            exact hfalse_eval g
         | true =>
             intro x
             rcases QuotientGroup.mk'_surjective N₂ x with ⟨g, rfl⟩
             refine ⟨QuotientGroup.mk' (N₁ ⊓ N₂) g, ?_⟩
-            simp only [QuotientGroup.mk'_apply, MonoidHom.coe_mk, OneHom.coe_mk,
-                QuotientGroup.map_mk, MonoidHom.id_apply,
-  H, f]
+            exact htrue_eval g
   · intro b
     cases b with
     | up b =>

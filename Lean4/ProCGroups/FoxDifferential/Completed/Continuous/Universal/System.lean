@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Completed.Continuous.Universal.FiniteStage
 import ProCGroups.InverseSystems.Basic
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — continuous — universal — system
 
@@ -41,9 +43,9 @@ def zcCompletedDifferentialModuleStageSystem :
   map := fun {i j} hij => zcCompletedDifferentialModuleStageTransition C ψ hij
   continuous_map := by
     intro i j hij
-    letI : TopologicalSpace (ZCCompletedDifferentialModuleStage C ψ i) := ⊥
-    letI : TopologicalSpace (ZCCompletedDifferentialModuleStage C ψ j) := ⊥
-    letI : DiscreteTopology (ZCCompletedDifferentialModuleStage C ψ j) := ⟨rfl⟩
+    let : TopologicalSpace (ZCCompletedDifferentialModuleStage C ψ i) := ⊥
+    let : TopologicalSpace (ZCCompletedDifferentialModuleStage C ψ j) := ⊥
+    let : DiscreteTopology (ZCCompletedDifferentialModuleStage C ψ j) := ⟨rfl⟩
     exact continuous_of_discreteTopology
   map_id := by
     intro i
@@ -121,15 +123,15 @@ def zcCompletedDifferentialPreModuleStageSystem :
   map := fun {i j} hij => zcCompletedDifferentialModulePreStageTransition C ψ hij
   continuous_map := by
     intro i j hij
-    letI : TopologicalSpace
+    let : TopologicalSpace
         (CrossedDifferentialPreModule
           (zcCompletedDifferentialModuleStageRing C ψ i)
           (zcCompletedDifferentialModuleStageSource C ψ i)) := ⊥
-    letI : TopologicalSpace
+    let : TopologicalSpace
         (CrossedDifferentialPreModule
           (zcCompletedDifferentialModuleStageRing C ψ j)
           (zcCompletedDifferentialModuleStageSource C ψ j)) := ⊥
-    letI : DiscreteTopology
+    let : DiscreteTopology
         (CrossedDifferentialPreModule
           (zcCompletedDifferentialModuleStageRing C ψ j)
           (zcCompletedDifferentialModuleStageSource C ψ j)) := ⟨rfl⟩

@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.AllFiniteAugmentation.StageAugmentation
 
+set_option autoImplicit false
+
 /-!
 # Completed Group Algebra / All Finite Augmentation / Canonical Augmentation
 
@@ -221,7 +223,7 @@ inverse-limit topology on \(\widehat{R[G]}\).
 theorem continuous_completedGroupAlgebraCanonicalAugmentation :
     Continuous (completedGroupAlgebraCanonicalAugmentation R G) := by
   let U := terminalCompletedGroupAlgebraIndex G
-  letI : TopologicalSpace (CompletedGroupAlgebraStage R G U) :=
+  let : TopologicalSpace (CompletedGroupAlgebraStage R G U) :=
     (completedGroupAlgebraSystem R G).topologicalSpace U
   change Continuous fun x : CompletedGroupAlgebraCarrier R G =>
     completedGroupAlgebraStageAugmentation R G U (completedGroupAlgebraProjection R G U x)

@@ -1,6 +1,8 @@
 import Mathlib.Topology.Algebra.Group.Quotient
 import ProCGroups.Topologies.ContinuousMulEquiv
 
+set_option autoImplicit false
+
 /-!
 # Continuous maps between group quotients
 

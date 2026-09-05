@@ -1,16 +1,17 @@
 name = "ProCGroups"
-version = "2.0.0"
+version = "3.0.0"
 defaultTargets = ["ProCGroups"]
+enableArtifactCache = false
+restoreAllArtifacts = false
 
 [leanOptions]
 pp.unicode.fun = true
 relaxedAutoImplicit = false
-maxSynthPendingDepth = 3
 
 [[require]]
 name = "mathlib"
 scope = "leanprover-community"
-rev = "v4.32.1"
+rev = "6f1ef4e5dd604a435bddba4747b13970cd65d2a1"
 
 [[lean_lib]]
 name = "ProCGroups"

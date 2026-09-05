@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.InClassFunctoriality.UnitRepresentation
 
+set_option autoImplicit false
+
 /-!
 # Augmentation at in-class quotient stages
 

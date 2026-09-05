@@ -1,6 +1,8 @@
 import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Defs
 import ProCGroups.ProC.Category.Basic
 
+set_option autoImplicit false
+
 /-!
 # Pro C Groups / pro-C / Category / Pushouts
 

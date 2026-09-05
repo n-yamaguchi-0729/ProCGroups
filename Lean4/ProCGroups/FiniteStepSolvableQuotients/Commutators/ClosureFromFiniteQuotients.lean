@@ -2,6 +2,8 @@ import ProCGroups.FiniteStepSolvableQuotients.Commutators.Basic
 import ProCGroups.Generation.WordProductsAndClosure
 import ProCGroups.ProC.OpenNormalSubgroups.Separation
 
+set_option autoImplicit false
+
 /-!
 # Detecting closed commutator subgroups in finite quotients
 
@@ -160,7 +162,7 @@ theorem isClosed_commutator_of_uniformFiniteQuotientCommutatorWidth
     let q : G →* Q := QuotientGroup.mk' (U : Subgroup G)
     have hpreClosed :
         IsClosed (q ⁻¹' (((commutator Q : Subgroup Q) : Set Q))) := by
-      letI : DiscreteTopology Q :=
+      let : DiscreteTopology Q :=
         QuotientGroup.discreteTopology (ProCGroups.openNormalSubgroup_isOpen (G := G) U)
       exact (isClosed_discrete _).preimage QuotientGroup.continuous_mk
     have hcomm_pre :

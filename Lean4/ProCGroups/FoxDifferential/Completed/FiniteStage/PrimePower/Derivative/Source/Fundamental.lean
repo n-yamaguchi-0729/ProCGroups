@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.Source.GroupLike
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: prime power — derivative — source — fundamental
 
@@ -77,7 +79,7 @@ theorem ppCompletedGAFoxDerivToTarget_of_fundFormula_proj
     primePowerCompletedGroupAlgebraProjection_one]
   simp only [map_sub, map_sum, map_mul, map_one] at hstage
   simp_rw [modNCompletedGroupAlgebraStageMap_of] at hstage
-  simp only [MonoidAlgebra.of_apply, QuotientGroup.mk'_apply]
+  simp only [QuotientGroup.mk'_apply]
   change @Eq
     (ModNCompletedGroupAlgebraStage (ℓ ^ j.1)
       (foxAlgebraicStageTargetQuotient (X := X) N) j.2) _ _

@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.UniversalProperty.OpenSubmoduleQuotient
 
+set_option autoImplicit false
+
 /-!
 # Lifts to profinite modules
 
@@ -54,7 +56,7 @@ private theorem completedGroupAlgebraLiftFiberSet_isClosed
       (R := R) (G := G) N f hf x W) := by
   let hdisc : IsDiscreteModule R (N ⧸ W.1) :=
     quotient_openSubmodule_isDiscreteModule R N W.1 W.2
-  letI : DiscreteTopology (N ⧸ W.1) := hdisc.2
+  let : DiscreteTopology (N ⧸ W.1) := hdisc.2
   have hqcont : Continuous (Submodule.mkQ W.1 : N → N ⧸ W.1) := by
     change Continuous (Submodule.Quotient.mk (p := W.1))
     exact continuous_quotient_mk'
@@ -276,7 +278,7 @@ def completedGroupAlgebraProfiniteModule
   exact
     { toProfinite := Profinite.of (CompletedGroupAlgebraCarrier Λ P)
       addCommGroup := inferInstance
-      module := inferInstance
+      module := instModuleCoeffCompletedGroupAlgebra (R := Λ) (G := P)
       isTopologicalAddGroup := inferInstance
       continuousSMul := inferInstance }
 
@@ -289,13 +291,11 @@ theorem completedGroupAlgebraOf_hasFreeLiftTo
       P.toProfinite (fun g => by
         change CompletedGroupAlgebraCarrier Λ P
         exact completedGroupAlgebraOf Λ P g) N := by
-  letI : Module Λ N := N.module
-  change ∀ f : P → N, Continuous f →
-    ∃! F : CompletedGroupAlgebraCarrier Λ P →L[Λ] N,
-      ∀ g : P, F (completedGroupAlgebraOf Λ P g) = f g
-  intro f hf
+  let : Module Λ N := N.module
+  dsimp [ProfiniteModule.HasFreeLiftTo, completedGroupAlgebraProfiniteModule,
+    ProfiniteCommRing.toProfiniteRing]
   exact completedGroupAlgebra_existsUnique_lift_to_profiniteModule
-    (R := Λ) (G := P) N f hf
+    (R := Λ) (G := P) N
 
 /--
 Ribes--Zalesskii Lemma 5.3.5(d): \(\widehat{R[G]}\) is the free profinite \(R\)-module on the
@@ -307,10 +307,11 @@ theorem completedGroupAlgebraOf_freeProfiniteModule
       P.toProfinite (fun g => by
         change CompletedGroupAlgebraCarrier Λ P
         exact completedGroupAlgebraOf Λ P g) := by
-  refine ⟨continuous_completedGroupAlgebraOf (R := Λ) (G := P),
-    completedGroupAlgebraOf_dense_span Λ P, ?_⟩
-  intro N
-  exact completedGroupAlgebraOf_hasFreeLiftTo Λ P N
+  refine ⟨continuous_completedGroupAlgebraOf (R := Λ) (G := P), ?_, ?_⟩
+  · dsimp [completedGroupAlgebraProfiniteModule, ProfiniteCommRing.toProfiniteRing]
+    exact completedGroupAlgebraOf_dense_span (R := Λ) (G := P)
+  · intro N
+    exact completedGroupAlgebraOf_hasFreeLiftTo Λ P N
 
 end
 

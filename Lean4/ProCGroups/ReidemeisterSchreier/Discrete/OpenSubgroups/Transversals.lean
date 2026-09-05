@@ -1,5 +1,10 @@
 import Mathlib.GroupTheory.Schreier
 import ProCGroups.ReidemeisterSchreier.Discrete.OpenSubgroups.Words.Basic
+import ProCGroups.ReidemeisterSchreier.RightQuotient
+
+set_option autoImplicit false
+
+universe u
 
 /-!
 # Reidemeister Schreier / Discrete / Open Subgroups / Transversals
@@ -14,7 +19,7 @@ namespace ReidemeisterSchreier.Discrete.OpenSubgroups
 section RightSchreierTransversals
 
 open scoped Pointwise
-open FreeGroup
+open _root_.ReidemeisterSchreier.FreeGroup
 
 /--
 A right Schreier transversal is a right transversal containing every initial segment of each of
@@ -411,23 +416,10 @@ g{}^{-1}]\). This is the action naturally compatible with Schreier generators of
 (\widetilde{t x}){}^{-1}\).
 -/
 instance rightCosetLeftMulActionByInverse {X : Type u} (L : Subgroup (FreeGroup X)) :
-    MulAction (FreeGroup X) (Quotient (QuotientGroup.rightRel L)) where
-  smul g :=
-    Quotient.map' (fun a => a * g⁻¹) fun a b hab => by
-      rw [QuotientGroup.rightRel_apply] at hab ⊢
-      simpa [mul_assoc] using hab
-  one_smul q := by
-    refine Quotient.inductionOn' q ?_
-    intro a
-    apply Quotient.sound'
-    rw [QuotientGroup.rightRel_apply]
-    simp only [inv_one, mul_one, mul_inv_cancel, one_mem]
-  mul_smul g h q := by
-    refine Quotient.inductionOn' q ?_
-    intro a
-    apply Quotient.sound'
-    rw [QuotientGroup.rightRel_apply]
-    simp only [mul_assoc, mul_inv_rev, inv_inv, inv_mul_cancel_left, mul_inv_cancel, one_mem]
+    MulAction (FreeGroup X) (Quotient (QuotientGroup.rightRel L)) :=
+  _root_.ReidemeisterSchreier.rightCosetMulAction L
+
+attribute [-instance] rightCosetLeftMulActionByInverse
 
 /-- The Schreier generator component of the corresponding rewriting map. -/
 @[simp] theorem rightCosetLeftMulActionByInverse_mk_smul {X : Type u}

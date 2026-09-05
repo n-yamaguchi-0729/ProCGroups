@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Completed.Continuous.Free.Continuity
 import ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.Naturality
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — continuous — free — rules
 

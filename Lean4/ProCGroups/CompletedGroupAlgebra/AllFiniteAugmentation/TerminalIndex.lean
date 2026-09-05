@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.Separation
 
+set_option autoImplicit false
+
 /-!
 # A base index for all-finite augmentation
 

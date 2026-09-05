@@ -1,6 +1,8 @@
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.Topology.Algebra.OpenSubgroup
 
+set_option autoImplicit false
+
 /-!
 # Quotients by kernels
 

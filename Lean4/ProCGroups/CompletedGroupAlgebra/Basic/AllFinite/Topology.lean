@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.Projections
 
+set_option autoImplicit false
+
 /-!
 # Completed Group Algebra / Basic / All Finite / Topology
 
@@ -48,12 +50,22 @@ instance instIsTopologicalRingCompletedGroupAlgebraSystemX
 /-- Scalar multiplication is continuous because it is continuous at every finite stage. -/
 instance instContinuousSMulCompletedGroupAlgebra :
     ContinuousSMul R (CompletedGroupAlgebraCarrier R G) := by
-  letI : ∀ U : CompletedGroupAlgebraIndex G,
+  let stageContinuousSMul : ∀ U : CompletedGroupAlgebraIndex G,
       ContinuousSMul R ((completedGroupAlgebraSystem R G).X U) := fun U => by
     dsimp [completedGroupAlgebraSystem, CompletedGroupAlgebraStage]
     exact finiteGroupAlgebra_continuousSMul R (CompletedGroupAlgebraQuotient G U)
-  exact inferInstanceAs
-    (ContinuousSMul R (completedGroupAlgebraSystem R G).inverseLimit)
+  exact @instContinuousSMulInverseLimitOfIsModuleSystem _ _
+    (completedGroupAlgebraSystem R G)
+    (fun U => @Ring.toAddCommGroup _
+      (instRingCompletedGroupAlgebraSystemStage (G := G) (R := R) U))
+    R inferInstance
+    (fun U => instModuleCompletedGroupAlgebraSystemStage (G := G) (R := R) U)
+    (@IsModuleSystem.mk _ _ R _ (completedGroupAlgebraSystem R G)
+      (fun U => @Ring.toAddCommGroup _
+        (instRingCompletedGroupAlgebraSystemStage (G := G) (R := R) U))
+      (fun U => instModuleCompletedGroupAlgebraSystemStage (G := G) (R := R) U)
+      (completedGroupAlgebraTransition_smul (R := R) (G := G)))
+    inferInstance stageContinuousSMul
 
 /-- The completed group algebra inherits its topological-ring structure from the generic
 ring-valued inverse limit. -/
@@ -65,12 +77,12 @@ instance instIsTopologicalRingCompletedGroupAlgebra :
 /-- The completed group algebra is compact for compact Hausdorff coefficients. -/
 theorem completedGroupAlgebra_compactSpace [CompactSpace R] [T2Space R] :
     CompactSpace (CompletedGroupAlgebraCarrier R G) := by
-  letI : ∀ U : CompletedGroupAlgebraIndex G,
+  let : ∀ U : CompletedGroupAlgebraIndex G,
       CompactSpace ((completedGroupAlgebraSystem R G).X U) := fun U =>
     by
       dsimp [completedGroupAlgebraSystem, CompletedGroupAlgebraStage]
       exact finiteGroupAlgebra_compactSpace R (CompletedGroupAlgebraQuotient G U)
-  letI : ∀ U : CompletedGroupAlgebraIndex G,
+  let : ∀ U : CompletedGroupAlgebraIndex G,
       T2Space ((completedGroupAlgebraSystem R G).X U) := fun U =>
     by
       dsimp [completedGroupAlgebraSystem, CompletedGroupAlgebraStage]
@@ -81,7 +93,7 @@ theorem completedGroupAlgebra_compactSpace [CompactSpace R] [T2Space R] :
 /-- The completed group algebra is Hausdorff for Hausdorff coefficients. -/
 theorem completedGroupAlgebra_t2Space [T2Space R] :
     T2Space (CompletedGroupAlgebraCarrier R G) := by
-  letI : ∀ U : CompletedGroupAlgebraIndex G,
+  let : ∀ U : CompletedGroupAlgebraIndex G,
       T2Space ((completedGroupAlgebraSystem R G).X U) := fun U =>
     by
       dsimp [completedGroupAlgebraSystem, CompletedGroupAlgebraStage]
@@ -91,7 +103,7 @@ theorem completedGroupAlgebra_t2Space [T2Space R] :
 /-- The completed group algebra is totally disconnected for totally disconnected coefficients. -/
 theorem completedGroupAlgebra_totallyDisconnectedSpace [TotallyDisconnectedSpace R] :
     TotallyDisconnectedSpace (CompletedGroupAlgebraCarrier R G) := by
-  letI : ∀ U : CompletedGroupAlgebraIndex G,
+  let : ∀ U : CompletedGroupAlgebraIndex G,
       TotallyDisconnectedSpace ((completedGroupAlgebraSystem R G).X U) := fun U =>
     by
       dsimp [completedGroupAlgebraSystem, CompletedGroupAlgebraStage]

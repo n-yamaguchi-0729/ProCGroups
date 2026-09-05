@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Completed.Continuous.ClosedGeneratedCoordinates.Equiv
 import ProCGroups.FoxDifferential.Completed.Continuous.SemidirectKernelBasis
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — continuous — closed generated coordinates — comparison
 

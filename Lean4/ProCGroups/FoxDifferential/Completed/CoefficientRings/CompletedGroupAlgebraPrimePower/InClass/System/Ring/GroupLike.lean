@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.InClass.System.Ring.Projection
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: in class — system — ring — group like
 
@@ -41,15 +43,29 @@ def primePowerCompletedGroupAlgebraOfInClass
         (CompletedGroupAlgebraQuotientInClass H C i.2)
         (QuotientGroup.mk h)
   · intro i j hij
+    let qj : CompletedGroupAlgebraQuotientInClass H C j.2 := QuotientGroup.mk h
+    let qi : CompletedGroupAlgebraQuotientInClass H C i.2 := QuotientGroup.mk h
     change primePowerCompletedGroupAlgebraTransitionInClass (ℓ := ell) (G := H) C hij
         (MonoidAlgebra.of (ModNCompletedCoeff (ell ^ j.1))
           (CompletedGroupAlgebraQuotientInClass H C j.2)
-          (QuotientGroup.mk h)) =
+          qj) =
       MonoidAlgebra.of (ModNCompletedCoeff (ell ^ i.1))
         (CompletedGroupAlgebraQuotientInClass H C i.2)
-        (QuotientGroup.mk h)
-    rw [primePowerCompletedGroupAlgebraTransitionInClass_of]
-    rfl
+        qi
+    calc
+      _ = MonoidAlgebra.of (ModNCompletedCoeff (ell ^ i.1))
+          (CompletedGroupAlgebraQuotientInClass H C i.2)
+          ((OpenNormalSubgroupInClass.map
+            (C := C) (G := H)
+            (U := OrderDual.ofDual i.2) (V := OrderDual.ofDual j.2) hij.2) qj) :=
+        primePowerCompletedGroupAlgebraTransitionInClass_of
+          (ℓ := ell) (G := H) C hij qj
+      _ = MonoidAlgebra.of (ModNCompletedCoeff (ell ^ i.1))
+          (CompletedGroupAlgebraQuotientInClass H C i.2) qi := by
+        apply congrArg
+          (MonoidAlgebra.of (ModNCompletedCoeff (ell ^ i.1))
+            (CompletedGroupAlgebraQuotientInClass H C i.2))
+        rfl
 
 /--
 The \(C\)-indexed prime-power completed group-algebra projection sends a group-like element to

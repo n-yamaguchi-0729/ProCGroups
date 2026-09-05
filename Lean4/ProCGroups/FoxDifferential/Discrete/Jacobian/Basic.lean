@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Discrete.Absolute
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: discrete — jacobian — basic
 
@@ -173,8 +175,10 @@ theorem freeGroupHomFoxJacobianMatrix_mapDomain
       (freeGroupHomFoxJacobianMatrix (H := H) ψ φ).map (groupRingMap η) := by
   apply Matrix.ext
   intro x y
-  simp only [freeGroupHomFoxJacobianMatrix, freeGroupHomFoxJacobian_mapDomain_apply,
-      Matrix.map_apply]
+  change
+    freeGroupHomFoxJacobian (H := K) (η.comp ψ) φ x y =
+      groupRingMap η (freeGroupHomFoxJacobian (H := H) ψ φ x y)
+  exact freeGroupHomFoxJacobian_mapDomain_apply ψ η φ x y
 
 /--
 A relative Fox Jacobian entry is the image of the corresponding absolute entry under the coefficient
@@ -199,8 +203,10 @@ theorem freeGroupHomFoxJacobianMatrix_eq_map_absolute
       (freeGroupHomFoxJacobianAbsoluteMatrix φ).map (groupRingMap ψ) := by
   apply Matrix.ext
   intro x y
-  simp only [freeGroupHomFoxJacobianMatrix, freeGroupHomFoxJacobian_eq_map_absolute_apply,
-  freeGroupHomFoxJacobianAbsoluteMatrix, Matrix.map_apply]
+  change
+    freeGroupHomFoxJacobian (H := H) ψ φ x y =
+      groupRingMap ψ (freeGroupHomFoxJacobianAbsolute φ x y)
+  exact freeGroupHomFoxJacobian_eq_map_absolute_apply ψ φ x y
 
 
 end FoxCalculus

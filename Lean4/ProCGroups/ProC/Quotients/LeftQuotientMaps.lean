@@ -1,5 +1,7 @@
 import ProCGroups.ProC.Subgroups.Products
 
+set_option autoImplicit false
+
 /-!
 # Maps between left quotients
 
@@ -76,8 +78,7 @@ coordinate.
     (K H L : Subgroup G) (hKH : K ≤ H) (hHL : H ≤ L) (x : G ⧸ K) :
     leftQuotientProjection H L hHL (leftQuotientProjection K H hKH x) =
       leftQuotientProjection K L (hKH.trans hHL) x := by
-  simpa using congrArg (fun f => f x) (leftQuotientProjection_comp (K := K) (H := H) (L := L)
-    hKH hHL)
+  exact congrFun (leftQuotientProjection_comp (K := K) (H := H) (L := L) hKH hHL) x
 
 /-- Symmetric pointwise form of the composition law for left-quotient projections. -/
 theorem leftQuotientProjection_comp_apply_symm

@@ -1,6 +1,8 @@
 import ProCGroups.InverseSystems.CompatibilityAndSurjectivity
 import ProCGroups.Topologies.ContinuousMulEquiv
 
+set_option autoImplicit false
+
 /-!
 # Stagewise isomorphisms and inverse-limit equivalences
 

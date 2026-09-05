@@ -1,5 +1,7 @@
 import ProCGroups.CrowellExactSequence.Profinite.BlanchfieldLyndon
 
+set_option autoImplicit false
+
 /-!
 # Crowell Exact Sequence / Profinite / Main Theorem
 

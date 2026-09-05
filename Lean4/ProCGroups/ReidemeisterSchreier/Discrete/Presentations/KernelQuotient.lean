@@ -3,6 +3,8 @@ import Mathlib.GroupTheory.GroupAction.ConjAct
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.Script
 
+set_option autoImplicit false
+
 /-!
 # Reidemeister Schreier / Discrete / Presentations / Kernel Quotient
 

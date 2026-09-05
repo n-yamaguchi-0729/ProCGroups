@@ -14,26 +14,62 @@ concurrency:
   cancel-in-progress: true
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
-    timeout-minutes: 30
+  verify:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 360
+    env:
+      LEAN_NUM_THREADS: "1"
+      PYTHONDONTWRITEBYTECODE: "1"
     steps:
       - uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
-      - name: Reject proof escapes and warning suppression
+        with:
+          persist-credentials: false
+      - name: Python verification fixtures and full physical source manifest
         shell: bash
         run: |
-          if rg -n '^\s*(set_option|sorry|admit)\b' Lean4; then
-            echo "Prohibited Lean command found." >&2
-            exit 1
-          fi
-      - name: Build ProCGroups with warnings as errors
+          set -euo pipefail
+          mkdir -p "$RUNNER_TEMP/verification"
+          python3 -B -m unittest discover -s tests/verification -p 'test_*.py' -v 2>&1 | tee "$RUNNER_TEMP/verification/python-tests.log"
+          python3 -B scripts/verification/generate_manifest.py \
+            --root . --config scripts/verification/manifest-config.json \
+            --manifest "$RUNNER_TEMP/verification/modules.json" \
+            --report "$RUNNER_TEMP/verification/source-audit.json" 2>&1 | tee "$RUNNER_TEMP/verification/source-audit.log"
+      - name: Install pinned Lean and obtain the pinned mathlib cache
         uses: leanprover/lean-action@38fbc41a8c28c4cbaec22d7f7de508ec2e7c0dd9 # v1.5.0
         with:
           auto-config: "false"
-          build: "true"
-          build-args: "--wfail ProCGroups"
+          build: "false"
           test: "false"
           lint: "false"
           use-mathlib-cache: "true"
+          use-github-cache: "false"
+      - name: Build exact checker revisions
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -B scripts/verification/setup_tools.py \
+            --checkouts "$RUNNER_TEMP/verification-tools" \
+            --output "$RUNNER_TEMP/verification/setup"
+      - name: Build, audit all declarations, check NanoDa, and replay the Lean kernel
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -B scripts/verification/verify.py \
+            --package-root "$GITHUB_WORKSPACE" \
+            --manifest "$RUNNER_TEMP/verification/modules.json" \
+            --output "$RUNNER_TEMP/verification/checks" \
+            --exporter-checkout "$RUNNER_TEMP/verification-tools/lean4export" \
+            --nanoda-checkout "$RUNNER_TEMP/verification-tools/nanoda_lib" \
+            --nanoda-binary "$RUNNER_TEMP/verification-tools/nanoda_lib/target/release/nanoda_bin"
       - name: Check whitespace
         run: git diff-tree --check --root -r HEAD
+      - name: Preserve logs and receipts even when a check fails
+        if: always()
+        uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
+        with:
+          name: verification-${{ github.run_id }}-${{ github.run_attempt }}
+          path: |
+            ${{ runner.temp }}/verification/
+            !${{ runner.temp }}/verification/checks/selected.ndjson
+          if-no-files-found: error
+          retention-days: 14

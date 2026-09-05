@@ -1,6 +1,8 @@
 import Mathlib.GroupTheory.FreeGroup.Basic
 import ProCGroups.Generation.QuotientGeneratorConvergingPairs
 
+set_option autoImplicit false
+
 /-!
 # Basic results on topological finite generation
 
@@ -210,7 +212,7 @@ theorem freeGroup_lift_surjective_of_topologicallyGenerates_discrete
 theorem topologicallyFinitelyGenerated_of_finite [Finite G] [DiscreteTopology G] :
     TopologicallyFinitelyGenerated G := by
   classical
-  letI : Fintype G := Fintype.ofFinite G
+  let : Fintype G := Fintype.ofFinite G
   refine ⟨Finset.univ, ?_⟩
   rw [topologicallyGenerates_iff_subgroupClosure_eq_top_of_discrete]
   simp only [Finset.coe_univ, Subgroup.closure_univ]
@@ -231,7 +233,7 @@ theorem topologicallyGeneratedByAtMost_of_topologicalRank_eq_nat
       Cardinal.mk X = topologicalRank G := hXcard
       _ = n := hd
       _ < Cardinal.aleph0 := Cardinal.natCast_lt_aleph0 (n := n)
-  letI : Finite X := (Cardinal.lt_aleph0_iff_finite (α := X)).mp hXlt
+  have : Finite X := (Cardinal.lt_aleph0_iff_finite (α := X)).mp hXlt
   have hXfin : X.Finite := Set.toFinite X
   let s : Finset G := hXfin.toFinset
   have hs_card : s.card = n := by
@@ -271,8 +273,7 @@ theorem exists_generatingTuple_of_topologicalRank_le_of_finite
         Cardinal.mk X = topologicalRank G := hXcard
         _ = m := hm
         _ < Cardinal.aleph0 := Cardinal.natCast_lt_aleph0 (n := m)
-    letI : Finite X := (Cardinal.lt_aleph0_iff_finite (α := X)).mp <| by
-       simpa using hXlt
+    have : Finite X := (Cardinal.lt_aleph0_iff_finite (α := X)).mp hXlt
     exact Set.toFinite X
   let s : Finset G := hXfin.toFinset
   have hs_gen : TopologicallyGenerates (G := G) (↑s : Set G) := by
@@ -323,7 +324,6 @@ theorem topologicalRank_inverseLimit_le_of_componentBound
     {n : ℕ} (hbound : ∀ i, topologicalRank (S.X i) ≤ n) :
     topologicalRank S.inverseLimit ≤ n := by
   classical
-  letI : ∀ i, DiscreteTopology (S.X i) := fun _ => by infer_instance
   let T : ProCGroups.InverseSystems.InverseSystem (I := I) := {
     X := fun i => { g : Fin n → S.X i // TopologicallyGenerates (G := S.X i) (Set.range g) }
     topologicalSpace := fun _ => inferInstance
@@ -356,8 +356,6 @@ theorem topologicalRank_inverseLimit_le_of_componentBound
     rcases exists_generatingTuple_of_topologicalRank_le_of_finite
         (G := S.X i) hfg (hbound i) with ⟨g, hg⟩
     exact ⟨⟨g, hg⟩⟩
-  letI : ∀ i, Nonempty (T.X i) := hTnonempty
-  letI : ∀ i, Finite (T.X i) := fun _ => inferInstance
   rcases ProCGroups.InverseSystems.InverseSystem.nonempty_inverseLimit_of_finite
       (S := T) hdir with ⟨x⟩
   let g : Fin n → S.inverseLimit := fun a =>

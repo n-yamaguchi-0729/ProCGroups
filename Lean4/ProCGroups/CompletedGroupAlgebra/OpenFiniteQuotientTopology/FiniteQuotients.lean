@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.OpenFiniteQuotientTopology.CanonicalMaps
 
+set_option autoImplicit false
+
 /-!
 # Finite coefficient-and-group quotients
 
@@ -34,8 +36,8 @@ theorem continuous_idealQuotient_mk_openIdeal_discrete
     (I : Ideal R) (hI : IsOpen (I : Set R)) :
     letI : TopologicalSpace (R ⧸ I) := ⊥
     Continuous (Ideal.Quotient.mk I) := by
-  letI : TopologicalSpace (R ⧸ I) := ⊥
-  haveI : DiscreteTopology (R ⧸ I) := ⟨rfl⟩
+  let : TopologicalSpace (R ⧸ I) := ⊥
+  have : DiscreteTopology (R ⧸ I) := ⟨rfl⟩
   rw [continuous_discrete_rng]
   intro b
   rcases Ideal.Quotient.mk_surjective (I := I) b with ⟨a, rfl⟩
@@ -58,9 +60,9 @@ theorem finiteGroupAlgebra_mapRangeRingHom_continuous
     Continuous (MonoidAlgebra.mapRingHom Q f :
       MonoidAlgebra R Q → MonoidAlgebra S Q) := by
   classical
-  letI : Fintype Q := Fintype.ofFinite Q
-  letI : TopologicalSpace (MonoidAlgebra R Q) := finiteGroupAlgebraTopology R Q
-  letI : TopologicalSpace (MonoidAlgebra S Q) := finiteGroupAlgebraTopology S Q
+  let : Fintype Q := Fintype.ofFinite Q
+  let : TopologicalSpace (MonoidAlgebra R Q) := finiteGroupAlgebraTopology R Q
+  let : TopologicalSpace (MonoidAlgebra S Q) := finiteGroupAlgebraTopology S Q
   let eS : MonoidAlgebra S Q ≃ (Q → S) :=
     MonoidAlgebra.coeffEquiv.trans Finsupp.equivFunOnFinite
   have heS : Topology.IsInducing (eS : MonoidAlgebra S Q → Q → S) :=
@@ -88,11 +90,10 @@ theorem finiteGroupAlgebraTopology_discrete_of_discrete_coeff
     letI : TopologicalSpace (MonoidAlgebra S Q) := finiteGroupAlgebraTopology S Q
     DiscreteTopology (MonoidAlgebra S Q) := by
   classical
-  letI : Fintype Q := Fintype.ofFinite Q
-  letI : TopologicalSpace (MonoidAlgebra S Q) := finiteGroupAlgebraTopology S Q
+  let : Fintype Q := Fintype.ofFinite Q
+  let : TopologicalSpace (MonoidAlgebra S Q) := finiteGroupAlgebraTopology S Q
   let e : MonoidAlgebra S Q ≃ (Q → S) :=
     MonoidAlgebra.coeffEquiv.trans Finsupp.equivFunOnFinite
-  haveI : DiscreteTopology (Q → S) := inferInstance
   exact DiscreteTopology.of_continuous_injective
     (continuous_induced_dom : Continuous (e : MonoidAlgebra S Q → Q → S)) e.injective
 
@@ -463,18 +464,15 @@ theorem completedGroupAlgebraFiniteQuotientTransition_single
           (C := ProCGroups.FiniteGroupClass.allFinite) (G := G)
           (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) hUV) q)
         (Ideal.Quotient.factor hIJ r) := by
+  let f : CompletedGroupAlgebraQuotient G V →*
+      CompletedGroupAlgebraQuotient G U :=
+    OpenNormalSubgroupInClass.map
+      (C := ProCGroups.FiniteGroupClass.allFinite) (G := G)
+      (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) hUV
   change
     MonoidAlgebra.map (Ideal.Quotient.factor hIJ)
-        (MonoidAlgebra.mapDomain
-          (OpenNormalSubgroupInClass.map
-            (C := ProCGroups.FiniteGroupClass.allFinite) (G := G)
-            (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) hUV)
-          (MonoidAlgebra.single q r)) =
-      MonoidAlgebra.single
-        ((OpenNormalSubgroupInClass.map
-          (C := ProCGroups.FiniteGroupClass.allFinite) (G := G)
-          (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) hUV) q)
-        (Ideal.Quotient.factor hIJ r)
+        (MonoidAlgebra.mapDomain f (MonoidAlgebra.single q r)) =
+      MonoidAlgebra.single (f q) (Ideal.Quotient.factor hIJ r)
   rw [MonoidAlgebra.mapDomain_single, MonoidAlgebra.map_single]
   rfl
 

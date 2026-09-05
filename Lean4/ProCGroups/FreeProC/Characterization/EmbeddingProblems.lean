@@ -1,6 +1,8 @@
 import ProCGroups.FreeProC.Basic
 import ProCGroups.TopologicalGroups
 
+set_option autoImplicit false
+
 /-!
 # Pro C Groups / Free pro-C / Characterization / Embedding Problems
 

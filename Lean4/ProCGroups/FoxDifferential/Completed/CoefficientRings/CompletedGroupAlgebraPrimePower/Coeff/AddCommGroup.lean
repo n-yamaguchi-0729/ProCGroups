@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.Coeff.System
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: coefficient rings — prime-power completed group algebra — coeff — add comm group
 
@@ -35,8 +37,6 @@ finite-stage zero elements.
 instance instZeroPrimePowerCompletedCoeff : Zero (PrimePowerCompletedCoeff ℓ G) where
   zero := ⟨fun i => (0 : ZMod (ℓ ^ i.1)), by
     intro i j hij
-    letI : Fact (0 < ℓ ^ i.1) := ⟨primePower_pos ℓ i.1⟩
-    letI : Fact (0 < ℓ ^ j.1) := ⟨primePower_pos ℓ j.1⟩
     exact map_zero
       (modNCompletedCoeffMap
         (n := ℓ ^ i.1) (m := ℓ ^ j.1)
@@ -50,8 +50,6 @@ instance instAddPrimePowerCompletedCoeff : Add (PrimePowerCompletedCoeff ℓ G) 
   add x y := ⟨fun i =>
       (show ZMod (ℓ ^ i.1) from x.1 i) + (show ZMod (ℓ ^ i.1) from y.1 i), by
     intro i j hij
-    letI : Fact (0 < ℓ ^ i.1) := ⟨primePower_pos ℓ i.1⟩
-    letI : Fact (0 < ℓ ^ j.1) := ⟨primePower_pos ℓ j.1⟩
     change modNCompletedCoeffMap
         (n := ℓ ^ i.1) (m := ℓ ^ j.1)
         (primePow_dvd_primePow (ℓ := ℓ) hij.1)
@@ -73,13 +71,13 @@ instance instAddZeroClassPrimePowerCompletedCoeff :
     funext i
     change (0 : ZMod (ℓ ^ i.1)) + (show ZMod (ℓ ^ i.1) from x.1 i) =
       (show ZMod (ℓ ^ i.1) from x.1 i)
-    simp only [zero_add]
+    exact zero_add (show ZMod (ℓ ^ i.1) from x.1 i)
   add_zero x := by
     apply Subtype.ext
     funext i
     change (show ZMod (ℓ ^ i.1) from x.1 i) + (0 : ZMod (ℓ ^ i.1)) =
       (show ZMod (ℓ ^ i.1) from x.1 i)
-    simp only [add_zero]
+    exact add_zero (show ZMod (ℓ ^ i.1) from x.1 i)
 
 /--
 Negation on the prime-power completed coefficient ring is defined coordinatewise through
@@ -88,8 +86,6 @@ finite-stage coefficient negations.
 instance instNegPrimePowerCompletedCoeff : Neg (PrimePowerCompletedCoeff ℓ G) where
   neg x := ⟨fun i => -(show ZMod (ℓ ^ i.1) from x.1 i), by
     intro i j hij
-    letI : Fact (0 < ℓ ^ i.1) := ⟨primePower_pos ℓ i.1⟩
-    letI : Fact (0 < ℓ ^ j.1) := ⟨primePower_pos ℓ j.1⟩
     change modNCompletedCoeffMap
         (n := ℓ ^ i.1) (m := ℓ ^ j.1)
         (primePow_dvd_primePow (ℓ := ℓ) hij.1)
@@ -106,8 +102,6 @@ instance instSubPrimePowerCompletedCoeff : Sub (PrimePowerCompletedCoeff ℓ G) 
   sub x y := ⟨fun i =>
       (show ZMod (ℓ ^ i.1) from x.1 i) - (show ZMod (ℓ ^ i.1) from y.1 i), by
     intro i j hij
-    letI : Fact (0 < ℓ ^ i.1) := ⟨primePower_pos ℓ i.1⟩
-    letI : Fact (0 < ℓ ^ j.1) := ⟨primePower_pos ℓ j.1⟩
     change modNCompletedCoeffMap
         (n := ℓ ^ i.1) (m := ℓ ^ j.1)
         (primePow_dvd_primePow (ℓ := ℓ) hij.1)
@@ -123,8 +117,6 @@ coordinatewise at every finite coefficient stage.
 instance instSMulNatPrimePowerCompletedCoeff : SMul ℕ (PrimePowerCompletedCoeff ℓ G) where
   smul m x := ⟨fun i => m • (show ZMod (ℓ ^ i.1) from x.1 i), by
     intro i j hij
-    letI : Fact (0 < ℓ ^ i.1) := ⟨primePower_pos ℓ i.1⟩
-    letI : Fact (0 < ℓ ^ j.1) := ⟨primePower_pos ℓ j.1⟩
     change modNCompletedCoeffMap
         (n := ℓ ^ i.1) (m := ℓ ^ j.1)
         (primePow_dvd_primePow (ℓ := ℓ) hij.1)
@@ -140,8 +132,6 @@ at every finite coefficient stage.
 instance instSMulIntPrimePowerCompletedCoeff : SMul ℤ (PrimePowerCompletedCoeff ℓ G) where
   smul m x := ⟨fun i => m • (show ZMod (ℓ ^ i.1) from x.1 i), by
     intro i j hij
-    letI : Fact (0 < ℓ ^ i.1) := ⟨primePower_pos ℓ i.1⟩
-    letI : Fact (0 < ℓ ^ j.1) := ⟨primePower_pos ℓ j.1⟩
     change modNCompletedCoeffMap
         (n := ℓ ^ i.1) (m := ℓ ^ j.1)
         (primePow_dvd_primePow (ℓ := ℓ) hij.1)

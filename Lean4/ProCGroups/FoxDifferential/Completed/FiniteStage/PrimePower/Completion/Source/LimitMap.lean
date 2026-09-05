@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Completion.Source.Index
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: prime power — completion — source — limit map
 
@@ -216,25 +218,25 @@ theorem primePowerCompletedGroupAlgebraToFoxAlgebraicStagePrimePowerSourceLimit_
       (ℓ := ℓ) (G := FreeGroup X)
       (a, foxAlgebraicStagePrimePowerSourceCompletedIndex
         (ℓ := ℓ) (X := X) N hfinite a)
-  letI : ∀ a : ℕ, TopologicalSpace (T.X a) := fun a => T.topologicalSpace a
-  letI : ∀ a : ℕ, DiscreteTopology (T.X a) := fun _ => ⟨rfl⟩
-  letI : ∀ a : ℕ, T2Space (T.X a) := fun _ => inferInstance
-  letI : ∀ i : PrimePowerCompletedGroupAlgebraIndex (FreeGroup X), TopologicalSpace (S.X i) :=
+  let : ∀ a : ℕ, TopologicalSpace (T.X a) := fun a => T.topologicalSpace a
+  let : ∀ a : ℕ, DiscreteTopology (T.X a) := fun _ => ⟨rfl⟩
+  let : ∀ a : ℕ, T2Space (T.X a) := fun _ => inferInstance
+  let : ∀ i : PrimePowerCompletedGroupAlgebraIndex (FreeGroup X), TopologicalSpace (S.X i) :=
     fun i => S.topologicalSpace i
-  letI : ∀ i : PrimePowerCompletedGroupAlgebraIndex (FreeGroup X), DiscreteTopology (S.X i) :=
+  let : ∀ i : PrimePowerCompletedGroupAlgebraIndex (FreeGroup X), DiscreteTopology (S.X i) :=
     fun _ => ⟨rfl⟩
-  letI : ∀ i : PrimePowerCompletedGroupAlgebraIndex (FreeGroup X), CompactSpace (S.X i) :=
+  let : ∀ i : PrimePowerCompletedGroupAlgebraIndex (FreeGroup X), CompactSpace (S.X i) :=
     fun i => by
-      letI : Finite (S.X i) := by
+      let : Finite (S.X i) := by
         dsimp [S, primePowerCompletedGroupAlgebraSystem]
         infer_instance
-      letI : Fintype (S.X i) := Fintype.ofFinite _
+      let : Fintype (S.X i) := Fintype.ofFinite _
       infer_instance
-  letI : ∀ i : PrimePowerCompletedGroupAlgebraIndex (FreeGroup X), T2Space (S.X i) :=
+  let : ∀ i : PrimePowerCompletedGroupAlgebraIndex (FreeGroup X), T2Space (S.X i) :=
     fun _ => inferInstance
-  letI : CompactSpace (PrimePowerCompletedGroupAlgebra ℓ (FreeGroup X)) :=
+  let : CompactSpace (PrimePowerCompletedGroupAlgebra ℓ (FreeGroup X)) :=
     inferInstance
-  letI : T2Space (PrimePowerCompletedGroupAlgebra ℓ (FreeGroup X)) :=
+  let : T2Space (PrimePowerCompletedGroupAlgebra ℓ (FreeGroup X)) :=
     S.t2Space_inverseLimit
   have hdirNat : Directed (· ≤ ·) (id : ℕ → ℕ) := by
     intro a b

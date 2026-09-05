@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.AugmentationIdealPrimePower.Augmentation
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — coefficient rings — prime-power augmentation ideal — subtype linear
 
@@ -41,11 +43,12 @@ def primePowerCompletedGroupAlgebraAugmentationIdealAddEquivAddSubgroup :
   toFun x := by
     refine ⟨(ofPrimePowerCompletedGroupAlgebraAugmentationIdeal
       (ℓ := ℓ) (G := G) x).1, ?_⟩
-    simp only [SetLike.coe_mem]
+    exact (ofPrimePowerCompletedGroupAlgebraAugmentationIdeal
+      (ℓ := ℓ) (G := G) x).2
   invFun x :=
     toPrimePowerCompletedGroupAlgebraAugmentationIdeal (ℓ := ℓ) (G := G) <|
       ⟨x.1, by
-        simp only [Subtype.coe_prop]⟩
+        exact x.2⟩
   left_inv := by
     intro x
     exact toPrimePowerCompletedGroupAlgebraAugmentationIdeal_of
@@ -55,7 +58,7 @@ def primePowerCompletedGroupAlgebraAugmentationIdealAddEquivAddSubgroup :
     apply Subtype.ext
     let y : PrimePowerCompletedGroupAlgebraAugmentationKernel (ℓ := ℓ) (G := G) :=
       ⟨x.1, by
-        simp only [Subtype.coe_prop]⟩
+        exact x.2⟩
     exact congrArg Subtype.val
       (ofPrimePowerCompletedGroupAlgebraAugmentationIdeal_to
         (ℓ := ℓ) (G := G) y)
@@ -230,8 +233,12 @@ omit [Fact (0 < ℓ)] in
 theorem primePowerCompletedGroupAlgebraAugmentationCoeffLinear_surjective :
     Function.Surjective
       (primePowerCompletedGroupAlgebraAugmentationCoeffLinear (ℓ := ℓ) (G := G)) := by
-  simpa [primePowerCompletedGroupAlgebraAugmentationCoeffLinear] using
-    primePowerCompletedGroupAlgebraAugmentation_surjective (ℓ := ℓ) (G := G)
+  intro y
+  rcases primePowerCompletedGroupAlgebraAugmentation_surjective
+      (ℓ := ℓ) (G := G) y with ⟨x, hx⟩
+  refine ⟨x, ?_⟩
+  change primePowerCompletedGroupAlgebraAugmentation (ℓ := ℓ) (G := G) x = y
+  exact hx
 
 omit [Fact (0 < ℓ)] in
 /-- The canonical linear inclusion of the completed augmentation ideal is injective. -/

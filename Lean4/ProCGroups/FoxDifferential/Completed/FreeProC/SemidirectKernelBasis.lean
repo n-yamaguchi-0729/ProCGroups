@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FreeProC.ProCIntegerBifilteredStageRightProjection
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — free pro-\(C\) — semidirect kernel basis
 
@@ -110,7 +112,7 @@ theorem coordinatewiseAdditiveKernelBasis_of_component_basis
     exact hbasis (V x) (hV x).1 (hV x).2
   choose jx hjx using hstage
   classical
-  letI : Fintype X := Fintype.ofFinite X
+  let : Fintype X := Fintype.ofFinite X
   have hupper : ∀ s : Finset X, ∃ k : J, ∀ x : X, x ∈ s → jx x ≤ k := by
     intro s
     induction s using Finset.induction_on with

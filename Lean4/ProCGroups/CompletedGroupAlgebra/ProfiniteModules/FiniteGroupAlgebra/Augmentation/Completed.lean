@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.ProfiniteModules.FiniteGroupAlgebra.Augmentation.Abstract
 
+set_option autoImplicit false
+
 /-!
 # Augmentation after completion
 
@@ -179,7 +181,7 @@ theorem finiteGroupAlgebra_hasCompletedGroupAlgebraAugmentation
     letI : TopologicalSpace (MonoidAlgebra R G) := finiteGroupAlgebraTopology R G
     hasCompletedGroupAlgebraAugmentation R G (MonoidAlgebra R G)
       (RingHom.id (MonoidAlgebra R G)) := by
-  letI : TopologicalSpace (MonoidAlgebra R G) := finiteGroupAlgebraTopology R G
+  let : TopologicalSpace (MonoidAlgebra R G) := finiteGroupAlgebraTopology R G
   refine Exists.intro (groupAlgebraAugmentation R G) ?_
   exact And.intro (RingHom.comp_id (groupAlgebraAugmentation R G))
     (finiteGroupAlgebra_augmentation_continuous R G)

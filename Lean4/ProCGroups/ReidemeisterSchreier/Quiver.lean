@@ -1,11 +1,15 @@
 import Mathlib.Combinatorics.Quiver.Arborescence
 import Mathlib.Combinatorics.Quiver.ConnectedComponent
 
+set_option autoImplicit false
+
 /-!
 # Reidemeister Schreier / Quiver
 
 This module formalizes the quiver and arborescence tools used by the groupoid construction.
 -/
+
+universe u
 
 namespace ReidemeisterSchreier
 
@@ -32,12 +36,12 @@ noncomputable def Quiver.coveredArrowEquivTotal
         match he : e.hom.1 with
         | Sum.inl f =>
             ⟨⟨e.left, e.right, f⟩, by
-              simpa [Quiver.wideSubquiverEquivSetTotal,
-                Quiver.wideSubquiverSymmetrify, he] using Or.inl e.hom.2⟩
+              change T e.left e.right (Sum.inl f) ∨ T e.right e.left (Sum.inr f)
+              exact Or.inl (he ▸ e.hom.property)⟩
         | Sum.inr f =>
             ⟨⟨e.right, e.left, f⟩, by
-              simpa [Quiver.wideSubquiverEquivSetTotal,
-                Quiver.wideSubquiverSymmetrify, he] using Or.inr e.hom.2⟩
+              change T e.right e.left (Sum.inl f) ∨ T e.left e.right (Sum.inr f)
+              exact Or.inr (he ▸ e.hom.property)⟩
       left_inv := ?_
       right_inv := ?_ }
   · intro e
@@ -56,7 +60,7 @@ noncomputable def Quiver.coveredArrowEquivTotal
             ((default : Quiver.Path (Quiver.root T) a).cons e :
               Quiver.Path (Quiver.root T) b) = default :=
           Subsingleton.elim _ _
-        simpa using congrArg Quiver.Path.length hpath
+        simpa only [Quiver.Path.length_cons] using congrArg Quiver.Path.length hpath
     intro e
     rcases e with ⟨a, b, e⟩
     cases e with

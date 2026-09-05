@@ -3,6 +3,8 @@ import Mathlib.Topology.Algebra.Group.Quotient
 import Mathlib.GroupTheory.Commutator.Basic
 import ProCGroups.Topologies.QuotientMaps
 
+set_option autoImplicit false
+
 /-!
 # Topologically characteristic subgroups
 

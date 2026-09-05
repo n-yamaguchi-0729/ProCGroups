@@ -1,5 +1,8 @@
 import Mathlib.GroupTheory.SemidirectProduct
 import ProCGroups.ProC.Subgroups.Products
+import ProCGroups.ReidemeisterSchreier.RightQuotient
+
+set_option autoImplicit false
 
 /-!
 # Pro C Groups / Wreath Products
@@ -21,23 +24,8 @@ variable {G : Type u} [Group G]
 `g • [a] = [a * g⁻¹]`. -/
 @[reducible]
 def rightCosetMulAction (H : Subgroup G) :
-    MulAction G (Quotient (QuotientGroup.rightRel H)) where
-  smul g :=
-    Quotient.map' (fun a => a * g⁻¹) fun a b hab => by
-      rw [QuotientGroup.rightRel_apply] at hab ⊢
-      simpa [mul_assoc] using hab
-  one_smul q := by
-    refine Quotient.inductionOn' q ?_
-    intro a
-    apply Quotient.sound'
-    rw [QuotientGroup.rightRel_apply]
-    simp only [inv_one, mul_one, mul_inv_cancel, one_mem]
-  mul_smul g h q := by
-    refine Quotient.inductionOn' q ?_
-    intro a
-    apply Quotient.sound'
-    rw [QuotientGroup.rightRel_apply]
-    simp only [mul_assoc, mul_inv_rev, inv_inv, inv_mul_cancel_left, mul_inv_cancel, one_mem]
+    MulAction G (Quotient (QuotientGroup.rightRel H)) :=
+  _root_.ReidemeisterSchreier.rightCosetMulAction H
 
 /-- Acting on a represented right coset multiplies its representative by the inverse on the
 right. -/
@@ -72,7 +60,6 @@ theorem continuous_rightCosetMulAction_inv_smul_of_open
     (q : Quotient (QuotientGroup.rightRel H)) :
     letI := rightCosetMulAction H
     Continuous fun g : G => g⁻¹ • q := by
-  letI := rightCosetMulAction H
   rw [continuous_discrete_rng]
   intro q'
   classical
@@ -688,6 +675,8 @@ instance instMulActionRightCosetStandardEmbedding :
     MulAction G (Quotient (QuotientGroup.rightRel H)) :=
   rightCosetMulAction H
 
+attribute [-instance] instMulActionRightCosetStandardEmbedding
+
 /-- The underlying section attached to a right transversal. -/
 noncomputable def rightTransversalSection {T : Set G}
     (hT : Subgroup.IsComplement (H : Set G) T) :
@@ -707,7 +696,6 @@ noncomputable def rightQuotientSectionCocycle
     (hτ : ∀ q, Quotient.mk'' (τ q) = q)
     (g : G) :
     Quotient (QuotientGroup.rightRel H) → H := by
-  letI := rightCosetMulAction H
   intro q
   refine ⟨τ q * g * (τ (g⁻¹ • q))⁻¹, ?_⟩
   have hq :
@@ -808,6 +796,8 @@ instance instMulActionRightCosetStandardEmbeddingTopological :
     MulAction G (Quotient (QuotientGroup.rightRel H)) :=
   rightCosetMulAction H
 
+attribute [-instance] instMulActionRightCosetStandardEmbeddingTopological
+
 /-- A continuous right-quotient section gives a continuous standard wreath-product
 embedding. -/
 theorem continuous_rightQuotientSectionEmbedding
@@ -901,6 +891,8 @@ natural multiplication action.
 instance instMulActionRightCosetCoordinateRecovery :
     MulAction G (Quotient (QuotientGroup.rightRel H)) :=
   rightCosetMulAction H
+
+attribute [-instance] instMulActionRightCosetCoordinateRecovery
 
 /-- Basepoint form: if a homomorphism into the wreath product has identity right
 factor and sends the chosen section to elements whose basepoint coordinate is trivial, then the
@@ -1069,7 +1061,6 @@ the basepoint. -/
     (rightQuotientSectionEmbedding (H := H) τ hτ g).left
         (Quotient.mk'' (1 : G) : Quotient (QuotientGroup.rightRel H)) =
       ⟨g, hg⟩ := by
-  letI := rightCosetMulAction H
   apply Subtype.ext
   have hq :
       (g⁻¹ •

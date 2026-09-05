@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.Continuous.ClosedGeneratedCoordinates.Basic
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — continuous — closed generated coordinates — equiv
 
@@ -86,7 +88,7 @@ def separatedClosedGeneratedDerivativeCoordinateLinearEquivProCInteger
     ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom
       ≃ₗ[ZCCompletedGroupAlgebra C H]
         ZCFreeFoxCoordinates C (X := X) (H := H) :=
-  LinearEquiv.ofLinear
+  LinearEquiv.ofLinearMap
     (separatedClosedGeneratedDerivativeCoordinatesLinearMapProCInteger
       (G := G) (H := H) C psi family hfree htarget hφconv
       hdir hGbasis hH hφHconv hφHgen)
@@ -241,7 +243,7 @@ theorem zcCompletedDifferentialModuleStageProjection_eq_of_closedGeneratedCoordi
         C psi.toMonoidHom i a =
       zcCompletedDifferentialModuleStageProjection
         C psi.toMonoidHom i b := by
-  letI : Fintype X := Fintype.ofFinite X
+  let : Fintype X := Fintype.ofFinite X
   let P :=
     zcCompletedDifferentialModuleStageProjection
       C psi.toMonoidHom i
@@ -290,7 +292,7 @@ theorem closedGenDerivativeCoordinatesLinearMapZC_inj_of_stageProjsSeparate
       (closedGeneratedDerivativeCoordinatesLinearMapProCInteger
         (G := G) (H := H) C psi family hfree htarget hφconv
         hH hφHconv hφHgen) := by
-  letI : Fintype X := Fintype.ofFinite X
+  let : Fintype X := Fintype.ofFinite X
   intro a b hab
   apply hsep
   funext i
@@ -550,10 +552,10 @@ theorem closedGenerated_fundamental_formula_naturalTopology_of_separating
           (freeProCZCCompletedFoxDerivativeVectorViaClosedGenerated
             (C := C) hfree (fun i : X => psi (family i)) htarget hφconv g) =
         zcUniversalDifferential C psi.toMonoidHom g := by
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (ZCCompletedDifferentialModule C psi.toMonoidHom) :=
     zcCompletedDifferentialModuleNaturalTopology C psi.toMonoidHom
-  letI : T2Space
+  let : T2Space
       (ZCCompletedDifferentialModule C psi.toMonoidHom) :=
     t2Space_zcCompletedDifferentialModuleNaturalTopology_of_separating
       C psi.toMonoidHom hsep
@@ -603,7 +605,7 @@ theorem zcDiffModuleRelSubmoduleClosed_iff_closedGenCoord_inj_of_hasOpenNormalBa
           (G := G) (H := H) (C := C) (psi := psi) (family := family)
           (hfree := hfree) (htarget := htarget) (hφconv := hφconv)
           hH hφHconv hφHgen) := by
-  letI : Fintype X := Fintype.ofFinite X
+  let : Fintype X := Fintype.ofFinite X
   constructor
   · intro hclosed
     have hsep :

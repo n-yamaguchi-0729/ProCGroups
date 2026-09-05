@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.CoeffMap.Source
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — finite stage — coeff map — augmentation
 
@@ -40,7 +42,7 @@ theorem foxCommutatorPowerSourceGAAugmentation_powerSourceGAMap
         (foxCommutatorPowerSourceGroupAlgebraAugmentation
           (F := FreeGroup X) N m₀ x) := by
   refine MonoidAlgebra.induction_on
-    (p := fun x =>
+    (motive := fun x =>
       foxCommutatorPowerSourceGroupAlgebraAugmentation
           (F := FreeGroup X) N n₀
           (foxAlgebraicStagePowerSourceGroupAlgebraMap (X := X) N hnm x) =

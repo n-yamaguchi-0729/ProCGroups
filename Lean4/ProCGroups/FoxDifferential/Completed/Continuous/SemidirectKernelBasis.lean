@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.Continuous.Topology
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — continuous — semidirect kernel basis
 

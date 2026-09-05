@@ -1,6 +1,8 @@
 import ProCGroups.Generation.WordProductsAndClosure
 import ProCGroups.LocalWeight.MetrizabilityAndQuotients
 
+set_option autoImplicit false
+
 /-!
 # Closed normal chains and local weight
 
@@ -110,8 +112,7 @@ theorem closed_normal_subgroup_eq_inter_openNormal_of_finite_index
     [Finite (H ⧸ K.subgroupOf H)] :
     ∃ V : OpenNormalSubgroup G, K = H ⊓ (V : Subgroup G) := by
   classical
-  letI : IsClosed (K : Set G) := hKclosed
-  letI : TotallyDisconnectedSpace (G ⧸ K) :=
+  let : TotallyDisconnectedSpace (G ⧸ K) :=
     ProCGroups.totallyDisconnectedSpace_quotient_closedNormal K hKclosed
   let ψ : H →* G ⧸ K := (QuotientGroup.mk' K).comp H.subtype
   have hKerEq : (K.subgroupOf H) = ψ.ker := by
@@ -125,9 +126,9 @@ theorem closed_normal_subgroup_eq_inter_openNormal_of_finite_index
         (by simpa [MonoidHom.mem_ker, ψ] using hx)
   let e₁ : H ⧸ (K.subgroupOf H) ≃* H ⧸ ψ.ker :=
     QuotientGroup.quotientMulEquivOfEq hKerEq
-  letI : Finite (H ⧸ ψ.ker) := Finite.of_injective e₁.symm e₁.symm.injective
+  let : Finite (H ⧸ ψ.ker) := Finite.of_injective e₁.symm e₁.symm.injective
   let e₂ : H ⧸ ψ.ker ≃* ψ.range := QuotientGroup.quotientKerEquivRange ψ
-  letI : Finite ψ.range := Finite.of_injective e₂.symm e₂.symm.injective
+  let : Finite ψ.range := Finite.of_injective e₂.symm e₂.symm.injective
   obtain ⟨W, hWbot⟩ :=
     exists_openNormalSubgroup_inf_eq_bot_of_finite (G := G ⧸ K) ψ.range
   let V : OpenNormalSubgroup G :=
@@ -199,12 +200,10 @@ theorem localWeight_split_over_closedNormalSubgroup
     localWeight G =
       localWeight ↥H.toSubgroup + quotientLocalWeight (G := G) H.toSubgroup := by
   classical
-  letI : CompactSpace ↥H.toSubgroup := by
+  let : CompactSpace ↥H.toSubgroup := by
     simpa using H.isClosed.isClosedEmbedding_subtypeVal.compactSpace
-  letI : T2Space ↥H.toSubgroup := inferInstance
-  letI : TotallyDisconnectedSpace ↥H.toSubgroup := inferInstance
-  letI : IsClosed (H.toSubgroup : Set G) := H.isClosed
-  letI : TotallyDisconnectedSpace (G ⧸ H.toSubgroup) :=
+  let : IsClosed (H.toSubgroup : Set G) := H.isClosed
+  let : TotallyDisconnectedSpace (G ⧸ H.toSubgroup) :=
     ProCGroups.totallyDisconnectedSpace_quotient_closedNormal H.toSubgroup H.isClosed
   rcases exists_openNormalNeighborhoodBasisAtOne_cardinal_le_localWeight
       (G := G) with ⟨ιG, WG, hWGbasis, hWGcard⟩
@@ -221,8 +220,7 @@ theorem localWeight_split_over_closedNormalSubgroup
         · change IsOpen (((↑) : H.toSubgroup → G) ⁻¹' (((WG i : Subgroup G) : Set G)))
           simpa using
             (openNormalSubgroup_isOpen (G := G) (WG i)).preimage continuous_subtype_val
-        · simp only [OpenNormalSubgroup.toSubgroup_comap, Subgroup.comap_subtype,
-            SetLike.mem_coe, one_mem, WH]
+        · exact (WH i).one_mem'
       · intro U hUopen hUone
         rcases isOpen_induced_iff.mp hUopen with ⟨O, hOopen, hOeq⟩
         have hOone : (1 : G) ∈ O := by
@@ -340,9 +338,7 @@ theorem localWeight_split_over_closedNormalSubgroup
       rcases hU with ⟨⟨i, j⟩, rfl⟩
       constructor
       · exact (hVHopen i).inter (openNormalSubgroup_isOpen (G := G) (PH j))
-      · exact ⟨hVHone i, by simp only [OpenNormalSubgroup.toSubgroup_comap, Subgroup.coe_comap,
-          QuotientGroup.coe_mk',
-  OpenSubgroup.coe_toSubgroup, mem_preimage, QuotientGroup.mk_one, SetLike.mem_coe, one_mem, PH, q]⟩
+      · exact ⟨hVHone i, (PH j).one_mem'⟩
     · intro U hUopen hUone
       rcases hWGbasis.2 U hUopen hUone with ⟨Nset, hNrange, hNsubU⟩
       rcases hNrange with ⟨n, rfl⟩
@@ -375,7 +371,9 @@ theorem localWeight_split_over_closedNormalSubgroup
       intro x hx
       have hxV : x ∈ VH i := hx.1
       have hxQ : q x ∈ ((QH j : Subgroup (G ⧸ H.toSubgroup)) : Set (G ⧸ H.toSubgroup)) := by
-        simpa [PH, OpenNormalSubgroup.mem_comap] using hx.2
+        exact (OpenSubgroup.mem_comap
+          (H := (QH j).toOpenSubgroup) (f := q)
+          (hf := QuotientGroup.continuous_mk) (x := x)).1 hx.2
       rcases hQsub hxQ with ⟨y, hy, hyEq⟩
       have hyN : y ∈ ((WG n : Subgroup G) : Set G) := hy.1
       have hyV : y ∈ VH i := hy.2
@@ -422,7 +420,6 @@ theorem localWeight_split_over_closedNormalSubgroup
       Cardinal.mk_ne_zero_iff.mpr hιQne
     cases hInf with
     | inl hHinf =>
-        letI : Infinite ↥H.toSubgroup := hHinf
         have hHaleph :
             ℵ₀ ≤ localWeight ↥H.toSubgroup :=
           aleph0_le_localWeight_of_infinite_profiniteGroup (G := ↥H.toSubgroup)
@@ -440,7 +437,6 @@ theorem localWeight_split_over_closedNormalSubgroup
             symm
             exact Cardinal.add_eq_max hHaleph
     | inr hQinf =>
-        letI : Infinite (G ⧸ H.toSubgroup) := hQinf
         have hQaleph :
             ℵ₀ ≤ quotientLocalWeight (G := G) H.toSubgroup := by
           simpa [quotientLocalWeight_eq_localWeight] using
@@ -469,14 +465,12 @@ theorem localWeight_split_over_closedNormalSubgroup
       localWeight ↥H.toSubgroup + quotientLocalWeight (G := G) H.toSubgroup ≤ localWeight G := by
     cases hInf with
     | inl hHinf =>
-        letI : Infinite ↥H.toSubgroup := hHinf
         have hHaleph :
             ℵ₀ ≤ localWeight ↥H.toSubgroup :=
           aleph0_le_localWeight_of_infinite_profiniteGroup (G := ↥H.toSubgroup)
         rw [Cardinal.add_eq_max hHaleph]
         exact max_le_iff.mpr ⟨hHle, hQle⟩
     | inr hQinf =>
-        letI : Infinite (G ⧸ H.toSubgroup) := hQinf
         have hQaleph :
             ℵ₀ ≤ quotientLocalWeight (G := G) H.toSubgroup := by
           simpa [quotientLocalWeight_eq_localWeight] using
@@ -559,7 +553,6 @@ theorem build_transfiniteClosedNormalSeries_of_localWeight_le
     rcases hWbasis.2 Set.univ isOpen_univ (by simp only [mem_univ]) with ⟨U, hUrange, _⟩
     rcases hUrange with ⟨i, rfl⟩
     exact ⟨i⟩
-  letI : Nonempty ι := hιne
   have hWcard : Cardinal.mk ι ≤ μ.card := hWcard0.trans hμ
   have hEmb : Nonempty (ι ↪ Set.Iio μ) := by
     have hWcardLift0 :
@@ -658,7 +651,7 @@ theorem build_transfiniteClosedNormalSeries_of_localWeight_le
         exact ⟨x, x.2, rfl⟩
       · rintro ⟨x, hx, rfl⟩
         exact ⟨⟨x, hx⟩, rfl⟩
-    letI : L.Normal := by
+    let : L.Normal := by
       dsimp [L]
       exact Subgroup.Normal.map H.normal' (QuotientGroup.mk' (U : Subgroup G))
         (QuotientGroup.mk'_surjective (U : Subgroup G))

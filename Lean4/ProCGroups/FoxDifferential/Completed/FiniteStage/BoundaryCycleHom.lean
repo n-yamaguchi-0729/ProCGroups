@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.BoundaryCycles
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — finite stage — boundary cycle hom
 

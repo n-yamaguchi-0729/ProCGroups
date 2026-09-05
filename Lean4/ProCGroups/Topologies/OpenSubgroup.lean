@@ -1,6 +1,8 @@
 import Mathlib.Topology.Algebra.OpenSubgroup
 import Mathlib.Topology.Algebra.ContinuousMonoidHom
 
+set_option autoImplicit false
+
 /-!
 # The whole group as an open subgroup
 

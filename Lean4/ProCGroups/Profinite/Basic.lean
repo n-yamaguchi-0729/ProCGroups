@@ -1,5 +1,7 @@
 import ProCGroups.Profinite.OpenSubgroups
 
+set_option autoImplicit false
+
 /-!
 # Separation in profinite groups
 

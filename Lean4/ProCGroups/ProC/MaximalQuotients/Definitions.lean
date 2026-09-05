@@ -1,5 +1,7 @@
 import ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
 
+set_option autoImplicit false
+
 /-!
 # Maximal pro-\(C\) quotients
 

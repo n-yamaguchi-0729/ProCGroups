@@ -1,9 +1,12 @@
+import Mathlib.Algebra.Polynomial.Roots
 import Mathlib.Analysis.Fourier.FiniteAbelian.PontryaginDuality
-import Mathlib.NumberTheory.Cyclotomic.Basic
+import Mathlib.FieldTheory.Finite.Basic
+import Mathlib.GroupTheory.Torsion
 import Mathlib.Topology.Algebra.PontryaginDual
 import Mathlib.Topology.Instances.AddCircle.DenseSubgroup
-import ProCGroups.Profinite.Basic
 import ProCGroups.Topologies.ContinuousMulEquiv
+
+set_option autoImplicit false
 
 /-!
 # Pro C Groups / Duality
@@ -113,7 +116,7 @@ theorem properClosedSubgroup_circleTarget_finite
   have hBclosed : IsClosed (B : Set (AddCircle (2 * Real.pi))) :=
     isClosed_circleSubgroupToAddCircleSubgroup A hAclosed
   have hBproper : B ≠ ⊤ := circleSubgroupToAddCircleSubgroup_ne_top A hAproper
-  haveI : Fact (0 < 2 * Real.pi) := ⟨by positivity⟩
+  have : Fact (0 < 2 * Real.pi) := ⟨Real.two_pi_pos⟩
   have hBfinite : Finite B := properClosedAddSubgroup_addCircle_finite B hBclosed hBproper
   let e : B ≃ A :=
     { toFun := fun θ => ⟨AddCircle.homeomorphCircle' θ, θ.2⟩
@@ -142,11 +145,6 @@ theorem circleTarget_one_ne_exp_pi :
 theorem not_totallyDisconnectedSpace_circleTarget :
     ¬ TotallyDisconnectedSpace Circle := by
   intro htd
-  letI : TotallyDisconnectedSpace Circle := htd
-  letI : ConnectedSpace Circle :=
-    AddCircle.homeomorphCircle'.surjective.connectedSpace
-      AddCircle.homeomorphCircle'.continuous_toFun
-  letI : PreconnectedSpace Circle := inferInstance
   have hEq : (1 : Circle) = Circle.exp Real.pi :=
     TotallyDisconnectedSpace.eq_of_continuous
       (f := fun z : Circle => z) continuous_id 1 (Circle.exp Real.pi)
@@ -171,7 +169,7 @@ theorem subgroup_eq_bot_of_isCompact_subset_rightHalfPlane
     exact hneg' (hApos (Circle.exp Real.pi) hneg)
   have hAfinite : Finite A :=
     properClosedSubgroup_circleTarget_finite A hAcompact.isClosed hAproper
-  letI : Fintype A := Fintype.ofFinite A
+  let : Fintype A := Fintype.ofFinite A
   have hCircleToUnits_injective :
       Function.Injective (Circle.toUnits : Circle →* Units ℂ) := by
     intro x y hxy
@@ -180,7 +178,7 @@ theorem subgroup_eq_bot_of_isCompact_subset_rightHalfPlane
   let B : Subgroup (Units ℂ) := A.map Circle.toUnits
   let e : A ≃* B := A.equivMapOfInjective Circle.toUnits hCircleToUnits_injective
   have hBfinite : Finite B := Finite.of_equiv A e
-  letI : Fintype B := Fintype.ofFinite B
+  let : Fintype B := Fintype.ofFinite B
   have hBnebot : B ≠ ⊥ := by
     intro hBbot
     apply hAbot
@@ -220,7 +218,7 @@ theorem dualGroup_discrete_of_compact [CompactSpace G] :
     let W : Set C(G, Circle) := {f | Set.MapsTo f Set.univ U}
     have hWopen : IsOpen W := by
       simpa [W] using
-        (ContinuousMap.isOpen_setOf_mapsTo
+        (ContinuousMap.isOpen_setOfPred_mapsTo
           (X := G) (Y := Circle) (K := Set.univ) (U := U) isCompact_univ hUopen)
     exact (ContinuousMonoidHom.isInducing_toContinuousMap G Circle).isOpen_iff.mpr
       ⟨W, hWopen, by ext χ; rfl⟩
@@ -267,7 +265,7 @@ theorem dualGroup_compact_of_discrete [DiscreteTopology G] :
   infer_instance
 
 private noncomputable def torsionPowerWitnessOfElement
-    {G : Type u} [CommGroup G] (htors : Monoid.IsTorsion G) (g : G) :
+    {G : Type u} [CommGroup G] (htors : IsMulTorsion G) (g : G) :
     {n : ℕ // 0 < n ∧ g ^ n = 1} := by
   let h := (isOfFinOrder_iff_pow_eq_one).mp (htors g)
   exact ⟨Classical.choose h, Classical.choose_spec h⟩
@@ -275,22 +273,21 @@ private noncomputable def torsionPowerWitnessOfElement
 /-- The Pontryagin dual of a discrete torsion abelian group is totally disconnected. -/
 theorem dualGroup_totallyDisconnected_of_discrete_torsion
     (G : Type u) [CommGroup G] [TopologicalSpace G]
-    [DiscreteTopology G] (htors : Monoid.IsTorsion G) :
+    [DiscreteTopology G] (htors : IsMulTorsion G) :
     TotallyDisconnectedSpace (PontryaginDual G) := by
   let n : G → ℕ := fun g => (torsionPowerWitnessOfElement htors g).1
   let Ω : G → Type := fun g => { z : Circle // (z : ℂ) ^ n g = 1 }
   have hΩfinite : ∀ g : G, Finite (Ω g) := by
     intro g
     classical
-    letI : NeZero (n g) :=
-      ⟨Nat.ne_of_gt (torsionPowerWitnessOfElement htors g).2.1⟩
     have hcomplexFinite :
         Finite {z : ℂ // z ∈ Polynomial.nthRoots (n g) (1 : ℂ)} := by
       simpa using
         (((Polynomial.nthRoots (n g) (1 : ℂ)).toFinset.finite_toSet).to_subtype)
     refine Finite.of_injective
       (f := fun z : Ω g =>
-        (⟨(z : ℂ), (Polynomial.mem_nthRoots (Nat.pos_of_neZero (n g))).2 z.2⟩ :
+        (⟨(z : ℂ),
+          (Polynomial.mem_nthRoots (torsionPowerWitnessOfElement htors g).2.1).2 z.2⟩ :
           {z : ℂ // z ∈ Polynomial.nthRoots (n g) (1 : ℂ)})) ?_
     intro x y hxy
     have hxyComplex : ((x : Ω g) : ℂ) = ((y : Ω g) : ℂ) := by
@@ -300,9 +297,6 @@ theorem dualGroup_totallyDisconnected_of_discrete_torsion
       apply Subtype.ext
       exact hxyComplex
     exact Subtype.ext hxyCircle
-  letI : ∀ g : G, Finite (Ω g) := hΩfinite
-  letI : ∀ g : G, TopologicalSpace (Ω g) := fun _ => inferInstance
-  letI : ∀ g : G, DiscreteTopology (Ω g) := fun _ => inferInstance
   let F : PontryaginDual G → ∀ g : G, Ω g := fun χ g =>
     ⟨χ g, by
       have hgpow : g ^ n g = 1 := (torsionPowerWitnessOfElement htors g).2.2
@@ -334,7 +328,6 @@ theorem dualGroup_totallyDisconnected_of_discrete_torsion
   let eTop : PontryaginDual G ≃ₜ Set.range F :=
     Continuous.homeoOfEquivCompactToT2
       (f := Equiv.ofBijective FRange hFRange_bij) hFRange_continuous
-  letI : TotallyDisconnectedSpace (Set.range F) := inferInstance
   exact Homeomorph.totallyDisconnectedSpace eTop.symm
 
 /-- For a discrete abelian group, multiplicative characters to the circle are the same as
@@ -369,39 +362,26 @@ noncomputable def dualGroupEquivAddCharCircle
 theorem dualGroup_finite_of_finite_discrete
     (A : Type u) [CommGroup A] [TopologicalSpace A] [Finite A] [DiscreteTopology A] :
     Finite (PontryaginDual A) := by
-  classical
-  letI : Fintype A := Fintype.ofFinite A
-  letI : Fintype (Additive A) := Fintype.ofFinite (Additive A)
-  haveI : Finite (AddChar (Additive A) ℂ) := by infer_instance
-  haveI : Finite (AddChar (Additive A) Circle) :=
-    Finite.of_equiv (AddChar (Additive A) ℂ)
-      (AddChar.circleEquivComplex (α := Additive A)).symm
-  exact Finite.of_equiv (AddChar (Additive A) Circle)
-    (dualGroupEquivAddCharCircle A).symm
+  exact Finite.of_equiv (AddChar (Additive A) ℂ)
+    ((AddChar.circleEquivComplex (α := Additive A)).toEquiv.symm.trans
+      (dualGroupEquivAddCharCircle A).symm)
 
 /-- A finite discrete abelian group and its Pontryagin dual have the same cardinality. -/
 theorem card_dualGroup_eq_card_of_finite_discrete
     (A : Type u) [CommGroup A] [TopologicalSpace A] [Finite A] [DiscreteTopology A] :
     Nat.card (PontryaginDual A) = Nat.card A := by
   classical
-  letI : Fintype A := Fintype.ofFinite A
-  letI : Fintype (Additive A) := Fintype.ofFinite (Additive A)
-  let e₁ := dualGroupEquivAddCharCircle A
-  let e₂ := (AddChar.circleEquivComplex (α := Additive A)).toEquiv
-  haveI : Finite (PontryaginDual A) := dualGroup_finite_of_finite_discrete A
-  letI : Fintype (PontryaginDual A) := Fintype.ofFinite (PontryaginDual A)
-  haveI : Finite (AddChar (Additive A) Circle) :=
-    Finite.of_equiv (AddChar (Additive A) ℂ)
-      (AddChar.circleEquivComplex (α := Additive A)).symm
-  letI : Fintype (AddChar (Additive A) Circle) :=
-    Fintype.ofFinite (AddChar (Additive A) Circle)
+  let : Fintype A := Fintype.ofFinite A
   calc
-    Nat.card (PontryaginDual A) = Fintype.card (PontryaginDual A) := Nat.card_eq_fintype_card
-    _ = Fintype.card (AddChar (Additive A) Circle) := Fintype.card_congr e₁
-    _ = Fintype.card (AddChar (Additive A) ℂ) := Fintype.card_congr e₂
+    Nat.card (PontryaginDual A) = Nat.card (AddChar (Additive A) Circle) :=
+      Nat.card_congr (dualGroupEquivAddCharCircle A)
+    _ = Nat.card (AddChar (Additive A) ℂ) :=
+      Nat.card_congr (AddChar.circleEquivComplex (α := Additive A)).toEquiv
+    _ = Fintype.card (AddChar (Additive A) ℂ) :=
+      Nat.card_eq_fintype_card (α := AddChar (Additive A) ℂ)
     _ = Fintype.card (Additive A) := AddChar.card_eq (α := Additive A)
-    _ = Fintype.card A := rfl
-    _ = Nat.card A := Nat.card_eq_fintype_card.symm
+    _ = Fintype.card A := Fintype.card_additive A
+    _ = Nat.card A := (Nat.card_eq_fintype_card (α := A)).symm
 
 /-- A topological group equivalence induces an equivalence on Pontryagin duals. -/
 noncomputable def dualGroupEquiv

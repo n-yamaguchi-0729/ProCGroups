@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.Basic.InClass.Projection
 
+set_option autoImplicit false
+
 /-!
 # Completed Group Algebra / Basic / Within a Class / Topology
 
@@ -45,9 +47,9 @@ theorem completedGroupAlgebraStageInClass_isTopologicalRing
     letI : TopologicalSpace (CompletedGroupAlgebraStageInClass C R G U) :=
       (completedGroupAlgebraSystemInClass C R G).topologicalSpace U
     IsTopologicalRing (CompletedGroupAlgebraStageInClass C R G U) := by
-  letI : Finite (CompletedGroupAlgebraQuotientInClass G C U) :=
+  let : Finite (CompletedGroupAlgebraQuotientInClass G C U) :=
     finite_completedGroupAlgebraQuotientInClass G C U
-  letI : TopologicalSpace (CompletedGroupAlgebraStageInClass C R G U) :=
+  let : TopologicalSpace (CompletedGroupAlgebraStageInClass C R G U) :=
     (completedGroupAlgebraSystemInClass C R G).topologicalSpace U
   dsimp [completedGroupAlgebraSystemInClass, CompletedGroupAlgebraStageInClass]
   exact finiteGroupAlgebra_isTopologicalRing R (CompletedGroupAlgebraQuotientInClass G C U)
@@ -76,30 +78,44 @@ instance instIsTopologicalRingCompletedGroupAlgebraInClass
 instance instContinuousSMulCompletedGroupAlgebraInClass
     (C : ProCGroups.FiniteGroupClass.{v}) :
     ContinuousSMul R (CompletedGroupAlgebraInClass C R G) := by
-  letI : ∀ U : CompletedGroupAlgebraIndexInClass G C,
+  let stageContinuousSMul : ∀ U : CompletedGroupAlgebraIndexInClass G C,
       ContinuousSMul R ((completedGroupAlgebraSystemInClass C R G).X U) :=
     fun U => by
-      letI : Finite (CompletedGroupAlgebraQuotientInClass G C U) :=
+      let : Finite (CompletedGroupAlgebraQuotientInClass G C U) :=
         finite_completedGroupAlgebraQuotientInClass G C U
       dsimp [completedGroupAlgebraSystemInClass, CompletedGroupAlgebraStageInClass]
       exact finiteGroupAlgebra_continuousSMul R
         (CompletedGroupAlgebraQuotientInClass G C U)
-  exact inferInstanceAs
-    (ContinuousSMul R (completedGroupAlgebraSystemInClass C R G).inverseLimit)
+  exact @instContinuousSMulInverseLimitOfIsModuleSystem _ _
+    (completedGroupAlgebraSystemInClass C R G)
+    (fun U => @Ring.toAddCommGroup _
+      (instRingCompletedGroupAlgebraSystemInClassStage
+        (G := G) (R := R) C U))
+    R inferInstance
+    (fun U => instModuleCompletedGroupAlgebraSystemInClassStage
+      (G := G) (R := R) C U)
+    (@IsModuleSystem.mk _ _ R _ (completedGroupAlgebraSystemInClass C R G)
+      (fun U => @Ring.toAddCommGroup _
+        (instRingCompletedGroupAlgebraSystemInClassStage
+          (G := G) (R := R) C U))
+      (fun U => instModuleCompletedGroupAlgebraSystemInClassStage
+        (G := G) (R := R) C U)
+      (completedGroupAlgebraTransitionInClass_smul (R := R) (G := G) C))
+    inferInstance stageContinuousSMul
 
 /-- The coefficient-ring map into the \(C\)-indexed completed group algebra is continuous. -/
 theorem continuous_completedGroupAlgebraAlgebraMapInClass
     (C : ProCGroups.FiniteGroupClass.{v}) :
     Continuous (algebraMap R (CompletedGroupAlgebraInClass C R G)) := by
   let S := completedGroupAlgebraSystemInClass C R G
-  letI : ∀ U, TopologicalSpace (CompletedGroupAlgebraStageInClass C R G U) :=
+  let : ∀ U, TopologicalSpace (CompletedGroupAlgebraStageInClass C R G U) :=
     fun U => (completedGroupAlgebraSystemInClass C R G).topologicalSpace U
   let π : ∀ U : CompletedGroupAlgebraIndexInClass G C,
       R → CompletedGroupAlgebraStageInClass C R G U :=
     fun U r => algebraMap R (CompletedGroupAlgebraStageInClass C R G U) r
   have hπ : ∀ U, Continuous (π U) := by
     intro U
-    letI : Finite (CompletedGroupAlgebraQuotientInClass G C U) :=
+    let : Finite (CompletedGroupAlgebraQuotientInClass G C U) :=
       finite_completedGroupAlgebraQuotientInClass G C U
     exact finiteGroupAlgebra_algebraMap_continuous R
       (CompletedGroupAlgebraQuotientInClass G C U)
@@ -117,16 +133,16 @@ theorem completedGroupAlgebraInClass_compactSpace
     [CompactSpace R] [T2Space R] :
     CompactSpace (CompletedGroupAlgebraInClass C R G) := by
   let S := completedGroupAlgebraSystemInClass C R G
-  letI : ∀ U : CompletedGroupAlgebraIndexInClass G C, CompactSpace (S.X U) := fun U =>
+  let : ∀ U : CompletedGroupAlgebraIndexInClass G C, CompactSpace (S.X U) := fun U =>
     by
-      letI : Finite (CompletedGroupAlgebraQuotientInClass G C U) :=
+      let : Finite (CompletedGroupAlgebraQuotientInClass G C U) :=
         finite_completedGroupAlgebraQuotientInClass G C U
       dsimp [S, completedGroupAlgebraSystemInClass, CompletedGroupAlgebraStageInClass]
       exact finiteGroupAlgebra_compactSpace R
         (CompletedGroupAlgebraQuotientInClass G C U)
-  letI : ∀ U : CompletedGroupAlgebraIndexInClass G C, T2Space (S.X U) := fun U =>
+  let : ∀ U : CompletedGroupAlgebraIndexInClass G C, T2Space (S.X U) := fun U =>
     by
-      letI : Finite (CompletedGroupAlgebraQuotientInClass G C U) :=
+      let : Finite (CompletedGroupAlgebraQuotientInClass G C U) :=
         finite_completedGroupAlgebraQuotientInClass G C U
       dsimp [S, completedGroupAlgebraSystemInClass, CompletedGroupAlgebraStageInClass]
       exact finiteGroupAlgebra_t2Space R
@@ -140,9 +156,9 @@ theorem completedGroupAlgebraInClass_t2Space
     [T2Space R] :
     T2Space (CompletedGroupAlgebraInClass C R G) := by
   let S := completedGroupAlgebraSystemInClass C R G
-  letI : ∀ U : CompletedGroupAlgebraIndexInClass G C, T2Space (S.X U) := fun U =>
+  let : ∀ U : CompletedGroupAlgebraIndexInClass G C, T2Space (S.X U) := fun U =>
     by
-      letI : Finite (CompletedGroupAlgebraQuotientInClass G C U) :=
+      let : Finite (CompletedGroupAlgebraQuotientInClass G C U) :=
         finite_completedGroupAlgebraQuotientInClass G C U
       dsimp [S, completedGroupAlgebraSystemInClass, CompletedGroupAlgebraStageInClass]
       exact finiteGroupAlgebra_t2Space R
@@ -158,10 +174,10 @@ theorem completedGroupAlgebraInClass_totallyDisconnectedSpace
     [TotallyDisconnectedSpace R] :
     TotallyDisconnectedSpace (CompletedGroupAlgebraInClass C R G) := by
   let S := completedGroupAlgebraSystemInClass C R G
-  letI : ∀ U : CompletedGroupAlgebraIndexInClass G C, TotallyDisconnectedSpace (S.X U) :=
+  let : ∀ U : CompletedGroupAlgebraIndexInClass G C, TotallyDisconnectedSpace (S.X U) :=
     fun U =>
       by
-        letI : Finite (CompletedGroupAlgebraQuotientInClass G C U) :=
+        let : Finite (CompletedGroupAlgebraQuotientInClass G C U) :=
           finite_completedGroupAlgebraQuotientInClass G C U
         dsimp [S, completedGroupAlgebraSystemInClass, CompletedGroupAlgebraStageInClass]
         exact finiteGroupAlgebra_totallyDisconnectedSpace R

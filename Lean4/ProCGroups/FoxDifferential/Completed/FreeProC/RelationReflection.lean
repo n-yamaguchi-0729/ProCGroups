@@ -3,6 +3,8 @@ import ProCGroups.FoxDifferential.Completed.FreeProC.FiniteQuotientStages
 import ProCGroups.FoxDifferential.Completed.Continuous.Universal.NaturalTopology
 import ProCGroups.FreeProC.FiniteBasis
 
+set_option autoImplicit false
+
 /-!
 # Relation reflection for free pro-\(C\) presentations
 
@@ -120,7 +122,7 @@ theorem freeProCRelationReflectionStageSourceHom_surjective
   let Q : Type u :=
     zcCompletedDifferentialModuleStageSource
       C psi.toMonoidHom i
-  letI : DiscreteTopology Q :=
+  let : DiscreteTopology Q :=
     QuotientGroup.discreteTopology i.source.1.toOpenSubgroup.isOpen'
   let g : X → Q := fun x =>
     zcCompletedDifferentialModuleStageSourceProj
@@ -352,12 +354,12 @@ theorem freeProCRelationReflectionTargetStageQMap_transition
       ProCGroups.Generation.TopologicallyGenerates (G := H) (Set.range φ) := by
     simpa [φ] using
       freeProCReflectionFamily_target_generates (C := C) sourceData hbasis psi hpsi
-  letI : DiscreteTopology
+  let : DiscreteTopology
       (CompletedGroupAlgebraQuotientInClass H C i.target.2) :=
     QuotientGroup.discreteTopology
       (ProCGroups.openNormalSubgroup_isOpen (G := H)
         ((OrderDual.ofDual i.target.2).1 : OpenNormalSubgroup H))
-  letI : DiscreteTopology
+  let : DiscreteTopology
       (CompletedGroupAlgebraQuotientInClass H C j.target.2) :=
     QuotientGroup.discreteTopology
       (ProCGroups.openNormalSubgroup_isOpen (G := H)

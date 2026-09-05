@@ -1,5 +1,7 @@
 import ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.CleanedTau
 
+set_option autoImplicit false
+
 
 /-!
 # Reidemeister Schreier / Discrete / Reidemeister Schreier / Finite Quotient / Cleaned Relators
@@ -67,7 +69,7 @@ theorem mem_cleanedSchreierRelatorFinset
       z ∈ D.cleanedSchreierRelators ({r | r ∈ R} : Set (FreeGroup X)) := by
   simp only [cleanedSchreierRelatorFinset, Finset.mem_biUnion, Finset.mem_univ,
       Finset.mem_image, eq_comm,
-  true_and, cleanedSchreierRelators, SetLike.setOf_mem_eq, SetLike.mem_coe, Set.mem_setOf_eq]
+  true_and, cleanedSchreierRelators, SetLike.setOfPred_mem_eq, SetLike.mem_coe, Set.mem_ofPred_eq]
 
 /-- Coercing the cleaned Schreier relator finset gives the cleaned Schreier relator set. -/
 @[simp]
@@ -79,7 +81,7 @@ theorem coe_cleanedSchreierRelatorFinset
       Set (FreeGroup D.NondegenerateSchreierSymbol)) =
       D.cleanedSchreierRelators ({r | r ∈ R} : Set (FreeGroup X)) := by
   ext z
-  simp only [mem_cleanedSchreierRelatorFinset, SetLike.setOf_mem_eq, Set.setOf_mem_eq]
+  simp only [mem_cleanedSchreierRelatorFinset, SetLike.setOfPred_mem_eq, Set.ofPred_mem_eq]
 
 /--
 The relators after deleting degenerate Schreier generators are exactly the cleaned Schreier
@@ -146,7 +148,7 @@ theorem mem_schreierRelatorFinset
   classical
   simp only [schreierRelatorFinset, Finset.mem_biUnion, Finset.mem_univ, Finset.mem_image,
       eq_comm, true_and,
-  schreierRelators, SetLike.setOf_mem_eq, SetLike.mem_coe, Set.mem_setOf_eq]
+  schreierRelators, SetLike.setOfPred_mem_eq, SetLike.mem_coe, Set.mem_ofPred_eq]
 
 /-- A finite set enumerating the degenerate finite-quotient Schreier relators. -/
 noncomputable def degenerateSchreierRelatorFinset [Fintype X] :
@@ -171,7 +173,7 @@ theorem mem_degenerateSchreierRelatorFinset [Fintype X]
   simp only [degenerateSchreierRelatorFinset, transition_eq, eq_comm, Finset.product_eq_sprod,
   Finset.univ_product_univ, Finset.mem_image, Finset.mem_filter, Finset.mem_univ, true_and,
       Prod.exists,
-  degenerateSchreierRelators, Set.mem_setOf_eq]
+  degenerateSchreierRelators, Set.mem_ofPred_eq]
 
 /-- A finite set enumerating the finite-quotient presentation relators. -/
 noncomputable def presentationRelatorFinset [Fintype X]
@@ -192,7 +194,7 @@ theorem mem_presentationRelatorFinset [Fintype X]
       z ∈ D.presentationRelators ({r | r ∈ R} : Set (FreeGroup X)) := by
   classical
   simp only [presentationRelatorFinset, Finset.mem_union, mem_schreierRelatorFinset,
-      SetLike.setOf_mem_eq,
+      SetLike.setOfPred_mem_eq,
   mem_degenerateSchreierRelatorFinset, presentationRelators, Set.mem_union]
 
 /-- The presentation-relator finset coerces to the finite-quotient presentation relator set. -/
@@ -224,7 +226,7 @@ theorem mem_quotientSectionRelatorFinset
       z ∈ D.quotientSectionRelators := by
   classical
   simp only [quotientSectionRelatorFinset, Finset.mem_image, Finset.mem_univ, eq_comm, true_and,
-  quotientSectionRelators, Set.mem_setOf_eq]
+  quotientSectionRelators, Set.mem_ofPred_eq]
 
 /--
 The finite augmented presentation relator set combines quotient-section relators with the finite
@@ -248,7 +250,7 @@ theorem mem_augmentedPresentationRelatorFinset [Fintype X]
       z ∈ D.augmentedPresentationRelators ({r | r ∈ R} : Set (FreeGroup X)) := by
   classical
   simp only [augmentedPresentationRelatorFinset, Finset.mem_union, mem_presentationRelatorFinset,
-  SetLike.setOf_mem_eq, mem_quotientSectionRelatorFinset, augmentedPresentationRelators,
+  SetLike.setOfPred_mem_eq, mem_quotientSectionRelatorFinset, augmentedPresentationRelators,
       Set.mem_union]
 
 /--

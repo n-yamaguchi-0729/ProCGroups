@@ -5,6 +5,8 @@ import ProCGroups.Order.Basic
 import ProCGroups.ProC.OpenNormalSubgroups.Separation
 import ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
 
+set_option autoImplicit false
+
 /-!
 # Closed derived series and solvable quotients
 
@@ -174,7 +176,6 @@ instance topDerivedTop_normalInst
       infer_instance
   | succ m ihm =>
       dsimp [topDerivedTop, closedDerivedSeries, closedCommutator]
-      letI : (topDerivedTop G m).Normal := ihm
       exact Subgroup.is_normal_topologicalClosure ⁅topDerivedTop G m, topDerivedTop G m⁆
 
 /-- The quotient by the mth closed derived subgroup. -/
@@ -320,8 +321,6 @@ theorem closedCommutator_topologicallyCharacteristic
     (h₁ : G₁.TopologicallyCharacteristic)
     (h₂ : G₂.TopologicallyCharacteristic) :
     (⁅G₁, G₂⁆ₜ).TopologicallyCharacteristic := by
-  letI : G₁.TopologicallyCharacteristic := h₁
-  letI : G₂.TopologicallyCharacteristic := h₂
   have hcomm : (⁅G₁, G₂⁆).TopologicallyCharacteristic := by
     infer_instance
   simpa [closedCommutator] using
@@ -645,7 +644,6 @@ theorem eq_one_of_mem_all_openNormalSubgroup_derived
     have hKnormal : K.Normal := by
       change (topDerivedTop Q 1).Normal
       infer_instance
-    letI : K.Normal := hKnormal
     let Hsub : Subgroup Q := K ⊔ (U : Subgroup Q)
     have hHopen : IsOpen (Hsub : Set Q) := by
       exact
@@ -667,10 +665,9 @@ theorem eq_one_of_mem_all_openNormalSubgroup_derived
         continuous_toFun := continuous_subtype_val }
     let qK0 : K →ₜ* Q ⧸ (U : Subgroup Q) := qU.comp inclK
     let qKr : K →ₜ* qK0.toMonoidHom.range := ProCGroups.ContinuousMonoidHom.rangeRestrict qK0
-    letI : DiscreteTopology (Q ⧸ (U : Subgroup Q)) :=
+    let : DiscreteTopology (Q ⧸ (U : Subgroup Q)) :=
       QuotientGroup.discreteTopology
         (ProCGroups.openNormalSubgroup_isOpen (G := Q) U)
-    letI : DiscreteTopology qK0.toMonoidHom.range := inferInstance
     have hKclosed : IsClosed (K : Set Q) := by
       change IsClosed ((topDerivedTop Q 1 : Subgroup Q) : Set Q)
       infer_instance
@@ -759,12 +756,12 @@ theorem eq_one_of_mem_all_openNormalSubgroup_derived
       (ProCGroups.ProC.OpenNormalSubgroup.quotientProj_eq_one_iff
         (U := U) (x := d)).mp hqd_one
   let Bot : ClosedSubgroup Q := ⊥
-  letI : ((Bot : Subgroup Q).Normal) := by
+  let : ((Bot : Subgroup Q).Normal) := by
     change (⊥ : Subgroup Q).Normal
     infer_instance
   have hdbot : d ∈ (Bot : Subgroup Q) := by
     rw [ProCGroups.ProC.closedSubgroup_eq_sInf_openNormal (G := Q) Bot]
-    simp only [Subgroup.mem_sInf, Set.mem_setOf_eq]
+    simp only [Subgroup.mem_sInf, Set.mem_ofPred_eq]
     intro N hN
     let U : OpenNormalSubgroup Q :=
       { toOpenSubgroup :=
@@ -813,8 +810,6 @@ theorem topDerivedTop_one_eq_bot_of_topologicallyGenerates_singleton
         simp only [Subgroup.mem_top]
       exact hcyc_le_cb this
     exact ProCGroups.GroupTheory.mem_centralizerOf_iff.mp ha_cb
-  letI : CommGroup Q := { (inferInstance : Group Q) with
-    mul_comm := hcomm }
   have hcommutator_bot : ⁅(⊤ : Subgroup Q), (⊤ : Subgroup Q)⁆ = ⊥ := by
     rw [Subgroup.commutator_eq_bot_iff_le_centralizer]
     intro a _

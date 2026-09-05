@@ -1,6 +1,8 @@
 import ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.GroupLike
 import ProCGroups.CompletedGroupAlgebra.OpenFiniteQuotientTopology.OpenFiniteComparison
 
+set_option autoImplicit false
+
 /-!
 # Completed Group Algebra / Separation
 
@@ -146,9 +148,9 @@ theorem exists_completedGroupAlgebraIndexInClass_avoids_finset
   revert hs
   refine Finset.induction_on s ?_ ?_
   · intro _hs
-    letI : Nonempty (OpenNormalSubgroupInClass C G) :=
+    let : Nonempty (OpenNormalSubgroupInClass C G) :=
       HasOpenNormalBasisInClass.openNormalSubgroupInClass_nonempty hG
-    letI : Nonempty (CompletedGroupAlgebraIndexInClass G C) := inferInstance
+    let : Nonempty (CompletedGroupAlgebraIndexInClass G C) := inferInstance
     exact ⟨Classical.choice inferInstance, by simp only [Finset.notMem_empty,
         OpenSubgroup.mem_toSubgroup, IsEmpty.forall_iff, implies_true]⟩
   · intro a s has ih hs
@@ -284,11 +286,15 @@ theorem injective_toCompletedGroupAlgebraRingHom
         (completedGroupAlgebraStageMap R G U (x - y)).coeff
             (openNormalSubgroupInClassProj
               (C := ProCGroups.FiniteGroupClass.allFinite) (G := G) U g) = 0 := by
-      simpa only [MonoidAlgebra.coeff_zero, Finsupp.zero_apply] using congrArg
-        (fun z : CompletedGroupAlgebraStage R G U =>
-          z.coeff (openNormalSubgroupInClassProj
-            (C := ProCGroups.FiniteGroupClass.allFinite) (G := G) U g))
-        hstage
+      rw [hstage]
+      exact
+        (congrArg
+          (fun c : CompletedGroupAlgebraQuotient G U →₀ R =>
+            c (openNormalSubgroupInClassProj
+              (C := ProCGroups.FiniteGroupClass.allFinite) (G := G) U g))
+          (MonoidAlgebra.coeff_zero
+            (R := R) (M := CompletedGroupAlgebraQuotient G U))).trans
+          Finsupp.zero_apply
     rw [completedGroupAlgebraStageMap_coeff_of_support_separated
       (R := R) (G := G) U (x - y) g hsep] at hstage_coeff
     simpa using hstage_coeff
@@ -369,10 +375,14 @@ theorem injective_toCompletedGroupAlgebraInClassRingHom
     have hstage_coeff :
         (completedGroupAlgebraStageMapInClass C R G U (x - y)).coeff
             (openNormalSubgroupInClassProj (C := C) (G := G) U g) = 0 := by
-      simpa only [MonoidAlgebra.coeff_zero, Finsupp.zero_apply] using congrArg
-        (fun z : CompletedGroupAlgebraStageInClass C R G U =>
-          z.coeff (openNormalSubgroupInClassProj (C := C) (G := G) U g))
-        hstage
+      rw [hstage]
+      exact
+        (congrArg
+          (fun c : CompletedGroupAlgebraQuotientInClass G C U →₀ R =>
+            c (openNormalSubgroupInClassProj (C := C) (G := G) U g))
+          (MonoidAlgebra.coeff_zero
+            (R := R) (M := CompletedGroupAlgebraQuotientInClass G C U))).trans
+          Finsupp.zero_apply
     rw [completedGroupAlgebraStageMapInClass_coeff_of_support_separated
       (R := R) (G := G) C U (x - y) g hsep] at hstage_coeff
     simpa using hstage_coeff
@@ -492,7 +502,7 @@ theorem completedGroupAlgebraRingHom_ext_of_comp_toCompleted
     (hfg : f.comp (toCompletedGroupAlgebraRingHom R G) =
       g.comp (toCompletedGroupAlgebraRingHom R G)) :
     f = g := by
-  letI : T2Space (CompletedGroupAlgebraCarrier R H) :=
+  let : T2Space (CompletedGroupAlgebraCarrier R H) :=
     completedGroupAlgebra_t2Space (R := R) (G := H)
   have hdense : DenseRange (toCompletedGroupAlgebraRingHom R G) :=
     denseRange_toCompletedGroupAlgebraRingHom (R := R) (G := G)

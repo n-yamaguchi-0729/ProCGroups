@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.Continuous.ClosedGeneratedCoordinates.Equiv
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — continuous — closed generated coordinates — topology
 
@@ -141,7 +143,7 @@ theorem t2Space_closedGenDerivativeCoordinateTopologyZC_of_fundFormula
       (closedGeneratedDerivativeCoordinateTopologyProCInteger_of_fundamental_formula
         (G := G) (H := H) C psi family hfree htarget hφconv
         hH hφHconv hφHgen hfundamental) := by
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (ZCCompletedDifferentialModule C psi.toMonoidHom) :=
     closedGeneratedDerivativeCoordinateTopologyProCInteger_of_fundamental_formula
       (G := G) (H := H) C psi family hfree htarget hφconv
@@ -351,7 +353,7 @@ theorem continuous_add_closedGenDerivativeCoordinateTopologyZC_of_fundFormula
       ZCCompletedDifferentialModule C psi.toMonoidHom ×
         ZCCompletedDifferentialModule C psi.toMonoidHom =>
       p.1 + p.2) := by
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (ZCCompletedDifferentialModule C psi.toMonoidHom) :=
     closedGeneratedDerivativeCoordinateTopologyProCInteger_of_fundamental_formula
       (G := G) (H := H) C psi family hfree htarget hφconv
@@ -417,7 +419,7 @@ theorem continuous_neg_closedGenDerivativeCoordinateTopologyZC_of_fundFormula
         hH hφHconv hφHgen hfundamental
     Continuous
       (fun a : ZCCompletedDifferentialModule C psi.toMonoidHom => -a) := by
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (ZCCompletedDifferentialModule C psi.toMonoidHom) :=
     closedGeneratedDerivativeCoordinateTopologyProCInteger_of_fundamental_formula
       (G := G) (H := H) C psi family hfree htarget hφconv
@@ -475,7 +477,7 @@ theorem continuous_smul_closedGenDerivativeCoordinateTopologyZC_of_fundFormula
         ZCCompletedGroupAlgebra C H ×
           ZCCompletedDifferentialModule C psi.toMonoidHom =>
         p.1 • p.2) := by
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (ZCCompletedDifferentialModule C psi.toMonoidHom) :=
     closedGeneratedDerivativeCoordinateTopologyProCInteger_of_fundamental_formula
       (G := G) (H := H) C psi family hfree htarget hφconv

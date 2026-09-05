@@ -1,5 +1,7 @@
 import ProCGroups.NormalSubgroups.Framework
 
+set_option autoImplicit false
+
 /-!
 # Maximal normal subgroups and simple quotients
 

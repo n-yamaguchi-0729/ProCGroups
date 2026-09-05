@@ -1,8 +1,12 @@
+import Mathlib.Topology.Algebra.IsUniformGroup.Basic
+import Mathlib.Topology.Metrizable.Uniformity
 import ProCGroups.FiniteGeneration.CharacteristicChainsAndIndices
 import ProCGroups.Generation.QuotientGeneratorConvergingPairs
 import ProCGroups.LocalWeight.CardinalInvariantsAndLocalWeight
 import ProCGroups.LocalWeight.SubgroupChains
 import ProCGroups.ProC.OpenNormalSubgroups.BasisAtOne
+
+set_option autoImplicit false
 
 /-!
 # Local weight, quotients, and metrizability
@@ -49,12 +53,14 @@ theorem quotientLocalWeight_mono_of_le
     [IsTopologicalGroup G] {H K : Subgroup G} [H.Normal] [K.Normal] (hHK : H ≤ K) :
     quotientLocalWeight (G := G) K ≤ quotientLocalWeight (G := G) H := by
   let f : G ⧸ H → G ⧸ K := QuotientGroup.map H K (MonoidHom.id G) hHK
+  have hf_mk (g : G) : f (QuotientGroup.mk' H g) = QuotientGroup.mk' K g :=
+    QuotientGroup.map_mk' H K (MonoidHom.id G) hHK g
   have hfcont : Continuous f := by
     have hcomp : Continuous (f ∘ ((↑) : G → G ⧸ H)) := by
       have hcomp_eq :
           f ∘ ((↑) : G → G ⧸ H) = ((↑) : G → G ⧸ K) := by
         funext g
-        simp [f]
+        exact hf_mk g
       rw [hcomp_eq]
       exact QuotientGroup.continuous_mk
     exact (QuotientGroup.isOpenQuotientMap_mk (N := H)).continuous_comp_iff.mp hcomp
@@ -68,16 +74,16 @@ theorem quotientLocalWeight_mono_of_le
       constructor
       · rintro ⟨x, hx, rfl⟩
         rcases Quotient.exists_rep x with ⟨g, rfl⟩
-        exact ⟨g, hx, by simp only [QuotientGroup.map_mk, MonoidHom.id_apply, f]⟩
+        exact ⟨g, hx, (hf_mk g).symm⟩
       · rintro ⟨g, hg, rfl⟩
-        exact ⟨((↑) : G → G ⧸ H) g, hg, by simp only [QuotientGroup.map_mk, MonoidHom.id_apply, f]⟩
+        exact ⟨QuotientGroup.mk' H g, hg, hf_mk g⟩
     rw [himage]
     exact QuotientGroup.isOpenMap_coe _ hpreOpen
   have hle :=
     localWeightAt_image_le_of_continuous_open
       (X := G ⧸ H) (Y := G ⧸ K) (f := f) (x := 1) hfcont hfopen
-  have hf_one : f (1 : G ⧸ H) = 1 := by
-    simp [f]
+  have hf_one : f (1 : G ⧸ H) = 1 :=
+    (QuotientGroup.map H K (MonoidHom.id G) hHK).map_one
   rw [hf_one] at hle
   simpa [quotientLocalWeight] using hle
 
@@ -149,19 +155,15 @@ section FiniteGroupClassHelpers
 theorem FiniteGroupClass.allFinite_normalSubgroupClosed :
     FiniteGroupClass.NormalSubgroupClosed FiniteGroupClass.allFinite := by
   intro G _ N _ hfin
-  letI : Finite G := by
-    simpa [FiniteGroupClass.allFinite] using hfin
-  letI : Finite N := Finite.of_injective (fun n : N => (n : G)) (by
-    intro n₁ n₂ h
-    exact Subtype.ext (show (n₁ : G) = n₂ from h))
-  simpa [FiniteGroupClass.allFinite]
+  have : Finite G := hfin
+  exact inferInstanceAs (Finite N)
 
 /-- A set whose cardinality is at least \(\aleph_0\) is infinite. -/
 theorem setInfinite_of_cardinal_ge_aleph0
     {α : Type u} (X : Set α) (hX : ℵ₀ ≤ Cardinal.mk X) : Set.Infinite X := by
   classical
   by_contra hXfin
-  letI : Finite X := Set.not_infinite.mp hXfin
+  let : Finite X := Set.not_infinite.mp hXfin
   have hlt : Cardinal.mk X < ℵ₀ :=
     (Cardinal.lt_aleph0_iff_finite (α := X)).2 inferInstance
   exact not_lt_of_ge hX hlt
@@ -183,8 +185,6 @@ theorem hasCountableDescendingOpenNormalChainAtOne_of_localWeight_le_aleph0
     rcases hWbasis.2 Set.univ isOpen_univ (by simp only [mem_univ]) with ⟨U, hUrange, _hUsub⟩
     rcases hUrange with ⟨i, rfl⟩
     exact ⟨i⟩
-  letI : Countable ι := hιcount
-  letI : Nonempty ι := hιne
   obtain ⟨e, he⟩ := exists_surjective_nat ι
   let V : ℕ → OpenNormalSubgroup G := fun n => W (e n)
   let U : ℕ → OpenNormalSubgroup G :=
@@ -249,8 +249,7 @@ theorem metrizable_iff_hasCountableDescendingOpenNormalChainAtOne
     Nonempty (MetrizableSpace G) ↔ ProCGroups.ProC.HasCountableOpenNormalBasisAtOne G := by
   constructor
   · intro hmetr
-    letI : MetrizableSpace G := hmetr.some
-    letI : FirstCountableTopology G := inferInstance
+    let : MetrizableSpace G := hmetr.some
     obtain ⟨u, hu, _⟩ := IsTopologicalGroup.exists_antitone_basis_nhds_one (G := G)
     have hV :
         ∀ n, ∃ V : Set G, V ⊆ u n ∧ IsOpen V ∧ (1 : G) ∈ V := by
@@ -306,11 +305,10 @@ theorem metrizable_iff_hasCountableDescendingOpenNormalChainAtOne
       · rintro ⟨n, -, hns⟩
         exact Filter.mem_of_superset
           (IsOpen.mem_nhds (openNormalSubgroup_isOpen (G := G) (U n)) (U n).one_mem') hns
-    letI : UniformSpace G := IsTopologicalGroup.rightUniformSpace G
-    haveI : (𝓝 (1 : G)).IsCountablyGenerated :=
+    let : UniformSpace G := IsTopologicalGroup.rightUniformSpace G
+    have : (𝓝 (1 : G)).IsCountablyGenerated :=
       Filter.HasCountableBasis.isCountablyGenerated ⟨hnhds, Set.to_countable _⟩
-    haveI : IsUniformGroup G := IsUniformGroup.of_compactSpace
-    haveI : (uniformity G).IsCountablyGenerated :=
+    have : (uniformity G).IsCountablyGenerated :=
       IsUniformGroup.uniformity_countably_generated (α := G)
     exact ⟨UniformSpace.metrizableSpace (X := G)⟩
 

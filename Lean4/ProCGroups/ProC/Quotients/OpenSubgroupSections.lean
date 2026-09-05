@@ -1,6 +1,8 @@
 import Mathlib.Topology.Algebra.ProperAction.Basic
 import ProCGroups.ProC.Quotients.ClosedSubgroupNeighborhoods
 
+set_option autoImplicit false
+
 /-!
 # Sections for quotients by open subgroups
 
@@ -57,12 +59,8 @@ theorem continuous_quotientOpenSubgroupSection
     [IsTopologicalGroup G]
     (U : Subgroup G) (hU : IsOpen (U : Set G)) :
     Continuous (quotientOpenSubgroupSection U) := by
-  letI : ContinuousMul G := (‹IsTopologicalGroup G›).toContinuousMul
-  letI : ContinuousInv G := (‹IsTopologicalGroup G›).toContinuousInv
-  letI : DiscreteTopology (G ⧸ U) := QuotientGroup.discreteTopology hU
-  simpa using
-    (continuous_of_discreteTopology :
-      Continuous (quotientOpenSubgroupSection U))
+  let : DiscreteTopology (G ⧸ U) := QuotientGroup.discreteTopology hU
+  exact continuous_of_discreteTopology
 
 /--
 Helper for the finite/open case: the canonical quotient map by an open normal subgroup of a
@@ -79,10 +77,14 @@ theorem quotient_openNormalSubgroup_hasContinuousSection
         σ 1 = 1 := by
   let hU : IsOpen ((U : Subgroup G) : Set G) := openNormalSubgroup_isOpen (G := G) U
   refine ⟨quotientOpenSubgroupSection (U : Subgroup G), ?_, ?_, ?_⟩
-  · simpa using continuous_quotientOpenSubgroupSection (G := G) (U : Subgroup G) hU
-  · simpa [QuotientGroup.mk'] using
-      quotientOpenSubgroupSection_rightInverse (G := G) (U : Subgroup G)
-  · simpa using quotientOpenSubgroupSection_one (G := G) (U : Subgroup G)
+  · exact continuous_quotientOpenSubgroupSection (G := G) (U : Subgroup G) hU
+  · intro q
+    change QuotientGroup.mk (s := (U : Subgroup G))
+      (quotientOpenSubgroupSection (U : Subgroup G) q) = q
+    exact quotientOpenSubgroupSection_rightInverse (G := G) (U : Subgroup G) q
+  · change quotientOpenSubgroupSection (U : Subgroup G)
+      (QuotientGroup.mk (s := (U : Subgroup G)) (1 : G)) = 1
+    exact quotientOpenSubgroupSection_one (G := G) (U : Subgroup G)
 
 /-- Finite-index case of the section theorem for left quotient projections. -/
 theorem leftQuotientProjection_hasContinuousSection_of_openSubgroup
@@ -99,10 +101,7 @@ theorem leftQuotientProjection_hasContinuousSection_of_openSubgroup
       σ (QuotientGroup.mk (s := (H : Subgroup G)) (1 : G)) =
         QuotientGroup.mk (s := (K : Subgroup G)) (1 : G) := by
   classical
-  letI : ContinuousMul G := (‹IsTopologicalGroup G›).toContinuousMul
-  letI : ContinuousInv G := (‹IsTopologicalGroup G›).toContinuousInv
-  letI : IsClosed (((K : ClosedSubgroup G) : Subgroup G) : Set G) := K.isClosed'
-  letI : IsClosed (((H : ClosedSubgroup G) : Subgroup G) : Set G) := H.isClosed'
+  let : IsClosed (((H : ClosedSubgroup G) : Subgroup G) : Set G) := H.isClosed'
   let UH : OpenSubgroup H :=
     ⟨((K : Subgroup G).subgroupOf (H : Subgroup G)), hKopen⟩
   obtain ⟨V, hVHK⟩ :=
@@ -172,7 +171,7 @@ theorem leftQuotientProjection_hasContinuousSection_of_openSubgroup
       refine ⟨⟨QuotientGroup.mk (s := (K : Subgroup G)) g, ⟨g, hg, rfl⟩⟩, ?_⟩
       apply Subtype.ext
       rfl
-  letI : CompactSpace WK := isCompact_iff_compactSpace.mp hWKcompact
+  let : CompactSpace WK := isCompact_iff_compactSpace.mp hWKcompact
   let eTop : WK ≃ₜ BH :=
     Continuous.homeoOfEquivCompactToT2
       (f := Equiv.ofBijective πloc hπloc_bij) hπloc_continuous

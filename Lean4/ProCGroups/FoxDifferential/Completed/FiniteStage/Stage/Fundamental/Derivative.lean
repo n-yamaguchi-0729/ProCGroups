@@ -3,6 +3,8 @@ import ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Derivative.Relator
 import ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Derivative.Rules
 import ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Derivative.Quotient.Fundamental
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: finite stage — stage — fundamental — derivative
 
@@ -167,7 +169,7 @@ theorem foxAlgebraicStageGroupAlgebraDerivative_mul
           φ z * D (MonoidAlgebra.of (ModNCompletedCoeff n)
             (FreeGroup X ⧸ foxCommutatorPowerSubgroup (F := FreeGroup X) N n) q)
     change P x
-    refine MonoidAlgebra.induction_on (p := P) x ?_ ?_ ?_
+    refine MonoidAlgebra.induction_on (motive := P) x ?_ ?_ ?_
     · intro q'
       dsimp [P]
       have hprod :
@@ -226,7 +228,7 @@ theorem foxAlgebraicStageGroupAlgebraDerivative_mul
   let P := fun z : Source =>
     D (x * z) = ε z • D x + φ x * D z
   change P y
-  refine MonoidAlgebra.induction_on (p := P) y ?_ ?_ ?_
+  refine MonoidAlgebra.induction_on (motive := P) y ?_ ?_ ?_
   · intro q
     dsimp [P]
     have hε :=

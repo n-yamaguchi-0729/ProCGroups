@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.Augmentation
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — coefficient rings — prime-power augmentation ideal — stage
 
@@ -41,7 +43,7 @@ instance instFinitePrimePowerCompletedGroupAlgebraStageAugmentationIdeal
     (i : PrimePowerCompletedGroupAlgebraIndex G) :
     Finite ↥(primePowerCompletedGroupAlgebraStageAugmentationIdeal (ℓ := ℓ) (G := G) i) := by
   classical
-  letI : Finite (PrimePowerCompletedGroupAlgebraStage ℓ G i) :=
+  let : Finite (PrimePowerCompletedGroupAlgebraStage ℓ G i) :=
     instFinitePrimePowerCompletedGroupAlgebraStage (ℓ := ℓ) (G := G) i
   refine Finite.of_injective Subtype.val ?_
   intro x y hxy
@@ -135,8 +137,6 @@ def primePowerCompletedGroupAlgebraStageAugmentationIdealTransition
   intro x
   refine ⟨primePowerCompletedGroupAlgebraTransition (ℓ := ℓ) (G := G) hij x.1, ?_⟩
   rw [mem_primePowerCompletedGroupAlgebraStageAugmentationIdeal_iff]
-  letI : Fact (0 < ℓ ^ i.1) := ⟨primePower_pos ℓ i.1⟩
-  letI : Fact (0 < ℓ ^ j.1) := ⟨primePower_pos ℓ j.1⟩
   have hcomp := congrFun
     (congrArg DFunLike.coe
       (primePowerCompletedGroupAlgebraStageAugmentation_comp_transition
@@ -174,11 +174,11 @@ def primePowerCompletedGroupAlgebraAugmentationIdealSystem :
       (ℓ := ℓ) (G := G) hij
   continuous_map := by
     intro i j hij
-    letI : TopologicalSpace
+    let : TopologicalSpace
         (primePowerCompletedGroupAlgebraStageAugmentationIdeal (ℓ := ℓ) (G := G) i) := ⊥
-    letI : TopologicalSpace
+    let : TopologicalSpace
         (primePowerCompletedGroupAlgebraStageAugmentationIdeal (ℓ := ℓ) (G := G) j) := ⊥
-    letI : DiscreteTopology
+    let : DiscreteTopology
         (primePowerCompletedGroupAlgebraStageAugmentationIdeal (ℓ := ℓ) (G := G) j) := ⟨rfl⟩
     exact continuous_of_discreteTopology
   map_id := by

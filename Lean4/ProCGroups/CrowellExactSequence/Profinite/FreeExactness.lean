@@ -2,6 +2,8 @@ import ProCGroups.CrowellExactSequence.Profinite.ContinuousMagnus.Injectivity
 import ProCGroups.CrowellExactSequence.Profinite.Exactness
 import ProCGroups.FoxDifferential.Completed.FreeProC.FundamentalFormula
 
+set_option autoImplicit false
+
 /-!
 # Free pro-C Crowell exactness
 

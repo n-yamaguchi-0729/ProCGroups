@@ -2,6 +2,8 @@ import ProCGroups.CompletedGroupAlgebra.OpenFiniteQuotientTopology.OpenFiniteLim
 import Mathlib.Algebra.Ring.TransferInstance
 import Mathlib.Topology.Homeomorph.TransferInstance
 
+set_option autoImplicit false
+
 /-!
 # Completed Group Algebra / Open Finite Quotient Topology / Open Finite Comparison
 
@@ -133,7 +135,7 @@ theorem completedGAToOpenFiniteQuotientLimitRingHom_comp_toCompletedGA :
 theorem continuous_completedGroupAlgebraToOpenFiniteQuotientLimit :
     Continuous (completedGroupAlgebraToOpenFiniteQuotientLimit R G) := by
   let S := completedGroupAlgebraOpenFiniteQuotientSystem R G
-  letI : ∀ K, TopologicalSpace (CompletedGroupAlgebraOpenQuotientStage R G K) :=
+  let : ∀ K, TopologicalSpace (CompletedGroupAlgebraOpenQuotientStage R G K) :=
     fun K => (completedGroupAlgebraOpenFiniteQuotientSystem R G).topologicalSpace K
   let π : ∀ K : CompletedGroupAlgebraOpenQuotientIndex R G,
       CompletedGroupAlgebraCarrier R G →
@@ -223,9 +225,9 @@ theorem surjective_completedGroupAlgebraToOpenFiniteQuotientLimit
     [CompactSpace R] [T2Space R] [TotallyDisconnectedSpace R] [Nonempty
         (CompletedGroupAlgebraOpenQuotientIndex R G)] :
     Function.Surjective (completedGroupAlgebraToOpenFiniteQuotientLimit R G) := by
-  letI : CompactSpace (CompletedGroupAlgebraCarrier R G) :=
+  let : CompactSpace (CompletedGroupAlgebraCarrier R G) :=
     completedGroupAlgebra_compactSpace (R := R) (G := G)
-  letI : T2Space (CompletedGroupAlgebraOpenFiniteQuotientLimit R G) :=
+  let : T2Space (CompletedGroupAlgebraOpenFiniteQuotientLimit R G) :=
     completedGroupAlgebraOpenFiniteQuotientLimit_t2Space (R := R) (G := G)
   have hclosed : IsClosed (Set.range (completedGroupAlgebraToOpenFiniteQuotientLimit R G)) := by
     exact (isCompact_range
@@ -302,8 +304,8 @@ into the completed group algebra.
 theorem denseRange_toCompletedGroupAlgebra :
     DenseRange (toCompletedGroupAlgebra R G) := by
   let S := completedGroupAlgebraSystem R G
-  letI : TopologicalSpace (MonoidAlgebra R G) := ⊥
-  letI : Nonempty (CompletedGroupAlgebraIndex G) := inferInstance
+  let : TopologicalSpace (MonoidAlgebra R G) := ⊥
+  let : Nonempty (CompletedGroupAlgebraIndex G) := inferInstance
   have hdir : Directed (α := CompletedGroupAlgebraIndex G) (· ≤ ·) fun U => U :=
     directed_openNormalSubgroupInClass
       (C := ProCGroups.FiniteGroupClass.allFinite) (G := G)
@@ -533,7 +535,7 @@ theorem continuous_toCompletedGroupAlgebraRingHom_naturalTopology :
     letI : TopologicalSpace (MonoidAlgebra R G) :=
       completedGroupAlgebraNaturalTopology R G
     Continuous (toCompletedGroupAlgebraRingHom R G) := by
-  letI : TopologicalSpace (MonoidAlgebra R G) :=
+  let : TopologicalSpace (MonoidAlgebra R G) :=
     completedGroupAlgebraNaturalTopology R G
   change Continuous (toCompletedGroupAlgebra R G)
   exact (continuous_induced_dom : Continuous (toCompletedGroupAlgebra R G))
@@ -541,7 +543,7 @@ theorem continuous_toCompletedGroupAlgebraRingHom_naturalTopology :
 /-- The natural-source wrapper's canonical map is continuous by construction. -/
 theorem continuous_toCompletedGroupAlgebraNaturalSourceRingHom :
     Continuous (toCompletedGroupAlgebraNaturalSourceRingHom (R := R) (G := G)) := by
-  letI : TopologicalSpace (MonoidAlgebra R G) :=
+  let : TopologicalSpace (MonoidAlgebra R G) :=
     completedGroupAlgebraNaturalTopology R G
   exact
     (continuous_toCompletedGroupAlgebraRingHom_naturalTopology (R := R) (G := G)).comp
@@ -550,7 +552,7 @@ theorem continuous_toCompletedGroupAlgebraNaturalSourceRingHom :
 /-- The natural-source wrapper has the same dense image as the raw algebraic group ring. -/
 theorem denseRange_toCompletedGroupAlgebraNaturalSourceRingHom
     : DenseRange (toCompletedGroupAlgebraNaturalSourceRingHom (R := R) (G := G)) := by
-  letI : TopologicalSpace (MonoidAlgebra R G) :=
+  let : TopologicalSpace (MonoidAlgebra R G) :=
     completedGroupAlgebraNaturalTopology R G
   simpa [toCompletedGroupAlgebraNaturalSourceRingHom, Function.comp_def] using
     (denseRange_toCompletedGroupAlgebraRingHom (R := R) (G := G)).comp
@@ -600,12 +602,13 @@ theorem groupAlgebraOpenFiniteQuotientKernelTopology_eq_induced_toLimit :
       TopologicalSpace.induced (toCompletedGroupAlgebraOpenFiniteQuotientLimit R G)
           inferInstance := by
   let S := completedGroupAlgebraOpenFiniteQuotientSystem R G
-  letI : ∀ K : CompletedGroupAlgebraOpenQuotientIndex R G,
+  let : ∀ K : CompletedGroupAlgebraOpenQuotientIndex R G,
       TopologicalSpace (CompletedGroupAlgebraOpenQuotientStage R G K) :=
     fun K => completedGroupAlgebraOpenFiniteQuotientStageTopology R G K
   change TopologicalSpace.induced (groupAlgebraOpenFiniteQuotientProductMap R G) inferInstance =
     TopologicalSpace.induced (toCompletedGroupAlgebraOpenFiniteQuotientLimit R G)
-      (TopologicalSpace.induced (fun z : S.inverseLimit => z.1) inferInstance)
+      (TopologicalSpace.induced
+        (fun z : CompletedGroupAlgebraOpenFiniteQuotientLimit R G => z.1) inferInstance)
   rw [induced_compose]
   rfl
 
@@ -663,7 +666,7 @@ def completedGroupAlgebraNaturalSourceHomeomorphKernelSource
         @Continuous (CompletedGroupAlgebraNaturalSource R G) (MonoidAlgebra R G)
           inferInstance τnat
           (completedGroupAlgebraNaturalSourceEquiv (R := R) (G := G)) := by
-      letI : TopologicalSpace (MonoidAlgebra R G) := τnat
+      let : TopologicalSpace (MonoidAlgebra R G) := τnat
       exact
         (completedGroupAlgebraNaturalSourceHomeomorph (R := R) (G := G)).continuous
     have hid : @Continuous (MonoidAlgebra R G) (MonoidAlgebra R G) τnat τker id := by
@@ -708,7 +711,7 @@ def completedGroupAlgebraNaturalSourceHomeomorphKernelSource
         @Continuous (MonoidAlgebra R G) (CompletedGroupAlgebraNaturalSource R G)
           τnat inferInstance
           (completedGroupAlgebraNaturalSourceEquiv (R := R) (G := G)).symm := by
-      letI : TopologicalSpace (MonoidAlgebra R G) := τnat
+      let : TopologicalSpace (MonoidAlgebra R G) := τnat
       exact
         (completedGroupAlgebraNaturalSourceHomeomorph (R := R) (G := G)).symm.continuous
     have hraw :=
@@ -759,7 +762,7 @@ theorem continuous_toCompletedGroupAlgebraKernelSourceRingHom
     [CompactSpace R] [T2Space R] [TotallyDisconnectedSpace R] [Nonempty
         (CompletedGroupAlgebraOpenQuotientIndex R G)] :
     Continuous (toCompletedGroupAlgebraKernelSourceRingHom (R := R) (G := G)) := by
-  letI : TopologicalSpace (MonoidAlgebra R G) :=
+  let : TopologicalSpace (MonoidAlgebra R G) :=
     groupAlgebraOpenFiniteQuotientKernelTopology R G
   exact
     (continuous_toCompletedGroupAlgebraRingHom_kernelTopology (R := R) (G := G)).comp

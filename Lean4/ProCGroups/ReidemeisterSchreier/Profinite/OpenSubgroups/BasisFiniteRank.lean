@@ -1,5 +1,8 @@
 import ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.BasisTheorems
 import ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.RankBound
+import Mathlib.SetTheory.Cardinal.Finite
+
+set_option autoImplicit false
 
 /-!
 # Finite-rank bases of open subgroups
@@ -45,24 +48,17 @@ theorem exists_finiteIndexBasisCarrierAndMap_openSubgroup
           (C := C)
           B ↥(H : Subgroup F) μ := by
   classical
-  letI : TopologicalSpace X := ⊥
-  letI : DiscreteTopology X := ⟨rfl⟩
-  letI : Fintype X := Fintype.ofFinite X
+  let : TopologicalSpace X := ⊥
+  let : DiscreteTopology X := ⟨rfl⟩
+  let : Fintype X := Fintype.ofFinite X
   rcases
       exists_compactPointedBasis_openSubgroup_of_freeProCOnConvergingSet
         C hForm hSub hIso hExt hF H with
     ⟨κ, _hκcont, _hκallBase, _hκbase, _hκcompact, _hκclosed, hκfree⟩
-  letI : Finite (OpenSubgroupRightQuotient H) :=
-    finite_openSubgroupRightQuotient (F := F) H
-  have hRangeFin : (Set.range ι).Finite := Set.finite_range ι
-  letI : Finite (Set.range ι) := hRangeFin.to_subtype
-  letI : Fintype (Set.range ι) := Fintype.ofFinite (Set.range ι)
-  letI : Finite (OnePoint X) := Finite.of_fintype (OnePoint X)
-  letI : Finite (Set.range κ) := (Set.finite_range κ).to_subtype
   let x0 : Set.range κ :=
     ⟨κ (openSubgroupRightCoset H (1 : F), OnePoint.infty),
       ⟨(openSubgroupRightCoset H (1 : F), OnePoint.infty), rfl⟩⟩
-  letI : DiscreteTopology (Set.range κ) :=
+  let : DiscreteTopology (Set.range κ) :=
     DiscreteTopology.of_finite_of_isClosed_singleton fun _ => isClosed_singleton
   let B : Type u := {y : Set.range κ // y ≠ x0}
   let μ : B → ↥(H : Subgroup F) := fun y => y.1.1
@@ -108,8 +104,8 @@ private theorem exists_exactGeneratingFamily_openSubgroup_of_finiteBasis_ulift
   rcases exists_finiteIndexBasisCarrierAndMap_openSubgroup
       C hForm hSub hIso hExt hF H with
     ⟨B, hBfin, μ, hμfree⟩
-  letI : Finite B := hBfin
-  letI : Fintype B := Fintype.ofFinite B
+  let : Finite B := hBfin
+  let : Fintype B := Fintype.ofFinite B
   let Fdata : EpimorphicallyFreeProCGroupOnConvergingSetData
       (C := C) :=
     { basis := B
@@ -117,7 +113,6 @@ private theorem exists_exactGeneratingFamily_openSubgroup_of_finiteBasis_ulift
         ProCGrp.of C (ProfiniteGrp.of ↥(H : Subgroup F)) hμfree.hasOpenNormalBasisInClass
       inclusion := μ
       isEpimorphicallyFree := hμfree }
-  letI : Fintype X := Fintype.ofFinite X
   let Fambient : EpimorphicallyFreeProCGroupOnConvergingSetData
       (C := C) :=
     { basis := X
@@ -130,7 +125,7 @@ private theorem exists_exactGeneratingFamily_openSubgroup_of_finiteBasis_ulift
   have hdF : Generation.topologicalRank F = Nat.card X := by
     calc
       Generation.topologicalRank F = Cardinal.mk X := hAmbientRank.symm
-      _ = (Nat.card X : Cardinal) := by simp only [Cardinal.mk_fintype, Nat.card_eq_fintype_card]
+      _ = (Nat.card X : Cardinal) := (Nat.cast_card (α := X)).symm
   have hdHle :
       Generation.topologicalRank ↥(H : Subgroup F) ≤ (n : Cardinal) := by
     simpa [n] using
@@ -245,8 +240,7 @@ theorem exists_basis_openSubgroup_of_extensionClosed_finiteRank
   rcases exists_finiteIndexBasisCarrierAndMap_openSubgroup
       C hForm hSub hIso' hExt' hF H with
     ⟨B, hBfin, μ, hμfree⟩
-  letI : Finite B := hBfin
-  letI : Fintype B := Fintype.ofFinite B
+  let : Finite B := hBfin
   let Fdata : EpimorphicallyFreeProCGroupOnConvergingSetData
       (C := C) :=
     { basis := B
@@ -254,7 +248,6 @@ theorem exists_basis_openSubgroup_of_extensionClosed_finiteRank
         ProCGrp.of C (ProfiniteGrp.of ↥(H : Subgroup F)) hμfree.hasOpenNormalBasisInClass
       inclusion := μ
       isEpimorphicallyFree := hμfree }
-  letI : Fintype X := Fintype.ofFinite X
   let Fambient : EpimorphicallyFreeProCGroupOnConvergingSetData
       (C := C) :=
     { basis := X
@@ -267,7 +260,7 @@ theorem exists_basis_openSubgroup_of_extensionClosed_finiteRank
   have hdF : Generation.topologicalRank F = Nat.card X := by
     calc
       Generation.topologicalRank F = Cardinal.mk X := hAmbientRank.symm
-      _ = (Nat.card X : Cardinal) := by simp only [Cardinal.mk_fintype, Nat.card_eq_fintype_card]
+      _ = (Nat.card X : Cardinal) := (Nat.cast_card (α := X)).symm
   have hdHle :
       Generation.topologicalRank ↥(H : Subgroup F) ≤ (n : Cardinal) := by
     simpa [n] using
@@ -281,9 +274,8 @@ theorem exists_basis_openSubgroup_of_extensionClosed_finiteRank
   rcases exists_exactGeneratingFamily_openSubgroup_of_finiteBasis_ulift
       C hForm hSub hIso' hQuot hExt' hcyc hF H with
     ⟨κ, hκ⟩
-  letI : TopologicalSpace (FreeGroup (ULift.{u} (Fin n))) := ⊥
-  letI : DiscreteTopology (FreeGroup (ULift.{u} (Fin n))) := ⟨rfl⟩
-  letI : IsTopologicalGroup (FreeGroup (ULift.{u} (Fin n))) := by infer_instance
+  let : TopologicalSpace (FreeGroup (ULift.{u} (Fin n))) := ⊥
+  let : DiscreteTopology (FreeGroup (ULift.{u} (Fin n))) := ⟨rfl⟩
   let φ : FreeGroup (ULift.{u} (Fin n)) →ₜ* ↥(H : Subgroup F) :=
     { toMonoidHom := FreeGroup.lift κ
       continuous_toFun := continuous_of_discreteTopology }
@@ -303,17 +295,15 @@ theorem exists_basis_openSubgroup_of_extensionClosed_finiteRank
           intro a b
           ext
           simp only [Subgroup.coe_mul, map_mul]}
-    letI : TopologicalSpace (FreeGroup X) := ⊥
-    letI : DiscreteTopology (FreeGroup X) := ⟨rfl⟩
-    letI : IsTopologicalGroup (FreeGroup X) := by infer_instance
+    let : TopologicalSpace (FreeGroup X) := ⊥
+    let : DiscreteTopology (FreeGroup X) := ⟨rfl⟩
     have hβFdense : DenseRange βF :=
       denseRange_freeGroupLift_of_topologicallyGenerates
         (F := F) (X := X) hF.generates_range
     have hψdense : DenseRange ψ := by
       exact denseRange_comapMap_of_openSubgroup (φ := βF) hβFdense H.isOpen'
-    letI : TopologicalSpace (FreeGroup Y) := ⊥
-    letI : DiscreteTopology (FreeGroup Y) := ⟨rfl⟩
-    letI : IsTopologicalGroup (FreeGroup Y) := by infer_instance
+    let : TopologicalSpace (FreeGroup Y) := ⊥
+    let : DiscreteTopology (FreeGroup Y) := ⟨rfl⟩
     let bY : FreeGroupBasis Y L := Classical.choice hYfree
     let eY : FreeGroup Y ≃* L := bY.repr.symm
     let φY : FreeGroup Y →ₜ* ↥(H : Subgroup F) :=

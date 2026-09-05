@@ -1,5 +1,8 @@
-import ProCGroups.CrowellExactSequence.Profinite.SequenceMaps
+import ProCGroups.CrowellExactSequence.Profinite.SequenceMaps.Basic
+import ProCGroups.CrowellExactSequence.Profinite.SequenceMaps.Exactness
 import ProCGroups.ProC.Kernels
+
+set_option autoImplicit false
 
 /-!
 # Boundary maps from the profinite kernel
@@ -227,7 +230,7 @@ theorem completedBoundaryKillsTopologicalCommutatorProCInteger_of_continuous
       Continuous (completedKernelBoundaryProCInteger (G := G) (H := H) C psi)) :
     Subgroup.topologicalClosure (commutator (ProfiniteKernelSubgroup psi)) <=
       (completedKernelBoundaryProCInteger (G := G) (H := H) C psi).ker := by
-  letI : T1Space (Multiplicative (ZCCompletedDifferentialModule C psi.toMonoidHom)) := by
+  let : T1Space (Multiplicative (ZCCompletedDifferentialModule C psi.toMonoidHom)) := by
     change T1Space (ZCCompletedDifferentialModule C psi.toMonoidHom)
     infer_instance
   let f : ProfiniteKernelSubgroup psi →ₜ*

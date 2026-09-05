@@ -1,5 +1,9 @@
-import Mathlib.Topology.Category.LightProfinite.Basic
+import Mathlib.Data.Set.Countable
+import Mathlib.Topology.ClopenBox
+import Mathlib.Topology.DiscreteQuotient
 import ProCGroups.InverseSystems.ProfiniteSpace
+
+set_option autoImplicit false
 
 /-!
 # Countable inverse-system models of profinite spaces
@@ -24,10 +28,10 @@ theorem exists_nat_inverseSystem_of_secondCountable (X : Type w) [TopologicalSpa
       (∀ n, Finite (S.X n)) ∧ (∀ n, DiscreteTopology (S.X n)) ∧
       Nonempty (X ≃ₜ S.inverseLimit) := by
   classical
-  let _ : Countable (DiscreteQuotient X) := by
-    letI : Countable (TopologicalSpace.Clopens X) := by
-      rw [TopologicalSpace.Clopens.countable_iff_secondCountable]
-      infer_instance
+  let : Countable (DiscreteQuotient X) := by
+    have : Countable (TopologicalSpace.Clopens X) :=
+      TopologicalSpace.Clopens.countable_iff_secondCountable.mpr
+        (inferInstance : SecondCountableTopology X)
     exact (DiscreteQuotient.finsetClopens_inj X).countable
   let e : ℕ → DiscreteQuotient X :=
     Set.enumerateCountable (s := (Set.univ : Set (DiscreteQuotient X))) Set.countable_univ ⊤
@@ -60,15 +64,14 @@ theorem exists_nat_inverseSystem_of_secondCountable (X : Type w) [TopologicalSpa
     intro a b
     exact ⟨max a b, le_max_left _ _, le_max_right _ _⟩
   have hrange : Set.range e = (Set.univ : Set (DiscreteQuotient X)) := by
-    simpa [e] using
-      (Set.range_enumerateCountable_of_mem
-        (s := (Set.univ : Set (DiscreteQuotient X))) Set.countable_univ
-        (default := (⊤ : DiscreteQuotient X)) (by simp only [mem_univ]))
+    exact Set.range_enumerateCountable_of_mem
+      (s := (Set.univ : Set (DiscreteQuotient X))) Set.countable_univ
+      (default := (⊤ : DiscreteQuotient X)) (Set.mem_univ (⊤ : DiscreteQuotient X))
   have hcofinal : ∀ Q : OrderDual (DiscreteQuotient X), ∃ n : ℕ, Q ≤ σ n := by
     intro Q
-    have hQ : (show DiscreteQuotient X from Q) ∈ Set.range e := by
+    have hQ : (Q : DiscreteQuotient X) ∈ Set.range e := by
       rw [hrange]
-      simp only [mem_univ]
+      exact Set.mem_univ (Q : DiscreteQuotient X)
     rcases hQ with ⟨n, rfl⟩
     refine ⟨n, ?_⟩
     change q n ≤ e n
@@ -77,19 +80,11 @@ theorem exists_nat_inverseSystem_of_secondCountable (X : Type w) [TopologicalSpa
   let S : InverseSystem (I := ℕ) := S0.reindex σ hσ
   refine ⟨S, ?_, ?_, ?_⟩
   · intro n
-    have hfiniteQ : ∀ A : DiscreteQuotient X, Finite ↥A := by
-      intro A
-      infer_instance
-    change Finite (Quotient (q n).toSetoid)
+    have hfiniteQ (A : DiscreteQuotient X) : Finite ↥A := inferInstance
     exact hfiniteQ (q n)
   · intro n
-    have hdiscQ : ∀ A : DiscreteQuotient X, DiscreteTopology ↥A := by
-      intro A
-      infer_instance
-    change
-      @DiscreteTopology (Quotient (q n).toSetoid)
-        (q n).instTopologicalSpaceQuotient
-    exact hdiscQ (q n)
+    have hdiscreteQ (A : DiscreteQuotient X) : DiscreteTopology ↥A := inferInstance
+    exact hdiscreteQ (q n)
   · refine ⟨(homeomorph_inverseLimit_discreteQuotientSystem X).trans ?_⟩
     exact S0.homeomorph_reindex_cofinal σ hσ hdirNat hcofinal
 
@@ -107,20 +102,16 @@ theorem secondCountable_iff_exists_countableLinearOrder_finiteDiscreteInverseSys
             Nonempty (X ≃ₜ S.inverseLimit) := by
   constructor
   · intro hsecond
-    letI : SecondCountableTopology X := hsecond
+    let : SecondCountableTopology X := hsecond
     rcases exists_nat_inverseSystem_of_secondCountable X with ⟨S, hfinite, hdisc, hhomeo⟩
     exact ⟨ℕ, inferInstance, inferInstance, S, hfinite, hdisc, hhomeo⟩
-  · rintro ⟨J, _hJord, hJcount, S, hfinite, hdisc, ⟨e⟩⟩
-    letI : Countable J := hJcount
-    letI : ∀ j, SecondCountableTopology (S.X j) := fun j => by
-      let _ : Finite (S.X j) := hfinite j
-      let _ : DiscreteTopology (S.X j) := hdisc j
-      infer_instance
-    letI : SecondCountableTopology (∀ j, S.X j) := inferInstance
-    letI : SecondCountableTopology S.inverseLimit := by
-      change SecondCountableTopology {x : ∀ j, S.X j // S.Compatible x}
-      exact TopologicalSpace.Subtype.secondCountableTopology _
-    letI : SecondCountableTopology X := e.secondCountableTopology
-    exact inferInstance
+  · rintro ⟨J, _hJord, hJcount, S, hfinite, _hdisc, ⟨e⟩⟩
+    let : Countable J := hJcount
+    let : ∀ j, SecondCountableTopology (S.X j) := fun j => by
+      have : Finite (S.X j) := hfinite j
+      exact Finite.toSecondCountableTopology
+    have : SecondCountableTopology S.inverseLimit :=
+      TopologicalSpace.Subtype.secondCountableTopology {x : ∀ j, S.X j | S.Compatible x}
+    exact e.secondCountableTopology
 
 end ProCGroups.InverseSystems

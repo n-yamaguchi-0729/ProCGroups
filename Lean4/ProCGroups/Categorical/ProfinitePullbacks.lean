@@ -3,6 +3,8 @@ import ProCGroups.Profinite.Basic
 import ProCGroups.Topologies.ContinuousMulEquiv
 import ProCGroups.TopologicalGroups
 
+set_option autoImplicit false
+
 /-!
 # Continuous pullbacks of topological groups
 
@@ -19,7 +21,7 @@ universe u v
 
 section
 
-open ContinuousMonoidHom
+open _root_.ProCGroups.ContinuousMonoidHom
 
 variable {A G H H₁ H₂ K : Type u}
 

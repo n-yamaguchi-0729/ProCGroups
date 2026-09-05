@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Discrete.GroupRing
 import Mathlib.Algebra.Ring.GeomSum
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: right derivative — geometric series
 

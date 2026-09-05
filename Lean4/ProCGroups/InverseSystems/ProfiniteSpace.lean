@@ -1,6 +1,9 @@
-import Mathlib.Topology.Category.Profinite.Basic
+import Mathlib.Topology.Homeomorph.Lemmas
 import Mathlib.Topology.DiscreteQuotient
+import Mathlib.Topology.Separation.Profinite
 import ProCGroups.InverseSystems.CofinalityAndDensity
+
+set_option autoImplicit false
 
 /-!
 # Profinite spaces as limits of finite discrete quotients
@@ -56,22 +59,10 @@ private theorem compatibleMaps_discreteQuotientProj (X : Type w) [TopologicalSpa
 noncomputable def homeomorph_inverseLimit_discreteQuotientSystem (X : Type w)
     [TopologicalSpace X] [CompactSpace X] [T2Space X] [TotallyDisconnectedSpace X] :
     X ≃ₜ (discreteQuotientSystem X).inverseLimit := by
-  let S := discreteQuotientSystem X
-  letI : ∀ Q : OrderDual (DiscreteQuotient X), CompactSpace (S.X Q) := fun Q => by
-    change CompactSpace (Quotient (show DiscreteQuotient X from Q).toSetoid)
-    let _ : Fintype (Quotient (show DiscreteQuotient X from Q).toSetoid) := by
-      have : Finite (show DiscreteQuotient X from Q) := inferInstance
-      exact Fintype.ofFinite _
-    infer_instance
+  let S : InverseSystem (I := OrderDual (DiscreteQuotient X)) := discreteQuotientSystem X
   letI : ∀ Q : OrderDual (DiscreteQuotient X), T2Space (S.X Q) := fun Q => by
     change T2Space (Quotient (show DiscreteQuotient X from Q).toSetoid)
     infer_instance
-  letI : ∀ Q : OrderDual (DiscreteQuotient X), TotallyDisconnectedSpace (S.X Q) := fun Q => by
-    change TotallyDisconnectedSpace (Quotient (show DiscreteQuotient X from Q).toSetoid)
-    infer_instance
-  letI : CompactSpace S.inverseLimit := inferInstance
-  letI : T2Space S.inverseLimit := S.t2Space_inverseLimit
-  letI : TotallyDisconnectedSpace S.inverseLimit := S.totallyDisconnectedSpace_inverseLimit
   let f : X → S.inverseLimit :=
     S.inverseLimitLift (fun Q : OrderDual (DiscreteQuotient X) => (Q : DiscreteQuotient X).proj)
       (compatibleMaps_discreteQuotientProj X)
@@ -105,8 +96,8 @@ noncomputable def homeomorph_inverseLimit_discreteQuotientSystem (X : Type w)
     change (show DiscreteQuotient X from Q).proj x =
       qs (show DiscreteQuotient X from Q)
     exact hQ
-  let fHom : Profinite.of X ⟶ Profinite.of S.inverseLimit := CompHausLike.ofHom _ ⟨f, hf_continuous⟩
-  exact CompHausLike.homeoOfIso (CompHausLike.isoOfBijective fHom ⟨hf_inj, hf_surj⟩)
+  exact Continuous.homeoOfEquivCompactToT2
+    (f := Equiv.ofBijective f ⟨hf_inj, hf_surj⟩) hf_continuous
 
 /--
 The homeomorphism from a compact Hausdorff totally disconnected space to the inverse limit of

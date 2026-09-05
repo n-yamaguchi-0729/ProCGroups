@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.Residue.FreeGroup.Universal
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — residue — free group — coordinates
 
@@ -181,7 +183,7 @@ def residueFreeFoxCoordinatesLinearEquivDifferential
     (n : ℕ) (ψ : FreeGroup X →* H) :
     ResidueFreeFoxCoordinates n H X ≃ₗ[ResidueGroupRing n H]
       ResidueDifferentialModule n ψ := by
-  refine LinearEquiv.ofLinear
+  refine LinearEquiv.ofLinearMap
     (residueFreeFoxCoordinatesLinearMap n ψ)
     (residueDifferentialToFreeFoxCoordinates n ψ)
     ?_ ?_

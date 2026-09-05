@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.DifferentialModule.Identity
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — differential module — map — comap
 
@@ -53,8 +55,9 @@ def completedGroupAlgebraComapIndex
     change ψ (a⁻¹ * b) ∈ (V : Subgroup H)
     have hv : (ψ a)⁻¹ * ψ b ∈ (V : Subgroup H) := QuotientGroup.eq.1 hxy
     simpa using hv
-  letI : Finite (H ⧸ (V : Subgroup H)) := (OrderDual.ofDual U).2
-  exact Finite.of_injective f hf
+  exact
+    letI : Finite (H ⧸ (V : Subgroup H)) := (OrderDual.ofDual U).2
+    Finite.of_injective f hf
 
 omit [IsTopologicalGroup G] in
 /-- The subgroup underlying the comap index is the subgroup-theoretic comap. -/

@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Completed.Continuous.Topology
 import ProCGroups.ProC.Kernels
 
+set_option autoImplicit false
+
 /-!
 # Continuous Fox formulas from topological generators
 

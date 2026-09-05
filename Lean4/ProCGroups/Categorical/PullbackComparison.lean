@@ -1,5 +1,7 @@
 import ProCGroups.Categorical.ProfinitePullbacks
 
+set_option autoImplicit false
+
 /-!
 # Pro C Groups / Categorical / Pullback Comparison
 
@@ -14,7 +16,7 @@ universe u
 
 section
 
-open ContinuousMonoidHom
+open _root_.ProCGroups.ContinuousMonoidHom
 
 variable {G H H₁ H₂ : Type u}
 variable [Group G] [Group H] [Group H₁] [Group H₂]

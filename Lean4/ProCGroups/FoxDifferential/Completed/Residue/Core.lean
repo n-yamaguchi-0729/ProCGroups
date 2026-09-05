@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Common.CrossedDifferentialModule
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraModN.System.CompletionMap
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — residue — core
 

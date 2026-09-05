@@ -1,5 +1,7 @@
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Operations
 
+set_option autoImplicit false
+
 /-!
 # Conjugated products and presentation endomorphisms
 

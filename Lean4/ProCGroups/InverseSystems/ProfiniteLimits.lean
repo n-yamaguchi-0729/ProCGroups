@@ -1,6 +1,8 @@
 import ProCGroups.InverseSystems.CofinalityAndDensity
 import ProCGroups.Profinite.Basic
 
+set_option autoImplicit false
+
 /-!
 # Projection kernels in profinite inverse limits
 

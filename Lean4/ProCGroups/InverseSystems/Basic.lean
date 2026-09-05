@@ -1,6 +1,8 @@
 import Mathlib.Topology.Algebra.Ring.Basic
 import Mathlib.Algebra.Module.Pi
 
+set_option autoImplicit false
+
 /-!
 # Concrete inverse systems and their limits
 
@@ -368,7 +370,7 @@ theorem isInverseLimit_projection : S.IsInverseLimit S.projection := by
 /-- The inverse limit is a closed subspace of the product. -/
 theorem isClosed_setOf_compatible [∀ i, T2Space (S.X i)] :
     IsClosed {x : ∀ i, S.X i | S.Compatible x} := by
-  simp only [Compatible, setOf_forall]
+  simp only [Compatible, Set.ofPred_forall]
   refine isClosed_iInter fun i => isClosed_iInter fun j => isClosed_iInter fun hij => ?_
   exact isClosed_eq ((S.continuous_map hij).comp (continuous_apply j)) (continuous_apply i)
 
@@ -889,10 +891,7 @@ rings.
 -/
 instance instIsTopologicalRingRingInverseLimit [∀ i, IsTopologicalRing (S.X i)] :
     IsTopologicalRing S.inverseLimit := by
-  letI : IsTopologicalAddGroup S.inverseLimit :=
-    instIsTopologicalAddGroupAddInverseLimit S
-  letI : ContinuousMul S.inverseLimit := instContinuousMulRingInverseLimit S
-  letI : IsTopologicalSemiring S.inverseLimit := IsTopologicalSemiring.mk
+  let : IsTopologicalSemiring S.inverseLimit := IsTopologicalSemiring.mk
   exact IsTopologicalRing.mk
 
 /-- The canonical projection from a ring-valued inverse limit is bundled as a ring homomorphism. -/

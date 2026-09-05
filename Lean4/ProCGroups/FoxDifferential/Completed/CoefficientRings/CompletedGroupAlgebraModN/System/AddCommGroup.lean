@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraModN.System.Basic
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: coefficient rings — mod-\(n\) completed group algebra — system — add comm group
 
@@ -80,14 +82,14 @@ instance instAddZeroClassModNCompletedGroupAlgebra :
     change (0 : ModNCompletedGroupAlgebraStage n G U) +
       (show ModNCompletedGroupAlgebraStage n G U from x.1 U) =
         (show ModNCompletedGroupAlgebraStage n G U from x.1 U)
-    simp only [zero_add]
+    exact zero_add (show ModNCompletedGroupAlgebraStage n G U from x.1 U)
   add_zero x := by
     apply Subtype.ext
     funext U
     change (show ModNCompletedGroupAlgebraStage n G U from x.1 U) +
       (0 : ModNCompletedGroupAlgebraStage n G U) =
         (show ModNCompletedGroupAlgebraStage n G U from x.1 U)
-    simp only [add_zero]
+    exact add_zero (show ModNCompletedGroupAlgebraStage n G U from x.1 U)
 
 /--
 Negation on the mod-\(n\) completed group algebra is defined coordinatewise through finite-stage

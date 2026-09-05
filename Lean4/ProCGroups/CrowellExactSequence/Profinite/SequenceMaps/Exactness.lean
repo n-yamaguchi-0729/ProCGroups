@@ -3,6 +3,8 @@ import ProCGroups.CrowellExactSequence.Profinite.SequenceMaps.Basic
 import ProCGroups.FoxDifferential.Completed.Continuous.ClosedGeneratedCoordinates.Topology
 import ProCGroups.FoxDifferential.Completed.Continuous.TailExactness
 
+set_option autoImplicit false
+
 /-!
 # Exactness criteria for profinite Crowell sequence maps
 
@@ -356,7 +358,7 @@ theorem exact_presentedCompletedToZC_of_boundary_family_topologicallyGenerates
       (zcCompletedGroupAlgebraAugmentation C H :
         ZCCompletedGroupAlgebra C H -> ZCCoeff C) := by
   classical
-  letI : Fintype X := Fintype.ofFinite X
+  let : Fintype X := Fintype.ofFinite X
   exact
     exact_presentedCompletedToZC_of_blanchfieldLyndonFiniteFamilyMap_boundary_family
       (G := G) (H := H) C psi family
@@ -481,7 +483,7 @@ theorem exact_presentedSepToZC_of_boundary_family_topologicallyGenerates
       (zcCompletedGroupAlgebraAugmentation C H :
         ZCCompletedGroupAlgebra C H -> ZCCoeff C) := by
   classical
-  letI : Fintype X := Fintype.ofFinite X
+  let : Fintype X := Fintype.ofFinite X
   exact
     exact_presentedSepToZC_of_blanchfieldLyndonFiniteFamilyMap_boundary_family
       (G := G) (H := H) C hC psi family

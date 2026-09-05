@@ -2,6 +2,8 @@ import ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.Map
 import ProCGroups.CompletedGroupAlgebra.InClassFunctoriality.Maps
 import ProCGroups.CompletedGroupAlgebra.OpenFiniteQuotientTopology.OpenFiniteComparison
 
+set_option autoImplicit false
+
 /-!
 # Completed Group Algebra / All Finite Functoriality / Within a Class Naturality
 
@@ -36,7 +38,7 @@ theorem completedGroupAlgebraRingHomToInClass_ext_of_comp_toCompleted
     (hfg : f.comp (toCompletedGroupAlgebraRingHom R G) =
       g.comp (toCompletedGroupAlgebraRingHom R G)) :
     f = g := by
-  letI : T2Space (CompletedGroupAlgebraInClass C R H) :=
+  let : T2Space (CompletedGroupAlgebraInClass C R H) :=
     completedGroupAlgebraInClass_t2Space (R := R) (G := H) C
   have hdense : DenseRange (toCompletedGroupAlgebraRingHom R G) :=
     denseRange_toCompletedGroupAlgebraRingHom (R := R) (G := G)

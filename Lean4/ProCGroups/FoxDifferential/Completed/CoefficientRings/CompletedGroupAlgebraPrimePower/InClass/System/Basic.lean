@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.Basic.Augmentation
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.Basic.StageCoeffMap.Coeff
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: prime-power completed group algebra — in class — system — basic
 
@@ -45,7 +47,7 @@ theorem finite_primePowerCompletedGroupAlgebraStageInClass
     (C : ProCGroups.FiniteGroupClass.{u})
     (i : PrimePowerCompletedGroupAlgebraIndexInClass G C) :
     Finite (PrimePowerCompletedGroupAlgebraStageInClass ℓ G C i) := by
-  letI : Fact (0 < ℓ ^ i.1) := ⟨primePower_pos ℓ i.1⟩
+  let : Fact (0 < ℓ ^ i.1) := ⟨primePower_pos ℓ i.1⟩
   exact finite_modNCompletedGroupAlgebraStageInClass
     (n := ℓ ^ i.1) (G := G) C i.2
 
@@ -323,9 +325,9 @@ def primePowerCompletedGroupAlgebraSystemInClass
     primePowerCompletedGroupAlgebraTransitionInClass (ℓ := ℓ) (G := G) C hij
   continuous_map := by
     intro i j hij
-    letI : TopologicalSpace (PrimePowerCompletedGroupAlgebraStageInClass ℓ G C i) := ⊥
-    letI : TopologicalSpace (PrimePowerCompletedGroupAlgebraStageInClass ℓ G C j) := ⊥
-    letI : DiscreteTopology (PrimePowerCompletedGroupAlgebraStageInClass ℓ G C j) := ⟨rfl⟩
+    let : TopologicalSpace (PrimePowerCompletedGroupAlgebraStageInClass ℓ G C i) := ⊥
+    let : TopologicalSpace (PrimePowerCompletedGroupAlgebraStageInClass ℓ G C j) := ⊥
+    let : DiscreteTopology (PrimePowerCompletedGroupAlgebraStageInClass ℓ G C j) := ⟨rfl⟩
     exact continuous_of_discreteTopology
   map_id := by
     intro i
@@ -418,19 +420,19 @@ theorem primePowerCompletedGroupAlgebraProjectionInClass_surjective
     Function.Surjective
       (primePowerCompletedGroupAlgebraProjectionInClass (ℓ := ℓ) (G := G) C i) := by
   let S := primePowerCompletedGroupAlgebraSystemInClass ℓ G C
-  letI : ∀ i : PrimePowerCompletedGroupAlgebraIndexInClass G C, TopologicalSpace (S.X i) :=
+  let : ∀ i : PrimePowerCompletedGroupAlgebraIndexInClass G C, TopologicalSpace (S.X i) :=
     fun i => S.topologicalSpace i
-  letI : ∀ i : PrimePowerCompletedGroupAlgebraIndexInClass G C, DiscreteTopology (S.X i) :=
+  let : ∀ i : PrimePowerCompletedGroupAlgebraIndexInClass G C, DiscreteTopology (S.X i) :=
     fun _ => ⟨rfl⟩
-  letI : ∀ i : PrimePowerCompletedGroupAlgebraIndexInClass G C, CompactSpace (S.X i) :=
+  let : ∀ i : PrimePowerCompletedGroupAlgebraIndexInClass G C, CompactSpace (S.X i) :=
     fun i => by
-      letI : Finite (S.X i) := by
+      let : Finite (S.X i) := by
         dsimp [S, primePowerCompletedGroupAlgebraSystemInClass]
         exact finite_primePowerCompletedGroupAlgebraStageInClass
           (ℓ := ℓ) (G := G) C i
-      letI : Fintype (S.X i) := Fintype.ofFinite _
+      let : Fintype (S.X i) := Fintype.ofFinite _
       infer_instance
-  letI : ∀ i : PrimePowerCompletedGroupAlgebraIndexInClass G C, T2Space (S.X i) :=
+  let : ∀ i : PrimePowerCompletedGroupAlgebraIndexInClass G C, T2Space (S.X i) :=
     fun _ => inferInstance
   change Function.Surjective (S.projection i)
   exact

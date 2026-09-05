@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Discrete.KernelBoundary.Homology
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: discrete — kernel boundary — magnus kernel
 
@@ -29,8 +31,8 @@ theorem kernelAbelianizationBoundaryLinearOfSurjective_injective
     (hψ : Function.Surjective ψ) :
     letI := kernelAbelianizationModuleOfSurjective ψ hψ
     Function.Injective (kernelAbelianizationBoundaryLinearOfSurjective ψ hψ) := by
-  letI := kernelAbelianizationModuleOfSurjective ψ hψ
-  letI := kernelAugmentationIdealCoinvariantsModuleOfSurjective (ψ := ψ) hψ
+  let := kernelAbelianizationModuleOfSurjective ψ hψ
+  let := kernelAugmentationIdealCoinvariantsModuleOfSurjective (ψ := ψ) hψ
   intro x y hxy
   have hcoinv :
       kernelAbelianizationToCoinvariantsLinear (ψ := ψ) x =
@@ -60,7 +62,7 @@ ordinary commutator subgroup of \(\ker \psi\).
 theorem mem_commutator_ker_of_d_eq_zero_of_surjective
     (hψ : Function.Surjective ψ) (n : ψ.ker) (hn : universalDifferential ψ n.1 = 0) :
     n ∈ commutator ψ.ker := by
-  letI := kernelAbelianizationModuleOfSurjective ψ hψ
+  let := kernelAbelianizationModuleOfSurjective ψ hψ
   have hboundary_zero :
       kernelAbelianizationBoundaryLinearOfSurjective ψ hψ
           (Additive.ofMul (Abelianization.of n)) =

@@ -1,5 +1,7 @@
 import ProCGroups.ProC.Subgroups.Closed
 
+set_option autoImplicit false
+
 /-!
 # Closed subgroups of products of pro-\(C\) groups
 
@@ -36,15 +38,14 @@ theorem HasOpenNormalBasisInClass.of_closedSubgroup_pi
     HasOpenNormalBasisInClass C ↥H := by
   have hpi : HasOpenNormalBasisInClass C ((i : ι) → Gs i) :=
     HasOpenNormalBasisInClass.pi (C := C) (α := ι) (β := Gs) hForm hGs
-  simpa using
-    (HasOpenNormalBasisInClass.of_isClosed_subgroup
+  exact HasOpenNormalBasisInClass.of_isClosed_subgroup
       (C := C)
       (G := ((i : ι) → Gs i))
       (H := H)
       hForm.isomClosed
       hSub
       (hG := hpi)
-      hH)
+      hH
 
 omit [∀ i, IsTopologicalGroup (Gs i)] in
 /-- A profinite group embedded as a subdirect product of groups with open-normal \(C\)-bases again
@@ -105,7 +106,7 @@ theorem HasOpenNormalBasisInClass.of_subdirectProduct
     iInf fun j : J =>
       ((OpenNormalSubgroup.comap (ψ j) ((continuous_apply j.1).comp hφcont) (V j) :
         OpenNormalSubgroup H) : Subgroup H)
-  letI : M.Normal := by
+  let : M.Normal := by
     exact Subgroup.normal_iInf_normal fun j : J =>
       (OpenNormalSubgroup.comap (ψ j) ((continuous_apply j.1).comp hφcont) (V j)).isNormal'
   have hMU : M ≤ (U : Subgroup H) := by
@@ -129,12 +130,12 @@ theorem HasOpenNormalBasisInClass.of_subdirectProduct
     have hxW :
         ((e x : ↥(φ.range : Subgroup ((i : ι) → Gs i))) : ((i : ι) → Gs i)) ∈ W := by
       apply hW'W
-      simpa [e, φrange] using hxW'
+      exact hxW'
     rcases hWU hxW with ⟨u, huU, hux⟩
     have hxu : x = u := by
       apply hφinj
       exact congrArg Subtype.val hux.symm
-    simpa [hxu] using huU
+    exact hxu.symm ▸ huU
   let φM : H →* ∀ j : J, Gs j ⧸ (V j : Subgroup (Gs j)) :=
     { toFun := fun h j => QuotientGroup.mk' (V j : Subgroup (Gs j)) (φ h j)
       map_one' := by
@@ -179,7 +180,7 @@ theorem HasOpenNormalBasisInClass.of_subdirectProduct
     · intro hx
       have hxker :
           (fun j : J => QuotientGroup.mk' (V j : Subgroup (Gs j)) (φ x j)) = 1 := by
-        simpa [MonoidHom.mem_ker, φM] using hx
+        exact MonoidHom.mem_ker.mp hx
       have hxM :
           ∀ j : J,
             x ∈ ((OpenNormalSubgroup.comap (ψ j) ((continuous_apply j.1).comp hφcont) (V j) :

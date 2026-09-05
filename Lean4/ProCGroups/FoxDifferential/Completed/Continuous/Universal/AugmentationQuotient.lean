@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Completed.Continuous.Universal.NaturalTopology
 import ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.AugmentationIdeal.Kernel
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — continuous — universal — augmentation quotient
 
@@ -104,7 +106,7 @@ theorem zcCompletedGAStageAugmentationIdeal_identityBoundary_monoidAlgebraToIden
           (G := CompletedGroupAlgebraQuotientInClass G C i.2)
           (x : ZCCompletedGroupAlgebraStage C G i)) =
       (x : ZCCompletedGroupAlgebraStage C G i) := by
-  letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+  let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
   have hxaug :
       (MonoidAlgebra.lift
           (ModNCompletedCoeff i.1.modulus)
@@ -313,9 +315,14 @@ def zcCompletedGroupAlgebraOpenImageKernelClass
     (i : ZCCompletedGroupAlgebraIndex C G)
     (n : ProfiniteKernelSubgroup psi) :
     (zcCompletedGroupAlgebraOpenImageQuotientMap C hC hForm psi hpsi hfopen i).ker := by
-  refine ⟨QuotientGroup.mk'
-      ((((OrderDual.ofDual i.2).1 : OpenNormalSubgroup G) : Subgroup G)) n.1, ?_⟩
-  rw [MonoidHom.mem_ker]
+  refine ⟨(QuotientGroup.mk'
+      ((((OrderDual.ofDual i.2).1 : OpenNormalSubgroup G) : Subgroup G)) n.1 :
+        CompletedGroupAlgebraQuotientInClass G C i.2), ?_⟩
+  change
+    zcCompletedGroupAlgebraOpenImageQuotientMap C hC hForm psi hpsi hfopen i
+        (QuotientGroup.mk'
+          ((((OrderDual.ofDual i.2).1 : OpenNormalSubgroup G) : Subgroup G)) n.1 :
+            CompletedGroupAlgebraQuotientInClass G C i.2) = 1
   rw [zcCompletedGroupAlgebraOpenImageQuotientMap_mk]
   change QuotientGroup.mk'
       ((((OrderDual.ofDual
@@ -370,7 +377,7 @@ theorem zcCompletedGroupAlgebraStandardAugmentationIdealProjection_kernel_genera
       zcCompletedGroupAlgebraProjection C G i (s : ZCCompletedGroupAlgebra C G)
   rw [zcCompletedGroupAlgebraProjection_mul]
   simp only [zcCompletedGroupAlgebraProjection_sub, zcCompletedGroupAlgebraProjection_groupLike,
-  MonoidAlgebra.of_apply, zcCompletedGroupAlgebraProjection_one, QuotientGroup.mk'_apply]
+    zcCompletedGroupAlgebraProjection_one, QuotientGroup.mk'_apply]
 
 /--
 Projecting an element of \(I(\ker\psi)I(G)\) to an open-image finite stage lands in the
@@ -538,10 +545,10 @@ theorem isClosed_zcCompletedGroupAlgebraKernelAugmentationIdealMulStandardClosed
       zcCompletedGroupAlgebraStandardAugmentationIdealProjection C i x ∈
         zcCompletedGroupAlgebraOpenImageKernelAugmentationIdealMulStageStandard
           C hC hForm psi hpsi hfopen i}
-  simp only [Set.setOf_forall]
+  simp only [Set.ofPred_forall]
   refine isClosed_iInter ?_
   intro i
-  haveI : DiscreteTopology (zcCompletedGroupAlgebraStageAugmentationIdeal C G i) := by
+  have : DiscreteTopology (zcCompletedGroupAlgebraStageAugmentationIdeal C G i) := by
     infer_instance
   exact
     (isClosed_discrete
@@ -593,20 +600,20 @@ theorem zcCompletedGroupAlgebraKernelAugmentationIdealMulStandardClosed_le_closu
     zcCompletedGroupAlgebraKernelAugmentationIdealMulStandard C psi
   let Yamb : Set R := Subtype.val '' Ystd
   have hxAmb : (x : R) ∈ closure Yamb := by
-    letI : Nonempty (ZCCompletedGroupAlgebraIndex C G) :=
+    let : Nonempty (ZCCompletedGroupAlgebraIndex C G) :=
       ⟨(ProCGroups.Completion.ProCIntegerIndex.terminal (C := C) inferInstance,
         zcCompletedGroupAlgebraTopIndex C G)⟩
-    letI : ∀ i : ZCCompletedGroupAlgebraIndex C G, TopologicalSpace (Ssys.X i) :=
+    let : ∀ i : ZCCompletedGroupAlgebraIndex C G, TopologicalSpace (Ssys.X i) :=
       Ssys.topologicalSpace
-    letI : ∀ i : ZCCompletedGroupAlgebraIndex C G, CompactSpace (Ssys.X i) := fun i => by
+    let : ∀ i : ZCCompletedGroupAlgebraIndex C G, CompactSpace (Ssys.X i) := fun i => by
       dsimp [Ssys, zcCompletedGroupAlgebraSystem]
       change @CompactSpace (ZCCompletedGroupAlgebraStage C G i) ⊥
-      letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
-      letI : Finite (ZCCompletedGroupAlgebraStage C G i) :=
+      let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+      let : Finite (ZCCompletedGroupAlgebraStage C G i) :=
         finite_modNCompletedGroupAlgebraStageInClass
           (n := i.1.modulus) (G := G) C i.2
       exact Finite.compactSpace
-    letI : ∀ i : ZCCompletedGroupAlgebraIndex C G, T2Space (Ssys.X i) := fun i => by
+    let : ∀ i : ZCCompletedGroupAlgebraIndex C G, T2Space (Ssys.X i) := fun i => by
       dsimp [Ssys, zcCompletedGroupAlgebraSystem]
       change @T2Space (ZCCompletedGroupAlgebraStage C G i) ⊥
       exact @DiscreteTopology.toT2Space _ ⊥ ⟨rfl⟩
@@ -626,9 +633,10 @@ theorem zcCompletedGroupAlgebraKernelAugmentationIdealMulStandardClosed_le_closu
         ⟨y, hy, hyproj⟩
       refine ⟨(y : R), subset_closure ?_, ?_⟩
       · exact ⟨y, by simpa [Ystd] using hy, rfl⟩
-      · simpa [Ssys, zcCompletedGroupAlgebraSystem,
-          zcCompletedGroupAlgebraStandardAugmentationIdealProjection_val] using
-          congrArg Subtype.val hyproj
+      · change
+          zcCompletedGroupAlgebraProjection C G i (y : R) =
+            zcCompletedGroupAlgebraProjection C G i (x : R)
+        exact congrArg Subtype.val hyproj
     convert hxLim using 1 <;> rfl
   have hclosure :
       closure Ystd =
@@ -768,7 +776,7 @@ theorem t1Space_kernelAugmentationIdealClosedQuotient
     (psi : ContinuousMonoidHom G H) (hpsi : Function.Surjective psi)
     (hfopen : IsOpenMap psi) :
     T1Space (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) := by
-  letI : IsClosed
+  let : IsClosed
       ((zcCompletedGroupAlgebraKernelAugmentationIdealMulStandardClosed
         C hC hForm psi hpsi hfopen :
           Submodule (ZCCompletedGroupAlgebra C G)
@@ -788,7 +796,7 @@ theorem isClosed_zero_kernelAugmentationIdealClosedQuotient
     IsClosed
       ({0} : Set
         (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen)) := by
-  letI : T1Space
+  let : T1Space
       (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
     t1Space_kernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen
   exact isClosed_singleton
@@ -1063,20 +1071,20 @@ theorem kernelAugmentationIdealClosedQuotient_topology_eq_induced_stageProjProdu
       have hxpre : x ∈ q ⁻¹' U := hxU
       rwa [← hVeq] at hxpre
     let Ssys := zcCompletedGroupAlgebraSystem C G
-    letI : Nonempty (ZCCompletedGroupAlgebraIndex C G) :=
+    let : Nonempty (ZCCompletedGroupAlgebraIndex C G) :=
       ⟨(ProCGroups.Completion.ProCIntegerIndex.terminal (C := C) inferInstance,
         zcCompletedGroupAlgebraTopIndex C G)⟩
-    letI : ∀ i : ZCCompletedGroupAlgebraIndex C G, TopologicalSpace (Ssys.X i) :=
+    let : ∀ i : ZCCompletedGroupAlgebraIndex C G, TopologicalSpace (Ssys.X i) :=
       Ssys.topologicalSpace
-    letI : ∀ i : ZCCompletedGroupAlgebraIndex C G, CompactSpace (Ssys.X i) := fun i => by
+    let : ∀ i : ZCCompletedGroupAlgebraIndex C G, CompactSpace (Ssys.X i) := fun i => by
       dsimp [Ssys, zcCompletedGroupAlgebraSystem]
       change @CompactSpace (ZCCompletedGroupAlgebraStage C G i) ⊥
-      letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
-      letI : Finite (ZCCompletedGroupAlgebraStage C G i) :=
+      let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+      let : Finite (ZCCompletedGroupAlgebraStage C G i) :=
         finite_modNCompletedGroupAlgebraStageInClass
           (n := i.1.modulus) (G := G) C i.2
       exact Finite.compactSpace
-    letI : ∀ i : ZCCompletedGroupAlgebraIndex C G, T2Space (Ssys.X i) := fun i => by
+    let : ∀ i : ZCCompletedGroupAlgebraIndex C G, T2Space (Ssys.X i) := fun i => by
       dsimp [Ssys, zcCompletedGroupAlgebraSystem]
       change @T2Space (ZCCompletedGroupAlgebraStage C G i) ⊥
       exact @DiscreteTopology.toT2Space _ ⊥ ⟨rfl⟩
@@ -1146,7 +1154,10 @@ theorem kernelAugmentationIdealClosedQuotient_topology_eq_induced_stageProjProdu
         have hxW' :
             zcCompletedGroupAlgebraProjection C G i
               (x : ZCCompletedGroupAlgebra C G) ∈ W := by
-          simpa [Ssys, zcCompletedGroupAlgebraSystem] using hxW
+          change
+            zcCompletedGroupAlgebraProjection C G i
+              (x : ZCCompletedGroupAlgebra C G) ∈ W at hxW
+          exact hxW
         change
           zcCompletedGroupAlgebraProjection C G i
             (((y - r : zcCompletedGroupAlgebraStandardAugmentationIdeal C G) :
@@ -1164,7 +1175,7 @@ theorem kernelAugmentationIdealClosedQuotient_topology_eq_induced_stageProjProdu
                 ZCCompletedGroupAlgebra C G) ⁻¹' V := hyV
         rwa [hVeq] at hyPre
       rwa [hq] at hyU
-    · letI : TopologicalSpace Q := Tind
+    · let : TopologicalSpace Q := Tind
       have hprod : Continuous stageProduct :=
         continuous_induced_dom
       have hcoord :
@@ -1184,7 +1195,7 @@ theorem kernelAugmentationIdealClosedQuotient_topology_eq_induced_stageProjProdu
         let T :=
           zcCompletedGroupAlgebraOpenImageKernelAugmentationIdealMulStageStandard
             C hC hForm psi hpsi hfopen i
-        haveI : DiscreteTopology (zcCompletedGroupAlgebraStageAugmentationIdeal C G i) := by
+        have : DiscreteTopology (zcCompletedGroupAlgebraStageAugmentationIdeal C G i) := by
           infer_instance
         change
           @IsOpen
@@ -1407,7 +1418,7 @@ theorem kernelAugmentationIdealClosedStageQuotientTargetStageModule_map_smul
     C hC hForm psi hpsi hfopen i
   let hφ := zcCompletedGroupAlgebraOpenImageStageRingHom_surjective
     C hC hForm psi hpsi hfopen i
-  letI : Module
+  let : Module
       (ZCCompletedGroupAlgebraStage C H
         (zcCompletedGroupAlgebraOpenImageTargetIndex C hForm psi hpsi hfopen i))
       (KernelAugmentationIdealClosedStageQuotient C hC hForm psi hpsi hfopen i) :=
@@ -1465,8 +1476,7 @@ theorem zcCompletedDifferentialModuleOpenImageIndex_stageScalar
           (CompletedGroupAlgebraQuotientInClass G C i.2) q) := by
   refine QuotientGroup.induction_on q ?_
   intro g
-  simp only [zcCompletedDifferentialModuleStageScalar_coe,
-    zcCompletedGroupAlgebraOpenImageStageRingHom_of]
+  rw [zcCompletedDifferentialModuleStageScalar_coe]
   have hq :=
     zcCompletedGroupAlgebraOpenImageQuotientMap_mk
       C hC hForm psi hpsi hfopen i g
@@ -1478,14 +1488,28 @@ theorem zcCompletedDifferentialModuleOpenImageIndex_stageScalar
         CompletedGroupAlgebraQuotientInClass H C
           (zcCompletedGroupAlgebraOpenImageTargetIndex
             C hForm psi hpsi hfopen i).2) at hq
-  symm
-  convert
-    congrArg
+  have hof :=
+    zcCompletedGroupAlgebraOpenImageStageRingHom_of
+      C hC hForm psi hpsi hfopen i
+        (QuotientGroup.mk g : CompletedGroupAlgebraQuotientInClass G C i.2)
+  change
+    MonoidAlgebra.of (ModNCompletedCoeff i.1.modulus)
+        (CompletedGroupAlgebraQuotientInClass H C
+          (zcCompletedGroupAlgebraOpenImageTargetIndex
+            C hForm psi hpsi hfopen i).2)
+        (QuotientGroup.mk (psi g)) =
+      zcCompletedGroupAlgebraOpenImageStageRingHom C hC hForm psi hpsi hfopen i
+        (MonoidAlgebra.of (ModNCompletedCoeff i.1.modulus)
+          (CompletedGroupAlgebraQuotientInClass G C i.2)
+          (QuotientGroup.mk g))
+  exact Eq.trans
+    (congrArg
       (MonoidAlgebra.of (ModNCompletedCoeff i.1.modulus)
         (CompletedGroupAlgebraQuotientInClass H C
           (zcCompletedGroupAlgebraOpenImageTargetIndex
             C hForm psi hpsi hfopen i).2))
-      hq using 1 <;> rfl
+      hq).symm
+    hof.symm
 
 /-- The finite source-boundary coordinate over the matching open-image target stage. -/
 def kernelAugmentationIdealClosedStageQuotientBoundary
@@ -1622,7 +1646,7 @@ theorem kernelAugmentationIdealClosedStageQuotientBoundaryLift_single
       a • kernelAugmentationIdealClosedStageQuotientBoundary
         C hC hForm psi hpsi hfopen i q := by
   let j := zcCompletedDifferentialModuleOpenImageIndex C hForm psi hpsi hfopen i
-  letI : Module (zcCompletedDifferentialModuleStageRing C psi.toMonoidHom j)
+  let : Module (zcCompletedDifferentialModuleStageRing C psi.toMonoidHom j)
       (KernelAugmentationIdealClosedStageQuotient C hC hForm psi hpsi hfopen i) :=
     kernelAugmentationIdealClosedStageQuotientTargetStageModule
       C hC hForm psi hpsi hfopen i
@@ -2102,7 +2126,7 @@ theorem zcCompletedGroupAlgebraCoeffMap_mul_groupLike_eq_groupLike_mul_coeffMap
       zcGroupLike C G g * zcCompletedGroupAlgebraCoeffMap C G a := by
   apply Subtype.ext
   funext i
-  letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+  let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
   change
     zcCompletedGroupAlgebraProjection C G i
         (zcCompletedGroupAlgebraCoeffMap C G a * zcGroupLike C G g) =
@@ -2110,7 +2134,7 @@ theorem zcCompletedGroupAlgebraCoeffMap_mul_groupLike_eq_groupLike_mul_coeffMap
         (zcGroupLike C G g * zcCompletedGroupAlgebraCoeffMap C G a)
   rw [zcCompletedGroupAlgebraProjection_mul, zcCompletedGroupAlgebraProjection_coeffMap,
     zcCompletedGroupAlgebraProjection_groupLike]
-  simp [mul_comm]
+  exact MonoidAlgebra.single_one_comm _ _
 
 omit [IsTopologicalGroup H] in
 /--
@@ -2192,7 +2216,7 @@ theorem kerAugQuotTargetGAModuleOfSurj_of_smul
         C psi hpsi
     MonoidAlgebra.of (ZCCoeff C) H h • x =
       zcGroupLike C G (Function.surjInv hpsi h) • x := by
-  letI : Module (MonoidAlgebra (ZCCoeff C) H) (KernelAugmentationIdealQuotient C psi) :=
+  let : Module (MonoidAlgebra (ZCCoeff C) H) (KernelAugmentationIdealQuotient C psi) :=
     zcCompletedGroupAlgebraKernelAugmentationQuotientTargetGroupAlgebraModuleOfSurjective
       C psi hpsi
   change
@@ -2214,7 +2238,7 @@ theorem kerAugQuotTargetGAModuleOfSurj_of_smul_eq_source_groupLike_smul
       zcCompletedGroupAlgebraKernelAugmentationQuotientTargetGroupAlgebraModuleOfSurjective
         C psi hpsi
     MonoidAlgebra.of (ZCCoeff C) H h • x = zcGroupLike C G g • x := by
-  letI : Module (MonoidAlgebra (ZCCoeff C) H) (KernelAugmentationIdealQuotient C psi) :=
+  let : Module (MonoidAlgebra (ZCCoeff C) H) (KernelAugmentationIdealQuotient C psi) :=
     zcCompletedGroupAlgebraKernelAugmentationQuotientTargetGroupAlgebraModuleOfSurjective
       C psi hpsi
   rw [kerAugQuotTargetGAModuleOfSurj_of_smul]
@@ -2289,7 +2313,7 @@ theorem zcAlgebraicDifferentialModuleToKernelAugmentationQuotientOfSurjective_un
         (universalCrossedDifferential
           ((MonoidAlgebra.of (ZCCoeff C) H).comp psi.toMonoidHom) g) =
       zcCompletedGroupAlgebraSourceBoundaryToKernelAugmentationQuotient C psi g := by
-  letI : Module (MonoidAlgebra (ZCCoeff C) H) (KernelAugmentationIdealQuotient C psi) :=
+  let : Module (MonoidAlgebra (ZCCoeff C) H) (KernelAugmentationIdealQuotient C psi) :=
     zcCompletedGroupAlgebraKernelAugmentationQuotientTargetGroupAlgebraModuleOfSurjective
       C psi hpsi
   exact
@@ -2731,7 +2755,7 @@ theorem kerAugClosedQuotTargetCompletedModuleOfSurj_map_smul
       kerAugClosedQuotTargetCompletedModuleOfSurj
         C hC hForm psi hpsi hfopen
     zcCompletedGroupAlgebraMap C hC psi a • x = a • x := by
-  letI : Module (ZCCompletedGroupAlgebra C H)
+  let : Module (ZCCompletedGroupAlgebra C H)
       (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
     kerAugClosedQuotTargetCompletedModuleOfSurj
       C hC hForm psi hpsi hfopen
@@ -2812,7 +2836,7 @@ theorem continuous_kerAugClosedQuotTargetCompletedModuleOfSurj_smul_const
       kerAugClosedQuotTargetCompletedModuleOfSurj
         C hC hForm psi hpsi hfopen
     Continuous (fun a : ZCCompletedGroupAlgebra C H => a • x) := by
-  letI : Module (ZCCompletedGroupAlgebra C H)
+  let : Module (ZCCompletedGroupAlgebra C H)
       (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
     kerAugClosedQuotTargetCompletedModuleOfSurj
       C hC hForm psi hpsi hfopen
@@ -2898,7 +2922,7 @@ theorem continuous_kerAugClosedQuotTargetCompletedModuleOfSurj_smul
     Continuous (fun p : ZCCompletedGroupAlgebra C H ×
         KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen =>
       p.1 • p.2) := by
-  letI : Module (ZCCompletedGroupAlgebra C H)
+  let : Module (ZCCompletedGroupAlgebra C H)
       (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
     kerAugClosedQuotTargetCompletedModuleOfSurj
       C hC hForm psi hpsi hfopen
@@ -2960,7 +2984,7 @@ theorem continuousSMul_kerAugClosedQuotTargetCompletedModuleOfSurj
         C hC hForm psi hpsi hfopen
     ContinuousSMul (ZCCompletedGroupAlgebra C H)
       (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) := by
-  letI : Module (ZCCompletedGroupAlgebra C H)
+  let : Module (ZCCompletedGroupAlgebra C H)
       (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
     kerAugClosedQuotTargetCompletedModuleOfSurj
       C hC hForm psi hpsi hfopen
@@ -2981,7 +3005,7 @@ theorem kerAugClosedQuotTargetCompletedModuleOfSurj_groupLike_smul
       kerAugClosedQuotTargetCompletedModuleOfSurj
         C hC hForm psi hpsi hfopen
     zcGroupLike C H (psi g) • x = zcGroupLike C G g • x := by
-  letI : Module (ZCCompletedGroupAlgebra C H)
+  let : Module (ZCCompletedGroupAlgebra C H)
       (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
     kerAugClosedQuotTargetCompletedModuleOfSurj
       C hC hForm psi hpsi hfopen
@@ -3123,16 +3147,16 @@ theorem kerAugIdealClosedQuotStageProj_liftLinear_eq_boundaryLift_preStageMap
         C hC hForm psi hpsi hfopen i
         (zcCompletedDifferentialModulePreStageMap C psi.toMonoidHom
           (zcCompletedDifferentialModuleOpenImageIndex C hForm psi hpsi hfopen i) x) := by
-  letI : Module (ZCCompletedGroupAlgebra C H)
+  let : Module (ZCCompletedGroupAlgebra C H)
       (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
     kerAugClosedQuotTargetCompletedModuleOfSurj
       C hC hForm psi hpsi hfopen
   let j := zcCompletedDifferentialModuleOpenImageIndex C hForm psi hpsi hfopen i
-  letI : Module (zcCompletedDifferentialModuleStageRing C psi.toMonoidHom j)
+  let : Module (zcCompletedDifferentialModuleStageRing C psi.toMonoidHom j)
       (KernelAugmentationIdealClosedStageQuotient C hC hForm psi hpsi hfopen i) :=
     kernelAugmentationIdealClosedStageQuotientTargetStageModule
       C hC hForm psi hpsi hfopen i
-  letI : Module
+  let : Module
       (ZCCompletedGroupAlgebraStage C H
         (zcCompletedGroupAlgebraOpenImageTargetIndex C hForm psi hpsi hfopen i))
       (KernelAugmentationIdealClosedStageQuotient C hC hForm psi hpsi hfopen i) :=
@@ -3269,24 +3293,24 @@ theorem continuous_kernelAugmentationIdealClosedQuotientStageProjection_liftLine
             (R := ZCCompletedGroupAlgebra C H)
             (zcCompletedGroupAlgebraSourceBoundaryToKernelAugmentationClosedQuotient
               C hC hForm psi hpsi hfopen) x)) := by
-  letI : Module (ZCCompletedGroupAlgebra C H)
+  let : Module (ZCCompletedGroupAlgebra C H)
       (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
     kerAugClosedQuotTargetCompletedModuleOfSurj
       C hC hForm psi hpsi hfopen
   let j := zcCompletedDifferentialModuleOpenImageIndex C hForm psi hpsi hfopen i
-  letI : Module (zcCompletedDifferentialModuleStageRing C psi.toMonoidHom j)
+  let : Module (zcCompletedDifferentialModuleStageRing C psi.toMonoidHom j)
       (KernelAugmentationIdealClosedStageQuotient C hC hForm psi hpsi hfopen i) :=
     kernelAugmentationIdealClosedStageQuotientTargetStageModule
       C hC hForm psi hpsi hfopen i
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G) :=
     zcCompletedDifferentialPreModuleNaturalTopology C psi.toMonoidHom
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (CrossedDifferentialPreModule
         (zcCompletedDifferentialModuleStageRing C psi.toMonoidHom j)
         (zcCompletedDifferentialModuleStageSource C psi.toMonoidHom j)) :=
     ⊥
-  letI : DiscreteTopology
+  let : DiscreteTopology
       (CrossedDifferentialPreModule
         (zcCompletedDifferentialModuleStageRing C psi.toMonoidHom j)
         (zcCompletedDifferentialModuleStageSource C psi.toMonoidHom j)) :=
@@ -3349,11 +3373,11 @@ theorem continuous_crossedDiffModuleLiftLinear_sourceBoundaryToKerAugClosedQuot
         (R := ZCCompletedGroupAlgebra C H)
         (zcCompletedGroupAlgebraSourceBoundaryToKernelAugmentationClosedQuotient
           C hC hForm psi hpsi hfopen)) := by
-  letI : Module (ZCCompletedGroupAlgebra C H)
+  let : Module (ZCCompletedGroupAlgebra C H)
       (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
     kerAugClosedQuotTargetCompletedModuleOfSurj
       C hC hForm psi hpsi hfopen
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G) :=
     zcCompletedDifferentialPreModuleNaturalTopology C psi.toMonoidHom
   rw [kernelAugmentationIdealClosedQuotient_topology_eq_induced_stageProjProduct
@@ -3427,7 +3451,7 @@ theorem zcDiffModuleIdToZCSepDiffModule_universal
     zcCompletedDifferentialModuleIdToZCSeparatedCompletedDifferentialModule C hC psi
         (zcUniversalDifferential C (MonoidHom.id G) g) =
       zcSeparatedUniversalDifferential C psi.toMonoidHom g := by
-  letI : Module (ZCCompletedGroupAlgebra C G)
+  let : Module (ZCCompletedGroupAlgebra C G)
       (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
     Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
   exact
@@ -3460,7 +3484,7 @@ theorem zcCompletedDifferentialModuleIdentitySourceStageRingHom_transition_mapSt
         zcCompletedDifferentialModuleIdentitySourceStageRingHom C psi.toMonoidHom i x := by
   intro sourceIndex idIndex hle x
   refine MonoidAlgebra.induction_on
-    (p := fun x : ZCCompletedGroupAlgebraStage C G idIndex.target =>
+    (motive := fun x : ZCCompletedGroupAlgebraStage C G idIndex.target =>
       zcCompletedGroupAlgebraMapStage C hC psi i.target
           (zcCompletedGroupAlgebraTransition C G hle x) =
         zcCompletedDifferentialModuleIdentitySourceStageRingHom C psi.toMonoidHom i x)
@@ -3470,16 +3494,53 @@ theorem zcCompletedDifferentialModuleIdentitySourceStageRingHom_transition_mapSt
     intro g
     dsimp only [sourceIndex, idIndex, hle,
       zcCompletedDifferentialModuleIdentitySourceIndex] at ⊢
-    rw [zcCompletedGroupAlgebraTransition_of]
+    erw [zcCompletedGroupAlgebraTransition_of]
     simp only [MonoidAlgebra.of_apply]
     simp only [zcCompletedGroupAlgebraMapStage,
       zcCompletedDifferentialModuleIdentitySourceStageRingHom]
     change MonoidAlgebra.mapDomain _ _ = MonoidAlgebra.mapDomain _ _
-    dsimp only [OpenNormalSubgroupInClass.map]
-    rw [QuotientGroup.map_mk]
+    let targetSubgroup : Subgroup G :=
+      ((OrderDual.ofDual (completedGroupAlgebraComapIndexInClass
+        (G := G) (H := H) C hC psi i.target.2)).1 : OpenNormalSubgroup G)
+    have hsource_le : (i.source.1 : Subgroup G) ≤ targetSubgroup := by
+      change
+        (i.source.1 : Subgroup G) ≤
+          (((OrderDual.ofDual i.target.2).1 : OpenNormalSubgroup H) : Subgroup H).comap
+            psi.toMonoidHom
+      exact i.compatible
+    have hsource_le_id :
+        (i.source.1 : Subgroup G) ≤
+          Subgroup.comap (MonoidHom.id G) targetSubgroup := by
+      intro a ha
+      exact hsource_le ha
+    let qSource : CompletedGroupAlgebraQuotientInClass G C (OrderDual.toDual i.source) :=
+      QuotientGroup.mk' (i.source.1 : Subgroup G) g
+    have hmap :
+        (QuotientGroup.map (i.source.1 : Subgroup G)
+          targetSubgroup
+          (MonoidHom.id G) hsource_le_id) qSource =
+            (QuotientGroup.mk'
+              targetSubgroup g :
+              CompletedGroupAlgebraQuotientInClass G C
+                (completedGroupAlgebraComapIndexInClass
+                  (G := G) (H := H) C hC psi i.target.2)) := by
+      exact QuotientGroup.map_mk'
+        (i.source.1 : Subgroup G) targetSubgroup
+        (MonoidHom.id G) hsource_le_id g
+    change
+      MonoidAlgebra.mapDomain _
+          (MonoidAlgebra.single
+            ((QuotientGroup.map (i.source.1 : Subgroup G)
+              targetSubgroup
+              (MonoidHom.id G) hsource_le_id) qSource) 1) =
+        MonoidAlgebra.mapDomain _
+          (MonoidAlgebra.of (ModNCompletedCoeff i.target.1.modulus)
+            (CompletedGroupAlgebraQuotientInClass G C (OrderDual.toDual i.source)) qSource)
+    rw [hmap]
     dsimp only [CompletedGroupAlgebraQuotientInClass,
       openNormalSubgroupInClassSystem] at ⊢
-    rw [MonoidAlgebra.mapDomain_single, MonoidAlgebra.mapDomain_single]
+    rw [MonoidAlgebra.mapDomain_single]
+    erw [MonoidAlgebra.of_apply, MonoidAlgebra.mapDomain_single]
     change MonoidAlgebra.single
         ((completedGroupAlgebraComapQuotientMapInClass (G := G) (H := H) C hC psi i.target.2)
           (QuotientGroup.mk'
@@ -3589,14 +3650,14 @@ theorem zcDiffModuleIdToZCSepDiffModule_stageProj
       zcCompletedDifferentialModuleIdentitySourceStageToStage C psi.toMonoidHom i
         (zcCompletedDifferentialModuleStageProjection C (MonoidHom.id G)
           (zcCompletedDifferentialModuleIdentitySourceIndex C psi.toMonoidHom i) x) := by
-  letI : Module (ZCCompletedGroupAlgebra C G)
+  let : Module (ZCCompletedGroupAlgebra C G)
       (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
     Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
-  letI : Module (ZCCompletedGroupAlgebra C G)
+  let : Module (ZCCompletedGroupAlgebra C G)
       (ZCCompletedDifferentialModuleStage C psi.toMonoidHom i) :=
     Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
   let idIndex := zcCompletedDifferentialModuleIdentitySourceIndex C psi.toMonoidHom i
-  letI : Module
+  let : Module
       (zcCompletedDifferentialModuleStageRing C (MonoidHom.id G) idIndex)
       (ZCCompletedDifferentialModuleStage C psi.toMonoidHom i) :=
     Module.compHom _ (zcCompletedDifferentialModuleIdentitySourceStageRingHom C psi.toMonoidHom i)
@@ -3701,10 +3762,10 @@ theorem zcCompletedDifferentialModuleStageBoundary_identitySourceStageToStage
         (zcCompletedDifferentialModuleStageBoundary C (MonoidHom.id G)
           (zcCompletedDifferentialModuleIdentitySourceIndex C ψ i) x) := by
   let j := zcCompletedDifferentialModuleIdentitySourceIndex C ψ i
-  letI : Module (zcCompletedDifferentialModuleStageRing C (MonoidHom.id G) j)
+  let : Module (zcCompletedDifferentialModuleStageRing C (MonoidHom.id G) j)
       (zcCompletedDifferentialModuleStageRing C ψ i) :=
     Module.compHom _ (zcCompletedDifferentialModuleIdentitySourceStageRingHom C ψ i)
-  letI : Module (zcCompletedDifferentialModuleStageRing C (MonoidHom.id G) j)
+  let : Module (zcCompletedDifferentialModuleStageRing C (MonoidHom.id G) j)
       (ZCCompletedDifferentialModuleStage C ψ i) :=
     Module.compHom _ (zcCompletedDifferentialModuleIdentitySourceStageRingHom C ψ i)
   let ringMapLinear :
@@ -3848,7 +3909,7 @@ theorem continuous_zcToStdAugIdeal_naturalTopology
       (zcCompletedDifferentialModuleNaturalTopology C psi.toMonoidHom)
       inferInstance
       (zcToStdAugIdeal C H psi.toMonoidHom) := by
-  letI : TopologicalSpace (ZCCompletedDifferentialModule C psi.toMonoidHom) :=
+  let : TopologicalSpace (ZCCompletedDifferentialModule C psi.toMonoidHom) :=
     zcCompletedDifferentialModuleNaturalTopology C psi.toMonoidHom
   have hval :
       @Continuous
@@ -3883,7 +3944,7 @@ theorem zcSeparatedCompletedDifferentialModule_source_kernel_groupLike_smul
         (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
       Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
     zcGroupLike C G n.1 • x = x := by
-  letI : Module (ZCCompletedGroupAlgebra C G)
+  let : Module (ZCCompletedGroupAlgebra C G)
       (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
     Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
   change zcCompletedGroupAlgebraMap C hC psi (zcGroupLike C G n.1) • x = x
@@ -3908,7 +3969,7 @@ theorem zcSeparatedCompletedDifferentialModule_source_map_smul
         (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
       Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
     zcCompletedGroupAlgebraMap C hC psi a • x = a • x := by
-  letI : Module (ZCCompletedGroupAlgebra C G)
+  let : Module (ZCCompletedGroupAlgebra C G)
       (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
     Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
   rfl
@@ -3926,7 +3987,7 @@ theorem zcSeparatedCompletedDifferentialModule_source_kernel_sub_one_smul
         (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
       Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
     (zcGroupLike C G n.1 - 1) • x = 0 := by
-  letI : Module (ZCCompletedGroupAlgebra C G)
+  let : Module (ZCCompletedGroupAlgebra C G)
       (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
     Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
   calc
@@ -3948,7 +4009,7 @@ theorem zcDiffModuleIdToZCSepDiffModule_kernel_sub_one_smul
     (x : ZCCompletedDifferentialModule C (MonoidHom.id G)) :
     zcCompletedDifferentialModuleIdToZCSeparatedCompletedDifferentialModule C hC psi
         ((zcGroupLike C G n.1 - 1) • x) = 0 := by
-  letI : Module (ZCCompletedGroupAlgebra C G)
+  let : Module (ZCCompletedGroupAlgebra C G)
       (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
     Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
   rw [map_smul]
@@ -3971,12 +4032,12 @@ noncomputable def
         zcToStdAugIdeal C G (MonoidHom.id G) x = 0 →
           zcCompletedDifferentialModuleIdToZCSeparatedCompletedDifferentialModule
             C hC psi x = 0) :
-    letI : Module (ZCCompletedGroupAlgebra C G)
+    let : Module (ZCCompletedGroupAlgebra C G)
         (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
       Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
     zcCompletedGroupAlgebraStandardAugmentationIdeal C G →ₗ[ZCCompletedGroupAlgebra C G]
       ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom := by
-  letI : Module (ZCCompletedGroupAlgebra C G)
+  let : Module (ZCCompletedGroupAlgebra C G)
       (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
     Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
   let f :=
@@ -4001,7 +4062,7 @@ noncomputable def
     [ProCGroups.FiniteGroupClass.ContainsTrivialQuotients C]
     (hC : ProCGroups.FiniteGroupClass.Hereditary C)
     (psi : ContinuousMonoidHom G H) :
-    letI : Module (ZCCompletedGroupAlgebra C G)
+    let : Module (ZCCompletedGroupAlgebra C G)
         (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
       Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
     zcCompletedGroupAlgebraStandardAugmentationIdeal C G →ₗ[ZCCompletedGroupAlgebra C G]
@@ -4024,14 +4085,14 @@ theorem
         zcToStdAugIdeal C G (MonoidHom.id G) x = 0 →
           zcCompletedDifferentialModuleIdToZCSeparatedCompletedDifferentialModule
             C hC psi x = 0) :
-    letI : Module (ZCCompletedGroupAlgebra C G)
+    let : Module (ZCCompletedGroupAlgebra C G)
         (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
       Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
     (stdAugIdealToZCSepDiffOfBoundaryKernel
         C hC psi hker).comp
       (zcToStdAugIdeal C G (MonoidHom.id G)) =
     zcCompletedDifferentialModuleIdToZCSeparatedCompletedDifferentialModule C hC psi := by
-  letI : Module (ZCCompletedGroupAlgebra C G)
+  let : Module (ZCCompletedGroupAlgebra C G)
       (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
     Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
   let f :=
@@ -4066,7 +4127,7 @@ theorem
     [ProCGroups.FiniteGroupClass.ContainsTrivialQuotients C]
     (hC : ProCGroups.FiniteGroupClass.Hereditary C)
     (psi : ContinuousMonoidHom G H) :
-    letI : Module (ZCCompletedGroupAlgebra C G)
+    let : Module (ZCCompletedGroupAlgebra C G)
         (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
       Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
     (stdAugIdealToZCSepDiff
@@ -4094,7 +4155,7 @@ theorem
       zcCompletedGroupAlgebraProjection C H i.target
         (zcCompletedGroupAlgebraMap C hC psi
           (s : ZCCompletedGroupAlgebra C G)) := by
-  letI : Module (ZCCompletedGroupAlgebra C G)
+  let : Module (ZCCompletedGroupAlgebra C G)
       (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
     Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
   let f :=
@@ -4145,7 +4206,7 @@ theorem
       zcSeparatedCompletedDifferentialModuleStageProjectionAdd C psi.toMonoidHom i
         (stdAugIdealToZCSepDiff
           C hC psi t) := by
-  letI : Module (ZCCompletedGroupAlgebra C G)
+  let : Module (ZCCompletedGroupAlgebra C G)
       (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
     Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
   let f :=
@@ -4233,7 +4294,7 @@ theorem
           dsimp [p, F]
           exact (Classical.choose_spec (hsurj (p s))).symm)
   rw [hfactor]
-  haveI : DiscreteTopology (zcCompletedGroupAlgebraStageAugmentationIdeal C G idIndex.target) := by
+  have : DiscreteTopology (zcCompletedGroupAlgebraStageAugmentationIdeal C G idIndex.target) := by
     infer_instance
   have hF : Continuous F :=
     continuous_of_discreteTopology
@@ -4264,7 +4325,7 @@ theorem
     (hC : ProCGroups.FiniteGroupClass.Hereditary C)
     (hForm : ProCGroups.FiniteGroupClass.Formation C)
     (psi : ContinuousMonoidHom G H) :
-    letI : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
+    let : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
       zcSeparatedCompletedDifferentialModuleNaturalTopology C psi.toMonoidHom
     @Continuous
       (zcCompletedGroupAlgebraStandardAugmentationIdeal C G)
@@ -4273,7 +4334,7 @@ theorem
       (zcSeparatedCompletedDifferentialModuleNaturalTopology C psi.toMonoidHom)
       (stdAugIdealToZCSepDiff
         C hC psi) := by
-  letI : Nonempty (ZCCompletedDifferentialModuleIndex C psi.toMonoidHom) :=
+  let : Nonempty (ZCCompletedDifferentialModuleIndex C psi.toMonoidHom) :=
     nonempty_zcCompletedDifferentialModuleIndex C hC psi
   rw [zcSepDiffModuleNaturalTopology_eq_induced_stageProjProduct
     C psi.toMonoidHom (directed_zcCompletedDifferentialModuleIndex C hForm hC psi)]
@@ -4302,7 +4363,7 @@ theorem
           zcCompletedGroupAlgebraBoundary_mem_standardAugmentationIdeal
             C G (MonoidHom.id G) g⟩ =
       zcSeparatedUniversalDifferential C psi.toMonoidHom g := by
-  letI : Module (ZCCompletedGroupAlgebra C G)
+  let : Module (ZCCompletedGroupAlgebra C G)
       (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
     Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
   have hcomp :=
@@ -4381,7 +4442,7 @@ theorem
     (s : zcCompletedGroupAlgebraStandardAugmentationIdeal C G) :
     stdAugIdealToZCSepDiffOfBoundaryKernel
         C hC psi hker ((zcGroupLike C G n.1 - 1) • s) = 0 := by
-  letI : Module (ZCCompletedGroupAlgebra C G)
+  let : Module (ZCCompletedGroupAlgebra C G)
       (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
     Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
   let f :=
@@ -4435,7 +4496,7 @@ theorem
     (hx : x ∈ zcCompletedGroupAlgebraKernelAugmentationIdealMulStandard C psi) :
     stdAugIdealToZCSepDiffOfBoundaryKernel
         C hC psi hker x = 0 := by
-  letI : Module (ZCCompletedGroupAlgebra C G)
+  let : Module (ZCCompletedGroupAlgebra C G)
       (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
     Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
   let M :=
@@ -4485,7 +4546,7 @@ theorem
           zcCompletedDifferentialModuleIdToZCSeparatedCompletedDifferentialModule
             C hC psi x = 0)
     (hcont :
-      letI : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
+      let : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
         zcSeparatedCompletedDifferentialModuleNaturalTopology C psi.toMonoidHom
       @Continuous
         (zcCompletedGroupAlgebraStandardAugmentationIdeal C G)
@@ -4499,7 +4560,7 @@ theorem
         C hC hForm psi hpsi hfopen) :
     stdAugIdealToZCSepDiffOfBoundaryKernel
         C hC psi hker x = 0 := by
-  letI : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
+  let : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
     zcSeparatedCompletedDifferentialModuleNaturalTopology C psi.toMonoidHom
   let M :=
     stdAugIdealToZCSepDiffOfBoundaryKernel
@@ -4538,7 +4599,7 @@ theorem
     (psi : ContinuousMonoidHom G H) (hpsi : Function.Surjective psi)
     (hfopen : IsOpenMap psi)
     (hcont :
-      letI : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
+      let : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
         zcSeparatedCompletedDifferentialModuleNaturalTopology C psi.toMonoidHom
       @Continuous
         (zcCompletedGroupAlgebraStandardAugmentationIdeal C G)
@@ -4553,7 +4614,7 @@ theorem
     stdAugIdealToZCSepDiff
         C hC psi x = 0 := by
   have hcont' :
-      letI : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
+      let : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
         zcSeparatedCompletedDifferentialModuleNaturalTopology C psi.toMonoidHom
       @Continuous
         (zcCompletedGroupAlgebraStandardAugmentationIdeal C G)
@@ -4609,13 +4670,13 @@ noncomputable def
             C hC hForm psi hpsi hfopen →
           stdAugIdealToZCSepDiffOfBoundaryKernel
             C hC psi hker x = 0) :
-    letI : Module (ZCCompletedGroupAlgebra C G)
+    let : Module (ZCCompletedGroupAlgebra C G)
         (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
       Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
     KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen
       →ₗ[ZCCompletedGroupAlgebra C G]
     ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom := by
-  letI : Module (ZCCompletedGroupAlgebra C G)
+  let : Module (ZCCompletedGroupAlgebra C G)
       (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
     Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
   let M :=
@@ -4660,7 +4721,7 @@ theorem
             zcCompletedGroupAlgebraBoundary_mem_standardAugmentationIdeal
               C G (MonoidHom.id G) g⟩) =
       zcSeparatedUniversalDifferential C psi.toMonoidHom g := by
-  letI : Module (ZCCompletedGroupAlgebra C G)
+  let : Module (ZCCompletedGroupAlgebra C G)
       (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
     Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
   rw [kerAugIdealQuotToZCSepDiffOfBoundaryKernelOfClosedKill,
@@ -4689,18 +4750,18 @@ noncomputable def
             C hC hForm psi hpsi hfopen →
           stdAugIdealToZCSepDiffOfBoundaryKernel
             C hC psi hker x = 0) :
-    letI : Module (ZCCompletedGroupAlgebra C H)
+    let : Module (ZCCompletedGroupAlgebra C H)
         (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
       kerAugClosedQuotTargetCompletedModuleOfSurj
         C hC hForm psi hpsi hfopen
     KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen
       →ₗ[ZCCompletedGroupAlgebra C H]
     ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom := by
-  letI : Module (ZCCompletedGroupAlgebra C H)
+  let : Module (ZCCompletedGroupAlgebra C H)
       (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
     kerAugClosedQuotTargetCompletedModuleOfSurj
       C hC hForm psi hpsi hfopen
-  letI : Module (ZCCompletedGroupAlgebra C G)
+  let : Module (ZCCompletedGroupAlgebra C G)
       (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
     Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
   let Q :=
@@ -4783,7 +4844,7 @@ noncomputable def
           zcCompletedDifferentialModuleIdToZCSeparatedCompletedDifferentialModule
             C hC psi x = 0)
     (hcont :
-      letI : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
+      let : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
         zcSeparatedCompletedDifferentialModuleNaturalTopology C psi.toMonoidHom
       @Continuous
         (zcCompletedGroupAlgebraStandardAugmentationIdeal C G)
@@ -4792,7 +4853,7 @@ noncomputable def
         (zcSeparatedCompletedDifferentialModuleNaturalTopology C psi.toMonoidHom)
         (stdAugIdealToZCSepDiffOfBoundaryKernel
           C hC psi hker)) :
-    letI : Module (ZCCompletedGroupAlgebra C H)
+    let : Module (ZCCompletedGroupAlgebra C H)
         (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
       kerAugClosedQuotTargetCompletedModuleOfSurj
         C hC hForm psi hpsi hfopen
@@ -4821,7 +4882,7 @@ theorem
           zcCompletedDifferentialModuleIdToZCSeparatedCompletedDifferentialModule
             C hC psi x = 0)
     (hcont :
-      letI : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
+      let : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
         zcSeparatedCompletedDifferentialModuleNaturalTopology C psi.toMonoidHom
       @Continuous
         (zcCompletedGroupAlgebraStandardAugmentationIdeal C G)
@@ -4863,7 +4924,7 @@ noncomputable def
             C hC hForm psi hpsi hfopen →
           stdAugIdealToZCSepDiff
             C hC psi x = 0) :
-    letI : Module (ZCCompletedGroupAlgebra C G)
+    let : Module (ZCCompletedGroupAlgebra C G)
         (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
       Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
     KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen
@@ -4928,7 +4989,7 @@ theorem
           stdAugIdealToZCSepDiff
             C hC psi x = 0)
     (hcont :
-      letI : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
+      let : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
         zcSeparatedCompletedDifferentialModuleNaturalTopology C psi.toMonoidHom
       @Continuous
         (zcCompletedGroupAlgebraStandardAugmentationIdeal C G)
@@ -4937,12 +4998,12 @@ theorem
         (zcSeparatedCompletedDifferentialModuleNaturalTopology C psi.toMonoidHom)
         (stdAugIdealToZCSepDiff
           C hC psi)) :
-    letI : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
+    let : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
       zcSeparatedCompletedDifferentialModuleNaturalTopology C psi.toMonoidHom
     Continuous
       (kerAugIdealQuotToZCSepDiffOfClosedKill
         C hC hForm psi hpsi hfopen hclosed_kill) := by
-  letI : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
+  let : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
     zcSeparatedCompletedDifferentialModuleNaturalTopology C psi.toMonoidHom
   rw [continuous_kernelAugmentationIdealClosedQuotient_iff_comp_mkQ
     (C := C) (hC := hC) (hForm := hForm) (psi := psi)
@@ -4976,7 +5037,7 @@ noncomputable def
             C hC hForm psi hpsi hfopen →
           stdAugIdealToZCSepDiff
             C hC psi x = 0) :
-    letI : Module (ZCCompletedGroupAlgebra C H)
+    let : Module (ZCCompletedGroupAlgebra C H)
         (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
       kerAugClosedQuotTargetCompletedModuleOfSurj
         C hC hForm psi hpsi hfopen
@@ -5031,7 +5092,7 @@ noncomputable def
     (psi : ContinuousMonoidHom G H) (hpsi : Function.Surjective psi)
     (hfopen : IsOpenMap psi)
     (hcont :
-      letI : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
+      let : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
         zcSeparatedCompletedDifferentialModuleNaturalTopology C psi.toMonoidHom
       @Continuous
         (zcCompletedGroupAlgebraStandardAugmentationIdeal C G)
@@ -5040,7 +5101,7 @@ noncomputable def
         (zcSeparatedCompletedDifferentialModuleNaturalTopology C psi.toMonoidHom)
         (stdAugIdealToZCSepDiff
           C hC psi)) :
-    letI : Module (ZCCompletedGroupAlgebra C H)
+    let : Module (ZCCompletedGroupAlgebra C H)
         (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
       kerAugClosedQuotTargetCompletedModuleOfSurj
         C hC hForm psi hpsi hfopen
@@ -5064,7 +5125,7 @@ theorem
     (psi : ContinuousMonoidHom G H) (hpsi : Function.Surjective psi)
     (hfopen : IsOpenMap psi)
     (hcont :
-      letI : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
+      let : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
         zcSeparatedCompletedDifferentialModuleNaturalTopology C psi.toMonoidHom
       @Continuous
         (zcCompletedGroupAlgebraStandardAugmentationIdeal C G)
@@ -5098,7 +5159,7 @@ theorem
     (psi : ContinuousMonoidHom G H) (hpsi : Function.Surjective psi)
     (hfopen : IsOpenMap psi)
     (hcont :
-      letI : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
+      let : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
         zcSeparatedCompletedDifferentialModuleNaturalTopology C psi.toMonoidHom
       @Continuous
         (zcCompletedGroupAlgebraStandardAugmentationIdeal C G)
@@ -5107,12 +5168,12 @@ theorem
         (zcSeparatedCompletedDifferentialModuleNaturalTopology C psi.toMonoidHom)
         (stdAugIdealToZCSepDiff
           C hC psi)) :
-    letI : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
+    let : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
       zcSeparatedCompletedDifferentialModuleNaturalTopology C psi.toMonoidHom
     Continuous
       (kerAugIdealQuotToZCSepDiffLinearOfContStdMap
         C hC hForm psi hpsi hfopen hcont) := by
-  letI : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
+  let : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
     zcSeparatedCompletedDifferentialModuleNaturalTopology C psi.toMonoidHom
   change Continuous
     (kerAugIdealQuotToZCSepDiffOfClosedKill
@@ -5137,7 +5198,7 @@ noncomputable def
     (hForm : ProCGroups.FiniteGroupClass.Formation C)
     (psi : ContinuousMonoidHom G H) (hpsi : Function.Surjective psi)
     (hfopen : IsOpenMap psi) :
-    letI : Module (ZCCompletedGroupAlgebra C H)
+    let : Module (ZCCompletedGroupAlgebra C H)
         (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
       kerAugClosedQuotTargetCompletedModuleOfSurj
         C hC hForm psi hpsi hfopen
@@ -5183,7 +5244,7 @@ theorem
     (hForm : ProCGroups.FiniteGroupClass.Formation C)
     (psi : ContinuousMonoidHom G H) (hpsi : Function.Surjective psi)
     (hfopen : IsOpenMap psi) :
-    letI : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
+    let : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
       zcSeparatedCompletedDifferentialModuleNaturalTopology C psi.toMonoidHom
     Continuous
       (kerAugIdealQuotToZCSepDiffLinear
@@ -5236,7 +5297,7 @@ theorem zcDiffToKerAugClosedQuotOfSurj_universal
         (zcUniversalDifferential C psi.toMonoidHom g) =
       zcCompletedGroupAlgebraSourceBoundaryToKernelAugmentationClosedQuotient
         C hC hForm psi hpsi hfopen g := by
-  letI : Module (ZCCompletedGroupAlgebra C H)
+  let : Module (ZCCompletedGroupAlgebra C H)
       (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
     kerAugClosedQuotTargetCompletedModuleOfSurj
       C hC hForm psi hpsi hfopen
@@ -5287,11 +5348,11 @@ theorem zcDiffToKerAugClosedQuotOfSurj_kills_finiteClosedSubmodule_of_continuous
       (R := ZCCompletedGroupAlgebra C H)
       (zcCompletedGroupAlgebraSourceBoundaryToKernelAugmentationClosedQuotient
         C hC hForm psi hpsi hfopen) x = 0 := by
-  letI : Module (ZCCompletedGroupAlgebra C H)
+  let : Module (ZCCompletedGroupAlgebra C H)
       (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
     kerAugClosedQuotTargetCompletedModuleOfSurj
       C hC hForm psi hpsi hfopen
-  letI : T1Space
+  let : T1Space
       (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
     t1Space_kernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen
   exact
@@ -5335,7 +5396,7 @@ theorem zcDiffToKerAugClosedQuotOfSurj_kills_finiteClosedSubmodule_of_continuous
       (R := ZCCompletedGroupAlgebra C H)
       (zcCompletedGroupAlgebraSourceBoundaryToKernelAugmentationClosedQuotient
         C hC hForm psi hpsi hfopen) x = 0 := by
-  letI : Nonempty (ZCCompletedDifferentialModuleIndex C psi.toMonoidHom) :=
+  let : Nonempty (ZCCompletedDifferentialModuleIndex C psi.toMonoidHom) :=
     nonempty_zcCompletedDifferentialModuleIndex C hC psi
   exact
     zcDiffToKerAugClosedQuotOfSurj_kills_finiteClosedSubmodule_of_continuous_lift
@@ -5465,11 +5526,11 @@ theorem zcSepDiffToKerAugClosedQuotOfSurjective_universal
         (zcSeparatedUniversalDifferential C psi.toMonoidHom g) =
       zcCompletedGroupAlgebraSourceBoundaryToKernelAugmentationClosedQuotient
         C hC hForm psi hpsi hfopen g := by
-  letI : Module (ZCCompletedGroupAlgebra C H)
+  let : Module (ZCCompletedGroupAlgebra C H)
       (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
     kerAugClosedQuotTargetCompletedModuleOfSurj
       C hC hForm psi hpsi hfopen
-  letI : T1Space
+  let : T1Space
       (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
     t1Space_kernelAugmentationIdealClosedQuotient
       C hC hForm psi hpsi hfopen
@@ -5512,7 +5573,7 @@ theorem zcSepDiffToKerAugClosedQuotOfSurjectiveOfContinuousLift_universal
         (zcSeparatedUniversalDifferential C psi.toMonoidHom g) =
       zcCompletedGroupAlgebraSourceBoundaryToKernelAugmentationClosedQuotient
         C hC hForm psi hpsi hfopen g := by
-  letI : Nonempty (ZCCompletedDifferentialModuleIndex C psi.toMonoidHom) :=
+  let : Nonempty (ZCCompletedDifferentialModuleIndex C psi.toMonoidHom) :=
     nonempty_zcCompletedDifferentialModuleIndex C hC psi
   exact
     zcSepDiffToKerAugClosedQuotOfSurjective_universal
@@ -5557,7 +5618,7 @@ theorem zcSepDiffToKerAugClosedQuotOfSurjective_comp_toSep
       (zcCompletedDifferentialModuleToSeparated C psi.toMonoidHom) =
     zcCompletedDifferentialModuleToKernelAugmentationClosedQuotientOfSurjective
       C hC hForm psi hpsi hfopen := by
-  letI : Module (ZCCompletedGroupAlgebra C H)
+  let : Module (ZCCompletedGroupAlgebra C H)
       (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
     kerAugClosedQuotTargetCompletedModuleOfSurj
       C hC hForm psi hpsi hfopen
@@ -5609,7 +5670,7 @@ theorem zcSepDiffToKerAugClosedQuotOfSurjectiveOfContinuousLift_comp_toSep
       (zcCompletedDifferentialModuleToSeparated C psi.toMonoidHom) =
     zcCompletedDifferentialModuleToKernelAugmentationClosedQuotientOfSurjective
       C hC hForm psi hpsi hfopen := by
-  letI : Nonempty (ZCCompletedDifferentialModuleIndex C psi.toMonoidHom) :=
+  let : Nonempty (ZCCompletedDifferentialModuleIndex C psi.toMonoidHom) :=
     nonempty_zcCompletedDifferentialModuleIndex C hC psi
   exact
     zcSepDiffToKerAugClosedQuotOfSurjective_comp_toSep
@@ -5658,9 +5719,9 @@ theorem continuous_zcSepDiffToKerAugClosedQuotOfSurjective
       inferInstance
       (zcSepDiffToKerAugClosedQuotOfSurjective
         C hC hForm psi hpsi hfopen hdir hcont) := by
-  letI : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
+  let : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
     zcSeparatedCompletedDifferentialModuleNaturalTopology C psi.toMonoidHom
-  letI : Module (ZCCompletedGroupAlgebra C H)
+  let : Module (ZCCompletedGroupAlgebra C H)
       (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
     kerAugClosedQuotTargetCompletedModuleOfSurj
       C hC hForm psi hpsi hfopen
@@ -5676,9 +5737,17 @@ theorem continuous_zcSepDiffToKerAugClosedQuotOfSurjective
           (zcCompletedGroupAlgebraSourceBoundaryToKernelAugmentationClosedQuotient
             C hC hForm psi hpsi hfopen) := by
     funext x
-    rw [zcSepDiffToKerAugClosedQuotOfSurjective,
-      zcSeparatedCompletedDifferentialModuleLiftOfContinuousPrelift,
-      Submodule.mkQ_apply, Submodule.liftQ_apply]
+    change
+      (zcCompletedDifferentialRelationFiniteClosedSubmodule C psi.toMonoidHom).liftQ
+          (crossedDifferentialModuleLiftLinear
+            (R := ZCCompletedGroupAlgebra C H)
+            (zcCompletedGroupAlgebraSourceBoundaryToKernelAugmentationClosedQuotient
+              C hC hForm psi hpsi hfopen))
+          _ ((zcCompletedDifferentialRelationFiniteClosedSubmodule C psi.toMonoidHom).mkQ x) =
+        crossedDifferentialModuleLiftLinear
+          (R := ZCCompletedGroupAlgebra C H)
+          (zcCompletedGroupAlgebraSourceBoundaryToKernelAugmentationClosedQuotient
+            C hC hForm psi hpsi hfopen) x
     rfl
   rw [hcomp]
   exact hcont
@@ -5720,7 +5789,7 @@ theorem continuous_zcSepDiffToKerAugClosedQuotOfSurjectiveOfContinuousLift
       inferInstance
       (zcSepDiffToKerAugClosedQuotOfSurjectiveOfContinuousLift
         C hC hForm psi hpsi hfopen hcont) := by
-  letI : Nonempty (ZCCompletedDifferentialModuleIndex C psi.toMonoidHom) :=
+  let : Nonempty (ZCCompletedDifferentialModuleIndex C psi.toMonoidHom) :=
     nonempty_zcCompletedDifferentialModuleIndex C hC psi
   exact
     continuous_zcSepDiffToKerAugClosedQuotOfSurjective
@@ -5741,7 +5810,7 @@ theorem zcDiffToKerAugClosedQuotOfSurj_surj
     Function.Surjective
       (zcCompletedDifferentialModuleToKernelAugmentationClosedQuotientOfSurjective
         C hC hForm psi hpsi hfopen) := by
-  letI : Module (ZCCompletedGroupAlgebra C H)
+  let : Module (ZCCompletedGroupAlgebra C H)
       (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
     kerAugClosedQuotTargetCompletedModuleOfSurj
       C hC hForm psi hpsi hfopen
@@ -5864,7 +5933,7 @@ theorem zcSepDiffToKerAugClosedQuotOfSurjective_surj
     Function.Surjective
       (zcSepDiffToKerAugClosedQuotOfSurjective
         C hC hForm psi hpsi hfopen hdir hcont) := by
-  letI : Module (ZCCompletedGroupAlgebra C H)
+  let : Module (ZCCompletedGroupAlgebra C H)
       (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
     kerAugClosedQuotTargetCompletedModuleOfSurj
       C hC hForm psi hpsi hfopen
@@ -5912,7 +5981,7 @@ theorem zcSepDiffToKerAugClosedQuotOfSurjectiveOfContinuousLift_surj
     Function.Surjective
       (zcSepDiffToKerAugClosedQuotOfSurjectiveOfContinuousLift
         C hC hForm psi hpsi hfopen hcont) := by
-  letI : Nonempty (ZCCompletedDifferentialModuleIndex C psi.toMonoidHom) :=
+  let : Nonempty (ZCCompletedDifferentialModuleIndex C psi.toMonoidHom) :=
     nonempty_zcCompletedDifferentialModuleIndex C hC psi
   exact
     zcSepDiffToKerAugClosedQuotOfSurjective_surj
@@ -6079,7 +6148,7 @@ theorem kerAugIdealQuotToZCSepDiffLinear_comp_zcSepDiffToKerAugClosedQuot
       (zcSeparatedCompletedDifferentialModuleToKernelAugmentationClosedQuotient
         C hC hForm psi hpsi hfopen) =
     LinearMap.id := by
-  letI : Module (ZCCompletedGroupAlgebra C H)
+  let : Module (ZCCompletedGroupAlgebra C H)
       (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
     kerAugClosedQuotTargetCompletedModuleOfSurj
       C hC hForm psi hpsi hfopen
@@ -6119,11 +6188,11 @@ theorem zcSepDiffToKerAugClosedQuot_comp_kerAugIdealQuotToZCSepDiffLinear
       (kerAugIdealQuotToZCSepDiffLinear
         C hC hForm psi hpsi hfopen) =
     LinearMap.id := by
-  letI : Module (ZCCompletedGroupAlgebra C H)
+  let : Module (ZCCompletedGroupAlgebra C H)
       (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
     kerAugClosedQuotTargetCompletedModuleOfSurj
       C hC hForm psi hpsi hfopen
-  letI : Module (ZCCompletedGroupAlgebra C G)
+  let : Module (ZCCompletedGroupAlgebra C G)
       (ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom) :=
     Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
   apply LinearMap.ext
@@ -6286,7 +6355,7 @@ def zcSepDiffEquivKerAugClosedQuot_of_surj
     kerAugClosedQuotTargetCompletedModuleOfSurj
       C hC hForm psi hpsi hfopen
   exact
-    LinearEquiv.ofLinear
+    LinearEquiv.ofLinearMap
       (zcSeparatedCompletedDifferentialModuleToKernelAugmentationClosedQuotient
         C hC hForm psi hpsi hfopen)
       (kerAugIdealQuotToZCSepDiffLinear
@@ -6406,7 +6475,7 @@ theorem zcCompletedGAKerAugQuotTargetCompletedModuleOfSurjective_map_smul
       zcCompletedGAKerAugQuotTargetCompletedModuleOfSurjective_of_kernelMulStandard_le
         C hC hForm psi hpsi hker_mul
     zcCompletedGroupAlgebraMap C hC psi a • x = a • x := by
-  letI : Module (ZCCompletedGroupAlgebra C H) (KernelAugmentationIdealQuotient C psi) :=
+  let : Module (ZCCompletedGroupAlgebra C H) (KernelAugmentationIdealQuotient C psi) :=
     zcCompletedGAKerAugQuotTargetCompletedModuleOfSurjective_of_kernelMulStandard_le
       C hC hForm psi hpsi hker_mul
   change zcCompletedGroupAlgebraTargetLiftOfSurjective C hC hForm psi hpsi
@@ -6450,7 +6519,7 @@ theorem zcCompletedGAKerAugQuotTargetCompletedModuleOfSurjective_groupLike_smul
       zcCompletedGAKerAugQuotTargetCompletedModuleOfSurjective_of_kernelMulStandard_le
         C hC hForm psi hpsi hker_mul
     zcGroupLike C H (psi g) • x = zcGroupLike C G g • x := by
-  letI : Module (ZCCompletedGroupAlgebra C H) (KernelAugmentationIdealQuotient C psi) :=
+  let : Module (ZCCompletedGroupAlgebra C H) (KernelAugmentationIdealQuotient C psi) :=
     zcCompletedGAKerAugQuotTargetCompletedModuleOfSurjective_of_kernelMulStandard_le
       C hC hForm psi hpsi hker_mul
   rw [← zcCompletedGroupAlgebraMap_groupLike (C := C) (hC := hC) psi g]
@@ -6558,7 +6627,7 @@ theorem zcDiffToKerAugQuotOfSurj_of_kernelMulStandard_le_universal
         C hC hForm psi hpsi hker_mul
         (zcUniversalDifferential C psi.toMonoidHom g) =
       zcCompletedGroupAlgebraSourceBoundaryToKernelAugmentationQuotient C psi g := by
-  letI : Module (ZCCompletedGroupAlgebra C H) (KernelAugmentationIdealQuotient C psi) :=
+  let : Module (ZCCompletedGroupAlgebra C H) (KernelAugmentationIdealQuotient C psi) :=
     zcCompletedGAKerAugQuotTargetCompletedModuleOfSurjective_of_kernelMulStandard_le
       C hC hForm psi hpsi hker_mul
   exact
@@ -6589,7 +6658,7 @@ theorem zcDiffToKerAugQuotOfSurj_of_kernelMulStandard_le_surj
     Function.Surjective
       (zcDiffToKerAugQuotOfSurj_of_kernelMulStandard_le
         C hC hForm psi hpsi hker_mul) := by
-  letI : Module (ZCCompletedGroupAlgebra C H) (KernelAugmentationIdealQuotient C psi) :=
+  let : Module (ZCCompletedGroupAlgebra C H) (KernelAugmentationIdealQuotient C psi) :=
     zcCompletedGAKerAugQuotTargetCompletedModuleOfSurjective_of_kernelMulStandard_le
       C hC hForm psi hpsi hker_mul
   intro x
@@ -6758,10 +6827,10 @@ theorem zcCompletedGAKerAugQuotToClosedQuotientTargetLinear_of_kernelMulStandard
         C hC hForm psi hpsi hfopen hker_mul (Submodule.Quotient.mk x) =
       (Submodule.Quotient.mk x :
         KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) := by
-  letI : Module (ZCCompletedGroupAlgebra C H) (KernelAugmentationIdealQuotient C psi) :=
+  let : Module (ZCCompletedGroupAlgebra C H) (KernelAugmentationIdealQuotient C psi) :=
     zcCompletedGAKerAugQuotTargetCompletedModuleOfSurjective_of_kernelMulStandard_le
       C hC hForm psi hpsi hker_mul
-  letI : Module (ZCCompletedGroupAlgebra C H)
+  let : Module (ZCCompletedGroupAlgebra C H)
       (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
     kerAugClosedQuotTargetCompletedModuleOfSurj
       C hC hForm psi hpsi hfopen
@@ -6794,10 +6863,10 @@ theorem zcDiffToKerAugClosedQuotOfSurj_eq_toClosed_comp_quotient_of_kernelMulSta
         C hC hForm psi hpsi hker_mul) =
     zcCompletedDifferentialModuleToKernelAugmentationClosedQuotientOfSurjective
       C hC hForm psi hpsi hfopen := by
-  letI : Module (ZCCompletedGroupAlgebra C H) (KernelAugmentationIdealQuotient C psi) :=
+  let : Module (ZCCompletedGroupAlgebra C H) (KernelAugmentationIdealQuotient C psi) :=
     zcCompletedGAKerAugQuotTargetCompletedModuleOfSurjective_of_kernelMulStandard_le
       C hC hForm psi hpsi hker_mul
-  letI : Module (ZCCompletedGroupAlgebra C H)
+  let : Module (ZCCompletedGroupAlgebra C H)
       (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
     kerAugClosedQuotTargetCompletedModuleOfSurj
       C hC hForm psi hpsi hfopen
@@ -6843,7 +6912,7 @@ theorem zcCompletedDifferentialModule_sourceKernelGroupLikeSubOne_smul_eq_zero
         (ZCCompletedDifferentialModule C psi.toMonoidHom) :=
       Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
     (zcGroupLike C G n.1 - 1) • x = 0 := by
-  letI : Module (ZCCompletedGroupAlgebra C G)
+  let : Module (ZCCompletedGroupAlgebra C G)
       (ZCCompletedDifferentialModule C psi.toMonoidHom) :=
     Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
   have hmap :
@@ -6867,7 +6936,7 @@ theorem zcCompletedDifferentialModule_kernelAugmentationIdealMulStandard_smul_eq
         (ZCCompletedDifferentialModule C psi.toMonoidHom) :=
       Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
     (y : ZCCompletedGroupAlgebra C G) • x = 0 := by
-  letI : Module (ZCCompletedGroupAlgebra C G)
+  let : Module (ZCCompletedGroupAlgebra C G)
       (ZCCompletedDifferentialModule C psi.toMonoidHom) :=
     Module.compHom _ (zcCompletedGroupAlgebraMap C hC psi)
   change (y : ZCCompletedGroupAlgebra C G) • x = 0

@@ -1,6 +1,8 @@
 import Mathlib.GroupTheory.OrderOfElement
 import Mathlib.Topology.Algebra.ClopenNhdofOne
 
+set_option autoImplicit false
+
 /-!
 # Open subgroups of compact groups
 
@@ -27,7 +29,7 @@ theorem openSubgroup_isOpen (U : OpenSubgroup G) :
 /-- An open subgroup is closed as a subset. -/
 theorem openSubgroup_isClosed [ContinuousMul G] (U : OpenSubgroup G) :
     IsClosed ((U : Subgroup G) : Set G) := by
-  simpa using OpenSubgroup.isClosed U
+  exact OpenSubgroup.isClosed U
 
 /-- An open normal subgroup is open as a subset. -/
 theorem openNormalSubgroup_isOpen (U : OpenNormalSubgroup G) :
@@ -37,7 +39,7 @@ theorem openNormalSubgroup_isOpen (U : OpenNormalSubgroup G) :
 /-- An open normal subgroup is closed as a subset. -/
 theorem openNormalSubgroup_isClosed [ContinuousMul G] (U : OpenNormalSubgroup G) :
     IsClosed ((U : Subgroup G) : Set G) := by
-  simpa using OpenSubgroup.isClosed U.toOpenSubgroup
+  exact OpenSubgroup.isClosed U.toOpenSubgroup
 
 namespace OpenNormalSubgroup
 
@@ -87,10 +89,10 @@ theorem exists_pos_pow_mem_openSubgroup [ContinuousMul G] [CompactSpace G]
     (U : OpenSubgroup G) (g : G) :
     ∃ n : ℕ, 0 < n ∧ g ^ n ∈ (U : Subgroup G) := by
   let K : Subgroup G := (U : Subgroup G).normalCore
-  letI : Finite (G ⧸ (U : Subgroup G)) :=
+  let : Finite (G ⧸ (U : Subgroup G)) :=
     openSubgroup_finiteQuotient (G := G) U
-  letI : (U : Subgroup G).FiniteIndex := Subgroup.finiteIndex_of_finite_quotient
-  letI : K.FiniteIndex := Subgroup.finiteIndex_normalCore (H := (U : Subgroup G))
+  let : (U : Subgroup G).FiniteIndex := Subgroup.finiteIndex_of_finite_quotient
+  let : K.FiniteIndex := Subgroup.finiteIndex_normalCore (H := (U : Subgroup G))
   have hidx : K.index ≠ 0 := (Subgroup.finiteIndex_iff (H := K)).mp ‹K.FiniteIndex›
   refine ⟨K.index, Nat.pos_iff_ne_zero.mpr hidx, ?_⟩
   exact (Subgroup.normalCore_le (U : Subgroup G)) (K.pow_index_mem g)
@@ -107,11 +109,10 @@ theorem subgroup_isOpen_iff_isClosed_finite_quotient [ContinuousMul G] [CompactS
   · intro hU
     exact ⟨Subgroup.isClosed_of_isOpen U hU, Subgroup.quotient_finite_of_isOpen U hU⟩
   · rintro ⟨hUclosed, hUfinite⟩
-    letI : IsClosed (U : Set G) := hUclosed
-    letI : T1Space (G ⧸ U) := inferInstance
-    letI : Finite (G ⧸ U) := hUfinite
-    letI : DiscreteTopology (G ⧸ U) := inferInstance
-    exact (QuotientGroup.discreteTopology_iff (N := U)).1 inferInstance
+    let : IsClosed (U : Set G) := hUclosed
+    let : Finite (G ⧸ U) := hUfinite
+    exact (QuotientGroup.discreteTopology_iff (N := U)).1
+      (inferInstance : DiscreteTopology (G ⧸ U))
 
 end OpenSubgroups
 

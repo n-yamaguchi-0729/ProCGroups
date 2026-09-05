@@ -1,6 +1,8 @@
 import Mathlib.GroupTheory.QuotientGroup.Finite
 import ProCGroups.FiniteGroups.Classes
 
+set_option autoImplicit false
+
 /-!
 # The class of all finite groups
 
@@ -22,18 +24,17 @@ def allFinite : FiniteGroupClass.{u} where
   finite_of_mem := fun hG => hG
   mem_of_mulEquiv := by
     intro G H _ _ e hG
-    letI : Finite G := hG
+    let : Finite G := hG
     exact Finite.of_equiv G e.toEquiv
 
 /-- The class of all finite groups is an extension-closed formation. -/
 theorem allFinite_formation : Formation allFinite := by
   refine ⟨?_, ?_⟩
   · intro G _ N _ hG
-    letI : Finite G := hG
+    let : Finite G := hG
     exact Finite.of_surjective (QuotientGroup.mk' N) (QuotientGroup.mk'_surjective N)
   · intro ι _ G _ H _ f hf _ hH
-    letI : ∀ i, Finite (H i) := hH
-    letI : Finite ((i : ι) → H i) := inferInstance
+    let : ∀ i, Finite (H i) := hH
     exact Finite.of_injective f hf
 
 /-- The class of all finite groups contains the trivial quotients. -/
@@ -48,7 +49,7 @@ theorem allFinite_isomClosed : IsomClosed allFinite := by
 /-- The class of all finite groups is closed under subgroups. -/
 theorem allFinite_subgroupClosed : SubgroupClosed allFinite := by
   intro G _ H hG
-  letI : Finite G := hG
+  let : Finite G := hG
   exact Finite.of_injective H.subtype Subtype.val_injective
 
 /-- The class of all finite groups is closed under normal subgroups. -/
@@ -67,15 +68,15 @@ theorem allFinite_finiteSubdirectProductClosed : FiniteSubdirectProductClosed al
 /-- The class of all finite groups is extension closed. -/
 theorem allFinite_extensionClosed : ExtensionClosed allFinite := by
   intro E _ N _ hN hQ
-  letI : Finite N := hN
-  letI : Finite (E ⧸ N) := hQ
+  let : Finite N := hN
+  let : Finite (E ⧸ N) := hQ
   exact Finite.of_subgroup_quotient N
 
 /-- The class of all finite groups is hereditary. -/
 theorem allFinite_hereditary : Hereditary allFinite := by
   refine ⟨?_⟩
   intro G H _ _ hH f hf
-  letI : Finite H := hH
+  let : Finite H := hH
   exact Finite.of_injective f hf
 
 end FiniteGroupClass

@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.InClass.System.Basic
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: in class — system — ring — add comm group
 

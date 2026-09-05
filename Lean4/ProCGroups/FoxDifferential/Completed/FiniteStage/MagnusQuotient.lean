@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Derivative.Rules
 import ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Derivative.Relators
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — finite stage — magnus quotient
 
@@ -121,7 +123,7 @@ theorem foxAlgebraicStageSemidirectReindexHom_lift
   MonoidAlgebra.mapDomainRingHom_apply, MonoidHom.coe_coe, foxAlgebraicStageLift,
       QuotientGroup.mk'_apply,
   MonoidHom.coe_comp, MonoidHom.coe_mk, OneHom.coe_mk, Function.comp_apply, FreeGroup.lift_apply_of,
-  QuotientGroup.congr_mk, FreeGroup.freeGroupCongr_apply, FreeGroup.map.of, Pi.single_eq_same,
+  FreeGroup.freeGroupCongr_apply, FreeGroup.map.of, Pi.single_eq_same,
       f₁, f₂, φ]
         rw [e.symm_apply_apply, Pi.single_eq_same]
         simp only [MonoidAlgebra.mapDomain_one]
@@ -132,13 +134,16 @@ theorem foxAlgebraicStageSemidirectReindexHom_lift
   MonoidAlgebra.mapDomainRingHom_apply, MonoidHom.coe_coe, foxAlgebraicStageLift,
       QuotientGroup.mk'_apply,
   MonoidHom.coe_comp, MonoidHom.coe_mk, OneHom.coe_mk, Function.comp_apply, FreeGroup.lift_apply_of,
-  QuotientGroup.congr_mk, FreeGroup.freeGroupCongr_apply, FreeGroup.map.of, Pi.single_eq_of_ne hne,
+  FreeGroup.freeGroupCongr_apply, FreeGroup.map.of, Pi.single_eq_of_ne hne,
   MonoidAlgebra.mapDomain_zero, Pi.single_eq_of_ne hy, f₁, f₂, φ]
-    · simp only [foxAlgebraicStageSemidirectReindexHom, MulEquiv.toMonoidHom_eq_coe,
-  MonoidAlgebra.mapDomainRingHom_apply, MonoidHom.coe_coe, foxAlgebraicStageLift,
-      QuotientGroup.mk'_apply,
-  MonoidHom.coe_comp, MonoidHom.coe_mk, OneHom.coe_mk, Function.comp_apply, FreeGroup.lift_apply_of,
-  QuotientGroup.congr_mk, FreeGroup.freeGroupCongr_apply, FreeGroup.map.of, f₁, f₂, φ]
+    · change
+        (QuotientGroup.congr N M (FreeGroup.freeGroupCongr e) hM)
+            (QuotientGroup.mk' N (FreeGroup.of x)) =
+          QuotientGroup.mk' M (FreeGroup.of (e x))
+      exact
+        (QuotientGroup.congr_mk' N M (FreeGroup.freeGroupCongr e) hM (FreeGroup.of x)).trans
+          (congrArg (QuotientGroup.mk' M) (by
+            simp only [FreeGroup.freeGroupCongr_apply, FreeGroup.map.of]))
   exact congrArg (fun f : FreeGroup X →* FoxAlgebraicStageSemidirect (X := Y) M n => f w) hf
 
 /-- Finite-stage Fox derivative vectors reindex along an equivalence of free bases. -/
@@ -276,7 +281,7 @@ theorem ker_foxAlgebraicStageLift_le_foxCommutatorPowerSubgroup_iff_residueUnive
         residueUniversalDifferential n (QuotientGroup.mk' N) w = 0 →
           w ∈ foxCommutatorPowerSubgroup (F := FreeGroup X) N n := by
   classical
-  letI : Fintype X := Fintype.ofFinite X
+  let : Fintype X := Fintype.ofFinite X
   rw [ker_foxAlgebraicStageLift_le_foxCommutatorPowerSubgroup_iff]
   constructor
   · intro h w hwN hres

@@ -1,6 +1,8 @@
 import ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.Topology
 import ProCGroups.CompletedGroupAlgebra.Basic.InClass.Topology
 
+set_option autoImplicit false
+
 /-!
 # Completed Group Algebra / Basic / Class Comparison
 
@@ -158,7 +160,7 @@ theorem continuous_completedGroupAlgebraToInClass
     (C : ProCGroups.FiniteGroupClass.{v}) :
     Continuous (completedGroupAlgebraToInClass (R := R) (G := G) C ) := by
   let S := completedGroupAlgebraSystemInClass C R G
-  letI : ∀ U, TopologicalSpace (CompletedGroupAlgebraStageInClass C R G U) :=
+  let : ∀ U, TopologicalSpace (CompletedGroupAlgebraStageInClass C R G U) :=
     fun U => (completedGroupAlgebraSystemInClass C R G).topologicalSpace U
   let π : ∀ U : CompletedGroupAlgebraIndexInClass G C,
       CompletedGroupAlgebraCarrier R G →
@@ -334,7 +336,7 @@ theorem continuous_completedGroupAlgebraFromInClass
     (hForm : ProCGroups.FiniteGroupClass.Formation C) (hG : HasOpenNormalBasisInClass C G) :
     Continuous (completedGroupAlgebraFromInClass (R := R) (G := G) C hForm hG) := by
   let S := completedGroupAlgebraSystem R G
-  letI : ∀ U, TopologicalSpace (CompletedGroupAlgebraStage R G U) :=
+  let : ∀ U, TopologicalSpace (CompletedGroupAlgebraStage R G U) :=
     fun U => (completedGroupAlgebraSystem R G).topologicalSpace U
   let π : ∀ U : CompletedGroupAlgebraIndex G,
       CompletedGroupAlgebraInClass C R G →
@@ -343,7 +345,7 @@ theorem continuous_completedGroupAlgebraFromInClass
       (completedGroupAlgebraIndexToInClass G C hForm hG U)
   have hπ : ∀ U, Continuous (π U) := by
     intro U
-    letI : TopologicalSpace
+    let : TopologicalSpace
         (CompletedGroupAlgebraStageInClass C R G (completedGroupAlgebraIndexToInClass G C hForm
             hG U)) :=
       (completedGroupAlgebraSystemInClass C R G).topologicalSpace

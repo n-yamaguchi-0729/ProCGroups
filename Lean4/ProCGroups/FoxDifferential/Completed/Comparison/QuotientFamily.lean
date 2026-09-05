@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.Comparison.DiscreteCompletion
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — comparison — quotient family
 
@@ -75,8 +77,8 @@ This keeps the historical projection-style name while deriving the structure rat
 it as unrelated input data. -/
 theorem targetIsTopologicalGroup (B : ZCFiniteStageQuotientBundle N) :
     @IsTopologicalGroup (Target (N := N) B) B.targetTopology inferInstance := by
-  letI : TopologicalSpace (Target (N := N) B) := B.targetTopology
-  letI : DiscreteTopology (Target (N := N) B) := B.targetDiscreteTopology
+  let : TopologicalSpace (Target (N := N) B) := B.targetTopology
+  let : DiscreteTopology (Target (N := N) B) := B.targetDiscreteTopology
   infer_instance
 
 /-- The canonical quotient morphism represented by a genuine finite-stage bundle. -/
@@ -123,8 +125,8 @@ theorem scalarStage_apply
        modNCompletedGroupAlgebraStageMapInClass j.1.modulus
         (zcFiniteStageTarget X N) C j.2
         (foxAlgebraicStageCoefficient (X := X) N j.1.modulus w)) := by
-  letI : TopologicalSpace (Target (N := N) B) := B.targetTopology
-  letI : IsTopologicalGroup (Target (N := N) B) := B.targetIsTopologicalGroup
+  let : TopologicalSpace (Target (N := N) B) := B.targetTopology
+  let : IsTopologicalGroup (Target (N := N) B) := B.targetIsTopologicalGroup
   exact zcCompletedGroupAlgebraScalarStage_apply (C := C) (X := X) N j w
 
 /-- Completed derivative projection theorem, using the bundled quotient-family hypotheses. -/
@@ -139,8 +141,8 @@ theorem derivative_finiteStageProjection
        modNCompletedGroupAlgebraStageMapInClass j.1.modulus
         (zcFiniteStageTarget X N) C j.2
         (foxAlgebraicStageDerivative (X := X) N j.1.modulus i w)) := by
-  letI : TopologicalSpace (Target (N := N) B) := B.targetTopology
-  letI : IsTopologicalGroup (Target (N := N) B) := B.targetIsTopologicalGroup
+  let : TopologicalSpace (Target (N := N) B) := B.targetTopology
+  let : IsTopologicalGroup (Target (N := N) B) := B.targetIsTopologicalGroup
   exact zcFreeGroupFoxDerivative_finiteStageProjection (C := C) (X := X) N j i w
 
 /-- Completed derivative-vector projection theorem, using the bundled quotient-family hypotheses. -/
@@ -157,8 +159,8 @@ theorem derivativeVector_finiteStageProjection
         modNCompletedGroupAlgebraStageMapInClass j.1.modulus
           (zcFiniteStageTarget X N) C j.2
           (foxAlgebraicStageDerivative (X := X) N j.1.modulus i w) := by
-  letI : TopologicalSpace (Target (N := N) B) := B.targetTopology
-  letI : IsTopologicalGroup (Target (N := N) B) := B.targetIsTopologicalGroup
+  let : TopologicalSpace (Target (N := N) B) := B.targetTopology
+  let : IsTopologicalGroup (Target (N := N) B) := B.targetIsTopologicalGroup
   exact zcFreeGroupFoxDerivativeVector_finiteStageProjection (C := C) (X := X) N j w
 
 /--
@@ -177,8 +179,8 @@ theorem derivative_finiteStageProjection_discreteReduction
         (foxAlgebraicStageGroupRingReduction (X := X) N j.1.modulus
           (FoxCalculus.relativeFreeGroupFoxDerivative
             (H := zcFiniteStageTarget X N) X (QuotientGroup.mk' N) w i))) := by
-  letI : TopologicalSpace (Target (N := N) B) := B.targetTopology
-  letI : IsTopologicalGroup (Target (N := N) B) := B.targetIsTopologicalGroup
+  let : TopologicalSpace (Target (N := N) B) := B.targetTopology
+  let : IsTopologicalGroup (Target (N := N) B) := B.targetIsTopologicalGroup
   exact zcFreeGroupFoxDerivative_finiteStageProjection_discreteReduction
     (C := C) (X := X) N i w j
 
@@ -201,8 +203,8 @@ theorem derivativeVector_finiteStageProjection_discreteReduction
           (foxAlgebraicStageGroupRingReduction (X := X) N j.1.modulus
             (FoxCalculus.relativeFreeGroupFoxDerivative
               (H := zcFiniteStageTarget X N) X (QuotientGroup.mk' N) w i)) := by
-  letI : TopologicalSpace (Target (N := N) B) := B.targetTopology
-  letI : IsTopologicalGroup (Target (N := N) B) := B.targetIsTopologicalGroup
+  let : TopologicalSpace (Target (N := N) B) := B.targetTopology
+  let : IsTopologicalGroup (Target (N := N) B) := B.targetIsTopologicalGroup
   exact zcFreeGroupFoxDerivativeVector_finiteStageProjection_discreteReduction
     (C := C) (X := X) N w j
 

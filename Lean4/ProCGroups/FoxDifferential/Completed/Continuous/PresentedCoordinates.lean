@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Common.FiniteFamilyLinearMap
 import ProCGroups.FoxDifferential.Completed.Continuous.Universal.NaturalTopology
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — continuous — presented coordinates
 
@@ -138,9 +140,9 @@ theorem continuous_presentedCompletedDifferentialFamilyMapProCInteger_naturalTop
           (presentedCompletedDifferentialFamilyMapProCInteger
             (G := G) (H := H) C psi family x))
   refine continuous_pi fun i => ?_
-  letI : TopologicalSpace (zcCompletedDifferentialModuleStageRing C psi.toMonoidHom i) :=
+  let : TopologicalSpace (zcCompletedDifferentialModuleStageRing C psi.toMonoidHom i) :=
     inferInstance
-  letI : DiscreteTopology (zcCompletedDifferentialModuleStageRing C psi.toMonoidHom i) :=
+  let : DiscreteTopology (zcCompletedDifferentialModuleStageRing C psi.toMonoidHom i) :=
     inferInstance
   have hstageAction :
       Continuous (fun p : zcCompletedDifferentialModuleStageRing C psi.toMonoidHom i ×

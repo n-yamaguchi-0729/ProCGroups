@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Discrete.Naturality
 import ProCGroups.FoxDifferential.Discrete.FoxCalculus.Boundary
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: discrete — absolute
 

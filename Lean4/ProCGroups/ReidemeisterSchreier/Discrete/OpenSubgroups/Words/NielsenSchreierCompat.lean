@@ -1,5 +1,9 @@
 import ProCGroups.ReidemeisterSchreier.Groupoid
 
+set_option autoImplicit false
+
+universe u
+
 /-!
 # Reidemeister Schreier / Discrete / Open Subgroups / Words / Nielsen Schreier Compat
 
@@ -13,7 +17,7 @@ namespace ReidemeisterSchreier.Discrete.OpenSubgroups
 section NielsenSchreierCompat
 
 open scoped Pointwise
-open CategoryTheory CategoryTheory.ActionCategory CategoryTheory.SingleObj Quiver FreeGroup
+open CategoryTheory CategoryTheory.ActionCategory CategoryTheory.SingleObj Quiver _root_.FreeGroup
 
 /--
 An explicit free-group basis makes the corresponding action groupoid free with controlled
@@ -61,8 +65,11 @@ generator labels.
         apply Unit.ext
       · refine ActionCategory.cases ?_
         intro t g
-        simp only [← hcurried, uncurry_map, curry_apply_left, coe_back, homOfPair.val]
-        rfl
+        have hEval :
+            (E.map (homOfPair (G := G) t g) : X) = (F' g).left t :=
+          (curry_apply_left E g t).symm.trans
+            (congrArg (fun φ : G →* (A → X) ⋊[mulAutArrow] G => (φ g).left t) hcurried)
+        exact heq_of_eq hEval
 
 /-- Two action-category objects are equal when their underlying points are equal. -/
 lemma actionCategory_eq_of_back_eq {M X : Type u} [Monoid M] [MulAction M X]

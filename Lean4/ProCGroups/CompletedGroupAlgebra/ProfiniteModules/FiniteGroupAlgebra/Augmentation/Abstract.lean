@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.ProfiniteModules.FiniteGroupAlgebra.Functoriality
 
+set_option autoImplicit false
+
 /-!
 # Algebraic group-algebra augmentation
 
@@ -247,7 +249,7 @@ theorem exists_mem_groupAlgebraAugmentationGeneratorIdeal_add
     ∃ y ∈ groupAlgebraAugmentationGeneratorIdeal R G,
       x = y + algebraMap R (MonoidAlgebra R G) (groupAlgebraAugmentation R G x) := by
   refine MonoidAlgebra.induction_on
-    (p := fun x : MonoidAlgebra R G =>
+    (motive := fun x : MonoidAlgebra R G =>
       ∃ y ∈ groupAlgebraAugmentationGeneratorIdeal R G,
         x = y + algebraMap R (MonoidAlgebra R G) (groupAlgebraAugmentation R G x))
     x ?_ ?_ ?_
@@ -339,7 +341,7 @@ theorem finiteGroupAlgebra_augmentation_apply_eq_sum
     letI : Fintype G := Fintype.ofFinite G
     groupAlgebraAugmentation R G x = ∑ g : G, x.coeff g := by
   classical
-  letI : Fintype G := Fintype.ofFinite G
+  let : Fintype G := Fintype.ofFinite G
   calc
     groupAlgebraAugmentation R G x = x.coeff.sum (fun _ r => r) := by
       simp only [groupAlgebraAugmentation, AlgHom.toRingHom_eq_coe, RingHom.coe_coe,
@@ -358,8 +360,8 @@ theorem finiteGroupAlgebra_algebraMap_continuous
     letI : TopologicalSpace (MonoidAlgebra R G) := finiteGroupAlgebraTopology R G
     Continuous (algebraMap R (MonoidAlgebra R G)) := by
   classical
-  letI : Fintype G := Fintype.ofFinite G
-  letI : TopologicalSpace (MonoidAlgebra R G) := finiteGroupAlgebraTopology R G
+  let : Fintype G := Fintype.ofFinite G
+  let : TopologicalSpace (MonoidAlgebra R G) := finiteGroupAlgebraTopology R G
   let e : MonoidAlgebra R G ≃ (G → R) :=
     (MonoidAlgebra.coeffEquiv (R := R) (M := G)).trans Finsupp.equivFunOnFinite
   have he : Topology.IsInducing (e : MonoidAlgebra R G → G → R) :=
@@ -386,8 +388,8 @@ theorem finiteGroupAlgebra_augmentation_continuous
     letI : TopologicalSpace (MonoidAlgebra R G) := finiteGroupAlgebraTopology R G
     Continuous (groupAlgebraAugmentation R G) := by
   classical
-  letI : Fintype G := Fintype.ofFinite G
-  letI : TopologicalSpace (MonoidAlgebra R G) := finiteGroupAlgebraTopology R G
+  let : Fintype G := Fintype.ofFinite G
+  let : TopologicalSpace (MonoidAlgebra R G) := finiteGroupAlgebraTopology R G
   change Continuous (fun x : MonoidAlgebra R G => groupAlgebraAugmentation R G x)
   rw [show (fun x : MonoidAlgebra R G => groupAlgebraAugmentation R G x) =
       (fun x : MonoidAlgebra R G => ∑ g : G, x.coeff g) from by

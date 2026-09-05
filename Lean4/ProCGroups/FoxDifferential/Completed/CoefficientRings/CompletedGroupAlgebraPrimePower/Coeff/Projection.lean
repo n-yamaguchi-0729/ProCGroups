@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.Coeff.Ring
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: coefficient rings — prime-power completed group algebra — coeff — projection
 
@@ -158,13 +160,29 @@ theorem primePowerCompletedCoeffProjection_eq_of_same_exponent
   have hU' :
       primePowerCompletedCoeffProjection (ℓ := ℓ) (G := G) (a, U) z =
         primePowerCompletedCoeffProjection (ℓ := ℓ) (G := G) (a, T) z := by
-    simpa [primePowerCompletedCoeffProjection, primePowerCompletedCoeffSystem, hTU_coeff] using
-      hU
+    change (show ZMod (ℓ ^ a) from z.1 (a, U)) =
+      (show ZMod (ℓ ^ a) from z.1 (a, T))
+    change
+      (modNCompletedCoeffMap
+          (n := ℓ ^ a) (m := ℓ ^ a)
+          (primePow_dvd_primePow (ℓ := ℓ) hTU.1))
+          (show ZMod (ℓ ^ a) from z.1 (a, U)) =
+        (show ZMod (ℓ ^ a) from z.1 (a, T)) at hU
+    rw [hTU_coeff, RingHom.id_apply] at hU
+    exact hU
   have hV' :
       primePowerCompletedCoeffProjection (ℓ := ℓ) (G := G) (a, V) z =
         primePowerCompletedCoeffProjection (ℓ := ℓ) (G := G) (a, T) z := by
-    simpa [primePowerCompletedCoeffProjection, primePowerCompletedCoeffSystem, hTV_coeff] using
-      hV
+    change (show ZMod (ℓ ^ a) from z.1 (a, V)) =
+      (show ZMod (ℓ ^ a) from z.1 (a, T))
+    change
+      (modNCompletedCoeffMap
+          (n := ℓ ^ a) (m := ℓ ^ a)
+          (primePow_dvd_primePow (ℓ := ℓ) hTV.1))
+          (show ZMod (ℓ ^ a) from z.1 (a, V)) =
+        (show ZMod (ℓ ^ a) from z.1 (a, T)) at hV
+    rw [hTV_coeff, RingHom.id_apply] at hV
+    exact hV
   exact hU'.trans hV'.symm
 
 end

@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Common.FiniteFamilyLinearMap
 import Mathlib.Topology.Basic
 
+set_option autoImplicit false
+
 /-!
 # `ProCGroups.CrowellExactSequence.Basic`
 

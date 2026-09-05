@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Completed.FreeProC.Coordinates
 import ProCGroups.FoxDifferential.Completed.FiniteStage.ClosedGeneratedCycles
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — free pro-\(C\) — fundamental formula
 
@@ -287,7 +289,7 @@ theorem freeProC_zcDiffModuleRelSubmoduleClosed_iff_closedGenCoord_inj
       Function.Injective
         (freeProCChosenULift_closedGeneratedCoordinateMap
           (H := H) (C := C) (hC := hC) sourceData hbasis psi hpsi) := by
-  letI :
+  let :
       Nonempty
         (ZCCompletedDifferentialModuleIndex
           C psi.toMonoidHom) :=

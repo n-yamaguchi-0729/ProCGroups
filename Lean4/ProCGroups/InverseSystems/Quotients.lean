@@ -2,6 +2,8 @@ import Mathlib.Topology.Algebra.ProperAction.Basic
 import ProCGroups.InverseSystems.CompatibilityAndSurjectivity
 import ProCGroups.Topologies.QuotientMaps
 
+set_option autoImplicit false
+
 /-!
 # Quotients of group-valued inverse systems
 
@@ -123,6 +125,13 @@ instance quotientInverseSystem_stageTopologicalGroup (i : I) :
     IsTopologicalGroup (Q.quotientInverseSystem.X i) := by
   change IsTopologicalGroup (S.X i ⧸ Q.N i)
   infer_instance
+
+/-- Fix the closed-subgroup boundary before using the quotient's canonical topology. -/
+private theorem quotientInverseSystem_stageT2Space (i : I) :
+    T2Space (Q.quotientInverseSystem.X i) := by
+  change T2Space (S.X i ⧸ Q.N i)
+  have : IsClosed (Q.N i : Set (S.X i)) := Q.closed i
+  exact QuotientGroup.instT2Space (H := Q.N i)
 
 /-- The induced quotient transitions preserve the group operations at every stage. -/
 instance quotientInverseSystem_isGroupSystem :
@@ -292,10 +301,7 @@ theorem surjective_quotientInverseLimitComparison
     (hdir : Directed (· ≤ ·) (id : I → I)) :
     Function.Surjective Q.quotientInverseLimitComparison := by
   let T : InverseSystem (I := I) := Q.quotientInverseSystem
-  letI : ∀ i, T2Space (T.X i) := fun i => by
-    dsimp [T, quotientInverseSystem]
-    haveI : IsClosed ((Q.N i : Subgroup (S.X i)) : Set (S.X i)) := Q.closed i
-    exact QuotientGroup.instT2Space
+  let : ∀ i, T2Space (T.X i) := Q.quotientInverseSystem_stageT2Space
   have hlimsurj : Function.Surjective (S.limMap Q.toQuotientInverseSystem) :=
     S.surjective_limMap (T := T) hdir Q.toQuotientInverseSystem
       (fun i => QuotientGroup.mk'_surjective (Q.N i))
@@ -322,14 +328,9 @@ noncomputable def quotientInverseLimitContinuousMulEquiv
     (hdir : Directed (· ≤ ·) (id : I → I)) :
     S.inverseLimit ⧸ Q.inverseLimitKernel ≃ₜ* Q.quotientInverseSystem.inverseLimit := by
   let T : InverseSystem (I := I) := Q.quotientInverseSystem
-  let f := Q.quotientInverseLimitComparison
-  letI : CompactSpace S.inverseLimit := inferInstance
-  letI : CompactSpace (S.inverseLimit ⧸ Q.inverseLimitKernel) := inferInstance
-  letI : ∀ i, T2Space (T.X i) := fun i => by
-    dsimp [T, quotientInverseSystem]
-    haveI : IsClosed ((Q.N i : Subgroup (S.X i)) : Set (S.X i)) := Q.closed i
-    exact QuotientGroup.instT2Space
-  letI : T2Space T.inverseLimit := T.t2Space_inverseLimit
+  let f : S.inverseLimit ⧸ Q.inverseLimitKernel →ₜ* T.inverseLimit :=
+    Q.quotientInverseLimitComparison
+  letI : ∀ i, T2Space (T.X i) := Q.quotientInverseSystem_stageT2Space
   exact ContinuousMulEquiv.ofBijectiveCompactToT2
     f.toMonoidHom f.continuous_toFun (Q.bijective_quotientInverseLimitComparison hdir)
 

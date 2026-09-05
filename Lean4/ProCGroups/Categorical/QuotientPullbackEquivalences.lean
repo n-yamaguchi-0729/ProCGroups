@@ -1,6 +1,8 @@
 import ProCGroups.Categorical.ProfinitePullbacks
 import ProCGroups.ProC.Quotients.ClosedNormal
 
+set_option autoImplicit false
+
 /-!
 # Pro C Groups / Categorical / Quotient Pullback Equivalences
 
@@ -88,10 +90,10 @@ def quotientMapOfLE (M N : Subgroup G) [M.Normal] [N.Normal] (hMN : M ≤ N) :
     (hMN : M ≤ N) (g : G) :
     quotientMapOfLE (G := G) M N hMN (QuotientGroup.mk g) = QuotientGroup.mk g :=
   by
-    let hcomap : M ≤ Subgroup.comap (MonoidHom.id G) N := by
-      simpa using hMN
-    change QuotientGroup.map M N (MonoidHom.id G) hcomap (QuotientGroup.mk g) = QuotientGroup.mk g
-    simp only [QuotientGroup.map_mk, MonoidHom.id_apply]
+    have hcomap : M ≤ Subgroup.comap (MonoidHom.id G) N := by
+      intro x hx
+      exact hMN hx
+    exact QuotientGroup.map_mk' (N := M) N (MonoidHom.id G) hcomap g
 
 /-- Coordinate map from the quotient by an indexed intersection of normal subgroups. -/
 def quotientIInfToCoordinate {ι : Type v} (W : ι → Subgroup G) [∀ i, (W i).Normal]
@@ -136,9 +138,9 @@ from \(G\).
     (hMN : M ≤ N) :
     ((quotientMapOfLE (G := G) M N hMN).comp (QuotientGroup.mk' M)).ker = N := by
   ext g
-  simp only [quotientMapOfLE, MonoidHom.mem_ker, MonoidHom.coe_comp, QuotientGroup.coe_mk',
-      Function.comp_apply,
-  QuotientGroup.map_mk, MonoidHom.id_apply, QuotientGroup.eq_one_iff]
+  change quotientMapOfLE (G := G) M N hMN (QuotientGroup.mk g) = 1 ↔ g ∈ N
+  rw [quotientMapOfLE_mk (G := G) M N hMN g]
+  exact QuotientGroup.eq_one_iff (N := N) g
 
 /-- The left-hand map in the quotient pullback square. -/
 def quotientInfToLeft : G ⧸ (U ⊓ V) →* G ⧸ U :=
@@ -188,15 +190,9 @@ group homomorphism.
     (quotientMapOfLECont (G := G) M N hMN).toMonoidHom =
       quotientMapOfLE (G := G) M N hMN :=
   by
-    ext g
-    change quotientMapOfLECont (G := G) M N hMN (QuotientGroup.mk' M g) =
-      quotientMapOfLE (G := G) M N hMN (QuotientGroup.mk' M g)
-    simpa [quotientMapOfLECont, quotientMapOfLE] using
-      (QuotientGroup.mapₜ_apply_mk
-        (N := M) (M := N) (f := ContinuousMonoidHom.id G)
-        (hNM := by
-          intro g hg
-          exact hMN hg) g)
+    exact QuotientGroup.mapₜ_toMonoidHom M N (ContinuousMonoidHom.id G) (by
+      intro g hg
+      exact hMN hg)
 
 /-- Evaluation of the continuous quotient map induced by inclusion on a quotient class. -/
 @[simp] theorem quotientMapOfLECont_mk
@@ -553,8 +549,6 @@ noncomputable def quotientInfContinuousPullbackEquiv
     G ⧸ (U ⊓ V) ≃ₜ*
       TopologicalFiberProduct.carrier (quotientToSupLeftCont (G := G) U V)
           (quotientToSupRightCont (G := G) U V) := by
-  letI : IsClosed (U : Set G) := hUclosed
-  letI : IsClosed (V : Set G) := hVclosed
   exact ContinuousMulEquiv.ofBijectiveCompactToT2
     (quotientInfToContinuousPullback (G := G) U V)
     (quotientInfToContinuousPullback (G := G) U V).continuous_toFun

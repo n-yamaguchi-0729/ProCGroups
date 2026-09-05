@@ -2,6 +2,8 @@ import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgeb
 import Mathlib.Algebra.Algebra.ZMod
 import Mathlib.Algebra.MonoidAlgebra.Basic
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — coefficient rings — mod-\(n\) completed group algebra — coeff map
 
@@ -82,9 +84,9 @@ theorem modNCompletedGroupRingCoeffMap_of
     modNCompletedGroupRingCoeffMap (n := n) (m := m) H hnm
         (MonoidAlgebra.of (ModNCompletedCoeff m) H h) =
       MonoidAlgebra.of (ModNCompletedCoeff n) H h := by
-  letI : Algebra (ModNCompletedCoeff m) (ModNCompletedCoeff n) :=
+  let : Algebra (ModNCompletedCoeff m) (ModNCompletedCoeff n) :=
     ZMod.algebra' (R := ModNCompletedCoeff n) (m := n) (n := m) hnm
-  letI : Algebra (ModNCompletedCoeff m) (ModNCompletedGroupRing n H) := inferInstance
+  let : Algebra (ModNCompletedCoeff m) (ModNCompletedGroupRing n H) := inferInstance
   change
     MonoidAlgebra.lift (ModNCompletedCoeff m) (ModNCompletedGroupRing n H) H
         (MonoidAlgebra.of (ModNCompletedCoeff n) H)

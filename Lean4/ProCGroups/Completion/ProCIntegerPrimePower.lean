@@ -1,5 +1,7 @@
 import ProCGroups.Completion.ProCInteger
 
+set_option autoImplicit false
+
 /-!
 # Pro C Groups / Completion / Prime-Power pro-C Integer
 
@@ -26,14 +28,11 @@ def pGroupPower (p k : ℕ) [Fact (Nat.Prime p)] :
       (FiniteGroupClass.pGroup p : FiniteGroupClass.{u})
       (Multiplicative (ZMod (p ^ k)))).1 ?_
     apply FiniteGroupClass.memAcrossUniverses_of_mem
-    letI : NeZero (p ^ k) := ⟨Nat.ne_of_gt (Nat.pow_pos
+    let : NeZero (p ^ k) := ⟨Nat.ne_of_gt (Nat.pow_pos
       (show 0 < p from (Fact.out : Nat.Prime p).pos))⟩
-    letI : Fintype (ZMod (p ^ k)) := ZMod.fintype (p ^ k)
     constructor
-    · have hfinZ : Finite (ZMod (p ^ k)) := Finite.of_fintype _
-      have hfinMul : Finite (Multiplicative (ZMod (p ^ k))) :=
-        @Finite.of_equiv _ _ hfinZ Multiplicative.toAdd
-      exact @Finite.of_equiv _ _ hfinMul Equiv.ulift.symm
+    · exact Finite.of_equiv (ZMod (p ^ k))
+        (Multiplicative.ofAdd.trans Equiv.ulift.symm)
     · intro g
       refine ⟨k, ?_⟩
       cases g with
@@ -60,7 +59,6 @@ theorem modulus_dvd_pow_of_mem_pGroup (p : ℕ) [Fact (Nat.Prime p)]
   rcases hH with ⟨_hfin, hp⟩
   rcases hp (e.symm (Multiplicative.ofAdd (1 : ZMod i.modulus))) with ⟨k, hk⟩
   refine ⟨k, ?_⟩
-  letI : NeZero i.modulus := ⟨Nat.ne_of_gt i.positive⟩
   have hk' : ((p ^ k : ℕ) : ZMod i.modulus) = 0 := by
     have hpow :
         (Multiplicative.ofAdd (1 : ZMod i.modulus)) ^ (p ^ k) = 1 := by
@@ -108,7 +106,7 @@ theorem denseRange_intToProCInteger_pGroup (p : ℕ) [Fact (Nat.Prime p)] :
   have hsurj : ∀ i, Function.Surjective (φ i) := by
     intro i
     exact ZMod.intCast_surjective
-  letI : Nonempty (ProCIntegerIndex C) := ⟨ProCIntegerIndex.pGroupPower p 0⟩
+  let : Nonempty (ProCIntegerIndex C) := ⟨ProCIntegerIndex.pGroupPower p 0⟩
   have hdense : DenseRange (S.inverseLimitLift φ hφ) :=
     ProCGroups.InverseSystems.InverseSystem.denseRange_lift
       (S := S) φ hφ hsurj (ProCIntegerIndex.directed_pGroup (p := p))
@@ -172,7 +170,7 @@ theorem hasPGroupOpenNormalBasis_multiplicative_proCInteger_pGroup (p : ℕ) [Fa
       (Multiplicative
         (ProCIntegerLimitCarrier (FiniteGroupClass.pGroup p : FiniteGroupClass.{0}))) := by
   let C : FiniteGroupClass.{0} := FiniteGroupClass.pGroup p
-  letI : Nonempty (ProCIntegerIndex C) := ⟨ProCIntegerIndex.pGroupPower p 0⟩
+  let : Nonempty (ProCIntegerIndex C) := ⟨ProCIntegerIndex.pGroupPower p 0⟩
   simpa [ProCGroups.ProC.HasPGroupOpenNormalBasis, C] using
     hasOpenNormalBasisInClass_multiplicative_proCInteger
       (C := C)
@@ -185,14 +183,14 @@ theorem hasCyclicOpenNormalBasis_multiplicative_proCInteger_pGroup (p : ℕ) [Fa
     ProCGroups.ProC.HasCyclicOpenNormalBasis
       (Multiplicative
         (ProCIntegerLimitCarrier (FiniteGroupClass.pGroup p : FiniteGroupClass.{0}))) := by
-  letI : T2Space
+  let : T2Space
       (Multiplicative
         (ProCIntegerLimitCarrier (FiniteGroupClass.pGroup p : FiniteGroupClass.{0}))) := by
     change T2Space
       (ProCIntegerLimitCarrier (FiniteGroupClass.pGroup p : FiniteGroupClass.{0}))
     exact instT2SpaceProCInteger
       (C := (FiniteGroupClass.pGroup p : FiniteGroupClass.{0}))
-  letI : TotallyDisconnectedSpace
+  let : TotallyDisconnectedSpace
       (Multiplicative
         (ProCIntegerLimitCarrier (FiniteGroupClass.pGroup p : FiniteGroupClass.{0}))) := by
     change TotallyDisconnectedSpace

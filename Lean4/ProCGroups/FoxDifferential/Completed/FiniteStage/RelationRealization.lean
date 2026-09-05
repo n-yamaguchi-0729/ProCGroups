@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.RelationSubmodule
 import ProCGroups.FoxDifferential.Completed.FiniteStage.BoundarySubgroups
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — finite stage — relation realization
 

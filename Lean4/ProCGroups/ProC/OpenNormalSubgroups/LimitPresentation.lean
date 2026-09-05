@@ -4,6 +4,8 @@ import ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
 import ProCGroups.Topologies.ContinuousMulEquiv
 import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Limits
 
+set_option autoImplicit false
+
 /-!
 # Presenting pro-\(C\) groups as inverse limits
 
@@ -55,22 +57,19 @@ noncomputable def openNormalSubgroupInClassMulEquivInverseLimit
     [CompactSpace G] [T2Space G]
     (hForm : FiniteGroupClass.Formation C) (hG : HasOpenNormalBasisInClass C G) :
     G ≃ₜ* (openNormalSubgroupInClassSystem C G).inverseLimit := by
-  let S := openNormalSubgroupInClassSystem C G
+  let S : InverseSystems.InverseSystem (I := OrderDual (OpenNormalSubgroupInClass C G)) :=
+    openNormalSubgroupInClassSystem C G
   letI : Nonempty (OpenNormalSubgroupInClass C G) := openNormalSubgroupInClass_nonempty hG
-  letI : Nonempty (OrderDual (OpenNormalSubgroupInClass C G)) := inferInstance
   letI : ∀ U : OrderDual (OpenNormalSubgroupInClass C G), Group (S.X U) := fun U =>
     instGroupOpenNormalSubgroupInClassSystemX (C := C) (G := G) U
-  letI : InverseSystems.IsGroupSystem S := by
-    dsimp [S]
-    infer_instance
+  letI : InverseSystems.IsGroupSystem S :=
+    instIsGroupSystemOpenNormalSubgroupInClassSystem (C := C) (G := G)
   letI : ∀ U : OrderDual (OpenNormalSubgroupInClass C G), T2Space (S.X U) := fun U => by
-    letI : DiscreteTopology (S.X U) := by
+    have : DiscreteTopology (S.X U) := by
       dsimp [S, openNormalSubgroupInClassSystem]
       exact QuotientGroup.discreteTopology
         (openNormalSubgroup_isOpen (G := G) ((OrderDual.ofDual U).1 : OpenNormalSubgroup G))
     infer_instance
-  letI : Group S.inverseLimit := by infer_instance
-  letI : T2Space S.inverseLimit := S.t2Space_inverseLimit
   let φ : G →* S.inverseLimit :=
     { toFun := S.inverseLimitLift
         (fun U : OrderDual (OpenNormalSubgroupInClass C G) =>
@@ -141,12 +140,11 @@ Under the canonical equivalence from a pro-\(C\) group to the inverse limit of i
         (openNormalSubgroupInClassMulEquivInverseLimit
           (C := C) (G := G) hForm hG g) =
       openNormalSubgroupInClassProj (C := C) (G := G) U g := by
-  simp only [openNormalSubgroupInClassMulEquivInverseLimit,
-      ContinuousMulEquiv.ofBijectiveCompactToT2,
-  MonoidHom.coe_mk, OneHom.coe_mk, ContinuousMulEquiv.coe_mk',
-      Equiv.toHomeomorphOfContinuousClosed_apply,
-  Equiv.ofBijective_apply, InverseSystems.InverseSystem.inverseLimitLift,
-  InverseSystems.InverseSystem.projection_apply]
+  exact (openNormalSubgroupInClassSystem C G).projection_inverseLimitLift_apply
+    (fun (V : OrderDual (OpenNormalSubgroupInClass C G)) (x : G) =>
+      (show (openNormalSubgroupInClassSystem C G).X V from
+        openNormalSubgroupInClassProj (C := C) (G := G) V x))
+    (openNormalSubgroupInClassProj_compatible (C := C) (G := G)) U g
 
 /-- The concrete pro-\(C\) presentation and mathlib's finite-quotient presentation have
 identical canonical coordinates. The generic concrete/categorical-limit comparison is
@@ -231,8 +229,8 @@ theorem t2Space_of_exactOpenNormalQuotientBasisInClass
     {g : G | y⁻¹ * g ∈ (U i : Subgroup G)}, ?_, ?_, ?_, ?_, ?_⟩
   · exact (hclopenCoset x).2
   · exact (hclopenCoset y).2
-  · simp only [OpenSubgroup.mem_toSubgroup, Set.mem_setOf_eq, inv_mul_cancel, one_mem]
-  · simp only [OpenSubgroup.mem_toSubgroup, Set.mem_setOf_eq, inv_mul_cancel, one_mem]
+  · simp only [OpenSubgroup.mem_toSubgroup, Set.mem_ofPred_eq, inv_mul_cancel, one_mem]
+  · simp only [OpenSubgroup.mem_toSubgroup, Set.mem_ofPred_eq, inv_mul_cancel, one_mem]
   · refine Set.disjoint_left.2 ?_
     intro g hx hg
     apply hxyi
@@ -246,7 +244,7 @@ theorem totallyDisconnectedSpace_of_exactOpenNormalQuotientBasisInClass
     (hC : HasExactOpenNormalQuotientBasisInClass C G) : TotallyDisconnectedSpace G := by
   have hC' := hC
   rcases hC' with ⟨_, ι, U, _, hbasis, _⟩
-  letI : T2Space G := t2Space_of_exactOpenNormalQuotientBasisInClass (C := C) hC
+  have : T2Space G := t2Space_of_exactOpenNormalQuotientBasisInClass (C := C) hC
   have hclopenBasis : TopologicalSpace.IsTopologicalBasis {s : Set G | IsClopen s} := by
     refine TopologicalSpace.isTopologicalBasis_of_isOpen_of_nhds ?_ ?_
     · intro s hs
@@ -266,7 +264,7 @@ theorem totallyDisconnectedSpace_of_exactOpenNormalQuotientBasisInClass
         · change IsOpen (f ⁻¹' ((U i).toOpenSubgroup : Set G))
           exact (openSubgroup_isOpen (G := G) (U i).toOpenSubgroup).preimage hf
       refine ⟨{g : G | x⁻¹ * g ∈ (U i : Subgroup G)}, ?_, by simp only
-          [OpenSubgroup.mem_toSubgroup, Set.mem_setOf_eq, inv_mul_cancel, one_mem], ?_⟩
+          [OpenSubgroup.mem_toSubgroup, Set.mem_ofPred_eq, inv_mul_cancel, one_mem], ?_⟩
       · exact hclopenCoset
       · intro g hg
         have hxgW₁ : x⁻¹ * g ∈ W₁ := hi hg

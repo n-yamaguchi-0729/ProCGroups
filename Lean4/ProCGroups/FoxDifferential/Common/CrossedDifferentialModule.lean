@@ -3,6 +3,8 @@ import Mathlib.Algebra.MonoidAlgebra.Basic
 import Mathlib.LinearAlgebra.Finsupp.LinearCombination
 import Mathlib.LinearAlgebra.Quotient.Basic
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: common — crossed differential module
 

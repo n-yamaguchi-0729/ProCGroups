@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Derivative.Lift
 import ProCGroups.FoxDifferential.Completed.Residue.FreeGroup.Coordinates
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: finite stage — stage — derivative — rules
 
@@ -135,7 +137,7 @@ theorem foxAlgebraicStageDerivativeVector_eq_zero_iff_residueUniversalDifferenti
     foxAlgebraicStageDerivativeVector (X := X) N n w = 0 ↔
       residueUniversalDifferential n (QuotientGroup.mk' N) w = 0 := by
   classical
-  letI : Fintype X := Fintype.ofFinite X
+  let : Fintype X := Fintype.ofFinite X
   rw [foxAlgebraicStageDerivativeVector_eq_residueFreeGroupFoxDerivativeVector]
   constructor
   · intro h

@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FreeProC.ProCIntegerStageCoeffProjection
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — free pro-\(C\) — pro c integer bifiltered stage projection
 

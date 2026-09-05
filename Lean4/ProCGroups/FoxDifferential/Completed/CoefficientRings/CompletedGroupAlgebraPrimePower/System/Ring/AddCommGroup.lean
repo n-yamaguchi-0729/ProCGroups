@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.System.Basic
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: prime-power completed group algebra — system — ring — add comm group
 
@@ -77,14 +79,14 @@ instance instAddZeroClassPrimePowerCompletedGroupAlgebra :
     change (0 : PrimePowerCompletedGroupAlgebraStage ℓ G i) +
       (show PrimePowerCompletedGroupAlgebraStage ℓ G i from x.1 i) =
         (show PrimePowerCompletedGroupAlgebraStage ℓ G i from x.1 i)
-    simp only [zero_add]
+    exact zero_add (show PrimePowerCompletedGroupAlgebraStage ℓ G i from x.1 i)
   add_zero x := by
     apply Subtype.ext
     funext i
     change (show PrimePowerCompletedGroupAlgebraStage ℓ G i from x.1 i) +
       (0 : PrimePowerCompletedGroupAlgebraStage ℓ G i) =
         (show PrimePowerCompletedGroupAlgebraStage ℓ G i from x.1 i)
-    simp only [add_zero]
+    exact add_zero (show PrimePowerCompletedGroupAlgebraStage ℓ G i from x.1 i)
 
 /--
 Negation on the prime-power completed group algebra is defined coordinatewise through

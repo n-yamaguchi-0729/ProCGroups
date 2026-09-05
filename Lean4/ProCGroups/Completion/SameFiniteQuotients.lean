@@ -2,6 +2,8 @@ import Mathlib.GroupTheory.Finiteness
 import ProCGroups.FiniteGeneration.CharacteristicChainsAndIndices
 import ProCGroups.ProC.OpenNormalSubgroups.LimitPresentation
 
+set_option autoImplicit false
+
 /-!
 # Pro C Groups / Completion / Same Finite Quotients
 
@@ -46,43 +48,35 @@ theorem
     ProC.openNormalSubgroupInClassSystem C G₂
   let SurjHom (U : OrderDual (ProC.OpenNormalSubgroupInClass C G₂)) :=
     { φ : ContinuousMonoidHom G₁ (S₂.X U) // Function.Surjective φ }
-  letI : Nonempty (ProC.OpenNormalSubgroupInClass C G₂) :=
+  let : Nonempty (ProC.OpenNormalSubgroupInClass C G₂) :=
     ProC.HasOpenNormalBasisInClass.openNormalSubgroupInClass_nonempty hG₂proC
-  letI : ∀ U : OrderDual (ProC.OpenNormalSubgroupInClass C G₂),
+  let : ∀ U : OrderDual (ProC.OpenNormalSubgroupInClass C G₂),
       Group (S₂.X U) := fun U =>
     ProC.instGroupOpenNormalSubgroupInClassSystemX
       (C := C) (G := G₂) U
-  letI : ∀ U : OrderDual (ProC.OpenNormalSubgroupInClass C G₂),
-      IsTopologicalGroup (S₂.X U) := fun U => by
-    letI : DiscreteTopology (S₂.X U) := by
-      dsimp [S₂, ProC.openNormalSubgroupInClassSystem]
-      exact QuotientGroup.discreteTopology
-        (openNormalSubgroup_isOpen (G := G₂)
-          ((OrderDual.ofDual U).1 : OpenNormalSubgroup G₂))
-    exact topologicalGroup_of_discreteTopology
-  letI : ∀ U : OrderDual (ProC.OpenNormalSubgroupInClass C G₂),
+  let : ∀ U : OrderDual (ProC.OpenNormalSubgroupInClass C G₂),
       Finite (S₂.X U) := fun U => by
     dsimp [S₂, ProC.openNormalSubgroupInClassSystem]
     exact (OrderDual.ofDual U).2
-  letI : ∀ U : OrderDual (ProC.OpenNormalSubgroupInClass C G₂),
+  let : ∀ U : OrderDual (ProC.OpenNormalSubgroupInClass C G₂),
       DiscreteTopology (S₂.X U) := fun U => by
     dsimp [S₂, ProC.openNormalSubgroupInClassSystem]
     exact QuotientGroup.discreteTopology
       (openNormalSubgroup_isOpen (G := G₂)
         ((OrderDual.ofDual U).1 : OpenNormalSubgroup G₂))
-  letI : ∀ U : OrderDual (ProC.OpenNormalSubgroupInClass C G₂),
+  let : ∀ U : OrderDual (ProC.OpenNormalSubgroupInClass C G₂),
       Finite (ContinuousMonoidHom G₁ (S₂.X U)) := fun U => by
     exact
       FiniteGeneration.finite_continuousMonoidHom_to_finite_of_topologicallyFinitelyGenerated
         (G := G₁) (R := S₂.X U) hG₁fg
-  letI : ∀ U : OrderDual (ProC.OpenNormalSubgroupInClass C G₂),
+  let : ∀ U : OrderDual (ProC.OpenNormalSubgroupInClass C G₂),
       TopologicalSpace (SurjHom U) := fun _ => ⊥
-  letI : ∀ U : OrderDual (ProC.OpenNormalSubgroupInClass C G₂),
+  let : ∀ U : OrderDual (ProC.OpenNormalSubgroupInClass C G₂),
       DiscreteTopology (SurjHom U) := fun _ => ⟨rfl⟩
   let X₂ : InverseSystems.InverseSystem
       (I := OrderDual (ProC.OpenNormalSubgroupInClass C G₂)) :=
     { X := SurjHom
-      topologicalSpace := fun _ => ⊥
+      topologicalSpace := fun U => inferInstanceAs (TopologicalSpace (SurjHom U))
       map := fun {U V} hUV φ => by
         have hUV' : ((OrderDual.ofDual V).1 : Subgroup G₂) ≤ (OrderDual.ofDual U).1 := hUV
         let qUV : ContinuousMonoidHom (S₂.X V) (S₂.X U) :=
@@ -148,7 +142,7 @@ theorem
               (C := C) (G := G₂)
               (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) (W := OrderDual.ofDual W)
               hUV' hVW') }
-  letI : ∀ U : OrderDual (ProC.OpenNormalSubgroupInClass C G₂),
+  let : ∀ U : OrderDual (ProC.OpenNormalSubgroupInClass C G₂),
       Nonempty (X₂.X U) := fun U => by
     dsimp [X₂]
     let qU : G₂ →ₜ* S₂.X U :=
@@ -204,8 +198,7 @@ theorem
             intro U
             calc
               S₂.projection U (S₂.inverseLimitLift ψ₂ hψ₂compat 1) = ψ₂ U 1 := by
-                simpa [Function.comp] using congrFun (S₂.projection_comp_inverseLimitLift ψ₂
-                    hψ₂compat U) (1 : G₁)
+                exact S₂.projection_inverseLimitLift_apply ψ₂ hψ₂compat U (1 : G₁)
               _ = 1 := by simp only [map_one, ψ₂]
           map_mul' := by
             intro x y
@@ -213,19 +206,16 @@ theorem
             intro U
             calc
               S₂.projection U (S₂.inverseLimitLift ψ₂ hψ₂compat (x * y)) = ψ₂ U (x * y) := by
-                simpa [Function.comp] using
-                  congrFun (S₂.projection_comp_inverseLimitLift ψ₂ hψ₂compat U) (x * y)
+                exact S₂.projection_inverseLimitLift_apply ψ₂ hψ₂compat U (x * y)
               _ = ψ₂ U x * ψ₂ U y := by simp only [map_mul, ψ₂]
               _ = S₂.projection U (S₂.inverseLimitLift ψ₂ hψ₂compat x) *
                     S₂.projection U (S₂.inverseLimitLift ψ₂ hψ₂compat y) := by
                   have hπx :
                       S₂.projection U (S₂.inverseLimitLift ψ₂ hψ₂compat x) = ψ₂ U x := by
-                    simpa [Function.comp] using
-                      congrFun (S₂.projection_comp_inverseLimitLift ψ₂ hψ₂compat U) x
+                    exact S₂.projection_inverseLimitLift_apply ψ₂ hψ₂compat U x
                   have hπy :
                       S₂.projection U (S₂.inverseLimitLift ψ₂ hψ₂compat y) = ψ₂ U y := by
-                    simpa [Function.comp] using
-                      congrFun (S₂.projection_comp_inverseLimitLift ψ₂ hψ₂compat U) y
+                    exact S₂.projection_inverseLimitLift_apply ψ₂ hψ₂compat U y
                   rw [← hπx, ← hπy] }
       continuous_toFun := S₂.continuous_inverseLimitLift ψ₂ hψ₂cont hψ₂compat }
   have hfToInv_surj : Function.Surjective (S₂.inverseLimitLift ψ₂ hψ₂compat) :=

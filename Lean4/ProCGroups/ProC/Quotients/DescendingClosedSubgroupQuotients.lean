@@ -1,5 +1,7 @@
 import ProCGroups.ProC.Quotients.OpenSubgroupSections
 
+set_option autoImplicit false
+
 /-!
 # Quotients along descending closed-subgroup systems
 
@@ -89,11 +91,10 @@ theorem exists_continuous_leftQuotient_lift_of_directed
   classical
   let Linf : ClosedSubgroup G := closedSubgroup_sInf L
   let S : InverseSystems.InverseSystem (I := I) := descendingClosedSubgroupSystem L hL
-  letI : IsClosed (((Linf : ClosedSubgroup G) : Subgroup G) : Set G) := Linf.isClosed'
-  letI : ∀ i, IsClosed (((L i : ClosedSubgroup G) : Subgroup G) : Set G) := fun i => (L i).isClosed'
-  letI : ∀ i, T2Space (S.X i) := fun i => by
+  let : ∀ i, T2Space (S.X i) := fun i => by
     change T2Space (G ⧸ (L i : Subgroup G))
-    infer_instance
+    have : IsClosed ((L i : Subgroup G) : Set G) := (L i).isClosed'
+    exact QuotientGroup.instT2Space (H := (L i : Subgroup G))
   let ψ : ∀ i, G ⧸ ((Linf : ClosedSubgroup G) : Subgroup G) → S.X i := fun i =>
     leftQuotientProjection
       (((Linf : ClosedSubgroup G) : Subgroup G))

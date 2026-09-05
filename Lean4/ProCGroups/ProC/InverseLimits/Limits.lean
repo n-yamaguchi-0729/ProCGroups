@@ -3,6 +3,8 @@ import ProCGroups.ProC.InverseLimits.FiniteQuotients
 import ProCGroups.ProC.OpenNormalSubgroups.FilteredFamilies
 import ProCGroups.Topologies.ContinuousMulEquiv
 
+set_option autoImplicit false
+
 /-!
 # Inverse limits and closed-normal quotients
 
@@ -42,17 +44,8 @@ theorem inverseLimit
     (hdir : Directed (· ≤ ·) (id : I → I))
     (hX : ∀ i, HasOpenNormalBasisInClass C (S.X i)) :
     HasOpenNormalBasisInClass C S.inverseLimit := by
-  letI : T2Space S.inverseLimit :=
-    InverseSystems.InverseSystem.t2Space_inverseLimit (S := S)
-  letI : TotallyDisconnectedSpace S.inverseLimit :=
-    InverseSystems.InverseSystem.totallyDisconnectedSpace_inverseLimit (S := S)
   refine HasOpenNormalBasisInClass.of_allOpenNormalQuotients (C := C) ?_
   intro U
-  letI : CompactSpace S.inverseLimit := inferInstance
-  letI : Finite (S.inverseLimit ⧸ (U : Subgroup S.inverseLimit)) :=
-    openNormalSubgroup_finiteQuotient (G := S.inverseLimit) U
-  letI : DiscreteTopology (S.inverseLimit ⧸ (U : Subgroup S.inverseLimit)) :=
-    QuotientGroup.discreteTopology (openNormalSubgroup_isOpen (G := S.inverseLimit) U)
   let β : S.inverseLimit →* S.inverseLimit ⧸ (U : Subgroup S.inverseLimit) :=
     QuotientGroup.mk' (U : Subgroup S.inverseLimit)
   rcases InverseSystems.InverseSystem.factors_through_projection_finite_group_hom
@@ -100,7 +93,7 @@ theorem quotient_closedNormalSubgroup
   let topU : OpenNormalSubgroup G :=
     { toOpenSubgroup := ⟨⊤, isOpen_univ⟩
       isNormal' := inferInstance }
-  letI : Nonempty (OrderDual {U : OpenNormalSubgroup G // K ≤ (U : Subgroup G)}) :=
+  let : Nonempty (OrderDual {U : OpenNormalSubgroup G // K ≤ (U : Subgroup G)}) :=
     ⟨OrderDual.toDual ⟨topU, le_top⟩⟩
   let S : InverseSystems.InverseSystem
       (I := OrderDual {U : OpenNormalSubgroup G // K ≤ (U : Subgroup G)}) := {
@@ -114,14 +107,12 @@ theorem quotient_closedNormalSubgroup
         hUV
     continuous_map := by
       intro U V hUV
-      letI : DiscreteTopology
-          (G ⧸ (((OrderDual.ofDual U).1 : OpenNormalSubgroup G) : Subgroup G)) :=
-        QuotientGroup.discreteTopology
-          (openNormalSubgroup_isOpen (G := G) ((OrderDual.ofDual U).1 : OpenNormalSubgroup G))
       exact continuous_of_discreteTopology
     map_id := by
       intro U
-      simp only [QuotientGroup.map_id, MonoidHom.coe_id]
+      funext x
+      exact QuotientGroup.map_id_apply ((OrderDual.ofDual U).1 : Subgroup G)
+        (h := fun _ hx => hx) x
     map_comp := by
       intro U V W hUV hVW
       funext x
@@ -131,7 +122,7 @@ theorem quotient_closedNormalSubgroup
           (M := (((OrderDual.ofDual V).1 : OpenNormalSubgroup G) : Subgroup G))
           (O := (((OrderDual.ofDual U).1 : OpenNormalSubgroup G) : Subgroup G))
           (f := MonoidHom.id G) (g := MonoidHom.id G) hVW hUV) }
-  letI : InverseSystems.IsGroupSystem S := {
+  let : InverseSystems.IsGroupSystem S := {
     map_one := by
       intro i j hij
       rfl
@@ -190,29 +181,19 @@ theorem quotient_closedNormalSubgroup
       by
     intro i
     let U : OpenNormalSubgroup G := (OrderDual.ofDual i).1
-    letI : Finite (G ⧸ (U : Subgroup G)) :=
-      openNormalSubgroup_finiteQuotient (G := G) U
-    letI : DiscreteTopology (G ⧸ (U : Subgroup G)) :=
-      QuotientGroup.discreteTopology (openNormalSubgroup_isOpen (G := G) U)
     exact HasOpenNormalBasisInClass.of_finite_discrete (C := C) (G := G ⧸ (U : Subgroup G))
       hQuot
       (HasOpenNormalBasisInClass.hasAllOpenNormalQuotientsInClass_of_basis_of_quotientClosed
         hIso hQuot hG U)
-  letI : ∀ i : OrderDual {U : OpenNormalSubgroup G // K ≤ (U : Subgroup G)},
+  let : ∀ i : OrderDual {U : OpenNormalSubgroup G // K ≤ (U : Subgroup G)},
       Finite (S.X i) := fun i => by
     dsimp [S]
     exact openNormalSubgroup_finiteQuotient (G := G) (OrderDual.ofDual i).1
-  letI : ∀ i : OrderDual {U : OpenNormalSubgroup G // K ≤ (U : Subgroup G)},
+  let : ∀ i : OrderDual {U : OpenNormalSubgroup G // K ≤ (U : Subgroup G)},
       DiscreteTopology (S.X i) := fun i => by
     dsimp [S]
     exact QuotientGroup.discreteTopology
       (openNormalSubgroup_isOpen (G := G) (OrderDual.ofDual i).1)
-  letI : ∀ i : OrderDual {U : OpenNormalSubgroup G // K ≤ (U : Subgroup G)},
-      CompactSpace (S.X i) := fun _ => by infer_instance
-  letI : ∀ i : OrderDual {U : OpenNormalSubgroup G // K ≤ (U : Subgroup G)},
-      T2Space (S.X i) := fun _ => by infer_instance
-  letI : ∀ i : OrderDual {U : OpenNormalSubgroup G // K ≤ (U : Subgroup G)},
-      TotallyDisconnectedSpace (S.X i) := fun _ => by infer_instance
   have hSinv : HasOpenNormalBasisInClass C S.inverseLimit :=
     inverseLimit (C := C) (S := S) hIso hQuot hdir hX
   let ψ :
@@ -257,11 +238,6 @@ theorem quotient_closedNormalSubgroup
       rfl }
   have hφcont : Continuous φ := S.continuous_inverseLimitLift ψ hψcont hψcompat
   have hφsurj : Function.Surjective φ := by
-    letI : CompactSpace (G ⧸ K) := by
-      infer_instance
-    letI : T2Space (G ⧸ K) := by
-      letI : IsClosed (K : Set G) := hK
-      infer_instance
     exact InverseSystems.InverseSystem.surjective_inverseLimitLift
       (S := S) ψ hψcont hψcompat
       (fun i => by
@@ -289,7 +265,7 @@ theorem quotient_closedNormalSubgroup
     have hx :
         gx⁻¹ * gy ∈
           sInf {N : Subgroup G | IsOpen (N : Set G) ∧ K ≤ N ∧ N.Normal} := by
-      simp only [Subgroup.mem_sInf, Set.mem_setOf_eq]
+      simp only [Subgroup.mem_sInf, Set.mem_ofPred_eq]
       intro N hN
       let U : OpenNormalSubgroup G :=
         { toOpenSubgroup := ⟨N, hN.1⟩
@@ -302,13 +278,9 @@ theorem quotient_closedNormalSubgroup
         closedSubgroup_eq_sInf_openNormal (G := G) HC
       exact hEq.symm ▸ hx
     exact hxK
-  letI : CompactSpace (G ⧸ K) := by
-    infer_instance
-  letI : T2Space S.inverseLimit :=
-    InverseSystems.InverseSystem.t2Space_inverseLimit (S := S)
   let e : G ⧸ K ≃ₜ* S.inverseLimit :=
     ContinuousMulEquiv.ofBijectiveCompactToT2 φ hφcont ⟨hφinj, hφsurj⟩
-  simpa using HasOpenNormalBasisInClass.ofContinuousMulEquiv (C := C) hSinv e.symm
+  exact HasOpenNormalBasisInClass.ofContinuousMulEquiv (C := C) hSinv e.symm
 
 end
 

@@ -1,5 +1,7 @@
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Basic
 
+set_option autoImplicit false
+
 /-!
 # Free-group lifts modulo relators
 

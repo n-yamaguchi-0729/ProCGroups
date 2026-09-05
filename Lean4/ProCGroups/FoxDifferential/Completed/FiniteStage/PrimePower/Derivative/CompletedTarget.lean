@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.CompletedSource
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: finite stage — prime power — derivative — completed target
 
@@ -175,19 +177,17 @@ theorem ppCompletedGAFoxDerivToTarget_fundFormula_proj
       (foxAlgebraicStageTargetQuotient (X := X) N) j.2)
     (primePowerCompletedGroupAlgebraFreeFoxDerivative_fundamental_formula_projection
       (ℓ := ℓ) (X := X) N hfinite z j.1)
-  simp_rw [map_sub, map_sum, map_mul] at hstage
-  rw [map_sub]
-  rw [hstage]
+  rw [hstage, map_sum]
   apply Finset.sum_congr rfl
   intro i hi
+  rw [map_mul]
   congr 1
   rw [map_sub, modNCompletedGroupAlgebraStageMap_of, map_one,
     primePowerCompletedGroupAlgebraProjection_sub,
     primePowerCompletedGroupAlgebraProjection_of,
     primePowerCompletedGroupAlgebraProjection_one]
-  simp only [MonoidAlgebra.single, QuotientGroup.mk'_apply, MonoidAlgebra.of, MonoidHom.coe_mk,
-      OneHom.coe_mk,
-  sub_left_inj]
+  simp only [MonoidAlgebra.single, QuotientGroup.mk'_apply, MonoidAlgebra.of,
+    MonoidHom.coe_mk]
   rfl
 
 omit [Fact (0 < ℓ)] in

@@ -1,5 +1,9 @@
 import ProCGroups.ReidemeisterSchreier.Discrete.OpenSubgroups.Transversals
 
+set_option autoImplicit false
+
+universe u
+
 /-!
 # Reidemeister Schreier / Discrete / Open Subgroups / Generators
 
@@ -13,7 +17,7 @@ namespace ReidemeisterSchreier.Discrete.OpenSubgroups
 section SchreierGenerators
 
 open scoped Pointwise
-open FreeGroup
+open _root_.ReidemeisterSchreier.FreeGroup
 
 /--
 The Schreier transversal itself carries the same right-coset action, transported along the
@@ -24,8 +28,6 @@ equivalence with right cosets.
     {L : Subgroup (FreeGroup X)} {T : Set (FreeGroup X)}
     (hT : IsRightSchreierTransversal (X := X) L T) :
     MulAction (FreeGroup X) T := by
-  letI : MulAction (FreeGroup X) (Quotient (QuotientGroup.rightRel L)) :=
-    rightCosetLeftMulActionByInverse L
   let e : T ≃ Quotient (QuotientGroup.rightRel L) := hT.1.rightQuotientEquiv.symm
   refine
     { smul := fun g t => e.symm (g • e t)

@@ -1,6 +1,8 @@
 import ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.DenseFreeModel
 import ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.SchreierTransversals
 
+set_option autoImplicit false
+
 /-!
 # Exact right-Schreier generation
 
@@ -28,7 +30,7 @@ universe u v
 
 section ExactRightSchreierGeneration
 
-open FreeGroup
+open _root_.ReidemeisterSchreier.FreeGroup
 
 variable {X : Type u} [TopologicalSpace X]
 variable {F : Type u} [Group F] [TopologicalSpace F] [IsTopologicalGroup F]
@@ -83,8 +85,6 @@ theorem map_schreierGenerator_eq_cocycle
   let τ := rightSchreierSectionOfComap π φ (π.comp φ) K rfl hβsurj hT
   let hτ := rightSchreierSectionOfComap_spec π φ (π.comp φ) K rfl hβsurj hT
   let Hc : Subgroup F := Subgroup.comap π K
-  letI : MulAction F (Quotient (QuotientGroup.rightRel Hc)) :=
-    rightCosetMulAction Hc
   let rep := schreierRepresentative (X := X) hT (t * FreeGroup.of x)
   have hτt :
       τ (Quotient.mk'' (φ t)) = φ t := by
@@ -329,7 +329,7 @@ theorem continuousMonoidHom_eq_of_agrees_on_topologicallyGeneratingSet
     f = g := by
   let E : Subgroup G :=
     { carrier := {x | f x = g x}
-      one_mem' := by simp only [mem_setOf_eq, map_one]
+      one_mem' := by simp only [mem_ofPred_eq, map_one]
       mul_mem' := by
         intro a b ha hb
         calc
@@ -379,6 +379,8 @@ variable {T : Set (FreeGroup X)}
 instance instMulActionRightCosetComap :
     MulAction F (Quotient (QuotientGroup.rightRel (Subgroup.comap π K))) :=
   rightCosetMulAction (Subgroup.comap π K)
+
+attribute [-instance] instMulActionRightCosetComap
 
 /--
 On a transported Schreier transversal, basepoint coordinates are trivial once every tree-edge
@@ -576,7 +578,7 @@ end TransportedSectionPurity
 
 section FiniteQuotientLift
 
-open FreeGroup
+open _root_.ReidemeisterSchreier.FreeGroup
 
 /--
 Concrete finite-quotient lift for the dense abstract Schreier subgroup comap (free group lift
@@ -625,9 +627,8 @@ theorem exists_continuousFiniteQuotientLift_of_comap_freeGroupLift
   let β : FreeGroup X →* P := ρ.toMonoidHom.comp βF
   let Lk : Subgroup (FreeGroup X) := Subgroup.comap β K
   let L : Subgroup (FreeGroup X) := Subgroup.comap βF (H : Subgroup F)
-  letI : TopologicalSpace (FreeGroup X) := ⊥
-  letI : DiscreteTopology (FreeGroup X) := ⟨rfl⟩
-  letI : IsTopologicalGroup (FreeGroup X) := by infer_instance
+  let : TopologicalSpace (FreeGroup X) := ⊥
+  let : DiscreteTopology (FreeGroup X) := ⟨rfl⟩
   have hcomap : Subgroup.comap ρ.toMonoidHom K = (H : Subgroup F) := by
     ext g
     constructor
@@ -713,15 +714,9 @@ theorem exists_continuousFiniteQuotientLift_of_comap_freeGroupLift
         ext
         simp only [Subgroup.coe_mul, MulMemClass.mk_mul_mk]}
   let ψK : Lk →* Q := ψ.comp fromK
-  letI : Finite (OpenSubgroupRightQuotient Hc) :=
-    finite_openSubgroupRightQuotient (F := F) Hc
-  letI : Fintype (OpenSubgroupRightQuotient Hc) :=
-    fintype_openSubgroupRightQuotient (F := F) Hc
-  letI : DiscreteTopology (OpenSubgroupRightQuotient Hc) :=
+  let : DiscreteTopology (OpenSubgroupRightQuotient Hc) :=
     discreteTopology_openSubgroupRightQuotient (F := F) Hc
-  letI : MulAction F (OpenSubgroupRightQuotient Hc) :=
-    rightCosetMulAction (Hc : Subgroup F)
-  letI : ContinuousSMul F (OpenSubgroupRightQuotient Hc) := by
+  let : ContinuousSMul F (OpenSubgroupRightQuotient Hc) := by
     refine ContinuousSMul.mk ?_
     refine (continuous_prod_of_discrete_right).2 ?_
     intro q
@@ -794,7 +789,7 @@ theorem exists_continuousFiniteQuotientLift_of_comap_freeGroupLift
   let hWclosed : IsClosed (W : Set (PermutationalWreathProduct Q (OpenSubgroupRightQuotient Hc)
       F)) := by
     simp [W]
-  letI : CompactSpace W := hWclosed.isClosedEmbedding_subtypeVal.compactSpace
+  let : CompactSpace W := hWclosed.isClosedEmbedding_subtypeVal.compactSpace
   let νW : X → W := fun x =>
     ⟨ν x, Subgroup.le_topologicalClosure _ (Subgroup.subset_closure ⟨x, rfl⟩)⟩
   have hνWconv : FamilyConvergesToOneAlongOpenSubgroups (G := W) νW := by
@@ -934,7 +929,6 @@ theorem exists_continuousFiniteQuotientLift_of_comap_freeGroupLift
             rw [hηCoord]
             rw [htRep_eq_of_mem (t := t) ht]
   have hψBarKFac : ψBarK.comp φK = ψK := by
-    letI : T2Space Q := inferInstance
     have hSchGen :
         ProCGroups.Generation.TopologicallyGenerates
           (G := Lk) (schreierGeneratorSet (X := X) hTK : Set Lk) := by
@@ -1017,9 +1011,8 @@ theorem exists_pointedFreeRightSchreierGeneratorFamily_of_openSubgroup
   let K : Subgroup P := MulAction.stabilizer P q0
   let βF : FreeGroup X →* F := FreeGroup.lift ι
   let β : FreeGroup X →* P := ρ.toMonoidHom.comp βF
-  letI : TopologicalSpace (FreeGroup X) := ⊥
-  letI : DiscreteTopology (FreeGroup X) := ⟨rfl⟩
-  letI : IsTopologicalGroup (FreeGroup X) := by infer_instance
+  let : TopologicalSpace (FreeGroup X) := ⊥
+  let : DiscreteTopology (FreeGroup X) := ⟨rfl⟩
   have hcomap : Subgroup.comap ρ.toMonoidHom K = (H : Subgroup F) := by
     ext g
     constructor
@@ -1068,8 +1061,6 @@ theorem exists_pointedFreeRightSchreierGeneratorFamily_of_openSubgroup
       isOpen' := by
         rw [hcomap]
         exact H.isOpen' }
-  letI : CompactSpace ↥(Hc : Subgroup F) :=
-    compactSpace_openSubgroupSubtype Hc
   have hHc : Hc = H := by
     ext g
     change g ∈ Subgroup.comap ρ.toMonoidHom K ↔ g ∈ (H : Subgroup F)
@@ -1101,15 +1092,9 @@ theorem exists_pointedFreeRightSchreierGeneratorFamily_of_openSubgroup
           ⟨(openSubgroupRightCoset J (1 : F), x0), rfl⟩⟩
         ↥(J : Subgroup F) Subtype.val
   have hMain : GoalProp Hc := by
-    letI : Finite (OpenSubgroupRightQuotient Hc) :=
-      finite_openSubgroupRightQuotient (F := F) Hc
-    letI : Fintype (OpenSubgroupRightQuotient Hc) :=
-      fintype_openSubgroupRightQuotient (F := F) Hc
-    letI : DiscreteTopology (OpenSubgroupRightQuotient Hc) :=
+    let : DiscreteTopology (OpenSubgroupRightQuotient Hc) :=
       discreteTopology_openSubgroupRightQuotient (F := F) Hc
-    letI : MulAction F (OpenSubgroupRightQuotient Hc) :=
-      rightCosetMulAction (Hc : Subgroup F)
-    letI : ContinuousSMul F (OpenSubgroupRightQuotient Hc) := by
+    let : ContinuousSMul F (OpenSubgroupRightQuotient Hc) := by
       refine ContinuousSMul.mk ?_
       refine (continuous_prod_of_discrete_right).2 ?_
       intro q
@@ -1148,6 +1133,8 @@ theorem exists_pointedFreeRightSchreierGeneratorFamily_of_openSubgroup
         (rightSchreierGenerator_eq_one
           (F := F) (H := Hc) (τ := τ) (hτ := hτ) (ι := ι) (q := q) (x := x0) hF.map_base)
     refine ⟨κ, hκcont, hκbase, hκ1, isCompact_range hκcont, (isCompact_range hκcont).isClosed, ?_⟩
+    let : CompactSpace ↥(Hc : Subgroup F) :=
+      compactSpace_openSubgroupSubtype (F := F) Hc
     refine ⟨?_, continuous_subtype_val, ?_, ?_, ?_⟩
     · exact
         HasOpenNormalBasisInClass.of_isClosed_subgroup
@@ -1220,7 +1207,7 @@ theorem exists_pointedFreeRightSchreierGeneratorFamily_of_openSubgroup
       let hWclosed : IsClosed (W : Set (PermutationalWreathProduct B (OpenSubgroupRightQuotient
           Hc) F)) := by
         simp [W]
-      letI : CompactSpace W := hWclosed.isClosedEmbedding_subtypeVal.compactSpace
+      let : CompactSpace W := hWclosed.isClosedEmbedding_subtypeVal.compactSpace
       let ξW : X → W := fun x =>
         ⟨ξ x, Subgroup.le_topologicalClosure _ (Subgroup.subset_closure ⟨x, rfl⟩)⟩
       have hξWcont : Continuous ξW :=
@@ -1416,9 +1403,8 @@ theorem exists_pointedFreeRightSchreierGeneratorFamily_of_openSubgroup_of_minima
         intro a b
         apply Subtype.ext
         exact βF.map_mul a b}
-  letI : TopologicalSpace (FreeGroup X) := ⊥
-  letI : DiscreteTopology (FreeGroup X) := ⟨rfl⟩
-  letI : IsTopologicalGroup (FreeGroup X) := by infer_instance
+  let : TopologicalSpace (FreeGroup X) := ⊥
+  let : DiscreteTopology (FreeGroup X) := ⟨rfl⟩
   have hcomap : Subgroup.comap ρ.toMonoidHom K = (H : Subgroup F) := by
     ext g
     constructor
@@ -1475,8 +1461,6 @@ theorem exists_pointedFreeRightSchreierGeneratorFamily_of_openSubgroup_of_minima
       isOpen' := by
         rw [hcomap]
         exact H.isOpen' }
-  letI : CompactSpace ↥(Hc : Subgroup F) :=
-    compactSpace_openSubgroupSubtype Hc
   have hHc : Hc = H := by
     ext g
     change g ∈ Subgroup.comap ρ.toMonoidHom K ↔ g ∈ (H : Subgroup F)
@@ -1510,15 +1494,9 @@ theorem exists_pointedFreeRightSchreierGeneratorFamily_of_openSubgroup_of_minima
           ⟨(openSubgroupRightCoset J (1 : F), x0), rfl⟩⟩
         ↥(J : Subgroup F) Subtype.val
   have hMain : GoalProp Hc := by
-    letI : Finite (OpenSubgroupRightQuotient Hc) :=
-      finite_openSubgroupRightQuotient (F := F) Hc
-    letI : Fintype (OpenSubgroupRightQuotient Hc) :=
-      fintype_openSubgroupRightQuotient (F := F) Hc
-    letI : DiscreteTopology (OpenSubgroupRightQuotient Hc) :=
+    let : DiscreteTopology (OpenSubgroupRightQuotient Hc) :=
       discreteTopology_openSubgroupRightQuotient (F := F) Hc
-    letI : MulAction F (OpenSubgroupRightQuotient Hc) :=
-      rightCosetMulAction (Hc : Subgroup F)
-    letI : ContinuousSMul F (OpenSubgroupRightQuotient Hc) := by
+    let : ContinuousSMul F (OpenSubgroupRightQuotient Hc) := by
       refine ContinuousSMul.mk ?_
       refine (continuous_prod_of_discrete_right).2 ?_
       intro q
@@ -1590,6 +1568,8 @@ theorem exists_pointedFreeRightSchreierGeneratorFamily_of_openSubgroup_of_minima
         _ = ⟨(ι x) ^ N, hpowHc⟩ := hβc_pow
     refine ⟨κ, hκcont, hκbase, hκ1, ⟨hpowHc, hxNrange⟩,
       isCompact_range hκcont, (isCompact_range hκcont).isClosed, ?_⟩
+    let : CompactSpace ↥(Hc : Subgroup F) :=
+      compactSpace_openSubgroupSubtype (F := F) Hc
     refine ⟨?_, continuous_subtype_val, ?_, ?_, ?_⟩
     · exact
         HasOpenNormalBasisInClass.of_isClosed_subgroup
@@ -1662,7 +1642,7 @@ theorem exists_pointedFreeRightSchreierGeneratorFamily_of_openSubgroup_of_minima
       let hWclosed : IsClosed (W : Set (PermutationalWreathProduct B (OpenSubgroupRightQuotient
           Hc) F)) := by
         simp [W]
-      letI : CompactSpace W := hWclosed.isClosedEmbedding_subtypeVal.compactSpace
+      let : CompactSpace W := hWclosed.isClosedEmbedding_subtypeVal.compactSpace
       let ξW : X → W := fun x =>
         ⟨ξ x, Subgroup.le_topologicalClosure _ (Subgroup.subset_closure ⟨x, rfl⟩)⟩
       have hξWcont : Continuous ξW :=

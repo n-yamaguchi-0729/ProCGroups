@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Limit.AddCommGroup
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Limit.CoeffMap
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: finite stage — prime power — completion — target
 
@@ -80,13 +82,31 @@ def foxAlgebraicStagePrimePowerTargetLimitToCompletedGroupAlgebra
             ((foxAlgebraicStagePrimePowerTargetSystem (ℓ := ℓ) (X := X) N).projection
               j.1 z) at hstage
         rw [hstage]
-        rw [foxAlgebraicStagePrimePowerTargetStageMap_coeffMap
-          (ℓ := ℓ) (X := X) N hij.1 i.2]
-        exact congrArg
-          (modNCompletedGroupAlgebraStageMap (ℓ ^ i.1)
-            (foxAlgebraicStageTargetQuotient (X := X) N) i.2)
-          ((foxAlgebraicStagePrimePowerTargetSystem (ℓ := ℓ) (X := X) N).projection_compatible
-            z i.1 j.1 hij.1)⟩
+        have hcoeffMap :
+            modNCompletedGroupAlgebraStageCoeffMap
+                (n := ℓ ^ i.1) (m := ℓ ^ j.1)
+                (G := foxAlgebraicStageTargetQuotient (X := X) N) i.2
+                (primePow_dvd_primePow (ℓ := ℓ) hij.1)
+                (modNCompletedGroupAlgebraStageMap (ℓ ^ j.1)
+                  (foxAlgebraicStageTargetQuotient (X := X) N) i.2
+                  ((foxAlgebraicStagePrimePowerTargetSystem
+                    (ℓ := ℓ) (X := X) N).projection j.1 z)) =
+              modNCompletedGroupAlgebraStageMap (ℓ ^ i.1)
+                (foxAlgebraicStageTargetQuotient (X := X) N) i.2
+                (foxAlgebraicStagePrimePowerTargetTransition
+                  (ℓ := ℓ) (X := X) N hij.1
+                  ((foxAlgebraicStagePrimePowerTargetSystem
+                    (ℓ := ℓ) (X := X) N).projection j.1 z)) :=
+          foxAlgebraicStagePrimePowerTargetStageMap_coeffMap
+            (ℓ := ℓ) (X := X) N hij.1 i.2
+            ((foxAlgebraicStagePrimePowerTargetSystem
+              (ℓ := ℓ) (X := X) N).projection j.1 z)
+        exact hcoeffMap.trans
+          (congrArg
+            (modNCompletedGroupAlgebraStageMap (ℓ ^ i.1)
+              (foxAlgebraicStageTargetQuotient (X := X) N) i.2)
+            ((foxAlgebraicStagePrimePowerTargetSystem
+              (ℓ := ℓ) (X := X) N).projection_compatible z i.1 j.1 hij.1))⟩
   map_zero' := by
     apply (primePowerCompletedGroupAlgebraSystem ℓ
       (foxAlgebraicStageTargetQuotient (X := X) N)).ext

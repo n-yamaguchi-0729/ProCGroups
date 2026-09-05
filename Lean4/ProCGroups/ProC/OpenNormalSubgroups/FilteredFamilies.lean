@@ -1,6 +1,8 @@
 import ProCGroups.ProC.OpenNormalSubgroups.BasisAtOne
 import ProCGroups.ProC.OpenNormalSubgroups.ClosedAndCosets
 
+set_option autoImplicit false
+
 /-!
 # Filtered families of open subgroups
 
@@ -14,7 +16,7 @@ namespace ProCGroups.ProC
 open Set
 open scoped Topology Pointwise
 
-universe u v
+universe u v w
 
 section
 
@@ -185,19 +187,19 @@ theorem closedSubgroup_eq_sInf_openNormal [CompactSpace G] [TotallyDisconnectedS
   ext x
   constructor
   · intro hx
-    simp only [Subgroup.mem_sInf, Set.mem_setOf_eq]
+    simp only [Subgroup.mem_sInf, Set.mem_ofPred_eq]
     intro N hN
     exact hN.2.1 hx
   · intro hx
     have hxall :
         ∀ N : Subgroup G, IsOpen (N : Set G) ∧ (H : Subgroup G) ≤ N ∧ N.Normal → x ∈ N := by
-      simpa only [Subgroup.mem_sInf, Set.mem_setOf_eq] using hx
+      simpa only [Subgroup.mem_sInf, Set.mem_ofPred_eq] using hx
     have hxOpen :
         x ∈ sInf {N : Subgroup G | IsOpen (N : Set G) ∧ (H : Subgroup G) ≤ N} := by
-      simp only [Subgroup.mem_sInf, Set.mem_setOf_eq]
+      simp only [Subgroup.mem_sInf, Set.mem_ofPred_eq]
       intro N hN
       have hNfin : Subgroup.FiniteIndex N := by
-        letI : Finite (G ⧸ N) := Subgroup.quotient_finite_of_isOpen N hN.1
+        let : Finite (G ⧸ N) := Subgroup.quotient_finite_of_isOpen N hN.1
         exact Subgroup.finiteIndex_of_finite_quotient
       have hcoreOpen : IsOpen (N.normalCore : Set G) := by
         exact Subgroup.isOpen_of_isClosed_of_finiteIndex _ (N.normalCore_isClosed

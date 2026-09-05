@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.Augmentation
 import ProCGroups.CompletedGroupAlgebra.ProfiniteModules.FiniteGroupAlgebra.Augmentation.Abstract
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — \(\mathbb{Z}_C\) coefficients — augmentation ideal — finite stage
 
@@ -52,7 +54,7 @@ theorem mem_zcCompletedGroupAlgebraStageAugmentationIdeal_iff
     {x : ZCCompletedGroupAlgebraStage C H i} :
     x ∈ zcCompletedGroupAlgebraStageAugmentationIdeal C H i ↔
       modNCompletedGroupAlgebraStageAugmentationInClass i.1.modulus H C i.2 x = 0 := by
-  letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+  let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
   rw [zcCompletedGroupAlgebraStageAugmentationIdeal, RingHom.mem_ker]
 
 /--
@@ -72,7 +74,7 @@ theorem zcCompletedGroupAlgebraStageAugmentationGenerator_mem
     (q : CompletedGroupAlgebraQuotientInClass H C i.2) :
     zcCompletedGroupAlgebraStageAugmentationGenerator C H i q ∈
       zcCompletedGroupAlgebraStageAugmentationIdeal C H i := by
-  letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+  let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
   rw [mem_zcCompletedGroupAlgebraStageAugmentationIdeal_iff]
   simp only [zcCompletedGroupAlgebraStageAugmentationGenerator, MonoidAlgebra.of_apply, map_sub,
   modNCompletedGroupAlgebraStageAugmentationInClass_single, map_one, sub_self]
@@ -90,7 +92,7 @@ theorem zcCompletedGroupAlgebraStageAugmentationIdeal_span_standardGenerators_eq
     (i : ZCCompletedGroupAlgebraIndex C H) :
     Submodule.span (ZCCompletedGroupAlgebraStage C H i)
       (Set.range (zcCompletedGroupAlgebraStageAugmentationGeneratorSubtype C H i)) = ⊤ := by
-  letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+  let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
   change
     Submodule.span
       (MonoidAlgebra (ModNCompletedCoeff i.1.modulus)
@@ -119,8 +121,8 @@ def zcCompletedGroupAlgebraStageAugmentationIdealTransition
   intro x
   refine ⟨zcCompletedGroupAlgebraTransition C H hij x.1, ?_⟩
   rw [mem_zcCompletedGroupAlgebraStageAugmentationIdeal_iff]
-  letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
-  letI : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
+  let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+  let : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
   have hx0 :
       modNCompletedGroupAlgebraStageAugmentationInClass j.1.modulus H C j.2 x.1 = 0 :=
     (mem_zcCompletedGroupAlgebraStageAugmentationIdeal_iff
@@ -184,9 +186,9 @@ def zcCompletedGroupAlgebraAugmentationIdealStageSystem :
     zcCompletedGroupAlgebraStageAugmentationIdealTransition (C := C) (H := H) hij
   continuous_map := by
     intro i j hij
-    letI : TopologicalSpace (zcCompletedGroupAlgebraStageAugmentationIdeal C H i) := ⊥
-    letI : TopologicalSpace (zcCompletedGroupAlgebraStageAugmentationIdeal C H j) := ⊥
-    letI : DiscreteTopology (zcCompletedGroupAlgebraStageAugmentationIdeal C H j) := ⟨rfl⟩
+    let : TopologicalSpace (zcCompletedGroupAlgebraStageAugmentationIdeal C H i) := ⊥
+    let : TopologicalSpace (zcCompletedGroupAlgebraStageAugmentationIdeal C H j) := ⊥
+    let : DiscreteTopology (zcCompletedGroupAlgebraStageAugmentationIdeal C H j) := ⟨rfl⟩
     exact continuous_of_discreteTopology
   map_id := by
     intro i
@@ -283,7 +285,7 @@ def zcCompletedGroupAlgebraAugmentationIdealOfStageFamily :
   rw [mem_zcCompletedGroupAlgebraAugmentationIdeal_iff]
   ext i
   let T := zcCompletedGroupAlgebraTopIndex C H
-  letI : Fact (0 < i.modulus) := ⟨i.positive⟩
+  let : Fact (0 < i.modulus) := ⟨i.positive⟩
   change
     modNCompletedGroupAlgebraStageAugmentationInClass i.modulus H C T
         ((x.1 (i, T)).1) = 0

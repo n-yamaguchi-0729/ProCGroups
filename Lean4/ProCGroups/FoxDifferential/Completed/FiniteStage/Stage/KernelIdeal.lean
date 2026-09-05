@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Source
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — finite stage — stage — kernel ideal
 
@@ -58,7 +60,7 @@ theorem foxAlgebraicStageGroupAlgebraMapKernel_mem_mulAugmentation_of_derivative
         (F := FreeGroup X) N n x = 0) :
     x ∈ foxAlgebraicStageGroupAlgebraMapKernelMulAugmentationIdeal (X := X) N n := by
   classical
-  letI := Fintype.ofFinite X
+  let := Fintype.ofFinite X
   have hcoeff_mem
       (i : X) :
       foxAlgebraicStageSourceGroupAlgebraDerivative (X := X) N n i x ∈

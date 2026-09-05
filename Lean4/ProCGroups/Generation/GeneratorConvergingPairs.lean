@@ -1,6 +1,8 @@
 import ProCGroups.Generation.QuotientCriteria
 import ProCGroups.ProC.Quotients.LeftQuotientProjectionSections
 
+set_option autoImplicit false
+
 /-!
 # Partial converging generators modulo a closed normal subgroup
 
@@ -217,9 +219,7 @@ noncomputable def chainUpperBoundOfNonempty
     exact p.1.convergesToOneAlongOpenSubgroups_mod U hpU
   generates := by
     let K : Subgroup G := iInf fun p : c => p.1.N
-    letI : K.Normal := Subgroup.normal_iInf_normal fun p : c => p.1.normal_N
-    have hKclosed : IsClosed (K : Set G) := by
-      simpa [K] using isClosed_iInter (fun p : c => p.1.closed_N)
+    have : K.Normal := Subgroup.normal_iInf_normal fun p : c => p.1.normal_N
     apply (topologicallyGenerates_union_subgroup_iff_forall_openNormalQuotient
       (G := G)
       (N := K) (X := ⋃ p : c, p.1.X)).2
@@ -229,7 +229,7 @@ noncomputable def chainUpperBoundOfNonempty
     have hpgen :
         TopologicallyGenerates (G := G ⧸ (U : Subgroup G))
           ((QuotientGroup.mk' (U : Subgroup G)) '' p.1.X) := by
-      letI : p.1.N.Normal := p.1.normal_N
+      have : p.1.N.Normal := p.1.normal_N
       exact
         (topologicallyGenerates_union_subgroup_iff_forall_openNormalQuotient
           (G := G)
@@ -280,8 +280,7 @@ theorem exists_finite_subset_generating_subgroup_mod_openNormal
       T ⊆ (M : Set G) \ (((U : Subgroup G) ⊓ M : Subgroup G) : Set G) ∧
       M ≤ Subgroup.closure (T ∪ ((((U : Subgroup G) ⊓ M : Subgroup G) : Subgroup G) : Set G)) := by
   classical
-  letI : IsClosed (M : Set G) := hMclosed
-  letI : CompactSpace M := hMclosed.isClosedEmbedding_subtypeVal.compactSpace
+  have : CompactSpace M := hMclosed.isClosedEmbedding_subtypeVal.compactSpace
   let UM : OpenNormalSubgroup M :=
     OpenNormalSubgroup.comap (M.subtype) continuous_subtype_val U
   obtain ⟨σ, -, hσright, -⟩ :=
@@ -290,7 +289,7 @@ theorem exists_finite_subset_generating_subgroup_mod_openNormal
   let Tsub : Set M := σ '' ({q1} : Set (M ⧸ (UM : Subgroup M)))ᶜ
   let T : Set G := Subtype.val '' Tsub
   refine ⟨T, ?_, ?_, ?_⟩
-  · letI : Finite (M ⧸ (UM : Subgroup M)) := openNormalSubgroup_finiteQuotient (G := M) UM
+  · have : Finite (M ⧸ (UM : Subgroup M)) := openNormalSubgroup_finiteQuotient (G := M) UM
     have hfin : ({q1} : Set (M ⧸ (UM : Subgroup M)))ᶜ.Finite := Set.toFinite _
     exact hfin.image σ |>.image Subtype.val
   · intro x hx

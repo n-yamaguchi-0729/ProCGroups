@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.ProfiniteModules.FiniteGroupAlgebra.Augmentation.Completed
 
+set_option autoImplicit false
+
 /-!
 # Group-like unit representations
 
@@ -129,8 +131,9 @@ theorem unitRepresentation_continuousSMul
     (hρ : Continuous fun g : G => ((ρ g : Sˣ) : S)) :
     letI : DistribMulAction G A := unitRepresentationDistribMulAction G S A ρ
     ContinuousSMul G A := by
-  letI : DistribMulAction G A := unitRepresentationDistribMulAction G S A ρ
-  refine ContinuousSMul.mk ?_
+  let : DistribMulAction G A := unitRepresentationDistribMulAction G S A ρ
+  refine ⟨?_⟩
+  change Continuous fun p : G × A => ((ρ p.1 : Sˣ) : S) • p.2
   have hpair : Continuous fun p : G × A => (((ρ p.1 : Sˣ) : S), p.2) :=
     (hρ.comp continuous_fst).prodMk continuous_snd
   exact (show Continuous (fun p : S × A => p.1 • p.2) from continuous_smul).comp hpair
@@ -150,15 +153,21 @@ theorem finiteGroupAlgebra_module_induces_continuous_gmodule
       unitRepresentationDistribMulAction G (MonoidAlgebra R G) A
         (groupAlgebraUnitRepresentation R G)
     ContinuousSMul G A := by
-  classical
-  letI : Fintype G := Fintype.ofFinite G
-  letI : TopologicalSpace (MonoidAlgebra R G) := finiteGroupAlgebraTopology R G
-  letI : ContinuousSMul (MonoidAlgebra R G) A := hsmul
-  letI : DistribMulAction G A :=
+  let : TopologicalSpace (MonoidAlgebra R G) := finiteGroupAlgebraTopology R G
+  let : DistribMulAction G A :=
     unitRepresentationDistribMulAction G (MonoidAlgebra R G) A
       (groupAlgebraUnitRepresentation R G)
-  exact unitRepresentation_continuousSMul G (MonoidAlgebra R G) A
-    (groupAlgebraUnitRepresentation R G) continuous_of_discreteTopology
+  refine ⟨?_⟩
+  change Continuous fun p : G × A =>
+    ((groupAlgebraUnitRepresentation R G p.1 : (MonoidAlgebra R G)ˣ) : MonoidAlgebra R G) • p.2
+  exact hsmul.continuous_smul.comp₂
+    (e := fun p : G × A =>
+      ((groupAlgebraUnitRepresentation R G p.1 : (MonoidAlgebra R G)ˣ) : MonoidAlgebra R G))
+    ((continuous_of_discreteTopology
+      (f := fun g : G =>
+        ((groupAlgebraUnitRepresentation R G g : (MonoidAlgebra R G)ˣ) :
+          MonoidAlgebra R G))).comp continuous_fst)
+    continuous_snd
 
 /--
 Proposition 5.3.6(a), model-independent form: a module over a completed group algebra inherits
@@ -184,6 +193,9 @@ theorem completedGroupAlgebra_module_induces_continuous_gmodule
       unitRepresentationDistribMulAction G RG A
         (completedGroupAlgebraUnitRepresentation R G RG dense)
     ContinuousSMul G A := by
+  let : DistribMulAction G A :=
+    unitRepresentationDistribMulAction G RG A
+      (completedGroupAlgebraUnitRepresentation R G RG dense)
   exact unitRepresentation_continuousSMul G RG A
     (completedGroupAlgebraUnitRepresentation R G RG dense) (by simpa using hdenseG)
 

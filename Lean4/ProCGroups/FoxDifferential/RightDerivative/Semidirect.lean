@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Discrete.GroupRing
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: right derivative — semidirect
 

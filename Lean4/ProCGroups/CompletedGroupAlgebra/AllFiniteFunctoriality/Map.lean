@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.StageMap
 
+set_option autoImplicit false
+
 /-!
 # Completed Group Algebra / All Finite Functoriality / Map
 
@@ -48,7 +50,7 @@ def completedGroupAlgebraMap
               (completedGroupAlgebraProjection R G
               (completedGroupAlgebraComapIndex (G := G) φ hφ W) x)
           rw [RingHom.comp_apply, RingHom.comp_apply] at hcomp
-          simp only [Function.comp_apply]
+          simp only
           rw [← completedGroupAlgebraProjection_compatible
             (R := R) (G := G) x
             (completedGroupAlgebraComapIndex_mono
@@ -133,7 +135,7 @@ theorem continuous_completedGroupAlgebraMap
     (φ : G →* H) (hφ : Continuous φ) :
     Continuous (completedGroupAlgebraMap (G := G) (H := H) R φ hφ) := by
   let S := completedGroupAlgebraSystem R H
-  letI : ∀ V, TopologicalSpace (CompletedGroupAlgebraStage R H V) :=
+  let : ∀ V, TopologicalSpace (CompletedGroupAlgebraStage R H V) :=
     fun V => (completedGroupAlgebraSystem R H).topologicalSpace V
   let π : ∀ V : CompletedGroupAlgebraIndex H,
       CompletedGroupAlgebraCarrier R G → CompletedGroupAlgebraStage R H V :=
@@ -144,7 +146,7 @@ theorem continuous_completedGroupAlgebraMap
           (completedGroupAlgebraComapIndex (G := G) φ hφ V) x)
   have hπ : ∀ V, Continuous (π V) := by
     intro V
-    letI : TopologicalSpace
+    let : TopologicalSpace
         (CompletedGroupAlgebraStage R G (completedGroupAlgebraComapIndex (G := G) φ hφ V)) :=
       (completedGroupAlgebraSystem R G).topologicalSpace
         (completedGroupAlgebraComapIndex (G := G) φ hφ V)
@@ -162,7 +164,7 @@ theorem continuous_completedGroupAlgebraMap
       (completedGroupAlgebraProjection R G
         (completedGroupAlgebraComapIndex (G := G) φ hφ W) x)
     rw [RingHom.comp_apply, RingHom.comp_apply] at hcomp
-    simp only [S, π, Function.comp_apply]
+    simp only [S, π]
     rw [← completedGroupAlgebraProjection_compatible
       (R := R) (G := G) x
       (completedGroupAlgebraComapIndex_mono (G := G) φ hφ hVW)]

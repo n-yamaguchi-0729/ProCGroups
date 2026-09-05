@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.Continuous.Free.Continuity
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — continuous — free — source formula
 

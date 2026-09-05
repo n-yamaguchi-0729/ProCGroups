@@ -2,6 +2,8 @@ import ProCGroups.Abelian.TopologicalAbelianizationLimits
 import ProCGroups.ProC.InverseLimits.FiniteQuotients
 import ProCGroups.ProC.OpenNormalSubgroups.LimitPresentation
 
+set_option autoImplicit false
+
 /-!
 # Detecting the closed commutator subgroup in finite quotients
 
@@ -19,6 +21,54 @@ universe u
 variable {C : FiniteGroupClass.{u}}
 variable {G : Type u} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
 variable [CompactSpace G] [T2Space G]
+
+/-- Every continuous homomorphism from the source to a finite discrete abelian group kills the
+kernel of `f`. -/
+def FiniteDiscreteAbelianMapsKillKernel
+    {Q : Type u} [Group Q] [TopologicalSpace Q]
+    (f : G →ₜ* Q) : Prop :=
+  ∀ (A : Type u) [Finite A] [TopologicalSpace A] [CommGroup A] [DiscreteTopology A],
+    ∀ φ : G →ₜ* A, f.ker ≤ φ.ker
+
+/--
+For a profinite source, finite discrete abelian targets detect the closed commutator subgroup.
+Consequently, if all such homomorphisms kill the kernel of `f`, then that kernel is contained in
+the closed commutator subgroup.
+-/
+theorem ker_le_closedCommutator_of_finiteDiscreteAbelianMapsKillKernel
+    [TotallyDisconnectedSpace G]
+    {Q : Type u} [Group Q] [TopologicalSpace Q]
+    (f : G →ₜ* Q) (hkill : FiniteDiscreteAbelianMapsKillKernel f) :
+    f.ker ≤ Subgroup.closedCommutator G := by
+  intro x hx
+  by_contra hxcomm
+  let A : Type u := TopologicalAbelianization G
+  have : TotallyDisconnectedSpace A := by
+    dsimp [A, TopologicalAbelianization]
+    exact ProCGroups.totallyDisconnectedSpace_quotient_closedNormal
+      (Subgroup.closedCommutator G) (Subgroup.isClosed_closedCommutator G)
+  have hmk_ne : ProCGroups.Abelian.TopologicalAbelianization.mk G x ≠ 1 := by
+    intro hmk
+    exact hxcomm
+      (ProCGroups.Abelian.TopologicalAbelianization.mk_eq_one_iff.mp hmk)
+  rcases exists_openNormalSubgroup_not_mem
+      (G := A) (x := ProCGroups.Abelian.TopologicalAbelianization.mk G x) hmk_ne with
+    ⟨U, hxU⟩
+  let B : Type u := A ⧸ (U : Subgroup A)
+  have : Finite B := openNormalSubgroup_finiteQuotient (G := A) U
+  have : DiscreteTopology B :=
+    QuotientGroup.discreteTopology (openNormalSubgroup_isOpen (G := A) U)
+  let φ : G →ₜ* B :=
+    (OpenNormalSubgroup.quotientProj U).comp
+      (ProCGroups.Abelian.TopologicalAbelianization.mkₜ G)
+  have hxker : x ∈ φ.ker := hkill B φ hx
+  have hφx : φ x = 1 := MonoidHom.mem_ker.mp hxker
+  have hxU' : ProCGroups.Abelian.TopologicalAbelianization.mk G x ∈ (U : Subgroup A) := by
+    apply (QuotientGroup.eq_one_iff
+      (N := (U : Subgroup A))
+      (ProCGroups.Abelian.TopologicalAbelianization.mk G x)).mp
+    exact hφx
+  exact hxU hxU'
 
 /--
 A quotient-level commutator descent along a surjective homomorphism. If \(f: N \to K\) is onto,
@@ -75,34 +125,21 @@ theorem mem_closedCommutator_of_forall_openNormalSubgroupInClass_quotient
       QuotientGroup.mk' (U.1 : Subgroup G) x ∈
         Subgroup.closedCommutator (G ⧸ (U.1 : Subgroup G))) :
     x ∈ Subgroup.closedCommutator G := by
-  let S := openNormalSubgroupInClassSystem C G
+  let S : InverseSystems.InverseSystem (I := OrderDual (OpenNormalSubgroupInClass C G)) :=
+    openNormalSubgroupInClassSystem C G
   let e := openNormalSubgroupInClassMulEquivInverseLimit (C := C) (G := G) hForm hG
-  letI : Nonempty (OpenNormalSubgroupInClass C G) := openNormalSubgroupInClass_nonempty hG
-  letI : Nonempty (OrderDual (OpenNormalSubgroupInClass C G)) := inferInstance
-  letI : ∀ U : OrderDual (OpenNormalSubgroupInClass C G), Group (S.X U) := fun U =>
+  have : Nonempty (OpenNormalSubgroupInClass C G) := openNormalSubgroupInClass_nonempty hG
+  let : ∀ U : OrderDual (OpenNormalSubgroupInClass C G), Group (S.X U) := fun U =>
     instGroupOpenNormalSubgroupInClassSystemX (C := C) (G := G) U
-  letI : InverseSystems.IsGroupSystem S := by
-    dsimp [S]
-    infer_instance
-  letI : ∀ U : OrderDual (OpenNormalSubgroupInClass C G), Finite (S.X U) := fun U => by
+  have : InverseSystems.IsGroupSystem S :=
+    instIsGroupSystemOpenNormalSubgroupInClassSystem (C := C) (G := G)
+  have : ∀ U : OrderDual (OpenNormalSubgroupInClass C G), Finite (S.X U) := fun U => by
     dsimp [S, openNormalSubgroupInClassSystem]
     exact C.finite (OrderDual.ofDual U).2
-  letI : ∀ U : OrderDual (OpenNormalSubgroupInClass C G), DiscreteTopology (S.X U) := fun U => by
+  have : ∀ U : OrderDual (OpenNormalSubgroupInClass C G), DiscreteTopology (S.X U) := fun U => by
     dsimp [S, openNormalSubgroupInClassSystem]
     exact QuotientGroup.discreteTopology
       (openNormalSubgroup_isOpen (G := G) ((OrderDual.ofDual U).1 : OpenNormalSubgroup G))
-  letI : ∀ U : OrderDual (OpenNormalSubgroupInClass C G), CompactSpace (S.X U) := fun _ => by
-    infer_instance
-  letI : ∀ U : OrderDual (OpenNormalSubgroupInClass C G), T2Space (S.X U) := fun _ => by
-    infer_instance
-  letI : ∀ U : OrderDual (OpenNormalSubgroupInClass C G),
-      TotallyDisconnectedSpace (S.X U) := fun _ => by
-    infer_instance
-  letI : ∀ U : OrderDual (OpenNormalSubgroupInClass C G), IsTopologicalGroup (S.X U) :=
-    fun _ => by
-      infer_instance
-  letI : Group S.inverseLimit := by infer_instance
-  letI : IsTopologicalGroup S.inverseLimit := by infer_instance
   have hlim : e x ∈ Subgroup.closedCommutator S.inverseLimit := by
     rw [ProCGroups.Abelian.mem_closedCommutator_inverseLimit_iff
       (S := S) (directed_openNormalSubgroupInClass (C := C) (G := G) hForm)]
@@ -118,9 +155,7 @@ theorem mem_closedCommutator_of_forall_openNormalSubgroupInClass_quotient
     simp only [Subgroup.closedCommutator_eq_commutator_of_discrete] at hxU ⊢
     change
       openNormalSubgroupInClassProj (C := C) (G := G) U x ∈
-        @commutator (S.X U)
-          (instGroupOpenNormalSubgroupInClassSystemX
-            (C := C) (G := G) U) at hxU
+        commutator (S.X U) at hxU
     exact hxU
   have hmap :
       e x ∈
@@ -191,7 +226,10 @@ theorem mem_closedCommutator_of_forall_exists_openNormalSubgroupInClass_le_quoti
   have hq :
       qVU (QuotientGroup.mk' (V.1 : Subgroup G) x) =
         QuotientGroup.mk' (U.1 : Subgroup G) x := by
-    simp only [QuotientGroup.mk'_apply, QuotientGroup.map_mk, MonoidHom.id_apply, qVU]
+    exact QuotientGroup.map_mk' (N := (V.1 : Subgroup G)) (U.1 : Subgroup G)
+      (MonoidHom.id G) (by
+        intro g hg
+        exact hVU hg) x
   have hcomm_map :
       (commutator (G ⧸ (V.1 : Subgroup G))).map qVU ≤
         commutator (G ⧸ (U.1 : Subgroup G)) := by

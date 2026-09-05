@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FreeProC.StageProjection
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — free pro-\(C\) — coordinate stage projection
 

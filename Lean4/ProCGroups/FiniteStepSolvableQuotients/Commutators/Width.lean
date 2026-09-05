@@ -1,6 +1,8 @@
 import Mathlib.GroupTheory.Rank
 import ProCGroups.FiniteGeneration.CharacteristicChainsAndIndices
 
+set_option autoImplicit false
+
 /-!
 # Uniform commutator-width estimates
 
@@ -191,7 +193,7 @@ theorem exists_normalGenerators_of_split_group_of_rank_le
   let y : Fin d → K := fun i => (l i)⁻¹ * x i
   refine ⟨y, ?_⟩
   let N : Subgroup K := Subgroup.normalClosure (Set.range y)
-  haveI : N.Normal := Subgroup.normalClosure_normal
+  have : N.Normal := Subgroup.normalClosure_normal
   have hyH : ∀ i, y i ∈ H := by
     intro i
     exact QuotientGroup.eq.mp (hlq i)

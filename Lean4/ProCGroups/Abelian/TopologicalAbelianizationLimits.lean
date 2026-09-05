@@ -3,6 +3,8 @@ import ProCGroups.InverseSystems.Quotients
 import ProCGroups.InverseSystems.StagewiseIso
 import ProCGroups.ProC.Quotients.ClosedNormal
 
+set_option autoImplicit false
+
 /-!
 # Topological abelianization and inverse limits
 
@@ -167,13 +169,10 @@ noncomputable def topologicalAbelianizationInverseLimitComparison
     [∀ i, IsTopologicalGroup (S.X i)] :
     TopologicalAbelianization S.inverseLimit →ₜ*
       (abelianizationInverseSystem S).inverseLimit := by
-  let T := abelianizationInverseSystem S
+  let T : InverseSystems.InverseSystem (I := I) := abelianizationInverseSystem S
   let ψ : ∀ i, TopologicalAbelianization S.inverseLimit →ₜ* T.X i := fun i =>
     TopologicalAbelianization.map
-      { toMonoidHom :=
-          { toFun := S.projection i
-            map_one' := rfl
-            map_mul' := by intro x y; rfl }
+      { toMonoidHom := InverseSystems.projectionHom (S := S) i
         continuous_toFun := S.continuous_projection i }
   let ψFun : ∀ i, TopologicalAbelianization S.inverseLimit → T.X i := fun i => ψ i
   have hψ : ∀ i, Continuous (ψFun i) := by
@@ -191,7 +190,7 @@ noncomputable def topologicalAbelianizationInverseLimitComparison
         QuotientGroup.mk'
           (Subgroup.topologicalClosure (commutator (S.X i)))
           (S.projection i a)
-    simpa using congrArg
+    exact congrArg
       (QuotientGroup.mk' (Subgroup.topologicalClosure (commutator (S.X i))))
       (S.projection_compatible a i j hij)
   refine
@@ -227,13 +226,10 @@ The projection from the topological abelianization inverse-limit comparison to a
               map_one' := rfl
               map_mul' := by intro x y; rfl }
           continuous_toFun := S.continuous_projection i } := by
-  let T := abelianizationInverseSystem S
+  let T : InverseSystems.InverseSystem (I := I) := abelianizationInverseSystem S
   let ψ : ∀ i, TopologicalAbelianization S.inverseLimit →ₜ* T.X i := fun i =>
     TopologicalAbelianization.map
-      { toMonoidHom :=
-          { toFun := S.projection i
-            map_one' := rfl
-            map_mul' := by intro x y; rfl }
+      { toMonoidHom := InverseSystems.projectionHom (S := S) i
         continuous_toFun := S.continuous_projection i }
   let ψFun : ∀ i, TopologicalAbelianization S.inverseLimit → T.X i := fun i => ψ i
   have hcompat : T.CompatibleMaps ψFun := by
@@ -248,12 +244,12 @@ The projection from the topological abelianization inverse-limit comparison to a
         QuotientGroup.mk'
           (Subgroup.topologicalClosure (commutator (S.X i)))
           (S.projection i a)
-    simpa using congrArg
+    exact congrArg
       (QuotientGroup.mk' (Subgroup.topologicalClosure (commutator (S.X i))))
       (S.projection_compatible a i j hij)
   funext x
   change T.projection i (T.inverseLimitLift ψFun hcompat x) = ψFun i x
-  rfl
+  exact T.projection_inverseLimitLift_apply ψFun hcompat i x
 
 /--
 The finite-stage projection of the topological abelianization comparison has the stated value on
@@ -305,25 +301,13 @@ private theorem inj_topologicalAbelianizationInverseLimitComparison_of_profinite
     [∀ i, TotallyDisconnectedSpace (S.X i)]
     (hdir : Directed (· ≤ ·) (id : I → I)) :
     Function.Injective (topologicalAbelianizationInverseLimitComparison S) := by
-  let f := topologicalAbelianizationInverseLimitComparison S
-  letI : CompactSpace S.inverseLimit := inferInstance
-  letI : T2Space S.inverseLimit := S.t2Space_inverseLimit
-  letI : TotallyDisconnectedSpace S.inverseLimit := S.totallyDisconnectedSpace_inverseLimit
-  let N : Subgroup S.inverseLimit :=
-    Subgroup.topologicalClosure (commutator S.inverseLimit)
-  letI : N.Normal := by dsimp [N]; infer_instance
-  have hNclosed : IsClosed (N : Set S.inverseLimit) := by
-    simp [N]
-  letI : IsClosed (N : Set S.inverseLimit) := hNclosed
-  letI : CompactSpace (TopologicalAbelianization S.inverseLimit) :=
-    by simpa [TopologicalAbelianization, N] using
-      (inferInstance : CompactSpace (S.inverseLimit ⧸ N))
-  letI : T2Space (TopologicalAbelianization S.inverseLimit) :=
-    by simpa [TopologicalAbelianization, N] using
-      (inferInstance : T2Space (S.inverseLimit ⧸ N))
-  letI : TotallyDisconnectedSpace (TopologicalAbelianization S.inverseLimit) :=
-    by simpa [TopologicalAbelianization, N] using
-      (ProCGroups.totallyDisconnectedSpace_quotient_closedNormal N hNclosed)
+  let f : TopologicalAbelianization S.inverseLimit →ₜ*
+      (abelianizationInverseSystem S).inverseLimit :=
+    topologicalAbelianizationInverseLimitComparison S
+  have : TotallyDisconnectedSpace (TopologicalAbelianization S.inverseLimit) :=
+    ProCGroups.totallyDisconnectedSpace_quotient_closedNormal
+      (Subgroup.closedCommutator S.inverseLimit)
+      (Subgroup.isClosed_closedCommutator S.inverseLimit)
   have hkerbot : f.toMonoidHom.ker = ⊥ := by
     ext a
     constructor
@@ -333,9 +317,9 @@ private theorem inj_topologicalAbelianizationInverseLimitComparison_of_profinite
           (G := TopologicalAbelianization S.inverseLimit) (x := a) hane with ⟨U, haU⟩
       let Q := TopologicalAbelianization S.inverseLimit ⧸
         (U : Subgroup (TopologicalAbelianization S.inverseLimit))
-      letI : Finite Q := openNormalSubgroup_finiteQuotient
+      have : Finite Q := openNormalSubgroup_finiteQuotient
         (G := TopologicalAbelianization S.inverseLimit) U
-      letI : DiscreteTopology Q :=
+      have : DiscreteTopology Q :=
         QuotientGroup.discreteTopology
           (openNormalSubgroup_isOpen (G := TopologicalAbelianization S.inverseLimit) U)
       let qInv : S.inverseLimit →ₜ* TopologicalAbelianization S.inverseLimit :=
@@ -362,10 +346,7 @@ private theorem inj_topologicalAbelianizationInverseLimitComparison_of_profinite
               (TopologicalAbelianization.mk S.inverseLimit x)
               = β x := rfl
           _ = βi (S.projection i x) := by
-            simpa [Function.comp] using
-              congrArg
-                (fun g : S.inverseLimit → Q => g x)
-                hβfac
+              exact congrFun hβfac x
           _ = TopologicalAbelianization.lift βiCont
                 (TopologicalAbelianization.mk (S.X i) (S.projection i x)) := by
               symm
@@ -468,10 +449,12 @@ theorem closedCommutator_inverseLimit_eq_iInf_comap
           ({ toFun := S.projection i
              map_one' := rfl
              map_mul' := by intro x y; rfl } : S.inverseLimit →* S.X i) := by
+    change Subgroup.closedCommutator S.inverseLimit =
+      ⨅ i, (Subgroup.closedCommutator (S.X i)).comap
+        (InverseSystems.projectionHom (S := S) i)
     ext x
-    rw [mem_closedCommutator_inverseLimit_iff (S := S) hdir (x := x)]
-    simp only [InverseSystems.InverseSystem.projection_apply, Subgroup.mem_iInf, Subgroup.mem_comap,
-  MonoidHom.coe_mk, OneHom.coe_mk]
+    simp only [Subgroup.mem_iInf, Subgroup.mem_comap, InverseSystems.projectionHom_apply]
+    exact mem_closedCommutator_inverseLimit_iff (S := S) hdir (x := x)
 
 /--
 For the closed-commutator compatible family, the generic quotient-limit kernel is the closed

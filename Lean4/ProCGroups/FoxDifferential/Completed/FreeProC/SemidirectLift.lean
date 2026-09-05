@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Completed.Semidirect
 import ProCGroups.FreeProC.Basic
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — free pro-\(C\) — semidirect lift
 
@@ -692,7 +694,7 @@ def freeProCZCCompletedFoxSemidirectLiftToClosedGenerated
     F →*
       (freeProCZCCompletedFoxSemidirectClosedGeneratedTarget (C := C) φ : Subgroup
           (ZCCompletedFoxSemidirect C X H)) := by
-  letI : CompactSpace
+  let : CompactSpace
       (freeProCZCCompletedFoxSemidirectClosedGeneratedTarget (C := C) φ : Subgroup
         (ZCCompletedFoxSemidirect C X H)) := by
     exact
@@ -725,7 +727,7 @@ def freeProCZCCompletedFoxSemidirectLiftHomToClosedGenerated
     F →ₜ*
       (freeProCZCCompletedFoxSemidirectClosedGeneratedTarget (C := C) φ : Subgroup
           (ZCCompletedFoxSemidirect C X H)) := by
-  letI : CompactSpace
+  let : CompactSpace
       (freeProCZCCompletedFoxSemidirectClosedGeneratedTarget (C := C) φ : Subgroup
         (ZCCompletedFoxSemidirect C X H)) := by
     exact
@@ -788,7 +790,7 @@ theorem freeProCZCCompletedFoxSemidirectLiftToClosedGenerated_generator
     freeProCZCCompletedFoxSemidirectLiftToClosedGenerated
         (C := C) hι φ htarget hφconv (ι x) =
       freeProCZCCompletedFoxSemidirectClosedGeneratedGenerator (C := C) φ x := by
-  letI : CompactSpace
+  let : CompactSpace
       (freeProCZCCompletedFoxSemidirectClosedGeneratedTarget (C := C) φ : Subgroup
         (ZCCompletedFoxSemidirect C X H)) := by
     exact

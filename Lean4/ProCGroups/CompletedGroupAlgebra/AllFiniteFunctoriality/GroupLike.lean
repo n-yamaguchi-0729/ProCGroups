@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.Map
 
+set_option autoImplicit false
+
 /-!
 # Completed Group Algebra / All Finite Functoriality / Group-Like
 
@@ -74,9 +76,9 @@ theorem continuous_completedGroupAlgebraStageMap_of
       (completedGroupAlgebraSystem R G).topologicalSpace U
     Continuous fun g : G =>
       completedGroupAlgebraStageMap R G U (MonoidAlgebra.of R G g) := by
-  letI : TopologicalSpace (CompletedGroupAlgebraStage R G U) :=
+  let : TopologicalSpace (CompletedGroupAlgebraStage R G U) :=
     (completedGroupAlgebraSystem R G).topologicalSpace U
-  letI : DiscreteTopology (CompletedGroupAlgebraQuotient G U) :=
+  let : DiscreteTopology (CompletedGroupAlgebraQuotient G U) :=
     QuotientGroup.discreteTopology
       (ProCGroups.openNormalSubgroup_isOpen
         (G := G) ((OrderDual.ofDual U).1 : OpenNormalSubgroup G))
@@ -108,7 +110,7 @@ theorem continuous_completedGroupAlgebraStageMap_of
 theorem continuous_completedGroupAlgebraOf :
     Continuous (completedGroupAlgebraOf R G) := by
   let S := completedGroupAlgebraSystem R G
-  letI : ∀ U, TopologicalSpace (CompletedGroupAlgebraStage R G U) :=
+  let : ∀ U, TopologicalSpace (CompletedGroupAlgebraStage R G U) :=
     fun U => (completedGroupAlgebraSystem R G).topologicalSpace U
   let π : ∀ U : CompletedGroupAlgebraIndex G,
       G → CompletedGroupAlgebraStage R G U :=

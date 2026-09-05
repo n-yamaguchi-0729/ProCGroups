@@ -2,6 +2,8 @@ import ProCGroups.FiniteGroups.StandardClasses
 import ProCGroups.Generation.QuotientCriteria
 import ProCGroups.ProC.InverseLimits.FiniteQuotients
 
+set_option autoImplicit false
+
 /-!
 # Finite-quotient predicates for profinite groups
 
@@ -47,10 +49,7 @@ theorem hasAbelianOpenNormalBasis (hG : HasCyclicOpenNormalBasis G) : HasAbelian
   exact hG.mono (fun {Q} [Group Q] hQ => by
     rcases hQ with ⟨hfin, hcyc⟩
     refine ⟨hfin, ?_⟩
-    letI : IsCyclic Q := hcyc
-    letI : CommGroup Q := IsCyclic.commGroup
-    intro a b
-    exact mul_comm a b)
+    exact (isMulCommutative_iff (M := Q)).mp (IsCyclic.isMulCommutative (α := Q)))
 
 end HasCyclicOpenNormalBasis
 
@@ -65,22 +64,22 @@ theorem hasCyclicOpenNormalBasis_of_topologicallyGenerates_singleton
   intro U
   let qg : G ⧸ (U : Subgroup G) := QuotientGroup.mk' (U : Subgroup G) g
   have hquot :
-      Generation.TopologicallyGenerates (G := G ⧸ (U : Subgroup G)) ({qg} : Set _) := by
+      Generation.TopologicallyGenerates (G := G ⧸ (U : Subgroup G))
+        ({qg} : Set (G ⧸ (U : Subgroup G))) := by
     have hmap := Generation.topologicallyGenerates_quotient_image
       (G := G) (N := (U : Subgroup G)) (X := ({g} : Set G)) hg
-    simpa [qg] using hmap
+    simpa only [Set.image_singleton] using hmap
   have hdense :
       Dense (((Subgroup.closure ({qg} : Set (G ⧸ (U : Subgroup G))) : Subgroup
         (G ⧸ (U : Subgroup G))) : Set (G ⧸ (U : Subgroup G)))) :=
     (Generation.topologicallyGenerates_iff_dense
-      (G := G ⧸ (U : Subgroup G)) (X := ({qg} : Set _))).1 hquot
+      (G := G ⧸ (U : Subgroup G)) (X := ({qg} : Set (G ⧸ (U : Subgroup G))))).1 hquot
   have htop : Subgroup.zpowers qg = ⊤ := by
     apply SetLike.ext'
     rw [Subgroup.zpowers_eq_closure]
     exact dense_discrete.1 hdense
   have hcyc : IsCyclic (G ⧸ (U : Subgroup G)) :=
     (isCyclic_iff_exists_zpowers_eq_top).2 ⟨qg, htop⟩
-  letI : Finite (G ⧸ (U : Subgroup G)) := openNormalSubgroup_finiteQuotient (G := G) U
   exact ⟨inferInstance, hcyc⟩
 
 end

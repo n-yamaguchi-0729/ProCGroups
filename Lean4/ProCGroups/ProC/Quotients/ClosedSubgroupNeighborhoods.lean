@@ -2,6 +2,8 @@ import ProCGroups.ProC.OpenNormalSubgroups.BasisAtOne
 import ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
 import ProCGroups.ProC.Quotients.LeftQuotientMaps
 
+set_option autoImplicit false
+
 /-!
 # Open-normal neighborhoods of closed subgroups
 

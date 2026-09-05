@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.System.Ring.AddCommGroup
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: prime-power completed group algebra — system — ring — multiplicative
 

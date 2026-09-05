@@ -1,5 +1,7 @@
 import ProCGroups.CrowellExactSequence.Profinite.KernelBoundary
 
+set_option autoImplicit false
+
 /-!
 # Injectivity criteria from the profinite kernel
 

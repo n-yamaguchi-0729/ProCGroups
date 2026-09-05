@@ -2,6 +2,8 @@ import ProCGroups.Completion.UniversalProperty
 import ProCGroups.ProC.InverseLimits.Predicates
 import ProCGroups.ProC.OpenNormalSubgroups.LimitPresentation
 
+set_option autoImplicit false
+
 /-!
 # Pro C Groups / Completion / Finite Quotient Lifts
 
@@ -34,8 +36,7 @@ noncomputable def lift_to_inverseLimit_of_compatible_finite_lifts
           intro i
           calc
             S.projection i (S.inverseLimitLift (fun i => φ i) hcompat 1) = φ i 1 := by
-              simpa [Function.comp] using
-                congrFun (S.projection_comp_inverseLimitLift (fun i => φ i) hcompat i) (1 : A)
+              exact S.projection_inverseLimitLift_apply (fun i => φ i) hcompat i (1 : A)
             _ = 1 := by simp only [map_one]
         map_mul' := by
           intro x y
@@ -43,20 +44,17 @@ noncomputable def lift_to_inverseLimit_of_compatible_finite_lifts
           intro i
           calc
             S.projection i (S.inverseLimitLift (fun i => φ i) hcompat (x * y)) = φ i (x * y) := by
-              simpa [Function.comp] using
-                congrFun (S.projection_comp_inverseLimitLift (fun i => φ i) hcompat i) (x * y)
+              exact S.projection_inverseLimitLift_apply (fun i => φ i) hcompat i (x * y)
             _ = φ i x * φ i y := by simp only [map_mul]
             _ =
                 S.projection i (S.inverseLimitLift (fun i => φ i) hcompat x) *
                   S.projection i (S.inverseLimitLift (fun i => φ i) hcompat y) := by
               have hx :
                   S.projection i (S.inverseLimitLift (fun i => φ i) hcompat x) = φ i x := by
-                simpa [Function.comp] using
-                  congrFun (S.projection_comp_inverseLimitLift (fun i => φ i) hcompat i) x
+                exact S.projection_inverseLimitLift_apply (fun i => φ i) hcompat i x
               have hy :
                   S.projection i (S.inverseLimitLift (fun i => φ i) hcompat y) = φ i y := by
-                simpa [Function.comp] using
-                  congrFun (S.projection_comp_inverseLimitLift (fun i => φ i) hcompat i) y
+                exact S.projection_inverseLimitLift_apply (fun i => φ i) hcompat i y
               rw [← hx, ← hy] }
     continuous_toFun := S.continuous_inverseLimitLift (fun i => φ i) (fun i => (φ
         i).continuous_toFun)
@@ -89,49 +87,29 @@ theorem isProCCompletion_of_finiteQuotientLifts
       existsUnique_lift := ?_ }
   intro H _ _ _ _ _ _ hH ψ
   let hHproC : ProCGroups.ProC.HasOpenNormalBasisInClass C H := hH
-  let S := ProCGroups.ProC.openNormalSubgroupInClassSystem C H
-  letI : Nonempty (ProCGroups.ProC.OpenNormalSubgroupInClass C H) :=
+  let S : ProCGroups.InverseSystems.InverseSystem
+      (I := OrderDual (ProCGroups.ProC.OpenNormalSubgroupInClass C H)) :=
+    ProCGroups.ProC.openNormalSubgroupInClassSystem C H
+  let : Nonempty (ProCGroups.ProC.OpenNormalSubgroupInClass C H) :=
     ProCGroups.ProC.HasOpenNormalBasisInClass.openNormalSubgroupInClass_nonempty hHproC
-  letI : Nonempty (OrderDual (ProCGroups.ProC.OpenNormalSubgroupInClass C H)) := inferInstance
-  letI :
-      ∀ U : OrderDual (ProCGroups.ProC.OpenNormalSubgroupInClass C H),
-        DiscreteTopology
-          (H ⧸ ((OrderDual.ofDual U).1 : Subgroup H)) := fun U =>
-    QuotientGroup.discreteTopology
-      (openNormalSubgroup_isOpen (G := H) (OrderDual.ofDual U).1)
-  letI :
-      ∀ U : OrderDual (ProCGroups.ProC.OpenNormalSubgroupInClass C H),
-        IsTopologicalGroup
-          (H ⧸ ((OrderDual.ofDual U).1 : Subgroup H)) := fun _ =>
-    topologicalGroup_of_discreteTopology
-  letI :
+  let :
       ∀ U : OrderDual (ProCGroups.ProC.OpenNormalSubgroupInClass C H),
         Group (S.X U) := fun U =>
     ProCGroups.ProC.instGroupOpenNormalSubgroupInClassSystemX
       (C := C) (G := H) U
-  letI : ProCGroups.InverseSystems.IsGroupSystem S := by
-    dsimp [S]
-    infer_instance
-  letI :
+  let : ProCGroups.InverseSystems.IsGroupSystem S :=
+    ProCGroups.ProC.instIsGroupSystemOpenNormalSubgroupInClassSystem (C := C) (G := H)
+  let :
       ∀ U : OrderDual (ProCGroups.ProC.OpenNormalSubgroupInClass C H),
         DiscreteTopology (S.X U) := fun U => by
       dsimp [S, ProCGroups.ProC.openNormalSubgroupInClassSystem]
       exact QuotientGroup.discreteTopology
         (openNormalSubgroup_isOpen (G := H) (OrderDual.ofDual U).1)
-  letI :
-      ∀ U : OrderDual (ProCGroups.ProC.OpenNormalSubgroupInClass C H),
-        IsTopologicalGroup (S.X U) := fun _ => by
-      exact topologicalGroup_of_discreteTopology
-  letI :
+  let :
       ∀ U : OrderDual (ProCGroups.ProC.OpenNormalSubgroupInClass C H),
         Finite (S.X U) := fun U => by
       dsimp [S, ProCGroups.ProC.openNormalSubgroupInClassSystem]
       exact C.finite (OrderDual.ofDual U).2
-  letI :
-      ∀ U : OrderDual (ProCGroups.ProC.OpenNormalSubgroupInClass C H),
-        T2Space (S.X U) := fun _ => by infer_instance
-  letI : Group S.inverseLimit := by infer_instance
-  letI : T2Space S.inverseLimit := S.t2Space_inverseLimit
   have hStageClass :
       ∀ U : OrderDual (ProCGroups.ProC.OpenNormalSubgroupInClass C H),
         C (S.X U) := fun U => by

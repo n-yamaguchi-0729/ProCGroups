@@ -3,6 +3,8 @@ import ProCGroups.FoxDifferential.Completed.Comparison.FiniteStage
 import ProCGroups.FoxDifferential.Completed.Continuous.Naturality
 import ProCGroups.FreeProC.FiniteBasis
 
+set_option autoImplicit false
+
 /-!
 # Fox Differential / Completed / Continuous Magnus / Finite Stage Kernel
 
@@ -287,7 +289,7 @@ theorem exists_openNormalSubgroupInClass_eq_on_right_coset_closedGenFoxVector_pr
         (ULift.{u} (Fin r) →
           FoxDifferential.ZCCompletedGroupAlgebraStage C K j) := by
     infer_instance
-  letI :
+  let :
       DiscreteTopology
         (ULift.{u} (Fin r) →
           FoxDifferential.ZCCompletedGroupAlgebraStage C K j) := hdisc

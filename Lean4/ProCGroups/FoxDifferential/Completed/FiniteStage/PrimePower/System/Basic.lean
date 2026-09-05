@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.CoeffMap.BoundaryCycles
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: finite stage — prime power — system — basic
 
@@ -171,7 +173,7 @@ theorem foxAlgebraicStagePrimePowerSourceProjection_transition
   apply RingHom.ext
   intro x
   refine MonoidAlgebra.induction_on
-    (p := fun x =>
+    (motive := fun x =>
       ((foxAlgebraicStagePrimePowerSourceTransition (ℓ := ℓ) (X := X) N hab).comp
           (foxAlgebraicStagePrimePowerSourceProjection (ℓ := ℓ) (X := X) N b)) x =
         ((foxAlgebraicStagePrimePowerSourceProjection (ℓ := ℓ) (X := X) N a).comp
@@ -252,11 +254,11 @@ def foxAlgebraicStagePrimePowerSourceSystem
   map := fun {a b} hab => foxAlgebraicStagePrimePowerSourceTransition (ℓ := ℓ) (X := X) N hab
   continuous_map := by
     intro a b hab
-    letI : TopologicalSpace
+    let : TopologicalSpace
         (foxAlgebraicStagePrimePowerSourceGroupAlgebra (ℓ := ℓ) (X := X) N a) := ⊥
-    letI : TopologicalSpace
+    let : TopologicalSpace
         (foxAlgebraicStagePrimePowerSourceGroupAlgebra (ℓ := ℓ) (X := X) N b) := ⊥
-    letI : DiscreteTopology
+    let : DiscreteTopology
         (foxAlgebraicStagePrimePowerSourceGroupAlgebra (ℓ := ℓ) (X := X) N b) := ⟨rfl⟩
     exact continuous_of_discreteTopology
   map_id := by
@@ -282,11 +284,11 @@ def foxAlgebraicStagePrimePowerTargetSystem
   map := fun {a b} hab => foxAlgebraicStagePrimePowerTargetTransition (ℓ := ℓ) (X := X) N hab
   continuous_map := by
     intro a b hab
-    letI : TopologicalSpace
+    let : TopologicalSpace
         (foxAlgebraicStagePrimePowerTargetGroupAlgebra (ℓ := ℓ) (X := X) N a) := ⊥
-    letI : TopologicalSpace
+    let : TopologicalSpace
         (foxAlgebraicStagePrimePowerTargetGroupAlgebra (ℓ := ℓ) (X := X) N b) := ⊥
-    letI : DiscreteTopology
+    let : DiscreteTopology
         (foxAlgebraicStagePrimePowerTargetGroupAlgebra (ℓ := ℓ) (X := X) N b) := ⟨rfl⟩
     exact continuous_of_discreteTopology
   map_id := by

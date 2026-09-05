@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Common.FoxBoundary
 import ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.FreeGroup.Derivative
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — \(\mathbb{Z}_C\) coefficients — free group — coordinates
 
@@ -244,7 +246,7 @@ def zcFreeFoxCoordinatesLinearEquivDifferential
     (ψ : FreeGroup X →* H) :
     ZCFreeFoxCoordinates C (X := X) (H := H) ≃ₗ[ZCCompletedGroupAlgebra C H]
       ZCCompletedDifferentialModule C ψ := by
-  refine LinearEquiv.ofLinear
+  refine LinearEquiv.ofLinearMap
     (zcFreeFoxCoordinatesLinearMap C ψ)
     (zcDifferentialToFreeFoxCoordinates C ψ)
     ?_ ?_

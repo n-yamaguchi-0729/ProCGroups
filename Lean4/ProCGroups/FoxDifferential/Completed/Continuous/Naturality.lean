@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.Continuous.Free.Rules
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — continuous — naturality
 
@@ -42,8 +44,8 @@ theorem continuous_zcCompletedGroupAlgebraMap (η : H →ₜ* K) :
   let sourceIndex : ZCCompletedGroupAlgebraIndex C H :=
     (i.1, completedGroupAlgebraComapIndexInClass
       (G := H) (H := K) C hC η i.2)
-  letI : TopologicalSpace (ZCCompletedGroupAlgebraStage C H sourceIndex) := ⊥
-  letI : DiscreteTopology (ZCCompletedGroupAlgebraStage C H sourceIndex) := ⟨rfl⟩
+  let : TopologicalSpace (ZCCompletedGroupAlgebraStage C H sourceIndex) := ⊥
+  let : DiscreteTopology (ZCCompletedGroupAlgebraStage C H sourceIndex) := ⟨rfl⟩
   have hstage : Continuous (zcCompletedGroupAlgebraMapStage C hC η i) :=
     continuous_of_discreteTopology
   exact hstage.comp ((continuous_apply sourceIndex).comp continuous_subtype_val)
@@ -82,7 +84,7 @@ theorem zcCompletedGroupAlgebraMap_surjective_of_surjective
     refine ⟨x, ?_⟩
     dsimp [ψ]
     rw [hx, hy₀]
-  letI : Nonempty (ZCCompletedGroupAlgebraIndex C K) :=
+  let : Nonempty (ZCCompletedGroupAlgebraIndex C K) :=
     ⟨(ProCIntegerIndex.terminal (C := C) inferInstance, zcCompletedGroupAlgebraTopIndex C K)⟩
   have hdir : Directed (· ≤ ·)
       (id : ZCCompletedGroupAlgebraIndex C K → ZCCompletedGroupAlgebraIndex C K) := by
@@ -93,7 +95,7 @@ theorem zcCompletedGroupAlgebraMap_surjective_of_surjective
         (C := C) (G := K) hForm i.2 j.2 with
       ⟨U, hiU, hjU⟩
     exact ⟨(n, U), ⟨hin, hiU⟩, ⟨hjn, hjU⟩⟩
-  letI : ∀ i : ZCCompletedGroupAlgebraIndex C K, T2Space (S.X i) := fun i => by
+  let : ∀ i : ZCCompletedGroupAlgebraIndex C K, T2Space (S.X i) := fun i => by
     dsimp [S, zcCompletedGroupAlgebraSystem]
     change @T2Space (ZCCompletedGroupAlgebraStage C K i) ⊥
     exact @DiscreteTopology.toT2Space _ ⊥ ⟨rfl⟩
@@ -184,7 +186,7 @@ def zcCompletedFoxSemidirectMapTarget (η : H →ₜ* K) :
         Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, map_mul,
         zcCompletedGroupAlgebraMap_groupLike, zcCompletedGroupAlgebraProjection_add,
         zcCompletedGroupAlgebraProjection_map, zcCompletedGroupAlgebraProjection_mul,
-        zcCompletedGroupAlgebraProjection_groupLike, MonoidAlgebra.of_apply,
+        zcCompletedGroupAlgebraProjection_groupLike,
         MonoidAlgebra.coeff_add]
     · simp only [ZCCompletedFoxSemidirect.mul_right, map_mul]
 

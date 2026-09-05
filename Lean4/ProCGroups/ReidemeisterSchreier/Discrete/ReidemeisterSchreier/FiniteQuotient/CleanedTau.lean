@@ -1,6 +1,8 @@
 import ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.CleanedSymbols
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.FreeGroupLift
 
+set_option autoImplicit false
+
 
 /-!
 # Reidemeister Schreier / Discrete / Reidemeister Schreier / Finite Quotient / Cleaned Tau

@@ -2,6 +2,8 @@ import ProCGroups.FoxDifferential.Common.CrossedDifferential
 import ProCGroups.FoxDifferential.Common.Jacobian
 import Mathlib.GroupTheory.FreeGroup.Basic
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: common — free crossed differential
 

@@ -2,6 +2,8 @@ import ProCGroups.FoxDifferential.Completed.Continuous.Naturality
 import ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.AugmentationIdeal.Closure
 import ProCGroups.ProC.Kernels
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — \(\mathbb{Z}_C\) coefficients — augmentation ideal — kernel
 
@@ -85,7 +87,7 @@ theorem groupAlgebraMapDomain_targetSection
         (groupAlgebraMapDomainTargetSection (R := R) f hf y) = y := by
   classical
   refine MonoidAlgebra.induction_on
-    (p := fun y : MonoidAlgebra R B =>
+    (motive := fun y : MonoidAlgebra R B =>
       MonoidAlgebra.mapDomainRingHom R f
           (groupAlgebraMapDomainTargetSection (R := R) f hf y) = y)
     y ?single ?add ?smul
@@ -158,7 +160,7 @@ theorem groupAlgebraMapDomain_sub_targetSection_map_mem_kernelAugmentationIdeal
       groupAlgebraMapDomainKernelAugmentationIdeal (R := R) f := by
   classical
   refine MonoidAlgebra.induction_on
-    (p := fun x : MonoidAlgebra R A =>
+    (motive := fun x : MonoidAlgebra R A =>
       x - groupAlgebraMapDomainTargetSection (R := R) f hf
           (MonoidAlgebra.mapDomainRingHom R f x) ∈
         groupAlgebraMapDomainKernelAugmentationIdeal (R := R) f)
@@ -675,12 +677,14 @@ theorem zcCompletedGroupAlgebraOpenImageQuotientMap_stage_eq
                 (zcCompletedGroupAlgebraOpenImageIndexInClass C hForm psi hpsi hfopen i)) ≤ i from
             ⟨le_rfl,
               zcCompletedGroupAlgebraOpenImage_comapIndex_le C hC hForm psi hpsi hfopen i⟩)) := by
-  rw [zcCompletedGroupAlgebraOpenImageQuotientMap, MonoidAlgebra.mapDomainRingHom_comp]
-  rw [zcCompletedGroupAlgebraMapStage]
+  erw [zcCompletedGroupAlgebraOpenImageQuotientMap]
+  erw [MonoidAlgebra.mapDomainRingHom_comp]
+  erw [zcCompletedGroupAlgebraMapStage]
   simp only [zcCompletedGroupAlgebraOpenImageTargetIndex]
   congr 1
-  rw [zcCompletedGroupAlgebraTransition,
-    modNCompletedGroupAlgebraStageCoeffMapInClass_rfl, RingHom.id_comp]
+  erw [zcCompletedGroupAlgebraTransition]
+  erw [modNCompletedGroupAlgebraStageCoeffMapInClass_rfl]
+  erw [RingHom.id_comp]
   rfl
 
 /--
@@ -782,19 +786,19 @@ theorem closure_zcCompletedGAKernelAugmentationIdealMul_eq_ker_map_of_openMap_su
   let K : Set (ZCCompletedGroupAlgebra C G) :=
     (RingHom.ker (zcCompletedGroupAlgebraMap C hC psi) :
       Set (ZCCompletedGroupAlgebra C G))
-  letI : Nonempty (ZCCompletedGroupAlgebraIndex C G) :=
+  let : Nonempty (ZCCompletedGroupAlgebraIndex C G) :=
     ⟨(ProCIntegerIndex.terminal (C := C) inferInstance, zcCompletedGroupAlgebraTopIndex C G)⟩
-  letI : ∀ i : ZCCompletedGroupAlgebraIndex C G, TopologicalSpace (S.X i) := fun _ =>
+  let : ∀ i : ZCCompletedGroupAlgebraIndex C G, TopologicalSpace (S.X i) := fun _ =>
     inferInstance
-  letI : ∀ i : ZCCompletedGroupAlgebraIndex C G, CompactSpace (S.X i) := fun i => by
+  let : ∀ i : ZCCompletedGroupAlgebraIndex C G, CompactSpace (S.X i) := fun i => by
     dsimp [S, zcCompletedGroupAlgebraSystem]
     change @CompactSpace (ZCCompletedGroupAlgebraStage C G i) ⊥
-    letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
-    letI : Finite (ZCCompletedGroupAlgebraStage C G i) :=
+    let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+    let : Finite (ZCCompletedGroupAlgebraStage C G i) :=
       finite_modNCompletedGroupAlgebraStageInClass
         (n := i.1.modulus) (G := G) C i.2
     exact Finite.compactSpace
-  letI : ∀ i : ZCCompletedGroupAlgebraIndex C G, T2Space (S.X i) := fun i => by
+  let : ∀ i : ZCCompletedGroupAlgebraIndex C G, T2Space (S.X i) := fun i => by
     dsimp [S, zcCompletedGroupAlgebraSystem]
     change @T2Space (ZCCompletedGroupAlgebraStage C G i) ⊥
     exact @DiscreteTopology.toT2Space _ ⊥ ⟨rfl⟩

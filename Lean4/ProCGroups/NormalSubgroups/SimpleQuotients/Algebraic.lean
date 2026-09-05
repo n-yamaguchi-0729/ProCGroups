@@ -1,5 +1,7 @@
 import ProCGroups.NormalSubgroups.Framework
 
+set_option autoImplicit false
+
 /-!
 # Algebraic properties of simple quotients
 
@@ -19,7 +21,6 @@ theorem normal_subgroup_eq_kernel_or_top_of_simple_quotient
     {G : Type u} [Group G] (K L : Subgroup G) [K.Normal] (hL : L.Normal)
     [IsSimpleGroup (G ⧸ K)] (hKL : K ≤ L) :
     L = K ∨ L = ⊤ := by
-  haveI : L.Normal := hL
   let qL : Subgroup (G ⧸ K) := Subgroup.map (QuotientGroup.mk' K) L
   have hqLnormal : qL.Normal := inferInstance
   rcases hqLnormal.eq_bot_or_eq_top with hbot | htop

@@ -2,6 +2,8 @@ import ProCGroups.CompletedGroupAlgebra.OpenFiniteQuotientTopology.OpenFiniteCom
 import ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.GroupLike
 import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Basic
 
+set_option autoImplicit false
+
 /-!
 # Completed Group Algebra / Universal Property / Basic
 
@@ -62,7 +64,7 @@ theorem stageProjection_continuous
     letI : TopologicalSpace (CompletedGroupAlgebraStage R G U) :=
       (completedGroupAlgebraSystem R G).topologicalSpace U
     Continuous (h.stageProjection U) := by
-  letI : TopologicalSpace (CompletedGroupAlgebraStage R G U) :=
+  let : TopologicalSpace (CompletedGroupAlgebraStage R G U) :=
     (completedGroupAlgebraSystem R G).topologicalSpace U
   exact h.isInverseLimit.continuous_proj U
 
@@ -617,7 +619,7 @@ theorem toCompletedGroupAlgebraRingHom_mem_span_completedGroupAlgebraOf
     toCompletedGroupAlgebraRingHom R G y ∈
       Submodule.span R (Set.range (completedGroupAlgebraOf R G))
   change P x
-  refine MonoidAlgebra.induction_on (p := P) x ?_ ?_ ?_
+  refine MonoidAlgebra.induction_on (motive := P) x ?_ ?_ ?_
   · intro g
     dsimp [P]
     change completedGroupAlgebraOf R G g ∈
@@ -673,7 +675,7 @@ theorem completedGroupAlgebraContinuousLinearMap_ext_of_basis
       (fun z hz => by
         rcases hz with ⟨g, rfl⟩
         exact hbasis g)
-      (by simp only [Set.mem_setOf_eq, map_zero])
+      (by simp only [Set.mem_ofPred_eq, map_zero])
       (fun z w _ _ hz hw => by
         change F (z + w) = K (z + w)
         rw [map_add, map_add, hz, hw])

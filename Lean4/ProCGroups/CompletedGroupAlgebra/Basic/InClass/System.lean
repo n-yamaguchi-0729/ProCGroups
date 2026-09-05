@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.Basic.InClass.Stage
 
+set_option autoImplicit false
+
 /-!
 # Completed Group Algebra / Basic / Within a Class / System
 
@@ -40,9 +42,9 @@ def completedGroupAlgebraSystemInClass
   map := fun {U V} hUV => completedGroupAlgebraTransitionInClass C R G hUV
   continuous_map := by
     intro U V hUV
-    letI : Finite (CompletedGroupAlgebraQuotientInClass G C V) :=
+    let : Finite (CompletedGroupAlgebraQuotientInClass G C V) :=
       finite_completedGroupAlgebraQuotientInClass G C V
-    letI : Finite (CompletedGroupAlgebraQuotientInClass G C U) :=
+    let : Finite (CompletedGroupAlgebraQuotientInClass G C U) :=
       finite_completedGroupAlgebraQuotientInClass G C U
     exact finiteGroupAlgebra_mapDomainRingHom_continuous R
       (CompletedGroupAlgebraQuotientInClass G C V) (CompletedGroupAlgebraQuotientInClass G C U)

@@ -1,5 +1,7 @@
 import ProCGroups.FreeProC.Basic
 
+set_option autoImplicit false
+
 /-!
 # Pro C Groups / Free pro-C / Finitely Generated
 

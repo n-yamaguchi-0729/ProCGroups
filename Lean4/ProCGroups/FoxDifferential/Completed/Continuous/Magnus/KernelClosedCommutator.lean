@@ -4,6 +4,8 @@ import ProCGroups.ProC.OpenNormalSubgroups.ClosedCommutator
 import ProCGroups.FreeProC.FiniteBasis
 import ProCGroups.FoxDifferential.Completed.Continuous.Magnus.ClosedGeneratedVector
 
+set_option autoImplicit false
+
 /-!
 # Fox Differential / Completed / Continuous Magnus / Kernel Closed Commutator
 
@@ -57,11 +59,11 @@ theorem freeProC_closedGeneratedFoxVector_kernel_le_closedCommutator
   let X : Type u := ULift.{u} (Fin r)
   let ι : X → sourceData.carrier :=
     freeProCChosenULiftFamilyOfBasisCard (C := C) sourceData hbasis
-  letI : IsClosed
+  let : IsClosed
       ((ProfiniteKernelSubgroup psi : Subgroup sourceData.carrier) :
         Set sourceData.carrier) :=
     isClosed_profiniteKernelSubgroup psi
-  letI : CompactSpace (ProfiniteKernelSubgroup psi) :=
+  let : CompactSpace (ProfiniteKernelSubgroup psi) :=
     (show IsClosed
         ((ProfiniteKernelSubgroup psi : Subgroup sourceData.carrier) :
           Set sourceData.carrier) from inferInstance).isClosedEmbedding_subtypeVal.compactSpace
@@ -97,9 +99,9 @@ theorem freeProC_closedGeneratedFoxVector_kernel_le_closedCommutator
       hC.melnikovFormation.formation psi hfopen hpsi V₀
   let Q₀ : Type u := sourceData.carrier ⧸ (V₀.1 : Subgroup sourceData.carrier)
   let K₀ : Type u := H ⧸ (W₀.1 : Subgroup H)
-  letI : Finite Q₀ := C.finite V₀.2
-  letI : Finite K₀ := C.finite W₀.2
-  letI : DiscreteTopology K₀ :=
+  let : Finite Q₀ := C.finite V₀.2
+  let : Finite K₀ := C.finite W₀.2
+  let : DiscreteTopology K₀ :=
     QuotientGroup.discreteTopology W₀.1.toOpenSubgroup.isOpen'
   let qH₀ : H →ₜ* K₀ :=
     OpenNormalSubgroupInClass.quotientProj
@@ -132,7 +134,7 @@ theorem freeProC_closedGeneratedFoxVector_kernel_le_closedCommutator
     exact ⟨QuotientGroup.mk' (V₀.1 : Subgroup sourceData.carrier) g, rfl⟩
   have hCker : C β.ker :=
     hC.hereditary.subgroupClosed β.ker V₀.2
-  letI : Finite β.ker := C.finite hCker
+  let : Finite β.ker := C.finite hCker
   rcases ProCGroups.Completion.ProCIntegerIndex.exists_index_kills_finite_group_of_mem
       (C := C)
       hC.melnikovFormation.formation hC.hereditary hCker with
@@ -140,9 +142,9 @@ theorem freeProC_closedGeneratedFoxVector_kernel_le_closedCommutator
   let ψstage : FreeGroup X →* K₀ := β.comp α₀
   let Nstage : Subgroup (FreeGroup X) := ψstage.ker
   let Qstage : Type u := FoxDifferential.zcFiniteStageTarget X Nstage
-  letI : TopologicalSpace Qstage := ⊥
-  letI : DiscreteTopology Qstage := ⟨rfl⟩
-  letI : IsTopologicalGroup Qstage := inferInstance
+  let : TopologicalSpace Qstage := ⊥
+  let : DiscreteTopology Qstage := ⟨rfl⟩
+  let : IsTopologicalGroup Qstage := inferInstance
   have hψstage_surj : Function.Surjective ψstage := by
     intro k
     rcases hβ_surj k with ⟨q, rfl⟩
@@ -223,8 +225,31 @@ theorem freeProC_closedGeneratedFoxVector_kernel_le_closedCommutator
         (N := (Vfinal.1 : Subgroup sourceData.carrier))
         (M := (V₀.1 : Subgroup sourceData.carrier))
         (f := MonoidHom.id sourceData.carrier) hfinal_le_V₀
-    have hτ := congrArg τ hwfinal
-    simpa [τ, αfinal, α₀] using hτ
+    have hmap (x : sourceData.carrier) :
+        τ (QuotientGroup.mk' (Vfinal.1 : Subgroup sourceData.carrier) x) =
+          QuotientGroup.mk' (V₀.1 : Subgroup sourceData.carrier) x := by
+      change
+        (QuotientGroup.map
+          (N := (Vfinal.1 : Subgroup sourceData.carrier))
+          (M := (V₀.1 : Subgroup sourceData.carrier))
+          (f := MonoidHom.id sourceData.carrier) hfinal_le_V₀)
+            (QuotientGroup.mk' (Vfinal.1 : Subgroup sourceData.carrier) x) =
+          QuotientGroup.mk' (V₀.1 : Subgroup sourceData.carrier) x
+      rfl
+    have hwfinal' :
+        QuotientGroup.mk' (Vfinal.1 : Subgroup sourceData.carrier)
+            ((FreeGroup.lift ι) w) =
+          QuotientGroup.mk' (Vfinal.1 : Subgroup sourceData.carrier) n.1 := by
+      simpa only [αfinal, MonoidHom.comp_apply] using hwfinal
+    change
+      QuotientGroup.mk' (V₀.1 : Subgroup sourceData.carrier) ((FreeGroup.lift ι) w) =
+        QuotientGroup.mk' (V₀.1 : Subgroup sourceData.carrier) n.1
+    calc
+      _ = τ (QuotientGroup.mk' (Vfinal.1 : Subgroup sourceData.carrier)
+          ((FreeGroup.lift ι) w)) := (hmap _).symm
+      _ = τ (QuotientGroup.mk' (Vfinal.1 : Subgroup sourceData.carrier) n.1) :=
+        congrArg τ hwfinal'
+      _ = _ := hmap _
   have hdiff_final :
       ((FreeGroup.lift ι) w) * n.1⁻¹ ∈
         (Vfinal.1 : Subgroup sourceData.carrier) := by

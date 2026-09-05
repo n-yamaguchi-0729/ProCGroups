@@ -1,4 +1,7 @@
 import ProCGroups.FiniteGeneration.Basic
+import ProCGroups.Topologies.ContinuousMonoidHom
+
+set_option autoImplicit false
 
 /-!
 # Characteristic chains from bounded-index intersections
@@ -102,7 +105,7 @@ theorem continuousMonoidHom_eq_of_eqOn_topologicalGenerators
     f = g := by
   let K : Subgroup G := {
     carrier := { x | f x = g x }
-    one_mem' := by simp only [mem_setOf_eq, map_one]
+    one_mem' := by simp only [mem_ofPred_eq, map_one]
     mul_mem' := by
       intro a b ha hb
       change f (a * b) = g (a * b)
@@ -153,9 +156,7 @@ noncomputable def openSubgroupIndexEquiv
     (G ⧸ H) ≃ Fin n := by
   classical
   letI : Finite (G ⧸ H) := hHfinite
-  letI : Fintype (G ⧸ H) := Fintype.ofFinite (G ⧸ H)
-  refine Finite.equivFinOfCardEq ?_
-  simpa [Nat.card_eq_fintype_card] using hn
+  exact Finite.equivFinOfCardEq hn
 
 /-- The coset action of `G` on the `n` cosets of an index-`n` subgroup, transported to `Fin n`. -/
 noncomputable def openSubgroupIndexAction
@@ -210,22 +211,15 @@ noncomputable def openSubgroupIndexContinuousHom
         simp only [Equiv.permCongr_apply, Equiv.Perm.coe_one, id_eq, Equiv.apply_symm_apply]
       rw [← hperm_one]
       exact e.permCongr.injective.eq_iff
-    letI : Finite (G ⧸ H) := Subgroup.quotient_finite_of_isOpen H hH
-    letI : H.FiniteIndex := Subgroup.finiteIndex_of_finite_quotient (H := H)
+    have : Finite (G ⧸ H) := hHfinite
+    have : H.FiniteIndex := Subgroup.finiteIndex_of_finite_quotient (H := H)
     have hHclosed : IsClosed ((H : Subgroup G) : Set G) :=
       Subgroup.isClosed_of_isOpen H hH
-    letI : H.normalCore.FiniteIndex := Subgroup.finiteIndex_normalCore (H := H)
     have hopenCore : IsOpen (((H.normalCore : Subgroup G) : Set G)) :=
       H.normalCore.isOpen_of_isClosed_of_finiteIndex (H.normalCore_isClosed hHclosed)
     simpa [hker, Subgroup.normalCore_eq_ker (H := H)] using hopenCore
-  have hφcont : Continuous φ := by
-    letI : UniformSpace G := IsTopologicalGroup.rightUniformSpace G
-    letI : UniformSpace (Equiv.Perm (Fin n)) :=
-      IsTopologicalGroup.rightUniformSpace (Equiv.Perm (Fin n))
-    have hφuc :
-        UniformContinuous φ :=
-      (IsUniformGroup.uniformContinuous_iff_isOpen_ker (f := φ)).2 hφker
-    exact hφuc.continuous
+  have hφcont : Continuous φ :=
+    ProCGroups.MonoidHom.continuous_of_isOpen_ker_to_discrete φ hφker
   exact
     { toMonoidHom := φ
       continuous_toFun := hφcont }
@@ -262,17 +256,13 @@ theorem hasFiniteOpenSubgroupsOfIndex_of_topologicallyFinitelyGenerated
   classical
   let S : Type u :=
     { H : Subgroup G // IsOpen (H : Set G) ∧ Finite (G ⧸ H) ∧ Nat.card (G ⧸ H) = n }
-  letI : TopologicalSpace (Equiv.Perm (Fin n)) := ⊥
-  letI : DiscreteTopology (Equiv.Perm (Fin n)) := ⟨rfl⟩
-  letI : IsTopologicalGroup (Equiv.Perm (Fin n)) := by infer_instance
-  letI : Finite (Equiv.Perm (Fin n)) := by infer_instance
   let code : S → ContinuousMonoidHom G (Equiv.Perm (Fin n)) × Fin n := fun H =>
     let φ := openSubgroupIndexAction (G := G) H.1 H.2.2.1 H.2.2.2
     let e := openSubgroupIndexEquiv (G := G) H.1 H.2.2.1 H.2.2.2
     let hφker :
         IsOpen ((φ.ker : Subgroup G) : Set G) := by
-      letI : Finite (G ⧸ H.1) := H.2.2.1
-      letI : H.1.FiniteIndex := Subgroup.finiteIndex_of_finite_quotient (H := H.1)
+      have : Finite (G ⧸ H.1) := H.2.2.1
+      have : H.1.FiniteIndex := Subgroup.finiteIndex_of_finite_quotient (H := H.1)
       have hHclosed : IsClosed ((H.1 : Subgroup G) : Set G) :=
         Subgroup.isClosed_of_isOpen H.1 H.2.1
       have hker :
@@ -285,27 +275,17 @@ theorem hasFiniteOpenSubgroupsOfIndex_of_topologicallyFinitelyGenerated
           simp only [Equiv.permCongr_apply, Equiv.Perm.coe_one, id_eq, Equiv.apply_symm_apply]
         rw [← hperm_one]
         exact e.permCongr.injective.eq_iff
-      letI : H.1.normalCore.FiniteIndex := Subgroup.finiteIndex_normalCore (H := H.1)
       have hopenCore : IsOpen (((H.1).normalCore : Subgroup G) : Set G) :=
         (H.1).normalCore.isOpen_of_isClosed_of_finiteIndex ((H.1).normalCore_isClosed hHclosed)
       simpa [hker, Subgroup.normalCore_eq_ker (H := H.1)] using hopenCore
-    let hφcont :
-        Continuous φ := by
-      letI : UniformSpace G := IsTopologicalGroup.rightUniformSpace G
-      letI : UniformSpace (Equiv.Perm (Fin n)) :=
-        IsTopologicalGroup.rightUniformSpace (Equiv.Perm (Fin n))
-      have hφuc :
-          UniformContinuous φ :=
-        (IsUniformGroup.uniformContinuous_iff_isOpen_ker (f := φ)).2 hφker
-      exact hφuc.continuous
+    have hφcont : Continuous φ :=
+      ProCGroups.MonoidHom.continuous_of_isOpen_ker_to_discrete φ hφker
     ({ toMonoidHom := φ
        continuous_toFun := hφcont },
       openSubgroupIndexBasepoint (G := G) H.1 H.2.2.1 H.2.2.2)
   have hhomfinite : Finite (ContinuousMonoidHom G (Equiv.Perm (Fin n))) :=
     finite_continuousMonoidHom_to_finite_of_topologicallyFinitelyGenerated
       (G := G) hG
-  let _ : Finite (ContinuousMonoidHom G (Equiv.Perm (Fin n)) × Fin n) := by
-    infer_instance
   have hcode : Function.Injective code := by
     intro H K hHK
     apply Subtype.ext
@@ -324,9 +304,9 @@ theorem hasFiniteOpenSubgroupsOfIndex_of_topologicallyFinitelyGenerated
         { H : Subgroup G //
           IsOpen (H : Set G) ∧ Finite (G ⧸ H) ∧ Nat.card (G ⧸ H) = n } := by
     simpa [S] using (Finite.of_injective code hcode)
-  exact @Set.toFinite (Subgroup G)
-    { H : Subgroup G | IsOpen (H : Set G) ∧ Finite (G ⧸ H) ∧ Nat.card (G ⧸ H) = n }
-    hSfinite
+  exact (Set.finite_coe_iff
+    (s := { H : Subgroup G |
+      IsOpen (H : Set G) ∧ Finite (G ⧸ H) ∧ Nat.card (G ⧸ H) = n })).mp hSfinite
 
 /-- Bounding the index by \(n\) still yields only finitely many open subgroups. -/
 theorem finite_openSubgroupsOfIndexLE_of_hasFiniteOpenSubgroupsOfIndex
@@ -502,7 +482,7 @@ theorem Finite.surjOn_of_injOn_mapsTo {α : Type*} {s : Set α}
     intro x y hxy
     apply Subtype.ext
     exact hinj x.2 y.2 (congrArg Subtype.val hxy)
-  haveI := hs.to_subtype
+  have : Finite s := hs.to_subtype
   have hg_surj : Function.Surjective g := Finite.surjective_of_injective hg_inj
   intro y hy
   rcases hg_surj ⟨y, hy⟩ with ⟨x, hx⟩

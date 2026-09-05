@@ -2,6 +2,8 @@ import ProCGroups.WreathProducts
 import ProCGroups.ReidemeisterSchreier.Discrete.OpenSubgroups.FreeBasis
 import ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.FinitePermutationTargets
 
+set_option autoImplicit false
+
 /-!
 # Dense abstract free models of open subgroups
 
@@ -26,7 +28,7 @@ universe u v w
 
 section RightQuotientTransport
 
-open FreeGroup
+open _root_.ReidemeisterSchreier.FreeGroup
 
 variable {F : Type u} [Group F]
 variable {P : Type v} [Group P]
@@ -44,7 +46,7 @@ theorem rightRel_map_of_comap
   have hb : π (βF b) = β b := by
     simpa [MonoidHom.comp_apply] using congrArg (fun f : FreeGroup Y →* P => f b) hβ
   rw [QuotientGroup.rightRel_apply] at hab ⊢
-  simpa [MonoidHom.map_mul, MonoidHom.map_inv, ha, hb] using hab
+  simpa only [Subgroup.mem_comap, map_mul, map_inv, ha, hb] using hab
 
 /-- Transport right-coset classes along a homomorphism compatible with two subgroup preimages. -/
 noncomputable def mapRightQuotientOfComap :
@@ -75,8 +77,9 @@ theorem surjective_mapRightQuotientOfComap
         simpa [MonoidHom.comp_apply] using congrArg (fun f : FreeGroup Y →* P => f w) hβ
       _ = π p := hw
   rw [QuotientGroup.rightRel_apply]
-  simp only [Subgroup.comap, Subgroup.mem_mk, Submonoid.mem_mk, Subsemigroup.mem_mk, mem_preimage,
-  MonoidHom.map_mul, MonoidHom.map_inv, hw', mul_inv_cancel, SetLike.mem_coe, one_mem]
+  apply (Subgroup.mem_comap (K := K) (f := π)).2
+  rw [map_mul, map_inv, hw', mul_inv_cancel]
+  exact K.one_mem
 
 /-- The induced map on right-quotient classes is injective under the comap compatibility equation. -/
 theorem injective_mapRightQuotientOfComap
@@ -216,7 +219,7 @@ end RightQuotientTransport
 
 section DenseAbstractFreeModel
 
-open FreeGroup
+open _root_.ReidemeisterSchreier.FreeGroup
 
 variable {X : Type u}
 variable {F : Type u} [Group F] [TopologicalSpace F] [IsTopologicalGroup F]
@@ -362,9 +365,8 @@ theorem exists_freeBasis_comap_freeGroupLift_of_openSubgroup_of_rankTransform
   let q0 : F ⧸ (H : Subgroup F) := QuotientGroup.mk (s := (H : Subgroup F)) (1 : F)
   let K : Subgroup P := MulAction.stabilizer P q0
   let β : FreeGroup X →* P := ρ.toMonoidHom.comp βF
-  letI : TopologicalSpace (FreeGroup X) := ⊥
-  letI : DiscreteTopology (FreeGroup X) := ⟨rfl⟩
-  letI : IsTopologicalGroup (FreeGroup X) := by infer_instance
+  let : TopologicalSpace (FreeGroup X) := ⊥
+  let : DiscreteTopology (FreeGroup X) := ⟨rfl⟩
   have hcomap : Subgroup.comap ρ.toMonoidHom K = (H : Subgroup F) := by
     ext g
     constructor
@@ -409,9 +411,7 @@ theorem exists_freeBasis_comap_freeGroupLift_of_openSubgroup_of_rankTransform
       Quotient (QuotientGroup.rightRel L) ≃
         Quotient (QuotientGroup.rightRel H0) := by
     simpa [hcomapL] using eQ
-  letI : Finite (F ⧸ (H : Subgroup F)) :=
-    ProCGroups.openSubgroup_finiteQuotient (G := F) H
-  letI : Finite (Quotient (QuotientGroup.rightRel (H : Subgroup F))) := by
+  let : Finite (Quotient (QuotientGroup.rightRel (H : Subgroup F))) := by
     exact
       Finite.of_equiv (F ⧸ (H : Subgroup F))
         (QuotientGroup.quotientRightRelEquivQuotientLeftRel (H : Subgroup F)).symm
@@ -420,15 +420,15 @@ theorem exists_freeBasis_comap_freeGroupLift_of_openSubgroup_of_rankTransform
         Quotient (QuotientGroup.rightRel H0) := by
     simpa using
       congrArg (fun S : Subgroup F => Quotient (QuotientGroup.rightRel S)) hH0.symm
-  letI : Finite (Quotient (QuotientGroup.rightRel H0)) := by
+  let : Finite (Quotient (QuotientGroup.rightRel H0)) := by
     exact Eq.ndrec
       (motive := fun T => Finite T)
       (inferInstance : Finite (Quotient (QuotientGroup.rightRel (H : Subgroup F))))
       hRightEq
-  letI : Finite (Quotient (QuotientGroup.rightRel L)) :=
+  let : Finite (Quotient (QuotientGroup.rightRel L)) :=
     Finite.of_equiv
       (Quotient (QuotientGroup.rightRel H0)) eQ0.symm
-  letI : Finite (FreeGroup X ⧸ L) :=
+  let : Finite (FreeGroup X ⧸ L) :=
     Finite.of_equiv
       (Quotient (QuotientGroup.rightRel L))
       (QuotientGroup.quotientRightRelEquivQuotientLeftRel L)

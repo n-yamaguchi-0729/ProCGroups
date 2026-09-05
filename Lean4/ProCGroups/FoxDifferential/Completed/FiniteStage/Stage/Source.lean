@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Naturality
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — finite stage — stage — source
 
@@ -193,7 +195,7 @@ theorem foxAlgebraicStageSourceGroupAlgebraDerivative_groupAlgebra_fundamental_f
               (foxCommutatorPowerSubgroup (F := FreeGroup X) N n)
               (FreeGroup.of i)) - 1)
   change P x
-  refine MonoidAlgebra.induction_on (p := P) x ?_ ?_ ?_
+  refine MonoidAlgebra.induction_on (motive := P) x ?_ ?_ ?_
   · intro q
     dsimp [P]
     rw [foxCommutatorPowerSourceGroupAlgebraAugmentation_of_quotient]
@@ -402,7 +404,7 @@ theorem foxAlgebraicStageSourceGroupAlgebraDerivative_map
         (foxAlgebraicStageSourceGroupAlgebraDerivative (X := X) N n i y) =
       foxAlgebraicStageGroupAlgebraDerivative (X := X) N n i y
   change P x
-  refine MonoidAlgebra.induction_on (p := P) x ?_ ?_ ?_
+  refine MonoidAlgebra.induction_on (motive := P) x ?_ ?_ ?_
   · intro q
     dsimp [P]
     exact

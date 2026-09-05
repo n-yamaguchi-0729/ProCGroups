@@ -1,5 +1,7 @@
 import ProCGroups.NormalSubgroups.SimpleQuotients.Algebraic
 
+set_option autoImplicit false
+
 /-!
 # Finite intersections above a simple-quotient kernel
 
@@ -44,9 +46,8 @@ theorem finite_sInf_sup_eq_top_of_noncomm_simple_quotient
       have hStop' : ∀ M ∈ S, M ⊔ K = ⊤ := by
         intro M hM
         exact hStop M (by simp only [Set.mem_insert_iff, hM, or_true])
-      haveI : a.Normal := hSnormal a (by simp only [Set.mem_insert_iff, true_or])
+      have : a.Normal := hSnormal a (by simp only [Set.mem_insert_iff, true_or])
       have hInfNormal : (sInf S).Normal := sInf_normal_of_forall_normal hSnormal'
-      haveI : (sInf S).Normal := hInfNormal
       rw [sInf_insert]
       exact inf_sup_eq_top_of_noncomm_simple_quotient K a (sInf S)
         hquotNoncomm (hStop a (by simp only [Set.mem_insert_iff, true_or])) (ih hSnormal' hStop')

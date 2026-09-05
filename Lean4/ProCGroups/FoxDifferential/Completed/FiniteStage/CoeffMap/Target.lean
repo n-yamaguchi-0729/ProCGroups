@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Source
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — finite stage — coeff map — target
 
@@ -85,7 +87,7 @@ theorem foxAlgebraicStageTargetGroupAlgebraCoeffMap_single_apply
     foxAlgebraicStageTargetGroupAlgebraCoeffMap (X := X) N hnm
         (MonoidAlgebra.single q a) =
       MonoidAlgebra.single q (modNCompletedCoeffMap (n := n₀) (m := m₀) hnm a) := by
-  letI : Algebra (ModNCompletedCoeff m₀) (ModNCompletedCoeff n₀) :=
+  let : Algebra (ModNCompletedCoeff m₀) (ModNCompletedCoeff n₀) :=
     ZMod.algebra' (R := ModNCompletedCoeff n₀) (m := n₀) (n := m₀) hnm
   have hcoeff :
       algebraMap (ModNCompletedCoeff m₀) (ModNCompletedCoeff n₀) a =
@@ -121,7 +123,7 @@ theorem foxAlgebraicStageTargetGroupAlgebraCoeffMap_eq_mapRange
   apply RingHom.ext
   intro x
   refine MonoidAlgebra.induction_on
-    (p := fun x =>
+    (motive := fun x =>
       foxAlgebraicStageTargetGroupAlgebraCoeffMap (X := X) N hnm x =
         MonoidAlgebra.mapRingHom
           (foxAlgebraicStageTargetQuotient (X := X) N)
@@ -163,7 +165,7 @@ theorem foxAlgebraicStageTargetGroupAlgebraCoeffMap_rfl
   apply RingHom.ext
   intro x
   refine MonoidAlgebra.induction_on
-    (p := fun x =>
+    (motive := fun x =>
       foxAlgebraicStageTargetGroupAlgebraCoeffMap (X := X) (n₀ := n₀) (m₀ := n₀) N
           dvd_rfl x = x)
     x ?_ ?_ ?_
@@ -191,7 +193,7 @@ theorem foxAlgebraicStageTargetGroupAlgebraCoeffMap_comp
   apply RingHom.ext
   intro x
   refine MonoidAlgebra.induction_on
-    (p := fun x =>
+    (motive := fun x =>
       ((foxAlgebraicStageTargetGroupAlgebraCoeffMap (X := X) N hnm).comp
           (foxAlgebraicStageTargetGroupAlgebraCoeffMap (X := X) N hmk)) x =
         foxAlgebraicStageTargetGroupAlgebraCoeffMap (X := X) N (dvd_trans hnm hmk) x)

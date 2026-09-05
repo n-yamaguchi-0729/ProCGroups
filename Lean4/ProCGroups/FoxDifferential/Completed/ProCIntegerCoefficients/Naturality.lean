@@ -2,6 +2,8 @@ import ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.Augmentation
 import ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.Core
 import ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.FreeGroup.Fundamental
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — \(\mathbb{Z}_C\) coefficients — naturality
 
@@ -261,7 +263,7 @@ theorem zcCompletedGroupAlgebraMapStage_targetSection
         (zcCompletedGroupAlgebraMapStageTargetSection C hC φ hφ i y) = y := by
   classical
   refine MonoidAlgebra.induction_on
-    (p := fun y : ZCCompletedGroupAlgebraStage C K i =>
+    (motive := fun y : ZCCompletedGroupAlgebraStage C K i =>
       zcCompletedGroupAlgebraMapStage C hC φ i
           (zcCompletedGroupAlgebraMapStageTargetSection C hC φ hφ i y) = y)
     y ?single ?add ?smul
@@ -374,7 +376,7 @@ theorem zcCompletedGAMapStage_sub_targetSection_map_mem_relationAugmentationIdea
       zcCompletedGroupAlgebraMapStageRelationAugmentationIdeal C hC φ i := by
   classical
   refine MonoidAlgebra.induction_on
-    (p := fun x :
+    (motive := fun x :
       ZCCompletedGroupAlgebraStage C H
         (i.1, completedGroupAlgebraComapIndexInClass
           (G := H) (H := K) C hC φ i.2) =>
@@ -453,12 +455,12 @@ theorem zcCompletedGroupAlgebraMapStage_compatible
             ⟨hij.1,
               completedGroupAlgebraComapIndexInClass_mono
                 (G := H) (H := K) C hC φ hij.2⟩)) := by
-  letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
-  letI : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
+  let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+  let : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
   apply RingHom.ext
   intro x
   refine MonoidAlgebra.induction_on
-    (p := fun x =>
+    (motive := fun x =>
       ((zcCompletedGroupAlgebraTransition C K hij).comp
           (zcCompletedGroupAlgebraMapStage C hC φ j)) x =
         ((zcCompletedGroupAlgebraMapStage C hC φ i).comp
@@ -496,7 +498,7 @@ theorem zcCompletedGroupAlgebraMapStage_compatible
                 (completedGroupAlgebraComapIndexInClass (G := H) (H := K) C hC φ j.2))
               (completedGroupAlgebraComapIndexInClass_mono
                 (G := H) (H := K) C hC φ hij.2)) q))
-    rw [zcCompletedGroupAlgebraMapStage_of]
+    erw [zcCompletedGroupAlgebraMapStage_of]
     exact congrArg (MonoidAlgebra.of (ModNCompletedCoeff i.1.modulus)
       (CompletedGroupAlgebraQuotientInClass K C i.2))
       (congrFun
@@ -659,8 +661,8 @@ theorem zcCompletedGroupAlgebraMap_groupLike
       zcCompletedGroupAlgebraProjection C K i (zcGroupLike C K (φ h))
   rw [zcCompletedGroupAlgebraProjection_map,
     zcCompletedGroupAlgebraProjection_groupLike,
-    zcCompletedGroupAlgebraProjection_groupLike,
-    zcCompletedGroupAlgebraMapStage_of]
+    zcCompletedGroupAlgebraProjection_groupLike]
+  erw [zcCompletedGroupAlgebraMapStage_of]
   exact congrArg
     (MonoidAlgebra.of (ModNCompletedCoeff i.1.modulus)
       (CompletedGroupAlgebraQuotientInClass K C i.2))
@@ -693,49 +695,16 @@ theorem zcCompletedGroupAlgebraMapStage_augmentation
         (zcCompletedGroupAlgebraMapStage C hC φ i) =
       modNCompletedGroupAlgebraStageAugmentationInClass i.1.modulus H C
         (completedGroupAlgebraComapIndexInClass (G := H) (H := K) C hC φ i.2) := by
-  letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
-  apply RingHom.ext
-  intro y
-  let U := i.2
-  let V := completedGroupAlgebraComapIndexInClass (G := H) (H := K) C hC φ U
-  let P := fun y =>
-    ((modNCompletedGroupAlgebraStageAugmentationInClass i.1.modulus K C U).comp
-        (zcCompletedGroupAlgebraMapStage C hC φ i)) y =
-      (modNCompletedGroupAlgebraStageAugmentationInClass i.1.modulus H C V) y
-  change P y
-  refine MonoidAlgebra.induction_on (p := P) y ?_ ?_ ?_
+  let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+  apply MonoidAlgebra.ringHom_ext
+  · intro a
+    rw [RingHom.comp_apply, zcCompletedGroupAlgebraMapStage_single,
+      modNCompletedGroupAlgebraStageAugmentationInClass_single,
+      modNCompletedGroupAlgebraStageAugmentationInClass_single]
   · intro q
-    dsimp [P]
-    rw [zcCompletedGroupAlgebraMapStage_of]
-    simp only [U, V, modNCompletedGroupAlgebraStageAugmentationInClass_of]
-  · intro a b ha hb
-    dsimp [P] at ha hb ⊢
-    rw [RingHom.map_add, map_add, ha, hb, map_add]
-  · intro a y hy
-    dsimp [P] at hy ⊢
-    rw [Algebra.smul_def, RingHom.map_mul, RingHom.map_mul, hy]
-    have hcoeff :
-        ((modNCompletedGroupAlgebraStageAugmentationInClass i.1.modulus K C U).comp
-            (zcCompletedGroupAlgebraMapStage C hC φ i))
-            (algebraMap (ModNCompletedCoeff i.1.modulus)
-              (ZCCompletedGroupAlgebraStage C H (i.1, V)) a) =
-          (modNCompletedGroupAlgebraStageAugmentationInClass i.1.modulus H C V)
-            (algebraMap (ModNCompletedCoeff i.1.modulus)
-              (ZCCompletedGroupAlgebraStage C H (i.1, V)) a) := by
-      rcases ZMod.intCast_surjective a with ⟨t, rfl⟩
-      simp only [modNCompletedGroupAlgebraStageAugmentationInClass,
-          zcCompletedGroupAlgebraMapStage, map_intCast, U,
-  V]
-    have hcoeff' :
-        (modNCompletedGroupAlgebraStageAugmentationInClass i.1.modulus K C U)
-            ((zcCompletedGroupAlgebraMapStage C hC φ i)
-              (algebraMap (ModNCompletedCoeff i.1.modulus)
-                (ZCCompletedGroupAlgebraStage C H (i.1, V)) a)) =
-          (modNCompletedGroupAlgebraStageAugmentationInClass i.1.modulus H C V)
-            (algebraMap (ModNCompletedCoeff i.1.modulus)
-              (ZCCompletedGroupAlgebraStage C H (i.1, V)) a) := by
-      simpa [RingHom.comp_apply] using hcoeff
-    rw [hcoeff', map_mul]
+    rw [RingHom.comp_apply, zcCompletedGroupAlgebraMapStage_single,
+      modNCompletedGroupAlgebraStageAugmentationInClass_single,
+      modNCompletedGroupAlgebraStageAugmentationInClass_single]
 
 /-- Completed augmentation is natural for target maps. -/
 @[simp 900]
@@ -798,13 +767,13 @@ theorem zcCompletedGroupAlgebraMap_id :
   change zcCompletedGroupAlgebraMapStage C hC (ContinuousMonoidHom.id H) i (x.1 i) =
     x.1 i
   refine MonoidAlgebra.induction_on
-    (p := fun y => zcCompletedGroupAlgebraMapStage C hC (ContinuousMonoidHom.id H) i y = y)
+    (motive := fun y => zcCompletedGroupAlgebraMapStage C hC (ContinuousMonoidHom.id H) i y = y)
     (x.1 i) ?_ ?_ ?_
   · intro q
     rcases QuotientGroup.mk'_surjective
         ((((OrderDual.ofDual i.2).1 : OpenNormalSubgroup H) : Subgroup H)) q with
       ⟨g, rfl⟩
-    rw [zcCompletedGroupAlgebraMapStage_of]
+    erw [zcCompletedGroupAlgebraMapStage_of]
     rfl
   · intro a b ha hb
     rw [map_add, ha, hb]
@@ -944,7 +913,7 @@ theorem zcCompletedDifferentialModuleTargetMap_universal
     zcCompletedDifferentialModuleTargetMap C hC ψ φ
         (zcUniversalDifferential C ψ g) =
       zcUniversalDifferential C (φ.toMonoidHom.comp ψ) g := by
-  letI : Module (ZCCompletedGroupAlgebra C H)
+  let : Module (ZCCompletedGroupAlgebra C H)
       (ZCCompletedDifferentialModule C (φ.toMonoidHom.comp ψ)) :=
     Module.compHom _ (zcCompletedGroupAlgebraMap C hC φ)
   exact
@@ -960,7 +929,7 @@ theorem zcUniversalDifferential_eq_zero_of_target
     (ψ : G →* H) (φ : H →ₜ* K) {g : G}
     (hg : zcUniversalDifferential C ψ g = 0) :
     zcUniversalDifferential C (φ.toMonoidHom.comp ψ) g = 0 := by
-  letI : Module (ZCCompletedGroupAlgebra C H)
+  let : Module (ZCCompletedGroupAlgebra C H)
       (ZCCompletedDifferentialModule C (φ.toMonoidHom.comp ψ)) :=
     Module.compHom _ (zcCompletedGroupAlgebraMap C hC φ)
   rw [← zcCompletedDifferentialModuleTargetMap_universal C hC ψ φ g, hg, map_zero]

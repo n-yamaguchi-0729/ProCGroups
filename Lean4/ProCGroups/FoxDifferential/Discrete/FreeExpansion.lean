@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Discrete.FoxCalculus.Universal
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: discrete — free expansion
 

@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.ProfiniteModules.Basic.OpenSubmodule
 
+set_option autoImplicit false
+
 /-!
 # Finite quotients of profinite modules
 
@@ -23,7 +25,6 @@ theorem profiniteModule_hasFiniteIndexSubmoduleBasis_of_linearTopology
     [TopologicalSpace M] [Module Λ M] [IsLinearTopology Λ M]
     [IsTopologicalAddGroup M] [CompactSpace M] :
     HasFiniteIndexSubmoduleBasis Λ M := by
-  letI : ContinuousAdd M := inferInstance
   intro U hU
   rcases ((IsLinearTopology.hasBasis_open_submodule Λ).mem_iff.mp hU) with
     ⟨N, hNopen, hNU⟩
@@ -40,7 +41,7 @@ theorem profiniteModule_hasFiniteIndexSubmoduleBasis
     [IsTopologicalAddGroup M] [ContinuousSMul Λ M] [CompactSpace M] [T2Space M]
     [TotallyDisconnectedSpace M] :
     HasFiniteIndexSubmoduleBasis Λ M := by
-  letI : IsLinearTopology Λ M := profiniteModule_isLinearTopology Λ M
+  let : IsLinearTopology Λ M := profiniteModule_isLinearTopology Λ M
   exact profiniteModule_hasFiniteIndexSubmoduleBasis_of_linearTopology Λ M
 
 /-- Open submodule quotients separate points of a profinite module. -/
@@ -84,7 +85,6 @@ theorem continuous_of_forall_openSubmodule_quotient_continuous
     (hF : ∀ W : Submodule R N, IsOpen (W : Set N) →
       Continuous fun y : Y => Submodule.mkQ W (F y)) :
     Continuous F := by
-  letI : ContinuousAdd N := inferInstance
   rw [continuous_iff_continuousAt]
   intro y
   rw [continuousAt_def]
@@ -94,12 +94,12 @@ theorem continuous_of_forall_openSubmodule_quotient_continuous
   have hU0 : U0 ∈ 𝓝 (0 : N) := by
     apply IsOpen.mem_nhds
     · exact hOopen.preimage (continuous_const.add continuous_id)
-    · simp only [Set.mem_setOf_eq, add_zero, hFO, U0]
+    · simp only [Set.mem_ofPred_eq, add_zero, hFO, U0]
   rcases profiniteModule_hasFiniteIndexSubmoduleBasis R N U0 hU0 with
     ⟨W, hWopen, hWU, _hfinite⟩
   let hdisc : IsDiscreteModule R (N ⧸ W) :=
     quotient_openSubmodule_isDiscreteModule R N W hWopen
-  letI : DiscreteTopology (N ⧸ W) := hdisc.2
+  let : DiscreteTopology (N ⧸ W) := hdisc.2
   let q : Y → N ⧸ W := fun z => Submodule.mkQ W (F z)
   let B : Set (N ⧸ W) := {Submodule.mkQ W (F y)}
   have hqcont : Continuous q := hF W hWopen

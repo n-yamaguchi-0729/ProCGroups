@@ -1,5 +1,7 @@
 import ProCGroups.Profinite.Basic
 
+set_option autoImplicit false
+
 /-!
 # Countable descending open-normal chains
 

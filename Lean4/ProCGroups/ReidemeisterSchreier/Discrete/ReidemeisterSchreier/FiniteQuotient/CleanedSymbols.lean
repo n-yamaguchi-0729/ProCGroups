@@ -1,6 +1,8 @@
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.KernelQuotient
 import ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.Tau
 
+set_option autoImplicit false
+
 
 /-!
 # Reidemeister Schreier / Discrete / Reidemeister Schreier / Finite Quotient / Cleaned Symbols
@@ -67,6 +69,14 @@ theorem trivialGeneratorRelatorsOfPredicate_isDegenerateSchreierSymbol
     [DecidablePred D.IsDegenerateSchreierSymbol] :
     Presented.trivialGeneratorRelatorsOfPredicate D.IsDegenerateSchreierSymbol =
       D.degenerateSchreierRelators := by
+  have hInverse (z : D.DegenerateSchreierSymbol) :
+      (FreeGroup.freeGroupCongr
+          (Presented.GeneratorPartition.equiv D.IsDegenerateSchreierSymbol)).symm
+          (FreeGroup.of (Sum.inr z)) = FreeGroup.of z.1 := by
+    rw [FreeGroup.freeGroupCongr_symm, FreeGroup.freeGroupCongr_apply, FreeGroup.map.of]
+    exact congrArg
+      (FreeGroup.of : FiniteSchreierSymbol X Q → FreeGroup (FiniteSchreierSymbol X Q))
+      (Presented.GeneratorPartition.equiv_symm_inr D.IsDegenerateSchreierSymbol z)
   ext q
   constructor
   · intro hq
@@ -75,14 +85,12 @@ theorem trivialGeneratorRelatorsOfPredicate_isDegenerateSchreierSymbol
     rcases y with ⟨⟨s, x⟩, hy⟩
     refine ⟨s, x, hy, ?_⟩
     rw [← hpq]
-    simp only [FreeGroup.freeGroupCongr, MulEquiv.symm_mk, MulEquiv.coe_mk, Equiv.coe_fn_symm_mk,
-  FreeGroup.map.of, Presented.GeneratorPartition.equiv_symm_inr]
+    exact hInverse (⟨(s, x), hy⟩ : D.DegenerateSchreierSymbol)
   · rintro ⟨s, x, hdeg, rfl⟩
     refine ⟨FreeGroup.of (Sum.inr
       (⟨(s, x), hdeg⟩ : D.DegenerateSchreierSymbol)), ?_, ?_⟩
     · exact ⟨⟨(s, x), hdeg⟩, rfl⟩
-    · simp only [FreeGroup.freeGroupCongr, MulEquiv.symm_mk, MulEquiv.coe_mk, Equiv.coe_fn_symm_mk,
-  FreeGroup.map.of, Presented.GeneratorPartition.equiv_symm_inr]
+    · exact hInverse (⟨(s, x), hdeg⟩ : D.DegenerateSchreierSymbol)
 
 /--
 Adding trivial-generator relators for degenerate Schreier symbols gives the presentation
@@ -269,10 +277,8 @@ theorem nondegenerateSymbolEvalHom_deleteDegenerateSchreierGeneratorHom
     · simp only [MonoidHom.coe_comp, Function.comp_apply,
         D.deleteDegenerateSchreierGeneratorHom_of_not_degenerate hz,
         symbolEvalHom_of, F]
-      change D.nondegenerateSymbolEvalHom (FreeGroup.of ⟨z, hz⟩) =
-        D.symbolEval z
-      rw [nondegenerateSymbolEvalHom, FreeGroup.lift_apply_of]
-      rfl
+      exact FreeGroup.lift_apply_of (f := D.nondegenerateSymbolEval)
+        (x := (⟨z, hz⟩ : D.NondegenerateSchreierSymbol))
   exact congrArg (fun f : FreeGroup (FiniteSchreierSymbol X Q) →* FreeGroup X => f w) hF
 
 /-- A single finite Schreier generator after deleting degenerate generators. -/
@@ -320,10 +326,10 @@ theorem deleteDegenerateSchreierGeneratorHom_of
     D.deleteDegenerateSchreierGeneratorHom (FreeGroup.of z) =
       D.cleanedSchreierSymbolWord z := by
   by_cases hz : D.IsDegenerateSchreierSymbol z
-  · simp only [hz, deleteDegenerateSchreierGeneratorHom_of_degenerate,
-      cleanedSchreierSymbolWord_of_degenerate]
-  · simp only [hz, not_false_eq_true, deleteDegenerateSchreierGeneratorHom_of_not_degenerate,
-  cleanedSchreierSymbolWord_of_not_degenerate]
+  · exact (D.deleteDegenerateSchreierGeneratorHom_of_degenerate hz).trans
+      (D.cleanedSchreierSymbolWord_of_degenerate hz).symm
+  · exact (D.deleteDegenerateSchreierGeneratorHom_of_not_degenerate hz).trans
+      (D.cleanedSchreierSymbolWord_of_not_degenerate hz).symm
 
 
 end FiniteQuotientSchreierData

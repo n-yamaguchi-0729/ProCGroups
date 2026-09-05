@@ -1,5 +1,7 @@
 import ProCGroups.ProC.InverseLimits.Limits
 
+set_option autoImplicit false
+
 /-!
 # Closed subgroups, ranges, and extensions of pro-\(C\) groups
 
@@ -75,7 +77,7 @@ theorem of_isClosed_subgroup
     (hG : HasOpenNormalBasisInClass C G) (H : Subgroup G) (hH : IsClosed (H : Set G)) :
     HasOpenNormalBasisInClass C H := by
   let HC : ClosedSubgroup G := ⟨H, hH⟩
-  simpa using of_closedSubgroup (C := C) hIso hSub hG HC
+  exact of_closedSubgroup (C := C) hIso hSub hG HC
 
 omit [IsTopologicalGroup G] in
 /-- Closed-subgroup permanence for pro-\(C\) groups from a full formation package. -/
@@ -107,15 +109,11 @@ theorem range
     HasOpenNormalBasisInClass C f.toMonoidHom.range := by
   let K : Subgroup G := f.toMonoidHom.ker
   have hKclosed : IsClosed (K : Set G) := by
-    dsimp [K]
     exact ContinuousMonoidHom.isClosed_ker f
-  letI : K.Normal := by
-    dsimp [K]
-    infer_instance
   have hQuotG : HasOpenNormalBasisInClass C (G ⧸ K) :=
     quotient_closedNormalSubgroup (C := C) hIso hQuot hG K hKclosed
   have e : (G ⧸ K) ≃ₜ* f.toMonoidHom.range := by
-    simpa [K] using ContinuousMonoidHom.quotientKerContinuousMulEquivRange f
+    exact ContinuousMonoidHom.quotientKerContinuousMulEquivRange f
   exact HasOpenNormalBasisInClass.ofContinuousMulEquiv (C := C) (G := G ⧸ K) hQuotG e
 
 end HasOpenNormalBasisInClass
@@ -132,9 +130,10 @@ theorem HasOpenNormalBasisInClass.of_surjective
   let R : Subgroup H := f.toMonoidHom.range
   have hR : HasOpenNormalBasisInClass C R :=
     HasOpenNormalBasisInClass.range hForm.isomClosed hForm.quotientClosed hG f
-  letI : CompactSpace R :=
+  let : CompactSpace R :=
     isCompact_iff_compactSpace.mp (by
-      simpa [R] using isCompact_range f.continuous_toFun)
+      change IsCompact (Set.range (f : G → H))
+      exact isCompact_range f.continuous_toFun)
   let e : R ≃ₜ* H :=
     ContinuousMulEquiv.ofBijectiveCompactToT2 (Subgroup.subtype R)
       continuous_subtype_val
@@ -163,12 +162,9 @@ theorem extension
     (K : Subgroup E) [K.Normal] (hKclosed : IsClosed (K : Set E))
     (hK : HasOpenNormalBasisInClass C K) (hQ : HasOpenNormalBasisInClass C (E ⧸ K)) :
     HasOpenNormalBasisInClass C E := by
-  letI : IsClosed (K : Set E) := hKclosed
   refine HasOpenNormalBasisInClass.of_allOpenNormalQuotients (C := C)
     ?_
   intro U
-  letI : CompactSpace (E ⧸ K) := by infer_instance
-  letI : T2Space (E ⧸ K) := by infer_instance
   let M : Subgroup E := K ⊔ (U : Subgroup E)
   let Wsub : Subgroup (E ⧸ K) := Subgroup.map (QuotientGroup.mk' K) M
   have hWclosed : IsClosed (Wsub : Set (E ⧸ K)) := by
@@ -196,10 +192,6 @@ theorem extension
   have hWopen : IsOpen (Wsub : Set (E ⧸ K)) :=
     (subgroup_isOpen_iff_isClosed_finite_quotient (G := E ⧸ K) (U := Wsub)).2
       ⟨hWclosed, hWfinite⟩
-  letI : Wsub.Normal := by
-    dsimp [Wsub, M]
-    have hMnormal : M.Normal := by infer_instance
-    exact Subgroup.Normal.map hMnormal (QuotientGroup.mk' K) (QuotientGroup.mk'_surjective K)
   let W : OpenNormalSubgroup (E ⧸ K) :=
     { toOpenSubgroup := ⟨Wsub, hWopen⟩
       isNormal' := inferInstance }
@@ -237,26 +229,10 @@ theorem extension
   Function.comp_apply, Subtype.exists, exists_prop, Subgroup.mem_map, QuotientGroup.mk'_apply, ψ, L]
   have hLC : C L := by
     exact hIso ⟨MulEquiv.subgroupCongr hRangeEq⟩ hKernelC
-  have hMapUbot : Subgroup.map (QuotientGroup.mk' (U : Subgroup E)) (U : Subgroup E) = ⊥ := by
-    ext x
-    constructor
-    · intro hx
-      rcases (Subgroup.mem_map).1 hx with ⟨u, hu, hux⟩
-      rw [Subgroup.mem_bot]
-      have hu1 : QuotientGroup.mk' (U : Subgroup E) u = 1 :=
-        (QuotientGroup.eq_one_iff (N := (U : Subgroup E)) u).2 hu
-      exact hux.symm.trans hu1
-    · intro hx
-      rcases Subgroup.mem_bot.1 hx with rfl
-      exact ⟨1, U.one_mem, by simp only [QuotientGroup.mk'_apply, QuotientGroup.mk_one]⟩
   have hMapM : Subgroup.map (QuotientGroup.mk' (U : Subgroup E)) M = L := by
-    calc
-      Subgroup.map (QuotientGroup.mk' (U : Subgroup E)) M
-          = Subgroup.map (QuotientGroup.mk' (U : Subgroup E)) K ⊔
-              Subgroup.map (QuotientGroup.mk' (U : Subgroup E)) (U : Subgroup E) := by
-                simp only [Subgroup.map_sup, QuotientGroup.map_mk'_self, bot_le, sup_of_le_left, M]
-      _ = L ⊔ ⊥ := by simp only [hMapUbot, bot_le, sup_of_le_left, L]
-      _ = L := by simp only [bot_le, sup_of_le_left]
+    change Subgroup.map (QuotientGroup.mk' (U : Subgroup E)) (K ⊔ (U : Subgroup E)) =
+      Subgroup.map (QuotientGroup.mk' (U : Subgroup E)) K
+    rw [Subgroup.map_sup, QuotientGroup.map_mk'_self, sup_bot_eq]
   have hQuotL : C ((E ⧸ (U : Subgroup E)) ⧸ L) := by
     let e0 : (E ⧸ (U : Subgroup E)) ⧸ L ≃* (E ⧸ (U : Subgroup E)) ⧸
         Subgroup.map (QuotientGroup.mk' (U : Subgroup E)) M :=
@@ -266,10 +242,6 @@ theorem extension
       QuotientGroup.quotientQuotientEquivQuotient (U : Subgroup E) M
         (show (U : Subgroup E) ≤ M from le_sup_right)
     exact hIso ⟨(e0.trans e1).symm⟩ hQuotM
-  letI : L.Normal := by
-    dsimp [L]
-    exact Subgroup.Normal.map inferInstance (QuotientGroup.mk' (U : Subgroup E))
-      (QuotientGroup.mk'_surjective (U : Subgroup E))
   exact hExt L hLC hQuotL
 
 end HasOpenNormalBasisInClass

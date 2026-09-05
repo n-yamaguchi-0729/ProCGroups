@@ -2,6 +2,8 @@ import ProCGroups.FoxDifferential.Completed.FreeProC.StageApproximation
 import ProCGroups.FoxDifferential.Completed.FiniteStage.RelationSubmodule
 import ProCGroups.FoxDifferential.Completed.FiniteStage.RelationIdealDerivative
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — free pro-\(C\) — relation submodule approximation
 

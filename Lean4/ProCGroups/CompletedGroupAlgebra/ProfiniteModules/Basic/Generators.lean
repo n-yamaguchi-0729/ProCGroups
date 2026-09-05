@@ -1,6 +1,8 @@
 import ProCGroups.CompletedGroupAlgebra.ProfiniteModules.Basic.FiniteQuotients
 import ProCGroups.Generation.QuotientGeneratorConvergingPairs
 
+set_option autoImplicit false
+
 /-!
 # Generating sets converging to zero
 
@@ -35,7 +37,7 @@ theorem MapConvergesToZero.setConvergesToZero_range
   intro U hU
   have hpre : {s : S | f s ∉ U}.Finite := by
     have hmem : {s : S | f s ∈ U} ∈ (Filter.cofinite : Filter S) := hf hU
-    simpa [Filter.mem_cofinite, Set.compl_setOf] using hmem
+    exact Filter.mem_cofinite.mp hmem
   exact (hpre.image f).subset (by
     rintro y ⟨⟨s, rfl⟩, hsU⟩
     exact ⟨s, hsU, rfl⟩)
@@ -50,7 +52,7 @@ theorem SetConvergesToZero.mapConvergesToZero_of_injective
     have hpre :
         ({s : S | f s ∉ U} : Set S) = f ⁻¹' (Set.range f \ U) := by
       ext s
-      simp only [Set.mem_setOf_eq, Set.preimage_sdiff, Set.preimage_range, Set.mem_sdiff,
+      simp only [Set.mem_ofPred_eq, Set.preimage_sdiff, Set.preimage_range, Set.mem_sdiff,
           Set.mem_univ,
   Set.mem_preimage, true_and]
     rw [hpre]
@@ -61,7 +63,7 @@ theorem SetConvergesToZero.mapConvergesToZero_of_injective
   rw [← Set.preimage_compl]
   have hpreimageCompl : f ⁻¹' Uᶜ = {s : S | f s ∉ U} := by
     ext s
-    simp only [Set.mem_preimage, Set.mem_compl_iff, Set.mem_setOf_eq]
+    simp only [Set.mem_preimage, Set.mem_compl_iff, Set.mem_ofPred_eq]
   rw [hpreimageCompl]
   exact hbad
 
@@ -153,9 +155,9 @@ theorem profiniteModule_hasGeneratingSetConvergingToZero
     [ContinuousSMul Λ M] [CompactSpace M] [T2Space M] [TotallyDisconnectedSpace M] :
     HasGeneratingSetConvergingToZero Λ M := by
   let e : M ≃ₜ Multiplicative M := multiplicativeHomeomorph M
-  letI : CompactSpace (Multiplicative M) := e.compactSpace
-  letI : T2Space (Multiplicative M) := e.t2Space
-  letI : TotallyDisconnectedSpace (Multiplicative M) := e.totallyDisconnectedSpace
+  let : CompactSpace (Multiplicative M) := e.compactSpace
+  let : T2Space (Multiplicative M) := e.t2Space
+  let : TotallyDisconnectedSpace (Multiplicative M) := e.totallyDisconnectedSpace
   rcases ProCGroups.Generation.exists_generatorsConvergingToOne
       (G := Multiplicative M) with ⟨X, hXgen, hXconv⟩
   let S : Set M := Multiplicative.toAdd '' X

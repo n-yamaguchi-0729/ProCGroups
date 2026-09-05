@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.Source.SpecialValues
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: prime power — derivative — source — mul
 

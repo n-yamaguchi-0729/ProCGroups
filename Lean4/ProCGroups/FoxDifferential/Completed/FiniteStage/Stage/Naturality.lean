@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Fundamental.Formula
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — finite stage — stage — naturality
 
@@ -294,7 +296,7 @@ theorem foxAlgebraicStageGroupAlgebraDerivative_natural
       foxAlgebraicStageGroupAlgebraDerivative (X := X) M n i
         (foxAlgebraicStageSourceGroupAlgebraMap (X := X) hNM n x) := by
   refine MonoidAlgebra.induction_on
-    (p := fun x =>
+    (motive := fun x =>
       foxAlgebraicStageTargetGroupAlgebraMap (X := X) hNM n
           (foxAlgebraicStageGroupAlgebraDerivative (X := X) N n i x) =
         foxAlgebraicStageGroupAlgebraDerivative (X := X) M n i

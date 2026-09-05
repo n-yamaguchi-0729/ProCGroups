@@ -1,6 +1,9 @@
 import ProCGroups.CrowellExactSequence.Profinite.KernelInjectivity
-import ProCGroups.CrowellExactSequence.Profinite.SequenceMaps
+import ProCGroups.CrowellExactSequence.Profinite.SequenceMaps.Basic
+import ProCGroups.CrowellExactSequence.Profinite.SequenceMaps.Exactness
 import ProCGroups.FoxDifferential.Completed.Continuous.ClosedGeneratedCoordinates.Comparison
+
+set_option autoImplicit false
 
 /-!
 # Profinite Crowell middle exactness

@@ -1,5 +1,9 @@
 import Mathlib.GroupTheory.FreeGroup.Reduce
 
+set_option autoImplicit false
+
+universe u
+
 /-!
 # Reidemeister Schreier / Free Group / Prefix Parent
 

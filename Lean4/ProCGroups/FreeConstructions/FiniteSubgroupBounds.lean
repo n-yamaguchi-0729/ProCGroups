@@ -1,4 +1,7 @@
+import Mathlib.SetTheory.Cardinal.NatCard
 import ProCGroups.FreeConstructions.Framework
+
+set_option autoImplicit false
 
 /-!
 # Generator bounds from finite subgroup families
@@ -84,13 +87,9 @@ theorem finite_subgroup_family_generator_bound
     (hEach : ∀ i, AbstractGeneratorRankLE (subgroups i) r) :
     AbstractGeneratorRankLE G (s * r) := by
   classical
-  letI : Fintype ι := Fintype.ofFinite ι
-  have hcard' : Fintype.card ι = s := by
-    simpa [Nat.card_eq_fintype_card] using hcard
-  have hprod : Fintype.card (ι × Fin r) = s * r := by
-    simp only [Fintype.card_prod, hcard', Fintype.card_fin]
-  let e : Fin (s * r) ≃ ι × Fin r :=
-    (Fin.castOrderIso hprod.symm).toEquiv.trans (Fintype.equivFin (ι × Fin r)).symm
+  have hprod : Nat.card (ι × Fin r) = s * r := by
+    rw [Nat.card_prod, hcard, Nat.card_fin]
+  let e : Fin (s * r) ≃ ι × Fin r := (Finite.equivFinOfCardEq hprod).symm
   let genSub : (i : ι) → Fin r → subgroups i :=
     fun i => Classical.choose (hEach i)
   have hgenSub : ∀ i, Subgroup.closure (Set.range (genSub i)) = ⊤ :=

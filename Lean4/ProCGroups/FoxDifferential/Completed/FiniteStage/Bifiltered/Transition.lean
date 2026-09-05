@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.TargetMap
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — finite stage — bifiltered — transition
 

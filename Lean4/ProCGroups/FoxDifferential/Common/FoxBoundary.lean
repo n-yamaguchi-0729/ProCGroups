@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Common.FreeCrossedDifferential
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: common — fox boundary
 

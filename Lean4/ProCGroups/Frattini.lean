@@ -1,6 +1,8 @@
 import Mathlib.GroupTheory.Frattini
 import Mathlib.Topology.Algebra.Group.ClosedSubgroup
 
+set_option autoImplicit false
+
 /-!
 # Pro C Groups / Frattini
 

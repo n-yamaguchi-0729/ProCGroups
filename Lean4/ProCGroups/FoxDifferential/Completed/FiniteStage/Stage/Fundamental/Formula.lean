@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Fundamental.Derivative
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: finite stage — stage — fundamental — formula
 
@@ -87,7 +89,7 @@ theorem foxAlgebraicStageGroupAlgebraDerivative_groupAlgebra_fundamental_formula
             (foxAlgebraicStageTargetQuotient (X := X) N)
             (QuotientGroup.mk' N (FreeGroup.of i)) - 1)
   change P x
-  refine MonoidAlgebra.induction_on (p := P) x ?_ ?_ ?_
+  refine MonoidAlgebra.induction_on (motive := P) x ?_ ?_ ?_
   · intro q
     dsimp [P]
     rw [foxCommutatorPowerSourceGroupAlgebraAugmentation_of_quotient]

@@ -2,6 +2,8 @@ import Mathlib.Topology.Instances.ZMod
 import ProCGroups.ProC.InverseLimits.Limits
 import ProCGroups.ProC.InverseLimits.Predicates
 
+set_option autoImplicit false
+
 /-!
 # `ProCGroups.Completion.ProCInteger`
 
@@ -88,12 +90,8 @@ def ofAllFiniteModulus (n : ℕ) (hn : 0 < n) :
   modulus := n
   positive := hn
   cyclic_mem := memAcrossUniverses_of_ulift_mem (by
-    letI : NeZero n := ⟨Nat.ne_of_gt hn⟩
-    letI : Fintype (ZMod n) := ZMod.fintype n
-    have hfinZ : Finite (ZMod n) := Finite.of_fintype _
-    have hfinMul : Finite (Multiplicative (ZMod n)) :=
-      @Finite.of_equiv _ _ hfinZ Multiplicative.toAdd
-    exact @Finite.of_equiv _ _ hfinMul Equiv.ulift.symm)
+    have : NeZero n := ⟨Nat.ne_of_gt hn⟩
+    exact Finite.of_equiv (ZMod n) (Multiplicative.ofAdd.trans Equiv.ulift.symm))
 
 /-- The all-finite coefficient index has the prescribed modulus. -/
 @[simp]
@@ -180,7 +178,7 @@ theorem directed_of_formation {C : FiniteGroupClass.{u}} (hForm : FiniteGroupCla
   let K : ULift Bool → Type u
     | ⟨false⟩ => ULift.{u} (Multiplicative (ZMod i.modulus))
     | ⟨true⟩ => ULift.{u} (Multiplicative (ZMod j.modulus))
-  letI : ∀ b : ULift Bool, Group (K b) := by
+  let : ∀ b : ULift Bool, Group (K b) := by
     intro b
     cases b with
     | up b =>
@@ -337,7 +335,7 @@ theorem exists_index_orderOf_dvd_of_finite_mem {C : FiniteGroupClass.{u}}
     {K : Type u} [Group K] [Finite K] (hK : C K) :
     ∃ i : ProCIntegerIndex C, ∀ k : K, orderOf k ∣ i.modulus := by
   classical
-  letI : Fintype K := Fintype.ofFinite K
+  let : Fintype K := Fintype.ofFinite K
   have hfinset :
       ∀ s : Finset K, ∃ i : ProCIntegerIndex C, ∀ k ∈ s, orderOf k ∣ i.modulus := by
     intro s
@@ -720,15 +718,9 @@ theorem hasOpenNormalBasisInClass_multiplicative_proCIntegerStage
     (hQuot : FiniteGroupClass.QuotientClosed C)
     (i : ProCIntegerIndex C) :
     ProCGroups.ProC.HasOpenNormalBasisInClass C (Multiplicative (ProCIntegerStage C i)) := by
-  haveI : NeZero i.modulus := ⟨Nat.ne_of_gt i.positive⟩
-  haveI : Fintype (ZMod i.modulus) := ZMod.fintype i.modulus
-  haveI : Finite (Multiplicative (ProCIntegerStage C i)) := by
-    have hfinZ : Finite (ZMod i.modulus) := Finite.of_fintype _
-    dsimp [ProCIntegerStage]
-    exact @Finite.of_equiv _ _ hfinZ Multiplicative.toAdd
-  haveI : DiscreteTopology (Multiplicative (ProCIntegerStage C i)) := by
-    dsimp [ProCIntegerStage]
-    infer_instance
+  have : NeZero i.modulus := ⟨Nat.ne_of_gt i.positive⟩
+  have : Finite (Multiplicative (ProCIntegerStage C i)) :=
+    Finite.of_equiv (ZMod i.modulus) Multiplicative.ofAdd
   exact ProCGroups.ProC.HasOpenNormalBasisInClass.of_finite_discrete (C := C)
     (G := Multiplicative (ProCIntegerStage C i)) hQuot
     ((C.memAcrossUniverses_iff).1
@@ -775,10 +767,8 @@ instance instGroupProCIntegerMultiplicativeSystemStage
 instance instIsTopologicalGroupProCIntegerMultiplicativeSystemStage
     (C : FiniteGroupClass.{u}) (i : ProCIntegerIndex C) :
     IsTopologicalGroup ((proCIntegerMultiplicativeSystem C).X i) := by
-  haveI : NeZero i.modulus := ⟨Nat.ne_of_gt i.positive⟩
-  letI : DiscreteTopology ((proCIntegerMultiplicativeSystem C).X i) := by
-    dsimp [proCIntegerMultiplicativeSystem, ProCIntegerStage]
-    exact ⟨rfl⟩
+  have : DiscreteTopology ((proCIntegerMultiplicativeSystem C).X i) :=
+    inferInstanceAs (DiscreteTopology (Multiplicative (ZMod i.modulus)))
   exact topologicalGroup_of_discreteTopology
 
 /-- The pro-\(C\) integer multiplicative system carries the induced group-system structure. -/
@@ -873,31 +863,13 @@ theorem hasOpenNormalBasisInClass_proCIntegerMultiplicativeSystem_inverseLimit
     (hdir : Directed (· ≤ ·) (id : ProCIntegerIndex C → ProCIntegerIndex C)) :
     ProCGroups.ProC.HasOpenNormalBasisInClass C (proCIntegerMultiplicativeSystem C).inverseLimit
         := by
-  let S := proCIntegerMultiplicativeSystem C
-  letI : ∀ i : ProCIntegerIndex C, IsTopologicalGroup (S.X i) := fun i => by
-    haveI : NeZero i.modulus := ⟨Nat.ne_of_gt i.positive⟩
-    letI : DiscreteTopology (S.X i) := by
-      dsimp [S, proCIntegerMultiplicativeSystem, ProCIntegerStage]
-      exact ⟨rfl⟩
-    exact topologicalGroup_of_discreteTopology
-  letI : ∀ i : ProCIntegerIndex C, CompactSpace (S.X i) := fun i => by
-    haveI : NeZero i.modulus := ⟨Nat.ne_of_gt i.positive⟩
-    dsimp [S, proCIntegerMultiplicativeSystem, ProCIntegerStage]
-    infer_instance
-  letI : ∀ i : ProCIntegerIndex C, T2Space (S.X i) := fun i => by
-    haveI : NeZero i.modulus := ⟨Nat.ne_of_gt i.positive⟩
-    letI : DiscreteTopology (S.X i) := by
-      dsimp [S, proCIntegerMultiplicativeSystem, ProCIntegerStage]
-      exact ⟨rfl⟩
-    exact DiscreteTopology.toT2Space
-  letI : ∀ i : ProCIntegerIndex C, TotallyDisconnectedSpace (S.X i) := fun i => by
-    haveI : NeZero i.modulus := ⟨Nat.ne_of_gt i.positive⟩
-    letI : DiscreteTopology (S.X i) := by
-      dsimp [S, proCIntegerMultiplicativeSystem, ProCIntegerStage]
-      exact ⟨rfl⟩
-    letI : TotallySeparatedSpace (S.X i) :=
-      TotallySeparatedSpace.of_discrete (S.X i)
-    exact TotallySeparatedSpace.totallyDisconnectedSpace (S.X i)
+  let S : ProCGroups.InverseSystems.InverseSystem (I := ProCIntegerIndex C) :=
+    proCIntegerMultiplicativeSystem C
+  have : ∀ i : ProCIntegerIndex C, Finite (S.X i) := fun i => by
+    have : NeZero i.modulus := ⟨Nat.ne_of_gt i.positive⟩
+    exact Finite.of_equiv (ZMod i.modulus) Multiplicative.ofAdd
+  have : ∀ i : ProCIntegerIndex C, DiscreteTopology (S.X i) := fun i =>
+    inferInstanceAs (DiscreteTopology (Multiplicative (ZMod i.modulus)))
   exact ProCGroups.ProC.inverseLimit (S := S) hIso hQuot hdir
     (fun i => hasOpenNormalBasisInClass_multiplicative_proCIntegerStage
       (C := C) hQuot i)
@@ -909,7 +881,7 @@ cyclic stages.
 theorem isClosed_setOf_proCIntegerCompatible :
     IsClosed {x : ∀ i : ProCIntegerIndex C, ProCIntegerStage C i |
       ProCIntegerCompatible C x} := by
-  simp only [ProCIntegerCompatible, Set.setOf_forall]
+  simp only [ProCIntegerCompatible, Set.ofPred_forall]
   refine isClosed_iInter fun i => isClosed_iInter fun j => isClosed_iInter fun hij => ?_
   have hleft :
       Continuous fun x : (∀ k : ProCIntegerIndex C, ProCIntegerStage C k) =>
@@ -923,8 +895,8 @@ The constructed object carries the compact space structure inherited from its pr
 construction.
 -/
 instance instCompactSpaceProCInteger : CompactSpace (ProCIntegerLimitCarrier C) := by
-  letI : ∀ i : ProCIntegerIndex C, CompactSpace (ProCIntegerStage C i) := fun i => by
-    haveI : NeZero i.modulus := ⟨Nat.ne_of_gt i.positive⟩
+  let : ∀ i : ProCIntegerIndex C, CompactSpace (ProCIntegerStage C i) := fun i => by
+    have : NeZero i.modulus := ⟨Nat.ne_of_gt i.positive⟩
     dsimp [ProCIntegerStage]
     infer_instance
   let hs : IsClosed {x : ∀ i : ProCIntegerIndex C, ProCIntegerStage C i |
@@ -974,11 +946,9 @@ instance instContinuousNegProCInteger : ContinuousNeg (ProCIntegerLimitCarrier C
 The coordinatewise ring operations make the pro-\(C\) integer completion a topological ring.
 -/
 instance instIsTopologicalRingProCInteger : IsTopologicalRing (ProCIntegerLimitCarrier C) := by
-  letI : ContinuousAdd (ProCIntegerLimitCarrier C) := instContinuousAddProCInteger (C := C)
-  letI : ContinuousMul (ProCIntegerLimitCarrier C) := instContinuousMulProCInteger (C := C)
-  letI : ContinuousNeg (ProCIntegerLimitCarrier C) := instContinuousNegProCInteger (C := C)
-  letI : IsTopologicalSemiring (ProCIntegerLimitCarrier C) := IsTopologicalSemiring.mk
-  exact IsTopologicalRing.mk
+  exact
+    { toIsTopologicalSemiring := IsTopologicalSemiring.mk
+      toContinuousNeg := instContinuousNegProCInteger (C := C) }
 
 /-- The additive group underlying the pro-\(C\) integers, written multiplicatively, has an
 open-normal \(C\)-basis whenever the coefficient indices are directed and \(C\) is isomorphism- and
@@ -1071,7 +1041,7 @@ theorem hasOpenNormalBasisInClass_multiplicative_proCInteger_allFinite :
       (Multiplicative
         (ProCIntegerLimitCarrier (FiniteGroupClass.allFinite : FiniteGroupClass.{0}))) := by
   let C : FiniteGroupClass.{0} := FiniteGroupClass.allFinite
-  letI : Nonempty (ProCIntegerIndex C) :=
+  let : Nonempty (ProCIntegerIndex C) :=
     ⟨ProCIntegerIndex.ofAllFiniteModulus 1 Nat.zero_lt_one⟩
   simpa [C] using
     hasOpenNormalBasisInClass_multiplicative_proCInteger
@@ -1097,7 +1067,7 @@ theorem denseRange_intToProCInteger_allFinite :
   have hsurj : ∀ i, Function.Surjective (ρ i) := by
     intro i
     exact ZMod.intCast_surjective
-  letI : Nonempty (ProCIntegerIndex C) :=
+  let : Nonempty (ProCIntegerIndex C) :=
     ⟨ProCIntegerIndex.ofAllFiniteModulus 1 Nat.zero_lt_one⟩
   have hdense : DenseRange (S.inverseLimitLift ρ hρ) :=
     ProCGroups.InverseSystems.InverseSystem.denseRange_lift
@@ -1202,14 +1172,14 @@ theorem hasCyclicOpenNormalBasis_multiplicative_proCInteger_allFinite :
     ProCGroups.ProC.HasCyclicOpenNormalBasis
       (Multiplicative
         (ProCIntegerLimitCarrier (FiniteGroupClass.allFinite : FiniteGroupClass.{0}))) := by
-  letI : T2Space
+  let : T2Space
       (Multiplicative
         (ProCIntegerLimitCarrier (FiniteGroupClass.allFinite : FiniteGroupClass.{0}))) := by
     change T2Space
       (ProCIntegerLimitCarrier (FiniteGroupClass.allFinite : FiniteGroupClass.{0}))
     exact instT2SpaceProCInteger
       (C := (FiniteGroupClass.allFinite : FiniteGroupClass.{0}))
-  letI : TotallyDisconnectedSpace
+  let : TotallyDisconnectedSpace
       (Multiplicative
         (ProCIntegerLimitCarrier (FiniteGroupClass.allFinite : FiniteGroupClass.{0}))) := by
     change TotallyDisconnectedSpace

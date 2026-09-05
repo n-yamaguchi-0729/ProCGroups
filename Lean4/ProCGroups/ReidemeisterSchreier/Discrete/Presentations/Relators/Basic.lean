@@ -4,6 +4,8 @@ import Mathlib.Data.Finset.Sort
 import Mathlib.GroupTheory.FreeGroup.Reduce
 import Mathlib.GroupTheory.QuotientGroup.Defs
 
+set_option autoImplicit false
+
 /-!
 # Relator equivalence
 

@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Completed.FreeProC.Uniqueness.Derivative
 import ProCGroups.FoxDifferential.Completed.Continuous.Topology
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — continuous — free — continuity
 

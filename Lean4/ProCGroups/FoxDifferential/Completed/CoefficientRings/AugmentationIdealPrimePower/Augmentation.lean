@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.AugmentationIdealPrimePower.LimitEquiv
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — coefficient rings — prime-power augmentation ideal — augmentation
 

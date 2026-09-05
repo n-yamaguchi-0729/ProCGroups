@@ -1,5 +1,7 @@
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.Core
 
+set_option autoImplicit false
+
 /-!
 # Reidemeister Schreier / Discrete / Presentations / Tietze / Relator Replacement
 

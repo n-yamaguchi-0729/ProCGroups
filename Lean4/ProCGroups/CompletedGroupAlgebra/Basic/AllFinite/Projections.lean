@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.Ring
 
+set_option autoImplicit false
+
 /-!
 # Completed Group Algebra / Basic / All Finite / Projections
 
@@ -27,7 +29,7 @@ variable (R : Type u) [CommRing R] [TopologicalSpace R] [IsTopologicalRing R]
 theorem continuous_completedGroupAlgebra_algebraMap :
     Continuous (algebraMap R (CompletedGroupAlgebraCarrier R G)) := by
   let S := completedGroupAlgebraSystem R G
-  letI : ∀ U, TopologicalSpace (CompletedGroupAlgebraStage R G U) :=
+  let : ∀ U, TopologicalSpace (CompletedGroupAlgebraStage R G U) :=
     fun U => (completedGroupAlgebraSystem R G).topologicalSpace U
   let π : ∀ U : CompletedGroupAlgebraIndex G,
       R → CompletedGroupAlgebraStage R G U :=

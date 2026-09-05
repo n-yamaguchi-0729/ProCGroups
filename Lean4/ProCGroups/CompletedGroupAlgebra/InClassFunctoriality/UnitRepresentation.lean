@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.InClassFunctoriality.Comparison
 
+set_option autoImplicit false
+
 /-!
 # Unit representations in the in-class completion
 
@@ -64,7 +66,7 @@ theorem toCompletedGroupAlgebraInClassRingHom_mem_span_completedGroupAlgebraOfIn
       Submodule.span R (Set.range (completedGroupAlgebraOfInClass C R G)) := by
   classical
   refine MonoidAlgebra.induction_linear
-    (p := fun x : MonoidAlgebra R G =>
+    (motive := fun x : MonoidAlgebra R G =>
       toCompletedGroupAlgebraInClassRingHom C R G x ∈
         Submodule.span R (Set.range (completedGroupAlgebraOfInClass C R G)))
     x ?_ ?_ ?_
@@ -126,6 +128,10 @@ theorem completedGroupAlgebraInClass_module_induces_continuous_gmodule
         (completedGroupAlgebraUnitRepresentation R G (CompletedGroupAlgebraInClass C R G)
             (toCompletedGroupAlgebraInClassRingHom C R G))
     ContinuousSMul G A := by
+  let : DistribMulAction G A :=
+    unitRepresentationDistribMulAction G (CompletedGroupAlgebraInClass C R G) A
+      (completedGroupAlgebraUnitRepresentation R G (CompletedGroupAlgebraInClass C R G)
+        (toCompletedGroupAlgebraInClassRingHom C R G))
   exact unitRepresentation_continuousSMul G (CompletedGroupAlgebraInClass C R G) A
     (completedGroupAlgebraUnitRepresentation R G (CompletedGroupAlgebraInClass C R G)
         (toCompletedGroupAlgebraInClassRingHom C R G))

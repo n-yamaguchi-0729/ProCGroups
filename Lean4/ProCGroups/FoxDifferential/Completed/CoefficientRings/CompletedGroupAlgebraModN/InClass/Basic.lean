@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebra
 import Mathlib.Data.ZMod.Basic
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: coefficient rings — mod-\(n\) completed group algebra — in class — basic
 
@@ -51,15 +53,15 @@ theorem finite_modNCompletedGroupAlgebraStageInClass
     (U : CompletedGroupAlgebraIndexInClass G C) :
     Finite (ModNCompletedGroupAlgebraStageInClass n G C U) := by
   classical
-  letI : Finite (CompletedGroupAlgebraQuotientInClass G C U) :=
+  let : Finite (CompletedGroupAlgebraQuotientInClass G C U) :=
     C.finite (OrderDual.ofDual U).2
-  letI : Fintype (CompletedGroupAlgebraQuotientInClass G C U) := Fintype.ofFinite _
-  letI : DecidableEq (CompletedGroupAlgebraQuotientInClass G C U) := Classical.decEq _
-  letI : NeZero n := ⟨Nat.ne_of_gt (show 0 < n from Fact.out)⟩
-  letI : Fintype (ModNCompletedCoeff n) := Fintype.ofEquiv (Fin n) (ZMod.finEquiv n)
-  letI :
+  let : Fintype (CompletedGroupAlgebraQuotientInClass G C U) := Fintype.ofFinite _
+  let : DecidableEq (CompletedGroupAlgebraQuotientInClass G C U) := Classical.decEq _
+  let : NeZero n := ⟨Nat.ne_of_gt (show 0 < n from Fact.out)⟩
+  let : Fintype (ModNCompletedCoeff n) := Fintype.ofEquiv (Fin n) (ZMod.finEquiv n)
+  let :
       Finite (CompletedGroupAlgebraQuotientInClass G C U → ModNCompletedCoeff n) := by
-    letI :
+    let :
         Fintype (CompletedGroupAlgebraQuotientInClass G C U → ModNCompletedCoeff n) :=
       inferInstance
     exact Finite.of_fintype _
@@ -168,13 +170,20 @@ theorem modNCompletedGroupAlgebraTransitionInClass_comp
     (modNCompletedGroupAlgebraTransitionInClass n G C hUV).comp
         (modNCompletedGroupAlgebraTransitionInClass n G C hVW) =
       modNCompletedGroupAlgebraTransitionInClass n G C (hUV.trans hVW) := by
-  rw [modNCompletedGroupAlgebraTransitionInClass, modNCompletedGroupAlgebraTransitionInClass,
-    modNCompletedGroupAlgebraTransitionInClass, ← MonoidAlgebra.mapDomainRingHom_comp]
-  congr 1
-  exact OpenNormalSubgroupInClass.map_comp
-    (C := C) (G := G)
-    (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) (W := OrderDual.ofDual W)
-    hUV hVW
+  unfold modNCompletedGroupAlgebraTransitionInClass
+  exact
+    (MonoidAlgebra.mapDomainRingHom_comp (R := ModNCompletedCoeff n)
+      (OpenNormalSubgroupInClass.map
+        (C := C) (G := G)
+        (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) hUV)
+      (OpenNormalSubgroupInClass.map
+        (C := C) (G := G)
+        (U := OrderDual.ofDual V) (V := OrderDual.ofDual W) hVW)).symm.trans
+      (congrArg (MonoidAlgebra.mapDomainRingHom (ModNCompletedCoeff n))
+        (OpenNormalSubgroupInClass.map_comp
+          (C := C) (G := G)
+          (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) (W := OrderDual.ofDual W)
+          hUV hVW))
 
 omit [Fact (0 < n)] in
 /-- The class-restricted inverse system \(U \mapsto (\mathbb{Z}/n\mathbb{Z})[G/U]\). -/
@@ -186,9 +195,9 @@ def modNCompletedGroupAlgebraSystemInClass
   map := fun {U V} hUV => modNCompletedGroupAlgebraTransitionInClass n G C hUV
   continuous_map := by
     intro U V hUV
-    letI : TopologicalSpace (ModNCompletedGroupAlgebraStageInClass n G C U) := ⊥
-    letI : TopologicalSpace (ModNCompletedGroupAlgebraStageInClass n G C V) := ⊥
-    letI : DiscreteTopology (ModNCompletedGroupAlgebraStageInClass n G C V) := ⟨rfl⟩
+    let : TopologicalSpace (ModNCompletedGroupAlgebraStageInClass n G C U) := ⊥
+    let : TopologicalSpace (ModNCompletedGroupAlgebraStageInClass n G C V) := ⊥
+    let : DiscreteTopology (ModNCompletedGroupAlgebraStageInClass n G C V) := ⟨rfl⟩
     exact continuous_of_discreteTopology
   map_id := by
     intro U
@@ -225,8 +234,31 @@ theorem modNCompletedGroupAlgebraTransitionInClass_surjective
       refine
         ⟨(MonoidAlgebra.single q' a : ModNCompletedGroupAlgebraStageInClass n G C V) + y,
           ?_⟩
-      rw [map_add, modNCompletedGroupAlgebraTransitionInClass_single, hy, hq']
-      rfl
+      have hsingle :
+          modNCompletedGroupAlgebraTransitionInClass n G C hUV
+              (MonoidAlgebra.single q' a) =
+            MonoidAlgebra.single (OpenNormalSubgroupInClass.map hUV q') a := by
+        unfold modNCompletedGroupAlgebraTransitionInClass
+        exact MonoidAlgebra.mapDomain_single
+      have hsingleTarget :
+          modNCompletedGroupAlgebraTransitionInClass n G C hUV
+              (MonoidAlgebra.single q' a) =
+            (MonoidAlgebra.single q a :
+              ModNCompletedGroupAlgebraStageInClass n G C U) :=
+        hsingle.trans
+          (congrArg (fun q₀ => MonoidAlgebra.single q₀ a) hq')
+      calc
+        modNCompletedGroupAlgebraTransitionInClass n G C hUV
+              ((MonoidAlgebra.single q' a :
+                ModNCompletedGroupAlgebraStageInClass n G C V) + y) =
+            modNCompletedGroupAlgebraTransitionInClass n G C hUV
+                (MonoidAlgebra.single q' a) +
+              modNCompletedGroupAlgebraTransitionInClass n G C hUV y :=
+          map_add _ _ _
+        _ = MonoidAlgebra.single q a + x :=
+          congrArg₂
+            (fun u v : ModNCompletedGroupAlgebraStageInClass n G C U => u + v)
+            hsingleTarget hy
 
 omit [Fact (0 < n)] in
 /--
@@ -271,9 +303,24 @@ theorem modNCompletedGroupAlgebraStageMapInClass_compatible
     (modNCompletedGroupAlgebraTransitionInClass n G C hUV).comp
         (modNCompletedGroupAlgebraStageMapInClass n G C V) =
       modNCompletedGroupAlgebraStageMapInClass n G C U := by
-  rw [modNCompletedGroupAlgebraTransitionInClass, modNCompletedGroupAlgebraStageMapInClass,
-    modNCompletedGroupAlgebraStageMapInClass, ← MonoidAlgebra.mapDomainRingHom_comp]
-  congr 1
+  unfold modNCompletedGroupAlgebraTransitionInClass modNCompletedGroupAlgebraStageMapInClass
+  have hproj :
+      (OpenNormalSubgroupInClass.map
+        (C := C) (G := G)
+        (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) hUV).comp
+          (openNormalSubgroupInClassProj (C := C) (G := G) V) =
+        openNormalSubgroupInClassProj (C := C) (G := G) U := by
+    ext g
+    exact congrFun
+      (openNormalSubgroupInClassProj_compatible
+        (C := C) (G := G) U V hUV) g
+  exact
+    (MonoidAlgebra.mapDomainRingHom_comp (R := ModNCompletedCoeff n)
+      (OpenNormalSubgroupInClass.map
+        (C := C) (G := G)
+        (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) hUV)
+      (openNormalSubgroupInClassProj (C := C) (G := G) V)).symm.trans
+      (congrArg (MonoidAlgebra.mapDomainRingHom (ModNCompletedCoeff n)) hproj)
 
 omit [Fact (0 < n)] in
 /-- Compatibility for a class-restricted residue-coefficient completed group algebra family. -/

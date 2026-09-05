@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.Continuous.Universal.System
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — continuous — universal — natural topology
 
@@ -699,7 +701,7 @@ theorem crossedDifferentialBoundaryLiftLinear_kills_finiteClosedSubmodule
           ((crossedDifferentialRelationSubmodule
             (zcCompletedDifferentialModuleStageScalar C ψc.toMonoidHom i)).mkQ
               (zcCompletedDifferentialModulePreStageMap C ψc.toMonoidHom i x)) := by
-    calc
+    have hfirst :
       zcCompletedGroupAlgebraProjection C H j
           (crossedDifferentialModuleLiftLinear
             (R := ZCCompletedGroupAlgebra C H)
@@ -708,31 +710,40 @@ theorem crossedDifferentialBoundaryLiftLinear_kills_finiteClosedSubmodule
           (zcToCompletedGroupAlgebra C ψc.toMonoidHom
             ((crossedDifferentialRelationSubmodule
               (zcCompletedGroupAlgebraScalar C ψc.toMonoidHom)).mkQ x)) := by
-          rw [hboundary_quot]
-          simp only [ContinuousMonoidHom.coe_toMonoidHom,
-              zcCompletedDifferentialModuleComapIndex, i]
-      _ =
+      rw [hboundary_quot]
+      simp only [ContinuousMonoidHom.coe_toMonoidHom,
+          zcCompletedDifferentialModuleComapIndex, i]
+    have hsecond :
+        zcCompletedGroupAlgebraProjection C H i.target
+            (zcToCompletedGroupAlgebra C ψc.toMonoidHom
+              ((crossedDifferentialRelationSubmodule
+                (zcCompletedGroupAlgebraScalar C ψc.toMonoidHom)).mkQ x)) =
         zcCompletedDifferentialModuleStageBoundaryCompletedLinearMap C ψc.toMonoidHom i
           (zcCompletedDifferentialModuleStageProjection C ψc.toMonoidHom i
             ((crossedDifferentialRelationSubmodule
               (zcCompletedGroupAlgebraScalar C ψc.toMonoidHom)).mkQ x)) := by
-          change
-            zcCompletedDifferentialModuleStageBoundaryCompletedLinearMap C ψc.toMonoidHom i
-                (zcCompletedDifferentialModuleStageProjection C ψc.toMonoidHom i
-                  ((crossedDifferentialRelationSubmodule
-                    (zcCompletedGroupAlgebraScalar C ψc.toMonoidHom)).mkQ x)) =
-              zcCompletedGroupAlgebraProjectionLinearMap C H i.target
-                (zcToCompletedGroupAlgebra C ψc.toMonoidHom
-                  ((crossedDifferentialRelationSubmodule
-                    (zcCompletedGroupAlgebraScalar C ψc.toMonoidHom)).mkQ x))
-            at hcompat
-          exact hcompat.symm
-      _ =
+      change
+        zcCompletedDifferentialModuleStageBoundaryCompletedLinearMap C ψc.toMonoidHom i
+            (zcCompletedDifferentialModuleStageProjection C ψc.toMonoidHom i
+              ((crossedDifferentialRelationSubmodule
+                (zcCompletedGroupAlgebraScalar C ψc.toMonoidHom)).mkQ x)) =
+          zcCompletedGroupAlgebraProjectionLinearMap C H i.target
+            (zcToCompletedGroupAlgebra C ψc.toMonoidHom
+              ((crossedDifferentialRelationSubmodule
+                (zcCompletedGroupAlgebraScalar C ψc.toMonoidHom)).mkQ x))
+        at hcompat
+      exact hcompat.symm
+    have hthird :
+        zcCompletedDifferentialModuleStageBoundaryCompletedLinearMap C ψc.toMonoidHom i
+            (zcCompletedDifferentialModuleStageProjection C ψc.toMonoidHom i
+              ((crossedDifferentialRelationSubmodule
+                (zcCompletedGroupAlgebraScalar C ψc.toMonoidHom)).mkQ x)) =
         zcCompletedDifferentialModuleStageBoundaryCompletedLinearMap C ψc.toMonoidHom i
           ((crossedDifferentialRelationSubmodule
             (zcCompletedDifferentialModuleStageScalar C ψc.toMonoidHom i)).mkQ
               (zcCompletedDifferentialModulePreStageMap C ψc.toMonoidHom i x)) := by
-          rw [hstage_proj]
+      rw [hstage_proj]
+    exact Eq.trans hfirst (Eq.trans hsecond hthird)
   rw [hproj_eq, hstage_zero]
   simp only [zcCompletedGroupAlgebraProjection_zero]
   rfl
@@ -844,7 +855,7 @@ theorem continuous_zcCompletedDifferentialModulePreStageMap_naturalTopology
           (zcCompletedDifferentialModuleStageRing C ψ i)
           (zcCompletedDifferentialModuleStageSource C ψ i)))
       (zcCompletedDifferentialModulePreStageMap C ψ i) := by
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G) :=
     zcCompletedDifferentialPreModuleNaturalTopology C ψ
   let S := zcCompletedDifferentialPreModuleStageSystem C ψ
@@ -904,10 +915,10 @@ theorem isQuotientMap_zcSeparatedCompletedDifferentialModule_mkQ_naturalTopology
     letI : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C ψ) :=
       zcSeparatedCompletedDifferentialModuleNaturalTopology C ψ
     Topology.IsQuotientMap (zcCompletedDifferentialRelationFiniteClosedSubmodule C ψ).mkQ := by
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G) :=
     zcCompletedDifferentialPreModuleNaturalTopology C ψ
-  letI : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C ψ) :=
+  let : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C ψ) :=
     zcSeparatedCompletedDifferentialModuleNaturalTopology C ψ
   rw [Topology.isQuotientMap_iff]
   constructor
@@ -932,10 +943,10 @@ theorem continuous_zcSeparatedCompletedDifferentialModule_iff_comp_mkQ
         (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G) A
         (zcCompletedDifferentialPreModuleNaturalTopology C ψ) inferInstance
         (fun x => f ((zcCompletedDifferentialRelationFiniteClosedSubmodule C ψ).mkQ x)) := by
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G) :=
     zcCompletedDifferentialPreModuleNaturalTopology C ψ
-  letI : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C ψ) :=
+  let : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C ψ) :=
     zcSeparatedCompletedDifferentialModuleNaturalTopology C ψ
   simpa [Function.comp_def] using
     (isQuotientMap_zcSeparatedCompletedDifferentialModule_mkQ_naturalTopology
@@ -954,9 +965,9 @@ theorem continuous_zcSepDiffModuleStageProjAdd_naturalTopology
       (zcSeparatedCompletedDifferentialModuleNaturalTopology C ψ)
       inferInstance
       (zcSeparatedCompletedDifferentialModuleStageProjectionAdd C ψ i) := by
-  letI : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C ψ) :=
+  let : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C ψ) :=
     zcSeparatedCompletedDifferentialModuleNaturalTopology C ψ
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G) :=
     zcCompletedDifferentialPreModuleNaturalTopology C ψ
   rw [continuous_coinduced_dom]
@@ -969,12 +980,12 @@ theorem continuous_zcSepDiffModuleStageProjAdd_naturalTopology
       (fun x =>
         zcSeparatedCompletedDifferentialModuleStageProjectionAdd C ψ i
           ((zcCompletedDifferentialRelationFiniteClosedSubmodule C ψ).mkQ x))
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (CrossedDifferentialPreModule
         (zcCompletedDifferentialModuleStageRing C ψ i)
         (zcCompletedDifferentialModuleStageSource C ψ i)) :=
     ⊥
-  letI : DiscreteTopology
+  let : DiscreteTopology
       (CrossedDifferentialPreModule
         (zcCompletedDifferentialModuleStageRing C ψ i)
         (zcCompletedDifferentialModuleStageSource C ψ i)) :=
@@ -989,8 +1000,8 @@ theorem continuous_zcSepDiffModuleStageProjAdd_naturalTopology
         inferInstance
         (zcCompletedDifferentialModulePreStageMap C ψ i) :=
     continuous_zcCompletedDifferentialModulePreStageMap_naturalTopology C ψ i
-  letI : TopologicalSpace (ZCCompletedDifferentialModuleStage C ψ i) := inferInstance
-  letI : DiscreteTopology (ZCCompletedDifferentialModuleStage C ψ i) := inferInstance
+  let : TopologicalSpace (ZCCompletedDifferentialModuleStage C ψ i) := inferInstance
+  let : DiscreteTopology (ZCCompletedDifferentialModuleStage C ψ i) := inferInstance
   have hq :
       Continuous
         (fun y :
@@ -1026,7 +1037,7 @@ theorem continuous_zcSepDiffModuleStageProjProduct_naturalTopology :
       (zcSeparatedCompletedDifferentialModuleNaturalTopology C ψ)
       inferInstance
       (zcSeparatedCompletedDifferentialModuleStageProjectionProduct C ψ) := by
-  letI : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C ψ) :=
+  let : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C ψ) :=
     zcSeparatedCompletedDifferentialModuleNaturalTopology C ψ
   exact
     continuous_pi fun i =>
@@ -1042,7 +1053,7 @@ theorem t2Space_zcSeparatedCompletedDifferentialModuleNaturalTopology :
     @T2Space
       (ZCSeparatedCompletedDifferentialModule C ψ)
       (zcSeparatedCompletedDifferentialModuleNaturalTopology C ψ) := by
-  letI : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C ψ) :=
+  let : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C ψ) :=
     zcSeparatedCompletedDifferentialModuleNaturalTopology C ψ
   exact T2Space.of_injective_continuous
     (zcSeparatedCompletedDifferentialModuleStageProjectionProduct_injective C ψ)
@@ -1190,7 +1201,7 @@ theorem zcSepDiffModuleNaturalTopology_eq_induced_stageProjProduct
             (b - r) ∈ zcCompletedDifferentialPreModuleStageFamilyMap C ψ ⁻¹' V := hbV
         rwa [hVeq] at hbV'
       rwa [hqa] at hbU
-    · letI : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C ψ) := Tind
+    · let : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C ψ) := Tind
       have hprod :
           Continuous (zcSeparatedCompletedDifferentialModuleStageProjectionProduct C ψ) :=
         continuous_induced_dom
@@ -1202,13 +1213,13 @@ theorem zcSepDiffModuleNaturalTopology_eq_induced_stageProjProduct
           Continuous
             (zcSeparatedCompletedDifferentialModuleStageProjectionAdd C ψ i) at hi
         exact hi
-      haveI : DiscreteTopology (ZCCompletedDifferentialModuleStage C ψ i) := inferInstance
+      have : DiscreteTopology (ZCCompletedDifferentialModuleStage C ψ i) := inferInstance
       exact (isOpen_discrete
         ({zcSeparatedCompletedDifferentialModuleStageProjectionAdd C ψ i (q a)} :
           Set (ZCCompletedDifferentialModuleStage C ψ i))).preimage hcoord
     · exact rfl
   · intro hU
-    letI : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C ψ) :=
+    let : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C ψ) :=
       zcSeparatedCompletedDifferentialModuleNaturalTopology C ψ
     rcases isOpen_induced_iff.mp hU with ⟨V, hVopen, hVU⟩
     rw [← hVU]
@@ -1329,7 +1340,7 @@ theorem continuous_zcSeparatedUniversalDifferential_naturalTopology :
       inferInstance
       (zcSeparatedCompletedDifferentialModuleNaturalTopology C ψ)
       (zcSeparatedUniversalDifferential C ψ) := by
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G) :=
     zcCompletedDifferentialPreModuleNaturalTopology C ψ
   exact
@@ -1363,15 +1374,15 @@ theorem continuous_crossedDifferentialModuleLiftLinear_of_preStageMap_factor
       inferInstance
       (crossedDifferentialModuleLiftLinear
         (R := ZCCompletedGroupAlgebra C H) delta) := by
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G) :=
     zcCompletedDifferentialPreModuleNaturalTopology C ψ
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (CrossedDifferentialPreModule
         (zcCompletedDifferentialModuleStageRing C ψ i)
         (zcCompletedDifferentialModuleStageSource C ψ i)) :=
     ⊥
-  letI : DiscreteTopology
+  let : DiscreteTopology
       (CrossedDifferentialPreModule
         (zcCompletedDifferentialModuleStageRing C ψ i)
         (zcCompletedDifferentialModuleStageSource C ψ i)) :=
@@ -1474,7 +1485,7 @@ theorem zcDiffModuleRelSubmoduleClosed_of_inj_continuous_comp_mkQ
             ((crossedDifferentialRelationSubmodule
               (zcCompletedGroupAlgebraScalar C ψ)).mkQ x))) :
     zcCompletedDifferentialModuleRelationSubmoduleClosed C ψ := by
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G) :=
     zcCompletedDifferentialPreModuleNaturalTopology C ψ
   change IsClosed
@@ -1535,10 +1546,10 @@ theorem continuous_zcCompletedDifferentialModule_mkQ_naturalTopology :
       (zcCompletedDifferentialPreModuleNaturalTopology C ψ)
       (zcCompletedDifferentialModuleNaturalTopology C ψ)
       (crossedDifferentialRelationSubmodule (zcCompletedGroupAlgebraScalar C ψ)).mkQ := by
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G) :=
     zcCompletedDifferentialPreModuleNaturalTopology C ψ
-  letI : TopologicalSpace (ZCCompletedDifferentialModule C ψ) :=
+  let : TopologicalSpace (ZCCompletedDifferentialModule C ψ) :=
     zcCompletedDifferentialModuleNaturalTopology C ψ
   rw [continuous_induced_rng]
   change Continuous
@@ -1549,12 +1560,12 @@ theorem continuous_zcCompletedDifferentialModule_mkQ_naturalTopology :
             (zcCompletedGroupAlgebraScalar C ψ)).mkQ x))
   refine continuous_pi fun i => ?_
   let S := zcCompletedDifferentialPreModuleStageSystem C ψ
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (CrossedDifferentialPreModule
         (zcCompletedDifferentialModuleStageRing C ψ i)
         (zcCompletedDifferentialModuleStageSource C ψ i)) :=
     ⊥
-  letI : DiscreteTopology
+  let : DiscreteTopology
       (CrossedDifferentialPreModule
         (zcCompletedDifferentialModuleStageRing C ψ i)
         (zcCompletedDifferentialModuleStageSource C ψ i)) :=
@@ -1584,8 +1595,8 @@ theorem continuous_zcCompletedDifferentialModule_mkQ_naturalTopology :
         (zcCompletedDifferentialPreModuleNaturalTopology C ψ) inferInstance
         (zcCompletedDifferentialModulePreStageMap C ψ i) at hproj
     exact hproj
-  letI : TopologicalSpace (ZCCompletedDifferentialModuleStage C ψ i) := inferInstance
-  letI : DiscreteTopology (ZCCompletedDifferentialModuleStage C ψ i) := inferInstance
+  let : TopologicalSpace (ZCCompletedDifferentialModuleStage C ψ i) := inferInstance
+  let : DiscreteTopology (ZCCompletedDifferentialModuleStage C ψ i) := inferInstance
   have hq :
       Continuous
         (fun y :
@@ -1624,12 +1635,12 @@ theorem zcCompletedDifferentialModuleRelationSubmoduleClosed_of_t1_naturalTopolo
       @T1Space (ZCCompletedDifferentialModule C ψ)
         (zcCompletedDifferentialModuleNaturalTopology C ψ)) :
     zcCompletedDifferentialModuleRelationSubmoduleClosed C ψ := by
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G) :=
     zcCompletedDifferentialPreModuleNaturalTopology C ψ
-  letI : TopologicalSpace (ZCCompletedDifferentialModule C ψ) :=
+  let : TopologicalSpace (ZCCompletedDifferentialModule C ψ) :=
     zcCompletedDifferentialModuleNaturalTopology C ψ
-  letI : T1Space (ZCCompletedDifferentialModule C ψ) := hT1
+  let : T1Space (ZCCompletedDifferentialModule C ψ) := hT1
   change IsClosed
     ((crossedDifferentialRelationSubmodule (zcCompletedGroupAlgebraScalar C ψ) :
       Submodule (ZCCompletedGroupAlgebra C H)
@@ -1706,7 +1717,7 @@ theorem zcDiffModuleFiniteRelationReductions_mem_closure_relSubmodule
           Submodule (ZCCompletedGroupAlgebra C H)
             (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G)) : Set
               (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G)) := by
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G) :=
     zcCompletedDifferentialPreModuleNaturalTopology C ψ
   rw [mem_closure_iff]
@@ -1749,16 +1760,16 @@ theorem isClosed_zcCompletedDifferentialModulePreStageKernel_naturalTopology
         Submodule (ZCCompletedGroupAlgebra C H)
           (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G)) :
         Set (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G)) := by
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G) :=
     zcCompletedDifferentialPreModuleNaturalTopology C ψ
   let S := zcCompletedDifferentialPreModuleStageSystem C ψ
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (CrossedDifferentialPreModule
         (zcCompletedDifferentialModuleStageRing C ψ i)
         (zcCompletedDifferentialModuleStageSource C ψ i)) :=
     ⊥
-  letI : DiscreteTopology
+  let : DiscreteTopology
       (CrossedDifferentialPreModule
         (zcCompletedDifferentialModuleStageRing C ψ i)
         (zcCompletedDifferentialModuleStageSource C ψ i)) :=
@@ -1841,7 +1852,7 @@ theorem isClosed_zcCompletedDifferentialRelationFiniteClosedSubmodule_naturalTop
         Submodule (ZCCompletedGroupAlgebra C H)
           (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G)) :
         Set (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G)) := by
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G) :=
     zcCompletedDifferentialPreModuleNaturalTopology C ψ
   change IsClosed
@@ -1865,7 +1876,7 @@ theorem isClosed_zero_zcSeparatedCompletedDifferentialModuleNaturalTopology :
     @IsClosed (ZCSeparatedCompletedDifferentialModule C ψ)
       (zcSeparatedCompletedDifferentialModuleNaturalTopology C ψ)
       ({0} : Set (ZCSeparatedCompletedDifferentialModule C ψ)) := by
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G) :=
     zcCompletedDifferentialPreModuleNaturalTopology C ψ
   rw [zcSeparatedCompletedDifferentialModuleNaturalTopology, isClosed_coinduced]
@@ -1904,7 +1915,7 @@ theorem closure_crossedDifferentialRelationSubmodule_eq_finiteClosedSubmodule
         Set (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G)) =
     (zcCompletedDifferentialRelationFiniteClosedSubmodule C ψ :
       Set (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G)) := by
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G) :=
     zcCompletedDifferentialPreModuleNaturalTopology C ψ
   apply Set.Subset.antisymm
@@ -1973,7 +1984,7 @@ theorem crossedDifferentialModuleLiftLinear_kills_finiteClosedSubmodule_of_conti
     (hx : x ∈ zcCompletedDifferentialRelationFiniteClosedSubmodule C ψ) :
     crossedDifferentialModuleLiftLinear
       (R := ZCCompletedGroupAlgebra C H) delta x = 0 := by
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G) :=
     zcCompletedDifferentialPreModuleNaturalTopology C ψ
   have hxcl :
@@ -2265,7 +2276,7 @@ def zcSeparatedCompletedContinuousCrossedDifferentialEquivContinuousLinearMap
       zcSeparatedCompletedDifferentialModuleLiftOfContinuousPrelift_universal
         C ψ hdir delta.1 (hprelift delta.1 delta.2) g
   right_inv f := by
-    letI : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C ψ) :=
+    let : TopologicalSpace (ZCSeparatedCompletedDifferentialModule C ψ) :=
       zcSeparatedCompletedDifferentialModuleNaturalTopology C ψ
     let delta :=
       (zcSeparatedUniversalDifferential C ψ).mapLinear f.toLinearMap
@@ -2413,31 +2424,31 @@ theorem zcCompletedGroupAlgebra_smul_factor_through_finite_stage
         ∀ (r : ZCCompletedGroupAlgebra C H) (a : A),
           act (zcCompletedGroupAlgebraProjection C H j r) a = r • a := by
   classical
-  letI : Fintype A := Fintype.ofFinite A
-  letI : ProCGroups.FiniteGroupClass.ContainsTrivialQuotients C :=
+  let : Fintype A := Fintype.ofFinite A
+  let : ProCGroups.FiniteGroupClass.ContainsTrivialQuotients C :=
     hForm.containsTrivialQuotients
-  letI : Nonempty (ProCIntegerIndex C) :=
+  let : Nonempty (ProCIntegerIndex C) :=
     ⟨ProCIntegerIndex.terminal (C := C) inferInstance⟩
-  letI : Nonempty (CompletedGroupAlgebraIndexInClass H C) :=
+  let : Nonempty (CompletedGroupAlgebraIndexInClass H C) :=
     ⟨_root_.CompletedGroupAlgebra.terminalCompletedGroupAlgebraIndexInClass (G := H) C⟩
-  letI : Nonempty (ZCCompletedGroupAlgebraIndex C H) := inferInstance
-  letI : Finite (A → A) := Finite.of_fintype (A → A)
+  let : Nonempty (ZCCompletedGroupAlgebraIndex C H) := inferInstance
+  let : Finite (A → A) := Finite.of_fintype (A → A)
   let S := zcCompletedGroupAlgebraSystem C H
-  letI : ∀ i : ZCCompletedGroupAlgebraIndex C H, TopologicalSpace (S.X i) :=
+  let : ∀ i : ZCCompletedGroupAlgebraIndex C H, TopologicalSpace (S.X i) :=
     S.topologicalSpace
-  letI : ∀ i : ZCCompletedGroupAlgebraIndex C H, CompactSpace (S.X i) := fun i => by
+  let : ∀ i : ZCCompletedGroupAlgebraIndex C H, CompactSpace (S.X i) := fun i => by
     dsimp [S, zcCompletedGroupAlgebraSystem]
     change @CompactSpace (ZCCompletedGroupAlgebraStage C H i) ⊥
-    letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
-    letI : Finite (ZCCompletedGroupAlgebraStage C H i) :=
+    let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+    let : Finite (ZCCompletedGroupAlgebraStage C H i) :=
       finite_modNCompletedGroupAlgebraStageInClass
         (n := i.1.modulus) (G := H) C i.2
     exact Finite.compactSpace
-  letI : ∀ i : ZCCompletedGroupAlgebraIndex C H, T2Space (S.X i) := fun i => by
+  let : ∀ i : ZCCompletedGroupAlgebraIndex C H, T2Space (S.X i) := fun i => by
     dsimp [S, zcCompletedGroupAlgebraSystem]
     change @T2Space (ZCCompletedGroupAlgebraStage C H i) ⊥
     exact @DiscreteTopology.toT2Space _ ⊥ ⟨rfl⟩
-  letI : ∀ i : ZCCompletedGroupAlgebraIndex C H, TotallyDisconnectedSpace (S.X i) := fun i => by
+  let : ∀ i : ZCCompletedGroupAlgebraIndex C H, TotallyDisconnectedSpace (S.X i) := fun i => by
     dsimp [S, zcCompletedGroupAlgebraSystem]
     change @TotallyDisconnectedSpace (ZCCompletedGroupAlgebraStage C H i) ⊥
     exact @TotallySeparatedSpace.totallyDisconnectedSpace _ ⊥
@@ -2453,7 +2464,8 @@ theorem zcCompletedGroupAlgebra_smul_factor_through_finite_stage
   refine ⟨j, act, ?_⟩
   intro r a
   have h := congrFun (congrFun hact r) a
-  simpa [ρ, S, zcCompletedGroupAlgebraSystem] using h.symm
+  change ((act ∘ S.projection j) r) a = ρ r a
+  exact h.symm
 
 omit [IsTopologicalGroup G] in
 /--
@@ -2481,7 +2493,7 @@ theorem crossedDifferentialModuleLiftLinear_factors_finite_discrete
               (R := ZCCompletedGroupAlgebra C H) delta x =
             L (zcCompletedDifferentialModulePreStageMap C ψc.toMonoidHom i x) := by
   classical
-  letI : Fintype A := Fintype.ofFinite A
+  let : Fintype A := Fintype.ofFinite A
   rcases zcCompletedGroupAlgebra_smul_factor_through_finite_stage
       (C := C) (H := H) (A := A) hForm with
     ⟨target, act, hact⟩
@@ -2606,8 +2618,8 @@ theorem continuous_crossedDifferentialModuleLiftLinear_of_profiniteTarget
       (crossedDifferentialModuleLiftLinear
         (R := ZCCompletedGroupAlgebra C H) delta) := by
   classical
-  letI : ContinuousAdd M := inferInstance
-  letI : TopologicalSpace
+  let : ContinuousAdd M := inferInstance
+  let : TopologicalSpace
       (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G) :=
     zcCompletedDifferentialPreModuleNaturalTopology C ψc.toMonoidHom
   apply _root_.CompletedGroupAlgebra.continuous_of_forall_openSubmodule_quotient_continuous
@@ -2617,9 +2629,9 @@ theorem continuous_crossedDifferentialModuleLiftLinear_of_profiniteTarget
       (ZCCompletedGroupAlgebra C H) (M ⧸ W) :=
     _root_.CompletedGroupAlgebra.quotient_openSubmodule_isDiscreteModule
       (ZCCompletedGroupAlgebra C H) M W hWopen
-  letI : DiscreteTopology (M ⧸ W) := hdisc.2
-  letI : ContinuousSMul (ZCCompletedGroupAlgebra C H) (M ⧸ W) := hdisc.1.2.2
-  letI : Fintype (M ⧸ W) :=
+  let : DiscreteTopology (M ⧸ W) := hdisc.2
+  let : ContinuousSMul (ZCCompletedGroupAlgebra C H) (M ⧸ W) := hdisc.1.2.2
+  let : Fintype (M ⧸ W) :=
     Classical.choice
       (_root_.CompletedGroupAlgebra.finite_quotient_of_openSubmodule
         (ZCCompletedGroupAlgebra C H) M W hWopen)
@@ -2711,7 +2723,7 @@ theorem zcDiffModuleFiniteRelationReductionsReflectRelations_of_isClosed_relSubm
                 (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G))) :
     zcCompletedDifferentialModuleFiniteRelationReductionsReflectRelations C ψ := by
   intro x hx
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G) :=
     zcCompletedDifferentialPreModuleNaturalTopology C ψ
   have hxcl :
@@ -2870,7 +2882,7 @@ theorem t2Space_zcCompletedDifferentialModuleNaturalTopology_of_separating
     (hsep : zcCompletedDifferentialModuleStageProjectionsSeparate C ψ) :
     @T2Space (ZCCompletedDifferentialModule C ψ)
       (zcCompletedDifferentialModuleNaturalTopology C ψ) := by
-  letI : TopologicalSpace (ZCCompletedDifferentialModule C ψ) :=
+  let : TopologicalSpace (ZCCompletedDifferentialModule C ψ) :=
     zcCompletedDifferentialModuleNaturalTopology C ψ
   exact T2Space.of_injective_continuous hsep
     (continuous_zcCompletedDifferentialModuleStageProjectionProduct_naturalTopology C ψ)
@@ -2895,12 +2907,12 @@ submodule is closed for the finite-stage topology on the completed pre-module.
 theorem zcCompletedDifferentialModuleRelationSubmoduleClosed_of_stageProjsSeparate
     (hsep : zcCompletedDifferentialModuleStageProjectionsSeparate C ψ) :
     zcCompletedDifferentialModuleRelationSubmoduleClosed C ψ := by
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G) :=
     zcCompletedDifferentialPreModuleNaturalTopology C ψ
-  letI : TopologicalSpace (ZCCompletedDifferentialModule C ψ) :=
+  let : TopologicalSpace (ZCCompletedDifferentialModule C ψ) :=
     zcCompletedDifferentialModuleNaturalTopology C ψ
-  letI : T2Space (ZCCompletedDifferentialModule C ψ) :=
+  let : T2Space (ZCCompletedDifferentialModule C ψ) :=
     t2Space_zcCompletedDifferentialModuleNaturalTopology_of_separating C ψ hsep
   change IsClosed
     ((crossedDifferentialRelationSubmodule (zcCompletedGroupAlgebraScalar C ψ) :
@@ -2995,9 +3007,9 @@ theorem zcCompletedDifferentialModuleRelationSubmoduleClosed_iff_t2_naturalTopol
       t2Space_zcCompletedDifferentialModuleNaturalTopology_of_separating C ψ
         ((zcDiffModuleRelSubmoduleClosed_iff_stageProjsSeparate (C := C) (ψ := ψ) hdir).1 hclosed)
   · intro hT2
-    letI : TopologicalSpace (ZCCompletedDifferentialModule C ψ) :=
+    let : TopologicalSpace (ZCCompletedDifferentialModule C ψ) :=
       zcCompletedDifferentialModuleNaturalTopology C ψ
-    letI : T2Space (ZCCompletedDifferentialModule C ψ) := hT2
+    let : T2Space (ZCCompletedDifferentialModule C ψ) := hT2
     exact
       zcCompletedDifferentialModuleRelationSubmoduleClosed_of_t1_naturalTopology
         C ψ (by infer_instance)
@@ -3009,7 +3021,7 @@ theorem continuous_add_zcCompletedDifferentialModuleNaturalTopology :
       zcCompletedDifferentialModuleNaturalTopology C ψ
     Continuous (fun p : ZCCompletedDifferentialModule C ψ ×
         ZCCompletedDifferentialModule C ψ => p.1 + p.2) := by
-  letI : TopologicalSpace (ZCCompletedDifferentialModule C ψ) :=
+  let : TopologicalSpace (ZCCompletedDifferentialModule C ψ) :=
     zcCompletedDifferentialModuleNaturalTopology C ψ
   rw [continuous_induced_rng]
   change Continuous
@@ -3030,7 +3042,7 @@ theorem continuous_neg_zcCompletedDifferentialModuleNaturalTopology :
     letI : TopologicalSpace (ZCCompletedDifferentialModule C ψ) :=
       zcCompletedDifferentialModuleNaturalTopology C ψ
     Continuous (fun a : ZCCompletedDifferentialModule C ψ => -a) := by
-  letI : TopologicalSpace (ZCCompletedDifferentialModule C ψ) :=
+  let : TopologicalSpace (ZCCompletedDifferentialModule C ψ) :=
     zcCompletedDifferentialModuleNaturalTopology C ψ
   rw [continuous_induced_rng]
   change Continuous
@@ -3046,7 +3058,7 @@ omit [IsTopologicalGroup G] in
 theorem isTopologicalAddGroup_zcCompletedDifferentialModuleNaturalTopology :
     @IsTopologicalAddGroup (ZCCompletedDifferentialModule C ψ)
       (zcCompletedDifferentialModuleNaturalTopology C ψ) _ := by
-  letI : TopologicalSpace (ZCCompletedDifferentialModule C ψ) :=
+  let : TopologicalSpace (ZCCompletedDifferentialModule C ψ) :=
     zcCompletedDifferentialModuleNaturalTopology C ψ
   exact
     { continuous_add := by
@@ -3058,7 +3070,7 @@ theorem isTopologicalAddGroup_zcCompletedDifferentialModuleNaturalTopology :
 theorem continuous_zcCompletedDifferentialModuleStageDifferential
     (i : ZCCompletedDifferentialModuleIndex C ψ) :
     Continuous (zcCompletedDifferentialModuleStageDifferential C ψ i) := by
-  letI : DiscreteTopology (zcCompletedDifferentialModuleStageSource C ψ i) :=
+  let : DiscreteTopology (zcCompletedDifferentialModuleStageSource C ψ i) :=
     ProCGroups.ProC.OpenNormalSubgroup.quotientDiscrete (G := G) i.source.1
   have hdiff :
       Continuous (fun q : zcCompletedDifferentialModuleStageSource C ψ i =>
@@ -3116,7 +3128,7 @@ theorem continuous_zcToCompletedGroupAlgebra_naturalTopology
       (ZCCompletedGroupAlgebra C H)
       (zcCompletedDifferentialModuleNaturalTopology C ψc.toMonoidHom) inferInstance
       (zcToCompletedGroupAlgebra C ψc.toMonoidHom) := by
-  letI : TopologicalSpace (ZCCompletedDifferentialModule C ψc.toMonoidHom) :=
+  let : TopologicalSpace (ZCCompletedDifferentialModule C ψc.toMonoidHom) :=
     zcCompletedDifferentialModuleNaturalTopology C ψc.toMonoidHom
   have hval : Continuous (fun a : ZCCompletedDifferentialModule C ψc.toMonoidHom =>
       ((zcToCompletedGroupAlgebra C ψc.toMonoidHom a : ZCCompletedGroupAlgebra C H) :
@@ -3169,7 +3181,7 @@ theorem continuousSMul_zcCompletedDifferentialModuleNaturalTopology :
     @ContinuousSMul (ZCCompletedGroupAlgebra C H)
       (ZCCompletedDifferentialModule C ψ)
       inferInstance inferInstance (zcCompletedDifferentialModuleNaturalTopology C ψ) := by
-  letI : TopologicalSpace (ZCCompletedDifferentialModule C ψ) :=
+  let : TopologicalSpace (ZCCompletedDifferentialModule C ψ) :=
     zcCompletedDifferentialModuleNaturalTopology C ψ
   refine ⟨?_⟩
   rw [continuous_induced_rng]
@@ -3178,8 +3190,8 @@ theorem continuousSMul_zcCompletedDifferentialModuleNaturalTopology :
       fun i : ZCCompletedDifferentialModuleIndex C ψ =>
         zcCompletedDifferentialModuleStageProjectionAdd C ψ i (p.1 • p.2))
   refine continuous_pi fun i => ?_
-  letI : TopologicalSpace (zcCompletedDifferentialModuleStageRing C ψ i) := inferInstance
-  letI : DiscreteTopology (zcCompletedDifferentialModuleStageRing C ψ i) := inferInstance
+  let : TopologicalSpace (zcCompletedDifferentialModuleStageRing C ψ i) := inferInstance
+  let : DiscreteTopology (zcCompletedDifferentialModuleStageRing C ψ i) := inferInstance
   have hstageAction :
       Continuous (fun p : zcCompletedDifferentialModuleStageRing C ψ i ×
           ZCCompletedDifferentialModuleStage C ψ i => p.1 • p.2) :=

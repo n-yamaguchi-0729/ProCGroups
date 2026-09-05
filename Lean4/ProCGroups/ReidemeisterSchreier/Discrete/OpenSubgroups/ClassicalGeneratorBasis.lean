@@ -1,5 +1,9 @@
 import ProCGroups.ReidemeisterSchreier.Discrete.OpenSubgroups.FreeBasis
 
+set_option autoImplicit false
+
+universe u
+
 /-!
 # Reidemeister Schreier / Discrete / Open Subgroups / Classical Generator Basis
 
@@ -26,8 +30,8 @@ private theorem IsRightSchreierTransversal.exists_inverseSchreierBasisEquiv
       ∀ z : ↥(schreierGeneratorSet (X := X) hT),
         e (FreeGroup.of z) = (z : L)⁻¹ := by
   classical
-  letI := schreierTransversalRightCosetAction (X := X) hT
-  letI : IsFreeGroupoid (CategoryTheory.ActionCategory (FreeGroup X) T) :=
+  let : MulAction (FreeGroup X) T := schreierTransversalRightCosetAction (X := X) hT
+  let : IsFreeGroupoid (CategoryTheory.ActionCategory (FreeGroup X) T) :=
     FreeGroupBasis.actionGroupoidIsFree (FreeGroup.inverseBasis X)
   let C :
       Set (Quiver.Total
@@ -50,7 +54,11 @@ private theorem IsRightSchreierTransversal.exists_inverseSchreierBasisEquiv
   have hval : ∀ i : ↑C, (b i : L) =
       (((toSch i : ↥(schreierGeneratorSet (X := X) hT)) : L)⁻¹) := by
     intro i
-    rw [FreeGroupBasis.map_apply, ReidemeisterSchreier.Groupoid.endBasis_apply]
+    refine (FreeGroupBasis.map_apply
+      (ReidemeisterSchreier.Groupoid.endBasis (schreierPrefixTree (X := X) hT))
+      (schreierRootEndMulEquiv (X := X) hT) i).trans ?_
+    refine (congrArg (schreierRootEndMulEquiv (X := X) hT)
+      (ReidemeisterSchreier.Groupoid.endBasis_apply (schreierPrefixTree (X := X) hT) i)).trans ?_
     have htree : ∀ {a b : IsFreeGroupoid.Generators (CategoryTheory.ActionCategory (FreeGroup X) T)}
         (e : a ⟶ b),
         e ∈ Quiver.wideSubquiverSymmetrify (schreierPrefixTree (X := X) hT) a b →

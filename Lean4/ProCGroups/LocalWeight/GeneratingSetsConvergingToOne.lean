@@ -1,5 +1,7 @@
 import ProCGroups.LocalWeight.LocalWeightTheorems
 
+set_option autoImplicit false
+
 /-!
 # Generating sets converging to one
 
@@ -40,7 +42,7 @@ theorem cardinal_le_aleph0_iff_hasCountableDescendingOpenNormalChainAtOne
           (G := G) X hX hXinfinite] using hXcount
       exact hasCountableDescendingOpenNormalChainAtOne_of_localWeight_le_aleph0
         (G := G) hlocal
-    · letI : Finite X := Set.not_infinite.mp hXinfinite
+    · let : Finite X := Set.not_infinite.mp hXinfinite
       have hXfinite : X.Finite := Set.toFinite X
       let s : Finset G := hXfinite.toFinset
       have hsgen : TopologicallyFinitelyGenerated G := by
@@ -75,7 +77,7 @@ theorem cardinal_le_aleph0_iff_hasCountableDescendingOpenNormalChainAtOne
           cardinalEqLocalWeight_of_generatesAndConvergesToOneAlongOpenSubgroups_infinite
             (G := G) X hX hXinfinite
         _ ≤ ℵ₀ := hlocal
-    · letI : Finite X := Set.not_infinite.mp hXinfinite
+    · let : Finite X := Set.not_infinite.mp hXinfinite
       exact ((Cardinal.lt_aleph0_iff_finite (α := X)).2 inferInstance).le
 
 /--

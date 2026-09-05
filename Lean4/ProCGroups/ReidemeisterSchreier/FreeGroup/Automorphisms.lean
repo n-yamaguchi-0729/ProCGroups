@@ -1,5 +1,9 @@
 import Mathlib.GroupTheory.FreeGroup.NielsenSchreier
 
+set_option autoImplicit false
+
+universe u
+
 /-!
 # Reidemeister Schreier / Free Group / Automorphisms
 

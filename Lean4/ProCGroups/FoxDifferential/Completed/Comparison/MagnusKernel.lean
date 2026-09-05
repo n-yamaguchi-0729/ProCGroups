@@ -3,6 +3,8 @@ import ProCGroups.FoxDifferential.Discrete.KernelBoundary.Quotient
 import ProCGroups.FoxDifferential.Discrete.FoxCalculus.Boundary
 import ProCGroups.FoxDifferential.Completed.Comparison.DiscreteCompletion
 
+set_option autoImplicit false
+
 /-!
 # Fox Differential / Completed / Comparison / Magnus Kernel
 
@@ -102,7 +104,7 @@ theorem mem_foxCommutatorPowerSubgroup_of_residueUniversalDifferential_eq_zero
         (FoxDifferential.FoxCalculus.relativeFreeFoxCoordinatesLinearMap
           (H := Hq) X ψ y) = 0
     exact hcomp.trans hboundary_y
-  letI := kernelAbelianizationModuleOfSurjective ψ hψ
+  let := kernelAbelianizationModuleOfSurjective ψ hψ
   obtain ⟨a, ha⟩ :=
     (exact_kernelAbelianizationBoundaryLinearOfSurjective_toGroupRing
       (H := Hq) ψ hψ Y).1 hYker
@@ -254,15 +256,15 @@ theorem mem_commutator_ker_of_finiteFoxStageDerivativeVector_eq_zero_finite
       simpa [MonoidHom.mem_ker, MonoidHom.comp_apply] using hwker⟩ : β.ker) ∈
       commutator β.ker := by
   classical
-  letI : Finite X := inferInstance
+  let : Finite X := inferInstance
   rcases Finite.exists_equiv_fin X with ⟨m, ⟨eX⟩⟩
-  letI : DecidableEq (Fin m) := Classical.decEq (Fin m)
+  let : DecidableEq (Fin m) := Classical.decEq (Fin m)
   rcases Finite.exists_type_univ_nonempty_mulEquiv.{u, 0} Q with
     ⟨Q0, instQ0Group, _instQ0Fintype, ⟨eQ⟩⟩
   rcases Finite.exists_type_univ_nonempty_mulEquiv.{u, 0} H with
     ⟨H0, instH0Group, _instH0Fintype, ⟨eH⟩⟩
-  letI : Group Q0 := instQ0Group
-  letI : Group H0 := instH0Group
+  let : Group Q0 := instQ0Group
+  let : Group H0 := instH0Group
   let phi : FreeGroup X ≃* FreeGroup (Fin m) := FreeGroup.freeGroupCongr eX
   let α0 : FreeGroup (Fin m) →* Q0 :=
     eQ.toMonoidHom.comp (α.comp phi.symm.toMonoidHom)
@@ -271,7 +273,7 @@ theorem mem_commutator_ker_of_finiteFoxStageDerivativeVector_eq_zero_finite
   let w0 : FreeGroup (Fin m) := phi w
   let M0 : Subgroup (FreeGroup (Fin m)) :=
     (β0.comp α0).ker
-  haveI : M0.Normal := by
+  have : M0.Normal := by
     dsimp [M0]
     infer_instance
   have hM0 : (β.comp α).ker.map phi.toMonoidHom = M0 := by

@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.System.Ring.Projection
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: coefficient rings — prime-power completed group algebra — coeff — system
 
@@ -35,29 +37,23 @@ def primePowerCompletedCoeffSystem :
   X := fun i => ZMod (ℓ ^ i.1)
   topologicalSpace := fun _ => ⊥
   map := fun {i j} hij =>
-    letI : Fact (0 < ℓ ^ i.1) := ⟨primePower_pos ℓ i.1⟩
-    letI : Fact (0 < ℓ ^ j.1) := ⟨primePower_pos ℓ j.1⟩
     modNCompletedCoeffMap (n := ℓ ^ i.1) (m := ℓ ^ j.1)
       (primePow_dvd_primePow (ℓ := ℓ) hij.1)
   continuous_map := by
     intro i j hij
-    letI : TopologicalSpace (ZMod (ℓ ^ i.1)) := ⊥
-    letI : TopologicalSpace (ZMod (ℓ ^ j.1)) := ⊥
-    letI : DiscreteTopology (ZMod (ℓ ^ j.1)) := ⟨rfl⟩
+    let : TopologicalSpace (ZMod (ℓ ^ i.1)) := ⊥
+    let : TopologicalSpace (ZMod (ℓ ^ j.1)) := ⊥
+    let : DiscreteTopology (ZMod (ℓ ^ j.1)) := ⟨rfl⟩
     exact continuous_of_discreteTopology
   map_id := by
     intro i
     funext x
-    letI : Fact (0 < ℓ ^ i.1) := ⟨primePower_pos ℓ i.1⟩
     exact congrFun
       (congrArg DFunLike.coe
         (modNCompletedCoeffMap_rfl (n := ℓ ^ i.1))) x
   map_comp := by
     intro i j k hij hjk
     funext x
-    letI : Fact (0 < ℓ ^ i.1) := ⟨primePower_pos ℓ i.1⟩
-    letI : Fact (0 < ℓ ^ j.1) := ⟨primePower_pos ℓ j.1⟩
-    letI : Fact (0 < ℓ ^ k.1) := ⟨primePower_pos ℓ k.1⟩
     exact congrFun
       (congrArg DFunLike.coe
         (modNCompletedCoeffMap_comp

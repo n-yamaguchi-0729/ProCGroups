@@ -1,6 +1,8 @@
 import Mathlib.Topology.Algebra.Group.TopologicalAbelianization
 import ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
 
+set_option autoImplicit false
+
 /-!
 # Topological abelianization
 
@@ -72,7 +74,7 @@ subgroup.
 instance instT2SpaceTopologicalAbelianization
     {G : Type u} [TopologicalSpace G] [Group G] [IsTopologicalGroup G] :
     T2Space (TopologicalAbelianization G) := by
-  letI : IsClosed (((Subgroup.closedCommutator G : Subgroup G) : Set G)) :=
+  have : IsClosed (((Subgroup.closedCommutator G : Subgroup G) : Set G)) :=
     Subgroup.isClosed_closedCommutator G
   infer_instance
 
@@ -244,8 +246,10 @@ noncomputable def congr
     {H : Type v} [TopologicalSpace H] [Group H] [IsTopologicalGroup H]
     (e : G ≃ₜ* H) :
     TopologicalAbelianization G ≃ₜ* TopologicalAbelianization H := by
-  let f := map (ContinuousMonoidHom.toContinuousMonoidHom e)
-  let g := map (ContinuousMonoidHom.toContinuousMonoidHom e.symm)
+  let f : TopologicalAbelianization G →ₜ* TopologicalAbelianization H :=
+    map (ContinuousMonoidHom.toContinuousMonoidHom e)
+  let g : TopologicalAbelianization H →ₜ* TopologicalAbelianization G :=
+    map (ContinuousMonoidHom.toContinuousMonoidHom e.symm)
   exact ContinuousMulEquiv.ofHomInv f g
     (by
       intro x

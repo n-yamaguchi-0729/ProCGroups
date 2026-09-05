@@ -3,6 +3,8 @@ import ProCGroups.FoxDifferential.Completed.Continuous.Magnus.ClosedGeneratedVec
 import ProCGroups.FoxDifferential.Completed.Continuous.ClosedGeneratedCoordinates.Topology
 import ProCGroups.FoxDifferential.Completed.FreeProC.RelationReflection
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — free pro-\(C\) — natural topology
 
@@ -125,7 +127,7 @@ theorem freeProC_zcDiffModuleStageProjsSeparate_of_relSubmoduleClosed
         C psi.toMonoidHom) :
     zcCompletedDifferentialModuleStageProjectionsSeparate
       C psi.toMonoidHom := by
-  letI :
+  let :
       Nonempty
         (ZCCompletedDifferentialModuleIndex
           C psi.toMonoidHom) :=
@@ -184,7 +186,7 @@ theorem freeProC_zcDiffModuleRelSubmoduleClosed_iff_stageProjsSeparate
         C psi.toMonoidHom ↔
       zcCompletedDifferentialModuleStageProjectionsSeparate
         C psi.toMonoidHom := by
-  letI :
+  let :
       Nonempty
         (ZCCompletedDifferentialModuleIndex
           C psi.toMonoidHom) :=
@@ -223,7 +225,7 @@ theorem freeProC_zcDiffModuleRelSubmoduleClosed_iff_t2_naturalTopology
         (ZCCompletedDifferentialModule C psi.toMonoidHom)
         (zcCompletedDifferentialModuleNaturalTopology
           C psi.toMonoidHom) := by
-  letI :
+  let :
       Nonempty
         (ZCCompletedDifferentialModuleIndex
           C psi.toMonoidHom) :=

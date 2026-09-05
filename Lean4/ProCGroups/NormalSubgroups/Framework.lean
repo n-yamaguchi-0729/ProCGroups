@@ -1,5 +1,7 @@
 import ProCGroups.FreeProC.Basic
 
+set_option autoImplicit false
+
 /-!
 # Closed normal closures and perfect subgroups
 

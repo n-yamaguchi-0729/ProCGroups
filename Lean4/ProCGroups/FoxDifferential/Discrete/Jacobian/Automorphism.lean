@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Discrete.Jacobian.ChainRule
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: discrete — jacobian — automorphism
 
@@ -89,7 +91,6 @@ theorem freeGroupAutomorphismFoxJacobianMatrix_left_inverse
       (1 : Matrix X X (GroupRing H)) := by
   apply Matrix.ext
   intro x z
-  rw [Matrix.mul_apply]
   change
     (∑ j : X,
         freeGroupHomFoxJacobian (H := H) (ψ.comp e.toMonoidHom)
@@ -118,7 +119,6 @@ theorem freeGroupAutomorphismFoxJacobianMatrix_right_inverse
       (1 : Matrix X X (GroupRing H)) := by
   apply Matrix.ext
   intro x z
-  rw [Matrix.mul_apply]
   change
     (∑ j : X,
         freeGroupHomFoxJacobian (H := H) (ψ.comp e.symm.toMonoidHom)

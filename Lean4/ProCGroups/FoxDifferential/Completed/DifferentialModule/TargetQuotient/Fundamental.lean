@@ -2,6 +2,8 @@ import ProCGroups.FoxDifferential.Completed.DifferentialModule.TargetQuotient.St
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.Source.Fundamental
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.Source.Mul
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — differential module — target quotient — fundamental
 

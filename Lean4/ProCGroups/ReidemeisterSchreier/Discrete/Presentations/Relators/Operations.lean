@@ -1,6 +1,8 @@
 import Mathlib.Tactic.Group
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Basic
 
+set_option autoImplicit false
+
 /-!
 # Operations on relator normal closures
 

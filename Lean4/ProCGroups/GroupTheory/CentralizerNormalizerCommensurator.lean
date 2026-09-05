@@ -1,5 +1,7 @@
 import ProCGroups.Generation.Basic
 
+set_option autoImplicit false
+
 /-!
 # Pro C Groups / Group Theory / Centralizers
 

@@ -1,5 +1,7 @@
 import ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
 
+set_option autoImplicit false
+
 /-!
 # Finite quotient objects for pro-\(C\) inverse limits
 
@@ -26,10 +28,6 @@ namespace HasOpenNormalBasisInClass
 /-- Any finite discrete group already lying in the class \(C\) is pro-\(C\). -/
 theorem of_finite_discrete (hquot : FiniteGroupClass.QuotientClosed C)
     [Finite G] [DiscreteTopology G] (hCG : C G) : HasOpenNormalBasisInClass C G := by
-  letI : Fintype G := Fintype.ofFinite G
-  letI : CompactSpace G := by infer_instance
-  letI : T2Space G := by infer_instance
-  letI : TotallyDisconnectedSpace G := by infer_instance
   refine HasOpenNormalBasisInClass.of_allOpenNormalQuotients (C := C) (G := G) ?_
   intro U
   exact hquot (N := (U : Subgroup G)) hCG
@@ -43,10 +41,6 @@ theorem quotient_openNormalSubgroup
     [CompactSpace G] [T2Space G]
     (hG : HasOpenNormalBasisInClass C G) (U : OpenNormalSubgroup G) :
     HasOpenNormalBasisInClass C (G ⧸ (U : Subgroup G)) := by
-  letI : Finite (G ⧸ (U : Subgroup G)) :=
-    openNormalSubgroup_finiteQuotient (G := G) U
-  letI : DiscreteTopology (G ⧸ (U : Subgroup G)) :=
-    QuotientGroup.discreteTopology (openNormalSubgroup_isOpen (G := G) U)
   exact HasOpenNormalBasisInClass.of_finite_discrete (C := C) (G := G ⧸ (U : Subgroup G))
     hForm.quotientClosed (hG.quotient_mem hForm U)
 
@@ -56,9 +50,7 @@ theorem quotient_openNormalSubgroupInClass
     (U : OpenNormalSubgroupInClass C G) :
     HasOpenNormalBasisInClass C (G ⧸ (U.1 : Subgroup G)) :=
   by
-    letI : Finite (G ⧸ (U.1 : Subgroup G)) := C.finite U.2
-    letI : DiscreteTopology (G ⧸ (U.1 : Subgroup G)) :=
-      QuotientGroup.discreteTopology (openNormalSubgroup_isOpen (G := G) U.1)
+    let : Finite (G ⧸ (U.1 : Subgroup G)) := C.finite U.2
     exact HasOpenNormalBasisInClass.of_finite_discrete (C := C)
       (G := G ⧸ (U.1 : Subgroup G)) hquot U.2
 
@@ -74,24 +66,6 @@ theorem pi {α : Type u} {β : α → Type u}
     HasOpenNormalBasisInClass C ((a : α) → β a) := by
   classical
   let G : Type u := (a : α) → β a
-  letI : Group G := by
-    dsimp [G]
-    infer_instance
-  letI : TopologicalSpace G := by
-    dsimp [G]
-    infer_instance
-  letI : IsTopologicalGroup G := by
-    change IsTopologicalGroup ((a : α) → β a)
-    exact Pi.topologicalGroup
-  letI : CompactSpace G := by
-    change CompactSpace ((a : α) → β a)
-    exact Pi.compactSpace
-  letI : T2Space G := by
-    change T2Space ((a : α) → β a)
-    exact Pi.t2Space
-  letI : TotallyDisconnectedSpace G := by
-    change TotallyDisconnectedSpace ((a : α) → β a)
-    exact Pi.totallyDisconnectedSpace
   refine HasOpenNormalBasisInClass.of_allOpenNormalQuotients (C := C) (G := G) ?_
   intro U
   let hUnhds : ((U : Subgroup G) : Set G) ∈ 𝓝 (1 : G) := by
@@ -114,7 +88,7 @@ theorem pi {α : Type u} {β : α → Type u}
            map_one' := rfl
            map_mul' := by intro x y; rfl } : G →* β j.1)
         (continuous_apply j.1) (V j) : OpenNormalSubgroup G) : Subgroup G)
-  letI : M.Normal := by
+  let : M.Normal := by
     exact Subgroup.normal_iInf_normal fun j : J =>
       (OpenNormalSubgroup.comap
         ({ toFun := fun g : G => g j.1
@@ -136,8 +110,6 @@ theorem pi {α : Type u} {β : α → Type u}
     { toFun := fun g j => QuotientGroup.mk' (V j : Subgroup (β j)) (g j)
       map_one' := by funext j; rfl
       map_mul' := by intro x y; funext j; rfl }
-  have hProd : C (∀ j : J, β j ⧸ (V j : Subgroup (β j))) := by
-    exact FiniteGroupClass.Formation.finiteProductClosed (C := C) hForm hVquot
   have hRange : C φ.range := by
     let ψ : φ.range →* ∀ j : J, β j ⧸ (V j : Subgroup (β j)) :=
       φ.range.subtype

@@ -1,6 +1,8 @@
 import ProCGroups.ProC.OpenNormalSubgroups.BasisAtOne
 import ProCGroups.ProC.Quotients.DescendingClosedSubgroupQuotients
 
+set_option autoImplicit false
+
 /-!
 # Continuous sections of left-quotient projections
 
@@ -82,7 +84,8 @@ noncomputable def closedSubgroupOfOpenSubgroup
     ClosedSubgroup G where
   toSubgroup := (N : Subgroup T).map ((T : Subgroup G).subtype)
   isClosed' := by
-    letI : IsTopologicalGroup ↥(T : Subgroup G) := by infer_instance
+    have : IsTopologicalGroup ↥(T : Subgroup G) :=
+      Topology.IsInducing.subtypeVal.topologicalGroup (T : Subgroup G).subtype
     have hNclosed : IsClosed ((N : Subgroup T) : Set T) :=
       Subgroup.isClosed_of_isOpen (N : Subgroup T) N.isOpen'
     have hNcompact : IsCompact ((N : Subgroup T) : Set T) := hNclosed.isCompact
@@ -151,9 +154,9 @@ noncomputable def quotientBotHomeomorph :
           rcases Quotient.exists_rep q with ⟨g, rfl⟩
           exact ⟨g, rfl⟩))
     (by
-      simpa using
-        (QuotientGroup.continuous_mk : Continuous
-          (QuotientGroup.mk (s := (⊥ : Subgroup G)) : G → G ⧸ (⊥ : Subgroup G))))
+      change Continuous
+        (QuotientGroup.mk (s := (⊥ : Subgroup G)) : G → G ⧸ (⊥ : Subgroup G))
+      exact QuotientGroup.continuous_mk)
 
 omit [T2Space G] in
 /-- The continuous equivalence is evaluated by the corresponding comparison formula. -/
@@ -243,7 +246,6 @@ theorem exists_upperBound_of_chain
   have hI_nonempty : Nonempty I := by
     rcases hcn with ⟨a, ha⟩
     exact ⟨⟨a, ha⟩⟩
-  letI : Nonempty I := hI_nonempty
   let L : I → ClosedSubgroup G := fun i => i.1.L
   have hL : ∀ {i j : I}, i ≤ j → (L j : Subgroup G) ≤ (L i : Subgroup G) := by
     intro i j hij
@@ -327,7 +329,7 @@ theorem leftQuotientProjection_hasContinuousSection
           QuotientGroup.mk (s := (K : Subgroup G)) (1 : G) := by
   classical
   let P := LeftQuotientSectionData (G := G) K H
-  letI : Nonempty P := ⟨LeftQuotientSectionData.top (G := G) hKH⟩
+  let : Nonempty P := ⟨LeftQuotientSectionData.top (G := G) hKH⟩
   obtain ⟨m, hmmax⟩ := zorn_le_nonempty (α := P) <| by
     intro c hc hcn
     rcases LeftQuotientSectionData.exists_upperBound_of_chain (G := G) (K := K) (H := H)
@@ -341,7 +343,7 @@ theorem leftQuotientProjection_hasContinuousSection
       ext x
       change x ∈ (m.L : Subgroup G) ↔ x ∈ (K : Subgroup G)
       exact ⟨fun hx => hmK hx, fun hx => m.hKL hx⟩
-    letI : CompactSpace ↥(m.L : Subgroup G) :=
+    let : CompactSpace ↥(m.L : Subgroup G) :=
       m.L.isClosed'.isClosedEmbedding_subtypeVal.compactSpace
     rcases exists_mem_of_not_le (G := G) (K := K) (L := m.L) hnotle with ⟨x, hxL, hxK⟩
     let KT : ClosedSubgroup ↥(m.L : Subgroup G) := {

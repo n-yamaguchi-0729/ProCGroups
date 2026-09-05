@@ -1,6 +1,8 @@
 import Mathlib.Algebra.MonoidAlgebra.MapDomain
 import ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — coefficient rings — completed group algebra
 
@@ -72,13 +74,20 @@ theorem completedGroupAlgebraTransitionInClass_comp
     (completedGroupAlgebraTransitionInClass G C hUV).comp
         (completedGroupAlgebraTransitionInClass G C hVW) =
       completedGroupAlgebraTransitionInClass G C (hUV.trans hVW) := by
-  rw [completedGroupAlgebraTransitionInClass, completedGroupAlgebraTransitionInClass,
-    completedGroupAlgebraTransitionInClass, ← MonoidAlgebra.mapDomainRingHom_comp]
-  congr 1
-  exact OpenNormalSubgroupInClass.map_comp
-    (C := C) (G := G)
-    (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) (W := OrderDual.ofDual W)
-    hUV hVW
+  unfold completedGroupAlgebraTransitionInClass
+  exact
+    (MonoidAlgebra.mapDomainRingHom_comp (R := ℤ)
+      (OpenNormalSubgroupInClass.map
+        (C := C) (G := G)
+        (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) hUV)
+      (OpenNormalSubgroupInClass.map
+        (C := C) (G := G)
+        (U := OrderDual.ofDual V) (V := OrderDual.ofDual W) hVW)).symm.trans
+      (congrArg (MonoidAlgebra.mapDomainRingHom ℤ)
+        (OpenNormalSubgroupInClass.map_comp
+          (C := C) (G := G)
+          (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) (W := OrderDual.ofDual W)
+          hUV hVW))
 
 /-- The class-restricted inverse system of finite-stage integral group rings. -/
 def completedGroupAlgebraSystemInClass
@@ -89,9 +98,9 @@ def completedGroupAlgebraSystemInClass
   map := fun {U V} hUV => completedGroupAlgebraTransitionInClass G C hUV
   continuous_map := by
     intro U V hUV
-    letI : TopologicalSpace (CompletedGroupAlgebraStageInClass G C U) := ⊥
-    letI : TopologicalSpace (CompletedGroupAlgebraStageInClass G C V) := ⊥
-    letI : DiscreteTopology (CompletedGroupAlgebraStageInClass G C V) := ⟨rfl⟩
+    let : TopologicalSpace (CompletedGroupAlgebraStageInClass G C U) := ⊥
+    let : TopologicalSpace (CompletedGroupAlgebraStageInClass G C V) := ⊥
+    let : DiscreteTopology (CompletedGroupAlgebraStageInClass G C V) := ⟨rfl⟩
     exact continuous_of_discreteTopology
   map_id := by
     intro U
@@ -135,9 +144,24 @@ theorem completedGroupAlgebraStageMapInClass_compatible
     (completedGroupAlgebraTransitionInClass G C hUV).comp
         (completedGroupAlgebraStageMapInClass G C V) =
       completedGroupAlgebraStageMapInClass G C U := by
-  rw [completedGroupAlgebraTransitionInClass, completedGroupAlgebraStageMapInClass,
-    completedGroupAlgebraStageMapInClass, ← MonoidAlgebra.mapDomainRingHom_comp]
-  congr 1
+  unfold completedGroupAlgebraTransitionInClass completedGroupAlgebraStageMapInClass
+  have hproj :
+      (OpenNormalSubgroupInClass.map
+        (C := C) (G := G)
+        (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) hUV).comp
+          (openNormalSubgroupInClassProj (C := C) (G := G) V) =
+        openNormalSubgroupInClassProj (C := C) (G := G) U := by
+    ext g
+    exact congrFun
+      (openNormalSubgroupInClassProj_compatible
+        (C := C) (G := G) U V hUV) g
+  exact
+    (MonoidAlgebra.mapDomainRingHom_comp (R := ℤ)
+      (OpenNormalSubgroupInClass.map
+        (C := C) (G := G)
+        (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) hUV)
+      (openNormalSubgroupInClassProj (C := C) (G := G) V)).symm.trans
+      (congrArg (MonoidAlgebra.mapDomainRingHom ℤ) hproj)
 
 /-- Compatibility for a class-restricted completed group algebra family. -/
 def CompletedGroupAlgebraCompatibleInClass

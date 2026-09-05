@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Completed.FreeProC.BifilteredStageProjection
 import ProCGroups.FoxDifferential.Completed.FiniteStage.Bifiltered.InverseSystem
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — free pro-\(C\) — bifiltered system stage projection
 

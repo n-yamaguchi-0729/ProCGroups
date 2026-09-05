@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.OpenFiniteQuotientTopology.FiniteQuotients
 
+set_option autoImplicit false
+
 /-!
 # The open-finite quotient system
 
@@ -43,7 +45,6 @@ theorem profiniteRing_eq_zero_of_forall_openIdeal_quotient_eq_zero
     (hr : ∀ I : CompletedGroupAlgebraOpenIdeal R, Ideal.Quotient.mk I.1 r = 0) :
     r = 0 := by
   by_contra hne
-  letI : T1Space R := inferInstance
   have h0 : (0 : R) ∈ ({r}ᶜ : Set R) := by
     exact fun h0r => hne h0r.symm
   have hU : ({r}ᶜ : Set R) ∈ 𝓝 (0 : R) :=
@@ -245,7 +246,7 @@ theorem completedGroupAlgebraOpenFiniteQuotientStage_discrete
     letI : TopologicalSpace (CompletedGroupAlgebraOpenQuotientStage R G K) :=
       completedGroupAlgebraOpenFiniteQuotientStageTopology R G K
     DiscreteTopology (CompletedGroupAlgebraOpenQuotientStage R G K) := by
-  letI : TopologicalSpace (CompletedGroupAlgebraOpenQuotientStage R G K) :=
+  let : TopologicalSpace (CompletedGroupAlgebraOpenQuotientStage R G K) :=
     completedGroupAlgebraOpenFiniteQuotientStageTopology R G K
   exact ⟨rfl⟩
 
@@ -263,10 +264,10 @@ theorem continuous_completedGroupAlgebraStageCoeffQuotientMap_openIdeal
       ((OrderDual.ofDual K.1).1 : Ideal R) K.2) := by
   let Iopen : CompletedGroupAlgebraOpenIdeal R := OrderDual.ofDual K.1
   let Q := CompletedGroupAlgebraQuotient G K.2
-  letI : TopologicalSpace (CompletedGroupAlgebraStage R G K.2) :=
+  let : TopologicalSpace (CompletedGroupAlgebraStage R G K.2) :=
     (completedGroupAlgebraSystem R G).topologicalSpace K.2
-  letI : TopologicalSpace (R ⧸ (Iopen.1 : Ideal R)) := ⊥
-  haveI : DiscreteTopology (R ⧸ (Iopen.1 : Ideal R)) := ⟨rfl⟩
+  let : TopologicalSpace (R ⧸ (Iopen.1 : Ideal R)) := ⊥
+  have : DiscreteTopology (R ⧸ (Iopen.1 : Ideal R)) := ⟨rfl⟩
   have hmk : Continuous (Ideal.Quotient.mk (Iopen.1 : Ideal R)) :=
     continuous_idealQuotient_mk_openIdeal_discrete
       (R := R) (I := Iopen.1) Iopen.2
@@ -308,9 +309,9 @@ theorem continuous_completedGroupAlgebraOpenFiniteQuotientProjection
     letI : TopologicalSpace (CompletedGroupAlgebraOpenQuotientStage R G K) :=
       completedGroupAlgebraOpenFiniteQuotientStageTopology R G K
     Continuous (completedGroupAlgebraOpenFiniteQuotientProjection R G K) := by
-  letI : TopologicalSpace (CompletedGroupAlgebraStage R G K.2) :=
+  let : TopologicalSpace (CompletedGroupAlgebraStage R G K.2) :=
     (completedGroupAlgebraSystem R G).topologicalSpace K.2
-  letI : TopologicalSpace (CompletedGroupAlgebraOpenQuotientStage R G K) :=
+  let : TopologicalSpace (CompletedGroupAlgebraOpenQuotientStage R G K) :=
     completedGroupAlgebraOpenFiniteQuotientStageTopology R G K
   exact (continuous_completedGroupAlgebraStageCoeffQuotientMap_openIdeal
     (R := R) (G := G) K).comp ((completedGroupAlgebraSystem R G).continuous_projection K.2)
@@ -348,9 +349,9 @@ theorem continuous_groupAlgebraOpenFiniteQuotientProductMap_kernelTopology
         TopologicalSpace (CompletedGroupAlgebraOpenQuotientStage R G K) :=
       fun K => completedGroupAlgebraOpenFiniteQuotientStageTopology R G K
     Continuous (groupAlgebraOpenFiniteQuotientProductMap R G) := by
-  letI : TopologicalSpace (MonoidAlgebra R G) :=
+  let : TopologicalSpace (MonoidAlgebra R G) :=
     groupAlgebraOpenFiniteQuotientKernelTopology R G
-  letI : ∀ K : CompletedGroupAlgebraOpenQuotientIndex R G,
+  let : ∀ K : CompletedGroupAlgebraOpenQuotientIndex R G,
       TopologicalSpace (CompletedGroupAlgebraOpenQuotientStage R G K) :=
     fun K => completedGroupAlgebraOpenFiniteQuotientStageTopology R G K
   exact continuous_induced_dom
@@ -368,9 +369,9 @@ theorem continuous_groupAlgebraOpenFiniteQuotientMap_kernelTopology
     letI : TopologicalSpace (CompletedGroupAlgebraOpenQuotientStage R G K) :=
       completedGroupAlgebraOpenFiniteQuotientStageTopology R G K
     Continuous (groupAlgebraOpenFiniteQuotientMap R G K) := by
-  letI : TopologicalSpace (MonoidAlgebra R G) :=
+  let : TopologicalSpace (MonoidAlgebra R G) :=
     groupAlgebraOpenFiniteQuotientKernelTopology R G
-  letI : ∀ K : CompletedGroupAlgebraOpenQuotientIndex R G,
+  let : ∀ K : CompletedGroupAlgebraOpenQuotientIndex R G,
       TopologicalSpace (CompletedGroupAlgebraOpenQuotientStage R G K) :=
     fun K => completedGroupAlgebraOpenFiniteQuotientStageTopology R G K
   change Continuous fun x : MonoidAlgebra R G =>
@@ -386,11 +387,11 @@ theorem groupAlgebraOpenFiniteQuotientKernel_isOpen_kernelTopology
     letI : TopologicalSpace (MonoidAlgebra R G) :=
       groupAlgebraOpenFiniteQuotientKernelTopology R G
     IsOpen (groupAlgebraOpenFiniteQuotientKernel R G K : Set (MonoidAlgebra R G)) := by
-  letI : TopologicalSpace (MonoidAlgebra R G) :=
+  let : TopologicalSpace (MonoidAlgebra R G) :=
     groupAlgebraOpenFiniteQuotientKernelTopology R G
-  letI : TopologicalSpace (CompletedGroupAlgebraOpenQuotientStage R G K) :=
+  let : TopologicalSpace (CompletedGroupAlgebraOpenQuotientStage R G K) :=
     completedGroupAlgebraOpenFiniteQuotientStageTopology R G K
-  haveI : DiscreteTopology (CompletedGroupAlgebraOpenQuotientStage R G K) :=
+  have : DiscreteTopology (CompletedGroupAlgebraOpenQuotientStage R G K) :=
     completedGroupAlgebraOpenFiniteQuotientStage_discrete R G K
   change IsOpen ((groupAlgebraOpenFiniteQuotientMap R G K) ⁻¹'
     ({0} : Set (CompletedGroupAlgebraOpenQuotientStage R G K)))
@@ -406,7 +407,7 @@ theorem groupAlgebraOpenFiniteQuotientKernel_mem_nhds_zero_kernelTopology
       groupAlgebraOpenFiniteQuotientKernelTopology R G
     (groupAlgebraOpenFiniteQuotientKernel R G K : Set (MonoidAlgebra R G)) ∈
       𝓝 (0 : MonoidAlgebra R G) := by
-  letI : TopologicalSpace (MonoidAlgebra R G) :=
+  let : TopologicalSpace (MonoidAlgebra R G) :=
     groupAlgebraOpenFiniteQuotientKernelTopology R G
   apply IsOpen.mem_nhds
     (groupAlgebraOpenFiniteQuotientKernel_isOpen_kernelTopology R G K)

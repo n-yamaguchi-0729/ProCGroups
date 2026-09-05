@@ -1,5 +1,7 @@
 import ProCGroups.FreeProducts.UniversalProperty
 
+set_option autoImplicit false
+
 /-!
 # Finite generating data
 

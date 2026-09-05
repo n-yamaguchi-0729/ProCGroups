@@ -2,6 +2,8 @@ import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.Topology.Algebra.ContinuousMonoidHom
 import ProCGroups.Topologies.ContinuousMonoidHom
 
+set_option autoImplicit false
+
 /-!
 # Continuous multiplicative equivalences
 

@@ -1,5 +1,7 @@
 import ProCGroups.ProC.InverseLimits.Predicates
 
+set_option autoImplicit false
+
 /-!
 # Pro C Groups / Free Products / Universal Property
 

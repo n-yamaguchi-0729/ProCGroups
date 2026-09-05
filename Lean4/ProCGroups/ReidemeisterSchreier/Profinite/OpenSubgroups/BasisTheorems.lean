@@ -2,6 +2,8 @@ import ProCGroups.Completion.FiniteQuotientLifts
 import ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
 import ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.ExactRightSchreierGeneration
 
+set_option autoImplicit false
+
 /-!
 # From exact Schreier generators to free pro-\(C\) bases
 
@@ -184,10 +186,6 @@ theorem topologicallyFinitelyGenerated_of_openSubgroup_local
     ProCGroups.FiniteGeneration.TopologicallyFinitelyGenerated G := by
   classical
   rcases hH with ⟨sH, hsH⟩
-  letI : Finite (OpenSubgroupRightQuotient H) :=
-    finite_openSubgroupRightQuotient (F := G) H
-  letI : Fintype (OpenSubgroupRightQuotient H) :=
-    Fintype.ofFinite (OpenSubgroupRightQuotient H)
   let τ := openSubgroupRightCosetSection (F := G) H
   let sReps : Finset G := Finset.univ.image τ
   let s : Finset G := sReps ∪ sH.image Subtype.val
@@ -284,7 +282,7 @@ theorem isProCCompletion_freeGroupLift_of_finiteBasis
   · intro G _ _ _ _ _ _ hG ψ
     let φX : X → G := fun x => ψ (FreeGroup.of x)
     let S : Subgroup G := (Subgroup.closure (Set.range φX)).topologicalClosure
-    letI : CompactSpace S :=
+    let : CompactSpace S :=
       (Subgroup.isClosed_topologicalClosure _).isClosedEmbedding_subtypeVal.compactSpace
     have hSproC : ProCGroups.ProC.HasOpenNormalBasisInClass C (S) := by
       exact
@@ -362,7 +360,7 @@ theorem isProCCompletion_freeGroupLift_of_exactGeneratingFamily_of_completion
         continuous_toFun := continuous_of_discreteTopology } := by
   have hYfin : Finite Y := by
     by_cases h0 : Nat.card Z = 0
-    · haveI : IsEmpty Z :=
+    · have : IsEmpty Z :=
         (Nat.card_eq_zero.1 h0).resolve_right <| Finite.not_infinite ‹_›
       have hκrange : Set.range κ = (∅ : Set H) := by
         ext z
@@ -406,10 +404,10 @@ theorem isProCCompletion_freeGroupLift_of_exactGeneratingFamily_of_completion
             _ = σ 1 := by rw [hHtriv (φY (FreeGroup.of y))]
             _ = 1 := map_one σ
         exact hψYne hyEq
-      letI : IsEmpty Y := hYempty
+      let : IsEmpty Y := hYempty
       infer_instance
     · exact Nat.finite_of_card_ne_zero (α := Y) (by rw [hYZcard]; exact h0)
-  letI : Finite Y := hYfin
+  let : Finite Y := hYfin
   have hFreeY :
       IsEpimorphicallyFreeProCGroupOnConvergingSet
         (C := C)

@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Discrete.FoxCalculus.Boundary
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: discrete — fox calculus — coordinates
 
@@ -79,7 +81,7 @@ module of a finite-rank free group.
 -/
 def relativeFreeFoxCoordinatesLinearEquivDifferential :
     RelativeFreeFoxCoordinates (H := H) X ≃ₗ[GroupRing H] DifferentialModule ψ := by
-  refine LinearEquiv.ofLinear
+  refine LinearEquiv.ofLinearMap
     (relativeFreeFoxCoordinatesLinearMap (H := H) X ψ)
     (relativeDifferentialToFreeFoxCoordinates (H := H) X ψ)
     ?_ ?_

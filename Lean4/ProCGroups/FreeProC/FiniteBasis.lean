@@ -1,5 +1,7 @@
 import ProCGroups.FreeProC.Basic
 
+set_option autoImplicit false
+
 /-!
 # Free pro-C finite-basis utilities
 
@@ -65,8 +67,7 @@ theorem freeProCChosenULiftFamilyOfBasisCard_isEpimorphicallyFree
       right_inv := by
         intro b
         simp only [Equiv.symm_apply_apply]}
-  letI : Fintype sourceData.basis :=
-    Fintype.ofEquiv (ULift.{u} (Fin n)) e
+  have : Finite sourceData.basis := Finite.of_equiv (ULift.{u} (Fin n)) e
   apply ProCGroups.FreeProC.finite_generatingFamily_is_basis
       (C := C) sourceData.isEpimorphicallyFree (Cardinal.mk_congr e).symm
   have hRange :
@@ -213,7 +214,7 @@ theorem freeProCChosenULiftFamilyOfBasisCard_quotient_lift_surjective
   let ι : X → sourceData.carrier :=
     freeProCChosenULiftFamilyOfBasisCard (C := C) sourceData hbasis
   let Q : Type u := sourceData.carrier ⧸ (V.1 : Subgroup sourceData.carrier)
-  letI : DiscreteTopology Q :=
+  let : DiscreteTopology Q :=
     QuotientGroup.discreteTopology V.1.toOpenSubgroup.isOpen'
   let g : X → Q :=
     fun i => QuotientGroup.mk' (V.1 : Subgroup sourceData.carrier) (ι i)

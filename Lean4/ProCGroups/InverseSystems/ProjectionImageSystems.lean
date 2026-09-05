@@ -1,5 +1,7 @@
 import ProCGroups.InverseSystems.CofinalityAndDensity
 
+set_option autoImplicit false
+
 /-!
 # Inverse systems formed from projection images
 
@@ -25,21 +27,23 @@ def InverseSystem.projectionImageSystem {I : Type u} [Preorder I]
   map := fun {i j} hij x => ⟨S.map hij x.1, by
     rcases x.2 with ⟨y, hy, hxy⟩
     refine ⟨y, hy, ?_⟩
-    simpa [← hxy] using (S.projection_compatible y i j hij).symm⟩
+    exact (S.projection_compatible y i j hij).symm.trans (congrArg (S.map hij) hxy)⟩
   continuous_map := fun {i j} hij =>
     Continuous.subtype_mk
       ((S.continuous_map hij).comp continuous_subtype_val) (fun x => by
         rcases x.2 with ⟨y, hy, hxy⟩
         refine ⟨y, hy, ?_⟩
-        simpa [Function.comp, ← hxy] using (S.projection_compatible y i j hij).symm)
+        exact (S.projection_compatible y i j hij).symm.trans (congrArg (S.map hij) hxy))
   map_id := fun i => by
     funext x
     apply Subtype.ext
-    simp only [map_id_apply, id_eq]
+    change S.map (le_rfl : i ≤ i) x.val = x.val
+    exact S.map_id_apply i x.val
   map_comp := fun {i j k} hij hjk => by
     funext x
     apply Subtype.ext
-    simp only [Function.comp_apply, S.map_comp_apply hij hjk]
+    change S.map hij (S.map hjk x.val) = S.map (hij.trans hjk) x.val
+    exact S.map_comp_apply hij hjk x.val
 
 /-- The canonical morphism from the projection-image system into the ambient inverse system. -/
 def projectionImageInclusion {I : Type u} [Preorder I]
@@ -116,10 +120,9 @@ theorem surjective_projectionImageLift {I : Type u} [Preorder I] [Nonempty I]
     (S : InverseSystem (I := I)) [∀ i, CompactSpace (S.X i)] [∀ i, T2Space (S.X i)]
     (hdir : Directed (· ≤ ·) (id : I → I)) (Y : Set S.inverseLimit) (hY : IsClosed Y) :
     Function.Surjective (projectionImageLift S Y) := by
-  let T := S.projectionImageSystem Y
-  letI : CompactSpace Y := by
-    simpa using hY.isClosedEmbedding_subtypeVal.compactSpace
-  letI : ∀ i, T2Space (T.X i) := fun i => by
+  let T : InverseSystem (I := I) := S.projectionImageSystem Y
+  let : CompactSpace Y := hY.isClosedEmbedding_subtypeVal.compactSpace
+  let : ∀ i, T2Space (T.X i) := fun i => by
     change T2Space (S.projection i '' Y)
     infer_instance
   exact T.surjective_inverseLimitLift (projectionImageSectionMap S Y)
@@ -137,26 +140,15 @@ theorem projectionImageLift_comp_subtype {I : Type u} [Preorder I]
   funext y
   apply S.ext
   intro i
-  have hpi :
-      (S.projectionImageSystem Y).projection i (projectionImageLift S Y y) =
-        projectionImageSectionMap S Y i y := by
-    simpa [Function.comp, projectionImageLift] using
-      congrFun
-        ((S.projectionImageSystem Y).projection_comp_inverseLimitLift (projectionImageSectionMap
-            S Y)
-          (compatible_projectionImageSectionMap S Y) i) y
-  calc
-    S.projection i ((S.projectionImageSystem Y).limMap (projectionImageInclusion S Y)
-        (projectionImageLift S Y y))
-        = (projectionImageInclusion S Y).map i
-            ((S.projectionImageSystem Y).projection i (projectionImageLift S Y y)) := by
-              simpa [Function.comp] using
-                congrFun
-                  ((S.projectionImageSystem Y).π_comp_limMap
-                    (Θ := projectionImageInclusion S Y) i) (projectionImageLift S Y y)
-    _ = ((S.projectionImageSystem Y).projection i (projectionImageLift S Y y)).1 := rfl
-    _ = (projectionImageSectionMap S Y i y).1 := by rw [hpi]
-    _ = S.projection i y.1 := rfl
+  change S.projection i ((S.projectionImageSystem Y).limMap (projectionImageInclusion S Y)
+    (projectionImageLift S Y y)) = S.projection i y.val
+  rw [(S.projectionImageSystem Y).π_limMap_apply (projectionImageInclusion S Y) i
+    (projectionImageLift S Y y)]
+  change ((S.projectionImageSystem Y).projection i (projectionImageLift S Y y)).val =
+    S.projection i y.val
+  exact congrArg Subtype.val
+    ((S.projectionImageSystem Y).projection_inverseLimitLift_apply
+      (projectionImageSectionMap S Y) (compatible_projectionImageSectionMap S Y) i y)
 
 /-- The transition maps in the projection-image system are always surjective. -/
 theorem InverseSystem.surjective_projectionImageSystem_map
@@ -182,12 +174,11 @@ noncomputable def InverseSystem.homeomorph_projectionImageSystem_of_isClosed
     (Y : Set S.inverseLimit) (hY : IsClosed Y) :
     Y ≃ₜ (S.projectionImageSystem Y).inverseLimit := by
   classical
-  letI : CompactSpace Y := by
-    simpa using hY.isClosedEmbedding_subtypeVal.compactSpace
+  letI : CompactSpace Y := hY.isClosedEmbedding_subtypeVal.compactSpace
   letI : ∀ i, T2Space ((S.projectionImageSystem Y).X i) := fun i => by
     change T2Space (S.projection i '' Y)
     infer_instance
-  let e := projectionImageLift S Y
+  let e : Y → (S.projectionImageSystem Y).inverseLimit := projectionImageLift S Y
   have he_inj : Function.Injective e := by
     intro y y' hyy
     have hy : y.1 = y'.1 := by

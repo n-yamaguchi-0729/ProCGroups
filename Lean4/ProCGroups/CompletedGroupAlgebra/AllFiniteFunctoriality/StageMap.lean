@@ -1,6 +1,8 @@
 import ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.Comap
 import ProCGroups.CompletedGroupAlgebra.OpenFiniteQuotientTopology.CanonicalMaps
 
+set_option autoImplicit false
+
 /-!
 # Completed Group Algebra / All Finite Functoriality / Stage Map
 
@@ -103,11 +105,11 @@ theorem continuous_completedGroupAlgebraFunctorialStageMap
       (completedGroupAlgebraSystem R H).topologicalSpace V
     Continuous (completedGroupAlgebraFunctorialStageMap (G := G) (H := H) (R := R)
       φ hφ V) := by
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (CompletedGroupAlgebraStage R G (completedGroupAlgebraComapIndex (G := G) φ hφ V)) :=
     (completedGroupAlgebraSystem R G).topologicalSpace
       (completedGroupAlgebraComapIndex (G := G) φ hφ V)
-  letI : TopologicalSpace (CompletedGroupAlgebraStage R H V) :=
+  let : TopologicalSpace (CompletedGroupAlgebraStage R H V) :=
     (completedGroupAlgebraSystem R H).topologicalSpace V
   exact finiteGroupAlgebra_mapDomainRingHom_continuous R
     (CompletedGroupAlgebraQuotient G (completedGroupAlgebraComapIndex (G := G) φ hφ V))
@@ -127,17 +129,51 @@ theorem completedGroupAlgebraFunctorialStageMap_transition
       (completedGroupAlgebraFunctorialStageMap (G := G) (H := H) (R := R) φ hφ V).comp
         (completedGroupAlgebraTransition R G
           (completedGroupAlgebraComapIndex_mono (G := G) φ hφ hVW)) := by
-  rw [completedGroupAlgebraTransition, completedGroupAlgebraFunctorialStageMap,
-    completedGroupAlgebraFunctorialStageMap, completedGroupAlgebraTransition,
-    ← MonoidAlgebra.mapDomainRingHom_comp, ← MonoidAlgebra.mapDomainRingHom_comp]
-  congr 1
-  apply MonoidHom.ext
-  intro q
-  rcases QuotientGroup.mk'_surjective
-      ((((OrderDual.ofDual (completedGroupAlgebraComapIndex (G := G) φ hφ W)).1 :
-        OpenNormalSubgroup G) : Subgroup G)) q with
-    ⟨g, rfl⟩
-  rfl
+  have hVW' :
+      (((OrderDual.ofDual W).1 : OpenNormalSubgroup H) : Subgroup H) ≤
+        (((OrderDual.ofDual V).1 : OpenNormalSubgroup H) : Subgroup H) :=
+    hVW
+  have hcomap :
+      (((OrderDual.ofDual (completedGroupAlgebraComapIndex (G := G) φ hφ W)).1 :
+        OpenNormalSubgroup G) : Subgroup G) ≤
+        (((OrderDual.ofDual (completedGroupAlgebraComapIndex (G := G) φ hφ V)).1 :
+          OpenNormalSubgroup G) : Subgroup G) :=
+    completedGroupAlgebraComapIndex_mono (G := G) φ hφ hVW
+  have hmaps :
+      (OpenNormalSubgroupInClass.map
+        (C := ProCGroups.FiniteGroupClass.allFinite) (G := H)
+        (U := OrderDual.ofDual V) (V := OrderDual.ofDual W) hVW').comp
+          (completedGroupAlgebraComapQuotientMap (G := G) φ hφ W) =
+        (completedGroupAlgebraComapQuotientMap (G := G) φ hφ V).comp
+          (OpenNormalSubgroupInClass.map
+            (C := ProCGroups.FiniteGroupClass.allFinite) (G := G)
+            (U := OrderDual.ofDual
+              (completedGroupAlgebraComapIndex (G := G) φ hφ V))
+            (V := OrderDual.ofDual
+              (completedGroupAlgebraComapIndex (G := G) φ hφ W)) hcomap) := by
+    apply MonoidHom.ext
+    intro q
+    rcases QuotientGroup.mk'_surjective
+        ((((OrderDual.ofDual (completedGroupAlgebraComapIndex (G := G) φ hφ W)).1 :
+          OpenNormalSubgroup G) : Subgroup G)) q with
+      ⟨g, rfl⟩
+    rfl
+  unfold completedGroupAlgebraTransition completedGroupAlgebraFunctorialStageMap
+  exact
+    (MonoidAlgebra.mapDomainRingHom_comp (R := R)
+      (OpenNormalSubgroupInClass.map
+        (C := ProCGroups.FiniteGroupClass.allFinite) (G := H)
+        (U := OrderDual.ofDual V) (V := OrderDual.ofDual W) hVW')
+      (completedGroupAlgebraComapQuotientMap (G := G) φ hφ W)).symm.trans
+      ((congrArg (MonoidAlgebra.mapDomainRingHom R) hmaps).trans
+        (MonoidAlgebra.mapDomainRingHom_comp (R := R)
+          (completedGroupAlgebraComapQuotientMap (G := G) φ hφ V)
+          (OpenNormalSubgroupInClass.map
+            (C := ProCGroups.FiniteGroupClass.allFinite) (G := G)
+            (U := OrderDual.ofDual
+              (completedGroupAlgebraComapIndex (G := G) φ hφ V))
+            (V := OrderDual.ofDual
+              (completedGroupAlgebraComapIndex (G := G) φ hφ W)) hcomap)))
 
 /-- The finite-stage functorial map agrees with the dense stage map after applying \(\varphi\). -/
 @[simp]
@@ -149,10 +185,27 @@ theorem completedGroupAlgebraFunctorialStageMap_comp_stageMap
           (completedGroupAlgebraComapIndex (G := G) φ hφ V)) =
       (completedGroupAlgebraStageMap R H V).comp
         (MonoidAlgebra.mapDomainRingHom R φ) := by
-  rw [completedGroupAlgebraFunctorialStageMap, completedGroupAlgebraStageMap,
-    completedGroupAlgebraStageMap, ← MonoidAlgebra.mapDomainRingHom_comp,
-    ← MonoidAlgebra.mapDomainRingHom_comp]
-  congr 1
+  have hmaps :
+      (completedGroupAlgebraComapQuotientMap (G := G) φ hφ V).comp
+          (openNormalSubgroupInClassProj
+            (C := ProCGroups.FiniteGroupClass.allFinite) (G := G)
+            (completedGroupAlgebraComapIndex (G := G) φ hφ V)) =
+        (openNormalSubgroupInClassProj
+          (C := ProCGroups.FiniteGroupClass.allFinite) (G := H) V).comp φ := by
+    apply MonoidHom.ext
+    intro g
+    exact completedGroupAlgebraComapQuotientMap_mk (G := G) φ hφ V g
+  unfold completedGroupAlgebraFunctorialStageMap completedGroupAlgebraStageMap
+  exact
+    (MonoidAlgebra.mapDomainRingHom_comp (R := R)
+      (completedGroupAlgebraComapQuotientMap (G := G) φ hφ V)
+      (openNormalSubgroupInClassProj
+        (C := ProCGroups.FiniteGroupClass.allFinite) (G := G)
+        (completedGroupAlgebraComapIndex (G := G) φ hφ V))).symm.trans
+      ((congrArg (MonoidAlgebra.mapDomainRingHom R) hmaps).trans
+        (MonoidAlgebra.mapDomainRingHom_comp (R := R)
+          (openNormalSubgroupInClassProj
+            (C := ProCGroups.FiniteGroupClass.allFinite) (G := H) V) φ))
 
 end
 

@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Discrete.Jacobian.Basic
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: discrete — jacobian — chain rule
 
@@ -148,7 +150,13 @@ theorem freeGroupHomFoxJacobianMatrix_comp
         freeGroupHomFoxJacobianMatrix (H := H) ψ φ := by
   apply Matrix.ext
   intro x z
-  simp only [freeGroupHomFoxJacobianMatrix, freeGroupHomFoxJacobian_comp_apply, Matrix.mul_apply]
+  change
+    freeGroupHomFoxJacobian (H := H) ψ (φ.comp χ) x z =
+      ∑ y : Y,
+        freeGroupHomFoxJacobian (H := H) (ψ.comp φ) χ x y *
+          freeGroupHomFoxJacobian (H := H) ψ φ y z
+  exact freeGroupHomFoxJacobian_comp_apply
+    (H := H) (X := X) (Y := Y) (Z := Z) ψ φ χ x z
 
 /--
 An entry of the absolute Fox Jacobian of a composite is the group-ring-weighted chain-rule sum.
@@ -188,8 +196,13 @@ theorem freeGroupHomFoxJacobianAbsoluteMatrix_comp
         freeGroupHomFoxJacobianAbsoluteMatrix φ := by
   apply Matrix.ext
   intro x z
-  simp only [freeGroupHomFoxJacobianAbsoluteMatrix, freeGroupHomFoxJacobianAbsolute_comp_apply,
-  Matrix.mul_apply, Matrix.map_apply]
+  change
+    freeGroupHomFoxJacobianAbsolute (φ.comp χ) x z =
+      ∑ y : Y,
+        groupRingMap φ (freeGroupHomFoxJacobianAbsolute χ x y) *
+          freeGroupHomFoxJacobianAbsolute φ y z
+  exact freeGroupHomFoxJacobianAbsolute_comp_apply
+    (X := X) (Y := Y) (Z := Z) φ χ x z
 
 
 end FoxCalculus

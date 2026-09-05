@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Completion.Target
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: finite stage — prime power — derivative — limit
 
@@ -66,12 +68,31 @@ def foxAlgebraicStagePrimePowerDerivativeLimit
             ((foxAlgebraicStagePrimePowerSourceSystem (ℓ := ℓ) (X := X) N).projection b z)) =
         foxAlgebraicStageGroupAlgebraDerivative (X := X) N (ℓ ^ a) i
           ((foxAlgebraicStagePrimePowerSourceSystem (ℓ := ℓ) (X := X) N).projection a z)
-      rw [foxAlgebraicStagePrimePowerTargetTransition,
-        foxAlgebraicStagePrimePowerGroupAlgebraDerivative_transition]
-      · congr 1
-        exact
-          (foxAlgebraicStagePrimePowerSourceSystem (ℓ := ℓ) (X := X) N).projection_compatible
-            z a b hab)
+      change
+        foxAlgebraicStageTargetGroupAlgebraCoeffMap (X := X) N
+            (primePow_dvd_primePow (ℓ := ℓ) hab)
+            (foxAlgebraicStageGroupAlgebraDerivative (X := X) N (ℓ ^ b) i
+              (show foxAlgebraicStagePrimePowerSourceGroupAlgebra
+                  (ℓ := ℓ) (X := X) N b from
+                (foxAlgebraicStagePrimePowerSourceSystem
+                  (ℓ := ℓ) (X := X) N).projection b z)) =
+          foxAlgebraicStageGroupAlgebraDerivative (X := X) N (ℓ ^ a) i
+            (show foxAlgebraicStagePrimePowerSourceGroupAlgebra
+                (ℓ := ℓ) (X := X) N a from
+              (foxAlgebraicStagePrimePowerSourceSystem
+                (ℓ := ℓ) (X := X) N).projection a z)
+      have hderivative :=
+        foxAlgebraicStagePrimePowerGroupAlgebraDerivative_transition
+          (ℓ := ℓ) (X := X) N hab i
+          (show foxAlgebraicStagePrimePowerSourceGroupAlgebra
+              (ℓ := ℓ) (X := X) N b from
+            (foxAlgebraicStagePrimePowerSourceSystem
+              (ℓ := ℓ) (X := X) N).projection b z)
+      exact hderivative.trans
+        (congrArg
+          (foxAlgebraicStageGroupAlgebraDerivative (X := X) N (ℓ ^ a) i)
+          ((foxAlgebraicStagePrimePowerSourceSystem
+            (ℓ := ℓ) (X := X) N).projection_compatible z a b hab)))
 
 /--
 Projecting the prime-power derivative limit gives the corresponding finite derivative

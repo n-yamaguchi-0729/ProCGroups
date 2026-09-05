@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.Bifiltered.System
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — finite stage — bifiltered — inverse system
 
@@ -136,9 +138,9 @@ def foxAlgebraicStageBifilteredSemidirectSystem
       (X := X) Nstage nstage hN hn hij
   continuous_map := by
     intro i j hij
-    letI : TopologicalSpace (FoxAlgebraicStageSemidirect (X := X) (Nstage i) (nstage i)) := ⊥
-    letI : TopologicalSpace (FoxAlgebraicStageSemidirect (X := X) (Nstage j) (nstage j)) := ⊥
-    letI : DiscreteTopology (FoxAlgebraicStageSemidirect (X := X) (Nstage j) (nstage j)) := ⟨rfl⟩
+    let : TopologicalSpace (FoxAlgebraicStageSemidirect (X := X) (Nstage i) (nstage i)) := ⊥
+    let : TopologicalSpace (FoxAlgebraicStageSemidirect (X := X) (Nstage j) (nstage j)) := ⊥
+    let : DiscreteTopology (FoxAlgebraicStageSemidirect (X := X) (Nstage j) (nstage j)) := ⟨rfl⟩
     exact continuous_of_discreteTopology
   map_id := by
     intro i

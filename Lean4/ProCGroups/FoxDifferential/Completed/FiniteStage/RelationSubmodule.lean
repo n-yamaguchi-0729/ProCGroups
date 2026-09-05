@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.RelationAction
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — finite stage — relation submodule
 
@@ -65,7 +67,7 @@ theorem foxAlgebraicStageRelationBoundaryRange_smul_mem
   refine MonoidAlgebra.induction_linear
     (M := foxAlgebraicStageTargetQuotient (X := X) N)
     (R := ModNCompletedCoeff n)
-    (p := fun a : foxAlgebraicStageTargetGroupAlgebra (X := X) N n =>
+    (motive := fun a : foxAlgebraicStageTargetGroupAlgebra (X := X) N n =>
       a • v ∈ foxAlgebraicStageRelationBoundaryRange (X := X) N n)
     a ?zero ?add ?single
   · simp only [zero_smul, zero_mem]

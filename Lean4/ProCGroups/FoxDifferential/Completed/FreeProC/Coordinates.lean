@@ -2,6 +2,8 @@ import ProCGroups.FoxDifferential.Completed.FreeProC.NaturalTopology
 import ProCGroups.FoxDifferential.Completed.Continuous.Magnus.KernelClosedCommutator
 import ProCGroups.FreeProC.FiniteBasis
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — free pro-\(C\) — coordinates
 
@@ -217,7 +219,7 @@ theorem freeProCChosenULift_sepCoordinateMap_universal
           (fun i : ULift.{u} (Fin r) =>
             psi (freeProCChosenULiftFamilyOfBasisCard (C := C) sourceData hbasis i)))
         g := by
-  letI :
+  let :
       Nonempty
         (ZCCompletedDifferentialModuleIndex
           C psi.toMonoidHom) :=

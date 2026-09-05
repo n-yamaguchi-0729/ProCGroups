@@ -1,48 +1,50 @@
 # ProCGroups
 
-This repository is the standalone Lean 4 source project for `ProCGroups`, a
-library for profinite groups and pro-\(\mathcal C\) groups. Local class field
-theory is maintained separately.
+[![Lean](https://github.com/n-yamaguchi-0729/ProCGroups/actions/workflows/lean.yml/badge.svg)](https://github.com/n-yamaguchi-0729/ProCGroups/actions/workflows/lean.yml)
+[![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
-Documentation and the library catalog are published through the
-[Yamaguchi Lean 4 Library](https://n-yamaguchi-0729.github.io/YamaLean4Lib_pages/).
+A Lean 4 library for profinite groups and pro-\(\mathcal C\) groups,
+with Mathlib as its external Lean dependency.
+Documentation and the library catalog: [YamaLeanLib](https://n-yamaguchi-0729.github.io/YamaLean4Lib_pages/).
 
 ## Contents
 
-- 574 Lean source files, including the public root module
-  `Lean4/ProCGroups.lean`.
-- Foundations for profinite groups, pro-\(\mathcal C\) groups, free
-  constructions, completed group algebras, Fox differentials, and related
-  topics.
-- The Crowell exact sequence implementation is collected under
-  `ProCGroups.CrowellExactSequence`. Its main aggregate is
-  `Lean4/ProCGroups/CrowellExactSequence.lean`.
+- Profinite and pro-\(\mathcal C\) groups, finite quotients, and inverse limits.
+- Free pro-\(\mathcal C\) groups, free products, finite generation, and presentations.
+- Completed group algebras, Fox differentials, Reidemeister–Schreier theory,
+  and the Crowell exact sequence.
 
-The project uses Lean 4.32.1 and mathlib v4.32.1.
+## Build and use
 
-## Build
-
-From the repository root:
+Use **Lean 4.33.0** and the checked-in `lake-manifest.json`, which pins Mathlib
+to `6f1ef4e5dd604a435bddba4747b13970cd65d2a1`. From the repository root:
 
 ```console
-lake update
 lake exe cache get
-lake --wfail build ProCGroups
+lake --wfail build
 ```
 
-## Import
-
-Import the whole public library:
+The default build covers all maintained modules. Import the whole library:
 
 ```lean
 import ProCGroups
 ```
 
-Or import a narrower aggregate, for example:
+Or use a focused aggregate:
 
 ```lean
-import ProCGroups.CrowellExactSequence
+import ProCGroups.CrowellExactSequence.All
 ```
+
+Folder aggregates now use `.All`; the top-level `import ProCGroups` is preserved.
+
+## Verification
+
+The [Lean workflow](.github/workflows/lean.yml) builds with warnings as errors,
+audits declaration dependencies against `propext`, `Classical.choice`, and
+`Quot.sound`, and runs NanoDa and the official Lean kernel replay.
+Workflow artifacts contain the logs and receipts; check the run's commit and
+result in GitHub Actions.
 
 This library was developed with AI assistance by a non-specialist; please review the material independently.
 

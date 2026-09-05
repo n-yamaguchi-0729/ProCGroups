@@ -1,6 +1,8 @@
 import ProCGroups.GroupTheory.Conjugation
 import ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
 
+set_option autoImplicit false
+
 /-!
 # Continuous conjugation actions
 
@@ -62,35 +64,25 @@ noncomputable def quotientConjugationOnTopologicallyCharacteristicQuotient
     (hNactsTrivially :
       ∀ n x : N, (((MulAut.conjNormal (n : G)) x) * x⁻¹ : N) ∈ K) :
     (G ⧸ N) →* MulAut (N ⧸ K) := by
-  let hKchar : K.TopologicallyCharacteristic := inferInstance
-  letI : K.Normal := by infer_instance
   let prequotientAction : G →* MulAut (N ⧸ K) :=
     { toFun := fun g =>
-        hKchar.quotientMulEquiv (Subgroup.conjNormalContinuousMulEquiv (G := G) N g)
+        (inferInstance : K.TopologicallyCharacteristic).quotientMulEquiv
+          (Subgroup.conjNormalContinuousMulEquiv (G := G) N g)
       map_one' := by
         ext a
         obtain ⟨x, rfl⟩ := QuotientGroup.mk'_surjective K a
-        rw [Subgroup.TopologicallyCharacteristic.quotientMulEquiv_mk]
-        simp only [Subgroup.conjNormalContinuousMulEquiv, map_one, ContinuousMulEquiv.coe_mk,
-            MulAut.one_apply,
-  QuotientGroup.mk'_apply]
+        simp only [Subgroup.TopologicallyCharacteristic.quotientMulEquiv_mk,
+          Subgroup.conjNormalContinuousMulEquiv_apply, map_one, MulAut.one_apply]
       map_mul' := by
         intro g h
         ext a
         obtain ⟨x, rfl⟩ := QuotientGroup.mk'_surjective K a
-        change
-          QuotientGroup.mk' K
-              ((Subgroup.conjNormalContinuousMulEquiv (G := G) N (g * h)) x) =
-            hKchar.quotientMulEquiv (Subgroup.conjNormalContinuousMulEquiv (G := G) N g)
-              (hKchar.quotientMulEquiv
-                (Subgroup.conjNormalContinuousMulEquiv (G := G) N h) (QuotientGroup.mk' K x))
-        rw [Subgroup.TopologicallyCharacteristic.quotientMulEquiv_mk,
+        simp only [MulAut.mul_apply,
           Subgroup.TopologicallyCharacteristic.quotientMulEquiv_mk]
-        congr 1
-        ext
-        simp only [Subgroup.conjNormalContinuousMulEquiv, map_mul, ContinuousMulEquiv.coe_mk,
-            MulAut.mul_apply,
-  MulAut.conjNormal_apply, mul_assoc]}
+        apply congrArg (QuotientGroup.mk' K)
+        simpa only [Subgroup.conjNormalContinuousMulEquiv_apply, MulAut.mul_apply] using
+          congrArg (fun e : MulAut N => e x)
+            (map_mul (MulAut.conjNormal (H := N)) g h) }
   have hNker : N ≤ prequotientAction.ker := by
     intro g hg
     ext a
@@ -101,7 +93,7 @@ noncomputable def quotientConjugationOnTopologicallyCharacteristicQuotient
     exact
       (QuotientGroup.eq_iff_div_mem (N := K)
         (x := (MulAut.conjNormal g) x) (y := x)).2
-        (by simpa [div_eq_mul_inv] using hNactsTrivially ⟨g, hg⟩ x)
+        (by simpa only [div_eq_mul_inv] using hNactsTrivially ⟨g, hg⟩ x)
   exact QuotientGroup.lift N prequotientAction hNker
 
 /-- The topological conjugation action sends representatives to conjugates. -/

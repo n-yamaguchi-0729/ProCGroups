@@ -1,6 +1,8 @@
 import Mathlib.RepresentationTheory.Homological.GroupHomology.LongExactSequence
 import ProCGroups.FoxDifferential.Discrete.KernelBoundary.Basic
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: discrete — kernel boundary — homology
 
@@ -98,13 +100,22 @@ def kernelGroupRingRepIsoRightTensor :
       GroupRing G ≃ₗ[ℤ] ((↥(ψ.ker) × H) →₀ ℤ) :=
     (MonoidAlgebra.coeffLinearEquiv ℤ).trans
       (Finsupp.domLCongr (kernelSplitEquiv ψ hψ))
+  let f : (↥(ψ.ker) →₀ ℤ) ≃ₗ[ℤ] GroupRing ↥(ψ.ker) :=
+    (Finsupp.domLCongr (Equiv.inv ↥(ψ.ker))).trans
+      (MonoidAlgebra.coeffLinearEquiv ℤ).symm
+  let gEquiv : (H →₀ ℤ) ≃ₗ[ℤ] (H →₀ ℤ) :=
+    LinearEquiv.refl ℤ (H →₀ ℤ)
   let e₂ :
       ((↥(ψ.ker) × H) →₀ ℤ) ≃ₗ[ℤ] (GroupRing ↥(ψ.ker)) ⊗[ℤ] (H →₀ ℤ) :=
     (finsuppTensorFinsupp' ℤ ↥(ψ.ker) H).symm.trans
-      (TensorProduct.congr
-        ((Finsupp.domLCongr (Equiv.inv ↥(ψ.ker))).trans
-          (MonoidAlgebra.coeffLinearEquiv ℤ).symm)
-        (LinearEquiv.refl ℤ (H →₀ ℤ)))
+      (TensorProduct.congr f gEquiv)
+  have he₂_single (m : ↥(ψ.ker)) (h : H) (r : ℤ) :
+      e₂ (Finsupp.single (m, h) r) =
+        f (Finsupp.single m 1) ⊗ₜ[ℤ] gEquiv (Finsupp.single h r) := by
+    dsimp only [e₂]
+    erw [LinearEquiv.trans_apply,
+      finsuppTensorFinsupp'_symm_single_eq_single_one_tmul,
+      TensorProduct.congr_tmul f gEquiv]
   refine Rep.mkIso (Representation.Equiv.mk (e₁.trans e₂) ?_)
   intro n
   apply LinearMap.toAddMonoidHom_injective
@@ -119,35 +130,25 @@ def kernelGroupRingRepIsoRightTensor :
         (e₂ (Finsupp.single (kernelSplitEquiv ψ hψ g) r))
     cases hkg : kernelSplitEquiv ψ hψ g with
     | mk m h =>
-        simp only [e₂, LinearEquiv.trans_apply,
-          finsuppTensorFinsupp'_symm_single_eq_single_one_tmul, TensorProduct.congr_tmul,
-          TensorProduct.map_tmul, LinearEquiv.refl_apply]
         have hnm :
-            (((Finsupp.domLCongr (Equiv.inv ↥(ψ.ker))).trans
-                (MonoidAlgebra.coeffLinearEquiv ℤ).symm)
-              (Finsupp.single (n * m) (1 : ℤ))) =
+            f (Finsupp.single (n * m) (1 : ℤ)) =
               MonoidAlgebra.single ((n * m)⁻¹) (1 : ℤ) := by
           ext x
-          simp only [LinearEquiv.trans_apply, Finsupp.domLCongr_apply, Finsupp.domCongr_apply,
+          simp only [f, LinearEquiv.trans_apply, Finsupp.domLCongr_apply, Finsupp.domCongr_apply,
             Finsupp.equivMapDomain_single, Equiv.inv_apply, mul_inv_rev,
             MonoidAlgebra.coeffLinearEquiv_symm_apply, MonoidAlgebra.coeff_single]
         have hm :
-            (((Finsupp.domLCongr (Equiv.inv ↥(ψ.ker))).trans
-                (MonoidAlgebra.coeffLinearEquiv ℤ).symm)
-              (Finsupp.single m (1 : ℤ))) =
+            f (Finsupp.single m (1 : ℤ)) =
               MonoidAlgebra.single m⁻¹ (1 : ℤ) := by
           ext x
-          simp only [LinearEquiv.trans_apply, Finsupp.domLCongr_apply, Finsupp.domCongr_apply,
+          simp only [f, LinearEquiv.trans_apply, Finsupp.domLCongr_apply, Finsupp.domCongr_apply,
             Finsupp.equivMapDomain_single, Equiv.inv_apply,
             MonoidAlgebra.coeffLinearEquiv_symm_apply, MonoidAlgebra.coeff_single]
-        change
-          (((Finsupp.domLCongr (Equiv.inv ↥(ψ.ker))).trans
-              (MonoidAlgebra.coeffLinearEquiv ℤ).symm)
-            (Finsupp.single (n * m) (1 : ℤ))) ⊗ₜ[ℤ] Finsupp.single h r =
-            ((rightRegularRepresentation ↥(ψ.ker)) n)
-              ((((Finsupp.domLCongr (Equiv.inv ↥(ψ.ker))).trans
-                  (MonoidAlgebra.coeffLinearEquiv ℤ).symm)
-                (Finsupp.single m (1 : ℤ)))) ⊗ₜ[ℤ] Finsupp.single h r
+        rw [show n • (m, h) = (n * m, h) by rfl]
+        rw [he₂_single, he₂_single]
+        erw [TensorProduct.map_tmul
+          ((rightRegularRepresentation ↥(ψ.ker)) n) LinearMap.id]
+        dsimp only [gEquiv, LinearEquiv.refl_apply, LinearMap.id_coe, id_eq]
         rw [hnm, hm]
         simp only [mul_inv_rev, rightRegularRepresentation_apply_single]
   change
@@ -197,11 +198,8 @@ theorem indBottomKernelUnderlyingEquiv_mk (g : ↥(ψ.ker)) (a : H →₀ ℤ) :
             ext y
             have : x = (1 : (⊥ : Subgroup ↥(ψ.ker))) := Subsingleton.elim _ _
             subst this
-            simp only [Function.comp_apply,
-  map_one, LinearMap.id_comp, LinearMap.coe_comp, Finsupp.lsingle_apply,
-  AlgebraTensorModule.curry_apply, LinearMap.restrictScalars_self, curry_apply,
-      Module.End.one_apply,
-  LinearMap.id_coe, id_eq]))
+            simp only [map_one, LinearMap.id_comp, Module.End.one_apply,
+              LinearMap.id_coe, id_eq]))
         (Representation.Coinvariants.mk _
           ((MonoidAlgebra.single g 1 : GroupRing ↥(ψ.ker)) ⊗ₜ[ℤ] a)) = _
   rw [Representation.Coinvariants.lift_mk]
@@ -420,7 +418,7 @@ the group-ring augmentation.
 -/
 theorem kernelAugmentationShortComplex_exact :
     (kernelAugmentationShortComplex (ψ := ψ)).Exact := by
-  letI repIntModule (A : Rep.{0} ℤ ↥(ψ.ker)) : Module ℤ A := A.hV2
+  let repIntModule (A : Rep.{0} ℤ ↥(ψ.ker)) : Module ℤ A := A.hV2
   apply (forget₂ (Rep.{0} ℤ ↥(ψ.ker)) (ModuleCat ℤ)).reflects_exact_of_faithful
   rw [CategoryTheory.ShortComplex.moduleCat_exact_iff_range_eq_ker]
   ext x
@@ -430,8 +428,7 @@ theorem kernelAugmentationShortComplex_exact :
   · intro hx
     change augmentation G x = 0 at hx
     refine ⟨⟨x, ?_⟩, rfl⟩
-    rw [mem_augmentationIdeal_iff]
-    simpa [LinearMap.mem_ker] using hx
+    exact (mem_augmentationIdeal_iff (H := G) (x := (show GroupRing G from x))).2 hx
 
 omit [DecidableEq H] [DecidableEq G] in
 /--
@@ -441,12 +438,12 @@ surjective.
 -/
 theorem kernelAugmentationShortExact :
     (kernelAugmentationShortComplex (ψ := ψ)).ShortExact := by
-  haveI : Mono (kernelAugmentationShortComplex (ψ := ψ)).f := by
+  have : Mono (kernelAugmentationShortComplex (ψ := ψ)).f := by
     change Mono (kernelAugmentationIdealInclusion (ψ := ψ))
     exact (Rep.mono_iff_injective _).2 fun x y h => by
       apply Subtype.ext
       exact h
-  haveI : Epi (kernelAugmentationShortComplex (ψ := ψ)).g := by
+  have : Epi (kernelAugmentationShortComplex (ψ := ψ)).g := by
     change Epi (kernelGroupRingAugmentation (ψ := ψ))
     exact (Rep.epi_iff_surjective _).2 <| by
       intro m
@@ -620,7 +617,7 @@ omit [DecidableEq H] [DecidableEq G] in
 theorem kernelAugmentationConnecting_injective
     (hψ : Function.Surjective ψ) :
     Function.Injective (kernelAugmentationConnecting (ψ := ψ)).hom := by
-  letI : Mono (kernelAugmentationConnecting (ψ := ψ)) := by
+  let : Mono (kernelAugmentationConnecting (ψ := ψ)) := by
     let hH1 : Limits.IsZero (groupHomology (kernelGroupRingRep (ψ := ψ)) 1) := by
       classical
       let hrt : Limits.IsZero (groupHomology (kernelRightTensorRep (ψ := ψ) (H := H)) 1) :=
@@ -651,7 +648,7 @@ augmentation ideal.
 abbrev KernelAugmentationIdealCoinvariants (ψ : G →* H) : Type _ :=
   Representation.Coinvariants ((kernelAugmentationIdealRep (ψ := ψ)).ρ)
 
-local instance (priority := 2000) instKernelAugmentationIdealCoinvariantsIntModule :
+local instance instKernelAugmentationIdealCoinvariantsIntModule :
     Module ℤ (KernelAugmentationIdealCoinvariants (ψ := ψ)) :=
   Representation.Coinvariants.instModule ((kernelAugmentationIdealRep (ψ := ψ)).ρ)
 
@@ -864,10 +861,19 @@ theorem kernelAugmentationIdealCoinvariantsActionRingHomOfSurjective_of
     kernelAugmentationIdealCoinvariantsActionRingHomOfSurjective (ψ := ψ) hψ
         (MonoidAlgebra.of ℤ H h) =
       kernelAugmentationIdealCoinvariantsModuleEndOfSurjective (ψ := ψ) hψ h := by
-  ext x
-  simp only [kernelAugmentationIdealCoinvariantsActionRingHomOfSurjective, MonoidAlgebra.of_apply,
-  MonoidAlgebra.liftNCRingHom_single, eq_intCast, Int.cast_one, one_mul, LinearMap.coe_comp,
-      Function.comp_apply]
+  let f := Int.castRingHom
+    (Module.End ℤ (KernelAugmentationIdealCoinvariants (ψ := ψ)))
+  let g := kernelAugmentationIdealCoinvariantsModuleEndOfSurjective (ψ := ψ) hψ
+  have hcomm : ∀ z h₀, Commute (f z) (g h₀) := by
+    intro z h₀
+    apply LinearMap.ext
+    intro x
+    change z • g h₀ x = g h₀ (z • x)
+    rw [map_zsmul]
+  change MonoidAlgebra.liftNCRingHom f g hcomm
+      (MonoidAlgebra.single h 1) = g h
+  exact (MonoidAlgebra.liftNCRingHom_single f g hcomm h 1).trans
+    (by rw [map_one, one_mul])
 
 /-- The induced \(\mathbb{Z}[H]\)-module structure on \(H_0(\ker \psi, I(\mathbb{Z}[G]))\). -/
 @[reducible] def kernelAugmentationIdealCoinvariantsModuleOfSurjective
@@ -1113,7 +1119,7 @@ theorem kernelAugmentationIdealCoinvariants_smul_mk_ofSurjective
         Representation.Coinvariants.mk ((kernelAugmentationIdealRep (ψ := ψ)).ρ) x =
       Representation.Coinvariants.mk ((kernelAugmentationIdealRep (ψ := ψ)).ρ)
         (((groupAugmentationIdealRep (G := G)).ρ (Function.surjInv hψ h)) x) := by
-  letI := kernelAugmentationIdealCoinvariantsModuleOfSurjective (ψ := ψ) hψ
+  let := kernelAugmentationIdealCoinvariantsModuleOfSurjective (ψ := ψ) hψ
   rw [show (MonoidAlgebra.of ℤ H h : GroupRing H) •
       Representation.Coinvariants.mk ((kernelAugmentationIdealRep (ψ := ψ)).ρ) x =
     kernelAugmentationIdealCoinvariantsActionRingHomOfSurjective (ψ := ψ) hψ
@@ -1181,7 +1187,7 @@ private theorem kernelAugmentationIdealCoinvariantsGeneratorOfSurjective_map_mul
       kernelAugmentationIdealCoinvariantsGeneratorOfSurjective (ψ := ψ) g₁ +
         groupRingScalar ψ g₁ •
           kernelAugmentationIdealCoinvariantsGeneratorOfSurjective (ψ := ψ) g₂ := by
-  letI := kernelAugmentationIdealCoinvariantsModuleOfSurjective (ψ := ψ) hψ
+  let := kernelAugmentationIdealCoinvariantsModuleOfSurjective (ψ := ψ) hψ
   rw [kernelAugmentationIdealCoinvariantsGeneratorOfSurjective,
     augmentationGeneratorSubtype_mul]
   rw [map_add]
@@ -1241,7 +1247,7 @@ theorem differentialToKernelAugmentationIdealCoinvariantsLinearOfSurjective_d
     differentialToKernelAugmentationIdealCoinvariantsLinearOfSurjective
         (ψ := ψ) hψ (universalDifferential ψ g) =
       kernelAugmentationIdealCoinvariantsGeneratorOfSurjective (ψ := ψ) g := by
-  letI := kernelAugmentationIdealCoinvariantsModuleOfSurjective (ψ := ψ) hψ
+  let := kernelAugmentationIdealCoinvariantsModuleOfSurjective (ψ := ψ) hψ
   change
     differentialModuleLift ψ
         (kernelAugmentationIdealCoinvariantsGeneratorHomOfSurjective (ψ := ψ) hψ)
@@ -1264,8 +1270,8 @@ theorem differentialToKernelAugmentationIdealCoinvariantsLinearOfSurjective_boun
     differentialToKernelAugmentationIdealCoinvariantsLinearOfSurjective (ψ := ψ) hψ
         (kernelAbelianizationBoundaryLinearOfSurjective ψ hψ x) =
       kernelAbelianizationToCoinvariantsLinear (ψ := ψ) x := by
-  letI := kernelAbelianizationModuleOfSurjective ψ hψ
-  letI := kernelAugmentationIdealCoinvariantsModuleOfSurjective (ψ := ψ) hψ
+  let := kernelAbelianizationModuleOfSurjective ψ hψ
+  let := kernelAugmentationIdealCoinvariantsModuleOfSurjective (ψ := ψ) hψ
   change
     (fun y : Abelianization ψ.ker =>
       differentialToKernelAugmentationIdealCoinvariantsLinearOfSurjective (ψ := ψ) hψ

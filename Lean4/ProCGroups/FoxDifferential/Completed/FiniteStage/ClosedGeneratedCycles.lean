@@ -2,6 +2,8 @@ import ProCGroups.FoxDifferential.Completed.Continuous.ClosedGeneratedCoordinate
 import ProCGroups.FoxDifferential.Completed.FreeProC.FiniteQuotientStages
 import ProCGroups.FoxDifferential.Completed.Continuous.SemidirectKernelBasis
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — finite stage — closed generated cycles
 
@@ -45,9 +47,9 @@ theorem freeProCZCBifilteredAllFiniteQuotientStageCoeffMap_additive_basis
         (freeProCZCBifilteredAllFiniteQuotientStageCoeffMap
           (C := C) (X := X) (H := H) φ hφgen j).toAddMonoidHom) := by
   classical
-  letI : ProCGroups.FiniteGroupClass.ContainsTrivialQuotients C :=
+  let : ProCGroups.FiniteGroupClass.ContainsTrivialQuotients C :=
     hForm.containsTrivialQuotients
-  letI : Nonempty (ZCCompletedGroupAlgebraIndex C H) :=
+  let : Nonempty (ZCCompletedGroupAlgebraIndex C H) :=
     ⟨(ProCIntegerIndex.terminal (C := C) inferInstance,
       zcCompletedGroupAlgebraTopIndex C H)⟩
   let S := zcCompletedGroupAlgebraSystem C H
@@ -63,7 +65,7 @@ theorem freeProCZCBifilteredAllFiniteQuotientStageCoeffMap_additive_basis
   intro z hz
   apply hpre
   change zcCompletedGroupAlgebraProjection C H j z ∈ V
-  letI :
+  let :
       ∀ j : ZCCompletedGroupAlgebraIndex C H,
         DiscreteTopology
           (CompletedGroupAlgebraQuotientInClass H C j.2) :=
@@ -153,16 +155,16 @@ theorem freeProCZCFoxBoundaryCycles_subset_closedGenTarget_of_zcBiAllStages_coef
         (C := C) φ : Subgroup
           (ZCCompletedFoxSemidirect C X H)) : Set
           (ZCCompletedFoxSemidirect C X H)) := by
-  letI : ProCGroups.FiniteGroupClass.ContainsTrivialQuotients C :=
+  let : ProCGroups.FiniteGroupClass.ContainsTrivialQuotients C :=
     hForm.containsTrivialQuotients
-  letI : Nonempty (ZCCompletedGroupAlgebraIndex C H) :=
+  let : Nonempty (ZCCompletedGroupAlgebraIndex C H) :=
     ⟨(ProCIntegerIndex.terminal (C := C) inferInstance,
       zcCompletedGroupAlgebraTopIndex C H)⟩
-  letI :
+  let :
       ∀ j : ZCCompletedGroupAlgebraIndex C H,
         Fact (0 < j.1.modulus) :=
     fun j => ProCIntegerIndex.positiveFact j.1
-  letI :
+  let :
       ∀ j : ZCCompletedGroupAlgebraIndex C H,
         DiscreteTopology
           (CompletedGroupAlgebraQuotientInClass H C j.2) :=
@@ -237,10 +239,7 @@ theorem freeProCZCFoxBoundaryCycles_subset_closedGenTarget_of_zcBiAllStages_coef
       ∀ j : J, ∀ x : X,
         qmap j (QuotientGroup.mk (φ x)) =
           QuotientGroup.mk' (Nstage j) (FreeGroup.of x) := by
-    simpa [J, Nstage, zcIndex, qmap] using
-      freeProCFiniteQuotientStageQMapFamily_generator
-        (C := C) φ
-        (id : J → J) hφgen
+    simp [J, Nstage, zcIndex, qmap]
   have hcoeff_basis :
       HasAdditiveIdentityQuotientKernelNeighbourhoodBasis
         (A := ZCCompletedGroupAlgebra C H)

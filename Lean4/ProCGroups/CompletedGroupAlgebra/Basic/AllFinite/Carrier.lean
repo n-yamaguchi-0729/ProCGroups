@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.Stage
 
+set_option autoImplicit false
+
 /-!
 # Completed Group Algebra / Basic / All Finite / Carrier
 
@@ -46,12 +48,14 @@ def completedGroupAlgebraCompatibleFamilyEquiv
       (completedGroupAlgebraSystem R G).inverseLimit :=
   Equiv.refl _
 
-local instance (U : CompletedGroupAlgebraIndex G) :
+local instance instRingCompletedGroupAlgebraSystemStage
+    (U : CompletedGroupAlgebraIndex G) :
     Ring ((completedGroupAlgebraSystem R G).X U) := by
   change Ring (CompletedGroupAlgebraStage R G U)
   infer_instance
 
-local instance (U : CompletedGroupAlgebraIndex G) :
+local instance instModuleCompletedGroupAlgebraSystemStage
+    (U : CompletedGroupAlgebraIndex G) :
     Module R ((completedGroupAlgebraSystem R G).X U) := by
   change Module R (CompletedGroupAlgebraStage R G U)
   infer_instance
@@ -132,14 +136,34 @@ theorem completedGroupAlgebraTransition_smul
 
 /-- The all-finite tower is a module-valued inverse system over its coefficient ring. -/
 instance instIsModuleSystemCompletedGroupAlgebra :
-    IsModuleSystem R (completedGroupAlgebraSystem R G) where
-  map_smul := completedGroupAlgebraTransition_smul (R := R) (G := G)
+    @IsModuleSystem _ _ R _ (completedGroupAlgebraSystem R G)
+      (fun U => @Ring.toAddCommGroup _
+        (instRingCompletedGroupAlgebraSystemStage (G := G) (R := R) U))
+      (fun U => instModuleCompletedGroupAlgebraSystemStage (G := G) (R := R) U) :=
+  @IsModuleSystem.mk _ _ R _ (completedGroupAlgebraSystem R G)
+    (fun U => @Ring.toAddCommGroup _
+      (instRingCompletedGroupAlgebraSystemStage (G := G) (R := R) U))
+    (fun U => instModuleCompletedGroupAlgebraSystemStage (G := G) (R := R) U)
+    (completedGroupAlgebraTransition_smul (R := R) (G := G))
 
 /-- The module structure is inherited once from the generic module inverse limit. -/
 instance instModuleCoeffCompletedGroupAlgebra :
     Module R (CompletedGroupAlgebraCarrier R G) := by
   change Module R (completedGroupAlgebraSystem R G).inverseLimit
-  infer_instance
+  exact @instModuleInverseLimitOfIsModuleSystem
+    _ _ (completedGroupAlgebraSystem R G)
+    (fun U => @Ring.toAddCommGroup _
+      (instRingCompletedGroupAlgebraSystemStage (G := G) (R := R) U))
+    (@isAddGroupSystemOfIsRingSystem _ _ (completedGroupAlgebraSystem R G)
+      (fun U => instRingCompletedGroupAlgebraSystemStage (G := G) (R := R) U)
+      (instIsRingSystemCompletedGroupAlgebraSystem G R))
+    R inferInstance
+    (fun U => instModuleCompletedGroupAlgebraSystemStage (G := G) (R := R) U)
+    (@IsModuleSystem.mk _ _ R _ (completedGroupAlgebraSystem R G)
+      (fun U => @Ring.toAddCommGroup _
+        (instRingCompletedGroupAlgebraSystemStage (G := G) (R := R) U))
+      (fun U => instModuleCompletedGroupAlgebraSystemStage (G := G) (R := R) U)
+      (completedGroupAlgebraTransition_smul (R := R) (G := G)))
 
 end
 

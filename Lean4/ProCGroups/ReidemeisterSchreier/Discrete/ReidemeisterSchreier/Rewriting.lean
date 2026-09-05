@@ -2,6 +2,8 @@ import Mathlib.GroupTheory.PresentedGroup
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Congruence
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Operations
 
+set_option autoImplicit false
+
 
 /-!
 # Reidemeister Schreier / Discrete / Reidemeister Schreier / Rewriting
@@ -518,7 +520,7 @@ def relatorSubgroup
     Subgroup L where
   carrier := {g | (g : FreeGroup X) ∈ Subgroup.normalClosure R}
   one_mem' := by
-    simp only [Set.mem_setOf_eq, OneMemClass.coe_one, one_mem]
+    simp only [Set.mem_ofPred_eq, OneMemClass.coe_one, one_mem]
   mul_mem' := by
     intro a b ha hb
     exact Subgroup.mul_mem (Subgroup.normalClosure R) ha hb

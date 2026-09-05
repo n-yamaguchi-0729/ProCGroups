@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.OpenFiniteQuotientTopology.OpenFiniteQuotients
 
+set_option autoImplicit false
+
 /-!
 # Completed Group Algebra / Open Finite Quotient Topology / Open Finite Limit / System
 
@@ -38,11 +40,11 @@ def completedGroupAlgebraOpenFiniteQuotientSystem
   map := fun {K L} hKL => completedGroupAlgebraOpenFiniteQuotientTransition R G hKL
   continuous_map := by
     intro K L hKL
-    letI : TopologicalSpace (CompletedGroupAlgebraOpenQuotientStage R G K) :=
+    let : TopologicalSpace (CompletedGroupAlgebraOpenQuotientStage R G K) :=
       completedGroupAlgebraOpenFiniteQuotientStageTopology R G K
-    letI : TopologicalSpace (CompletedGroupAlgebraOpenQuotientStage R G L) :=
+    let : TopologicalSpace (CompletedGroupAlgebraOpenQuotientStage R G L) :=
       completedGroupAlgebraOpenFiniteQuotientStageTopology R G L
-    haveI : DiscreteTopology (CompletedGroupAlgebraOpenQuotientStage R G L) :=
+    have : DiscreteTopology (CompletedGroupAlgebraOpenQuotientStage R G L) :=
       completedGroupAlgebraOpenFiniteQuotientStage_discrete R G L
     exact continuous_of_discreteTopology
   map_id := by

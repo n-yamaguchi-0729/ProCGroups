@@ -1,5 +1,7 @@
 import Mathlib.GroupTheory.QuotientGroup.Basic
 
+set_option autoImplicit false
+
 /-!
 # Right cosets for Schreier rewriting
 
@@ -62,6 +64,8 @@ theorem rightCoset_eq_basepoint_iff_mem
     apply Quotient.sound'
     rw [QuotientGroup.rightRel_apply]
     simp only [mul_assoc, mul_inv_rev, inv_inv, inv_mul_cancel_left, mul_inv_cancel, one_mem]
+
+attribute [instance] rightCosetMulAction
 
 /-- Acting on a represented right coset multiplies its representative by the inverse on the
 right. -/

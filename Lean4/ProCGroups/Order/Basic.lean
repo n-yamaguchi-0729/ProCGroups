@@ -3,6 +3,8 @@ import ProCGroups.ProC.OpenNormalSubgroups.Basic
 import ProCGroups.ProC.OpenNormalSubgroups.FilteredFamilies
 import ProCGroups.Profinite.Basic
 
+set_option autoImplicit false
+
 /-!
 # The order structure on closed subgroups
 
@@ -274,7 +276,7 @@ theorem mem_closedSubgroup_iff_forall_quotientImage_mem
       exact hxV
     have hxInf :
         x ∈ sInf {N : Subgroup G | IsOpen (N : Set G) ∧ (H : Subgroup G) ≤ N} := by
-      simp only [Subgroup.mem_sInf, Set.mem_setOf_eq]
+      simp only [Subgroup.mem_sInf, Set.mem_ofPred_eq]
       intro N hN
       exact hxOpen N hN
     change x ∈ (H : Subgroup G)
@@ -357,7 +359,7 @@ theorem closedSubgroup_eq_of_quotientImages_eq
       exact hxV
     have hxB :
         x ∈ sInf {N : Subgroup G | IsOpen (N : Set G) ∧ (B : Subgroup G) ≤ N} := by
-      simp only [Subgroup.mem_sInf, Set.mem_setOf_eq]
+      simp only [Subgroup.mem_sInf, Set.mem_ofPred_eq]
       intro N hN
       exact hxOpen N hN
     exact (closedSubgroup_eq_sInf_open (G := G) B).symm ▸ hxB
@@ -531,16 +533,13 @@ noncomputable def closedSubgroupFromCompatibleFamily
     ClosedSubgroup S.inverseLimit where
   toSubgroup := (compatibleClosedSubgroupLimHom (S := S) L hcompat).range
   isClosed' := by
-    let T := compatibleClosedSubgroupSystem (S := S) L hcompat
-    letI : ∀ i, CompactSpace (T.X i) := fun i => by
-      change CompactSpace (L i)
-      exact (L i).isClosed'.isClosedEmbedding_subtypeVal.compactSpace
-    letI : ∀ i, T2Space (T.X i) := fun i => by
-      change T2Space (L i)
-      infer_instance
-    letI : CompactSpace T.inverseLimit := inferInstance
-    letI : T2Space S.inverseLimit := S.t2Space_inverseLimit
-    let φ := compatibleClosedSubgroupLimHom (S := S) L hcompat
+    let T : InverseSystem (I := I) := compatibleClosedSubgroupSystem (S := S) L hcompat
+    let : ∀ i, CompactSpace (T.X i) := fun i =>
+      (inferInstance : CompactSpace (L i))
+    let : ∀ i, T2Space (T.X i) := fun i =>
+      (inferInstance : T2Space (L i))
+    let φ : T.inverseLimit →* S.inverseLimit :=
+      compatibleClosedSubgroupLimHom (S := S) L hcompat
     have hφcont :
         Continuous (φ : T.inverseLimit → S.inverseLimit) := by
       change Continuous (T.limMap (compatibleClosedSubgroupInclusion (S := S) L hcompat))
@@ -564,9 +563,10 @@ theorem inverseLimitProjectionImage_closedSubgroupFromCompatibleFamily
         (L i : Subgroup (S.X i))) (i : I) :
     inverseLimitProjectionImage S (closedSubgroupFromCompatibleFamily (S := S) L hcompat) i =
       L i := by
-  let T := compatibleClosedSubgroupSystem (S := S) L hcompat
-  let incl := compatibleClosedSubgroupInclusion (S := S) L hcompat
-  let φ := compatibleClosedSubgroupLimHom (S := S) L hcompat
+  let T : InverseSystem (I := I) := compatibleClosedSubgroupSystem (S := S) L hcompat
+  let incl : T.Morphism S := compatibleClosedSubgroupInclusion (S := S) L hcompat
+  let φ : T.inverseLimit →* S.inverseLimit :=
+    compatibleClosedSubgroupLimHom (S := S) L hcompat
   have hTsurj : ∀ {i j : I} (hij : i ≤ j), Function.Surjective (T.map hij) := by
     intro i j hij y
     have hy :
@@ -581,14 +581,10 @@ theorem inverseLimitProjectionImage_closedSubgroupFromCompatibleFamily
     change S.map hij x = y.1
     change S.map hij x = y.1 at hxy
     exact hxy
-  letI : ∀ i, CompactSpace (T.X i) := fun i => by
-    change CompactSpace (L i)
-    exact (L i).isClosed'.isClosedEmbedding_subtypeVal.compactSpace
-  letI : ∀ i, T2Space (T.X i) := fun i => by
-    change T2Space (L i)
-    infer_instance
-  letI : CompactSpace T.inverseLimit := inferInstance
-  letI : T2Space T.inverseLimit := T.t2Space_inverseLimit
+  let : ∀ i, CompactSpace (T.X i) := fun i =>
+    (inferInstance : CompactSpace (L i))
+  let : ∀ i, T2Space (T.X i) := fun i =>
+    (inferInstance : T2Space (L i))
   ext y
   constructor
   · intro hy
@@ -739,15 +735,11 @@ theorem closedSubgroup_le_of_projectionImages_le
   have hx' :
       x ∈ sInf {N : Subgroup S.inverseLimit |
         IsOpen (N : Set S.inverseLimit) ∧ (K : Subgroup S.inverseLimit) ≤ N} := by
-    simp only [Subgroup.mem_sInf, Set.mem_setOf_eq]
+    simp only [Subgroup.mem_sInf, Set.mem_ofPred_eq]
     intro N hN
     let V : OpenSubgroup S.inverseLimit := ⟨N, hN.1⟩
     rcases exists_openNormalSubgroup_mul_subset_openSubgroup (G := S.inverseLimit) K V hN.2 with
       ⟨U, hKU⟩
-    letI : Finite (S.inverseLimit ⧸ (U : Subgroup S.inverseLimit)) :=
-      openNormalSubgroup_finiteQuotient (G := S.inverseLimit) U
-    letI : DiscreteTopology (S.inverseLimit ⧸ (U : Subgroup S.inverseLimit)) :=
-      QuotientGroup.discreteTopology (openNormalSubgroup_isOpen (G := S.inverseLimit) U)
     let β : S.inverseLimit →* S.inverseLimit ⧸ (U : Subgroup S.inverseLimit) :=
       QuotientGroup.mk' (U : Subgroup S.inverseLimit)
     rcases ProCGroups.InverseSystems.InverseSystem.factors_through_projection_finite_group_hom

@@ -1,5 +1,7 @@
 import Mathlib.Topology.Algebra.Group.Basic
 
+set_option autoImplicit false
+
 /-!
 # Quotient formations and their subgroup topology
 

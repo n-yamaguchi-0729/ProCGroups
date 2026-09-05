@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Derivative.Lift
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: finite stage — stage — derivative — relators
 

@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Completed.Continuous.PresentedCoordinates
 import ProCGroups.FoxDifferential.Completed.Continuous.TopologicalGeneration
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — continuous — closed generated coordinates — basic
 
@@ -76,7 +78,7 @@ theorem continuous_closedGenerated_module_expansion_naturalTopology :
           (G := G) (H := H) C psi family
           (freeProCZCCompletedFoxDerivativeVectorViaClosedGenerated
             (C := C) hfree (fun i : X => psi (family i)) htarget hφconv g)) := by
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (ZCCompletedDifferentialModule C psi.toMonoidHom) :=
     zcCompletedDifferentialModuleNaturalTopology C psi.toMonoidHom
   change Continuous
@@ -267,7 +269,7 @@ theorem continuous_closedGenDerivCoordsZC_of_stageFactorization
       (closedGeneratedDerivativeCoordinatesLinearMapProCInteger
         (G := G) (H := H) C psi family hfree htarget hφconv
         hH hφHconv hφHgen) := by
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (ZCCompletedDifferentialModule C psi.toMonoidHom) :=
     zcCompletedDifferentialModuleNaturalTopology
       C psi.toMonoidHom
@@ -286,10 +288,10 @@ theorem continuous_closedGenDerivCoordsZC_of_stageFactorization
     C H) ?_ (fun a => (L a x).property)
   refine continuous_pi fun j => ?_
   rcases hfactor x j with ⟨i, stageCoord, hstageCoord⟩
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (ZCCompletedDifferentialModuleStage
         C psi.toMonoidHom i) := inferInstance
-  letI : DiscreteTopology
+  let : DiscreteTopology
       (ZCCompletedDifferentialModuleStage
         C psi.toMonoidHom i) := inferInstance
   have hstage : Continuous stageCoord := continuous_of_discreteTopology
@@ -502,7 +504,7 @@ theorem closedGenDerivativeCoordinatesLinearMapZC_stage_factorization_of_hasOpen
       (A := ZCCompletedGroupAlgebraStage C H j)
       (zcCompletedDifferentialModuleStageScalar C psi.toMonoidHom i)
       Dstage
-  letI : Module (ZCCompletedGroupAlgebra C H)
+  let : Module (ZCCompletedGroupAlgebra C H)
       (ZCCompletedDifferentialModuleStage C psi.toMonoidHom i) :=
     Module.compHom _ (zcCompletedGroupAlgebraProjectionRingHom C H i.target)
   let stageCoordLinear :
@@ -629,10 +631,10 @@ theorem continuous_closedGenDerivativeCoordinatesPreliftZC_naturalTopology_of_op
           freeProCZCCompletedFoxDerivativeVectorViaClosedGenerated
             (C := C) hfree (fun i : X => psi (family i)) htarget hφconv g)) := by
   let C := C
-  letI : TopologicalSpace
+  let : TopologicalSpace
       (CrossedDifferentialPreModule (ZCCompletedGroupAlgebra C H) G) :=
     zcCompletedDifferentialPreModuleNaturalTopology C psi.toMonoidHom
-  letI : TopologicalSpace (ZCCompletedDifferentialModule C psi.toMonoidHom) :=
+  let : TopologicalSpace (ZCCompletedDifferentialModule C psi.toMonoidHom) :=
     zcCompletedDifferentialModuleNaturalTopology C psi.toMonoidHom
   let Dclosed : G → ZCFreeFoxCoordinates C (X := X) (H := H) :=
     fun g =>
@@ -927,7 +929,7 @@ theorem closedGenerated_fundamental_formula_stageProj
       (ZCCompletedDifferentialModuleStage C psi.toMonoidHom i) :=
     Dclosed.mapLinear (P.comp M)
   have hstage_continuous : Continuous Dstage := by
-    letI : TopologicalSpace (ZCCompletedDifferentialModule C psi.toMonoidHom) :=
+    let : TopologicalSpace (ZCCompletedDifferentialModule C psi.toMonoidHom) :=
       zcCompletedDifferentialModuleNaturalTopology C psi.toMonoidHom
     have hmodule :
         @Continuous G
@@ -957,7 +959,7 @@ theorem closedGenerated_fundamental_formula_stageProj
     exact hP.comp hmodule
   have huniv_stage_continuous :
       Continuous (zcCompletedDifferentialModuleStageDifferential C psi.toMonoidHom i) := by
-    letI : TopologicalSpace (ZCCompletedDifferentialModule C psi.toMonoidHom) :=
+    let : TopologicalSpace (ZCCompletedDifferentialModule C psi.toMonoidHom) :=
       zcCompletedDifferentialModuleNaturalTopology C psi.toMonoidHom
     have huniv :
         @Continuous G

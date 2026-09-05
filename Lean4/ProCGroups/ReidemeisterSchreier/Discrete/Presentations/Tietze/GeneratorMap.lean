@@ -1,5 +1,7 @@
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.RelatorQuotientMutualMapData
 
+set_option autoImplicit false
+
 /-!
 # Reidemeister Schreier / Discrete / Presentations / Tietze / Generator Map
 

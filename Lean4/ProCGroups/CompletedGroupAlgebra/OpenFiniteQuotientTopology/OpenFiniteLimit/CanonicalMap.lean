@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.OpenFiniteQuotientTopology.OpenFiniteLimit.Topology
 
+set_option autoImplicit false
+
 /-!
 # Completed Group Algebra / Open Finite Quotient Topology / Open Finite Limit / Canonical Map
 
@@ -127,10 +129,10 @@ theorem continuous_toCompletedGroupAlgebraOpenFiniteQuotientLimit_kernelTopology
     letI : TopologicalSpace (MonoidAlgebra R G) :=
       groupAlgebraOpenFiniteQuotientKernelTopology R G
     Continuous (toCompletedGroupAlgebraOpenFiniteQuotientLimit R G) := by
-  letI : TopologicalSpace (MonoidAlgebra R G) :=
+  let : TopologicalSpace (MonoidAlgebra R G) :=
     groupAlgebraOpenFiniteQuotientKernelTopology R G
   let S := completedGroupAlgebraOpenFiniteQuotientSystem R G
-  letI : ∀ K, TopologicalSpace (CompletedGroupAlgebraOpenQuotientStage R G K) :=
+  let : ∀ K, TopologicalSpace (CompletedGroupAlgebraOpenQuotientStage R G K) :=
     fun K => (completedGroupAlgebraOpenFiniteQuotientSystem R G).topologicalSpace K
   let π : ∀ K : CompletedGroupAlgebraOpenQuotientIndex R G,
       MonoidAlgebra R G → CompletedGroupAlgebraOpenQuotientStage R G K :=
@@ -153,7 +155,7 @@ theorem denseRange_toCompletedGroupAlgebraOpenFiniteQuotientLimit
     [Nonempty (CompletedGroupAlgebraOpenQuotientIndex R G)] :
     DenseRange (toCompletedGroupAlgebraOpenFiniteQuotientLimit R G) := by
   let S := completedGroupAlgebraOpenFiniteQuotientSystem R G
-  letI : TopologicalSpace (MonoidAlgebra R G) := ⊥
+  let : TopologicalSpace (MonoidAlgebra R G) := ⊥
   have hdir :
       Directed (α := CompletedGroupAlgebraOpenQuotientIndex R G) (· ≤ ·) fun K => K :=
     directed_completedGroupAlgebraOpenQuotientIndex R G

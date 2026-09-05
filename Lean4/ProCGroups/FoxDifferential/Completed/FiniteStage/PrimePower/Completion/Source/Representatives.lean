@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Completion.Source.LimitMap
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: prime power — completion — source — representatives
 

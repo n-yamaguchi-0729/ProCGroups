@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Completion.Target
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: prime power — completion — source — index
 

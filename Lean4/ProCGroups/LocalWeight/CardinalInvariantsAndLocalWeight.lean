@@ -1,6 +1,8 @@
 import Mathlib.SetTheory.Cardinal.Arithmetic
 import ProCGroups.FiniteGeneration.CharacteristicChainsAndIndices
 
+set_option autoImplicit false
+
 /-!
 # Cardinal invariants and local weight
 
@@ -127,7 +129,7 @@ theorem finite_of_finite_basisSubtype [T1Space X] {B : Set (Set X)}
     (hB : IsTopologicalBasis B) [Finite { U : Set X // U ∈ B }] : Finite X := by
   classical
   let β : Type u := { U : Set X // U ∈ B }
-  letI : Fintype β := Fintype.ofFinite β
+  let : Fintype β := Fintype.ofFinite β
   let code : X → Set β := fun x => { U | x ∈ (U : Set X) }
   have hcode : Function.Injective code := by
     intro x y hxy
@@ -160,7 +162,7 @@ theorem infinite_familySubtype_of_basis [T1Space X] [Infinite X] {B : Set (Set X
     (hB : IsTopologicalBasis B) : Infinite { U : Set X // U ∈ B } := by
   classical
   by_contra hfinite
-  letI : Finite { U : Set X // U ∈ B } := not_infinite_iff_finite.mp hfinite
+  let : Finite { U : Set X // U ∈ B } := not_infinite_iff_finite.mp hfinite
   have hXfin : Finite X := finite_of_finite_basisSubtype (X := X) hB
   exact hXfin.false
 
@@ -186,7 +188,6 @@ theorem rho_le_familyCardinal_of_basis [CompactSpace X] [T2Space X] [Infinite X]
   classical
   let β : Type u := { U : Set X // U ∈ B }
   have hβinf : Infinite β := infinite_familySubtype_of_basis (X := X) hB
-  letI : Infinite β := hβinf
   let encode : { U : Set X // IsClopen U } → Finset β :=
     fun U =>
       Classical.choose
@@ -423,7 +424,7 @@ theorem continuousMonoidHom_eq_of_eqOn_topologicalGeneratingSet
     f = g := by
   let K : Subgroup G := {
     carrier := { x | f x = g x }
-    one_mem' := by simp only [mem_setOf_eq, map_one]
+    one_mem' := by simp only [mem_ofPred_eq, map_one]
     mul_mem' := by
       intro a b ha hb
       change f (a * b) = g (a * b)
@@ -467,8 +468,7 @@ theorem cardinal_continuousMap_to_finite_le_rho
           (B := { U : Set X | IsClopen U })
           (InverseSystems.isTopologicalBasis_isClopen_of_compact_t2_totallyDisconnected
             (X := X)))
-    letI : Infinite β := hβinf
-    letI : Fintype H := Fintype.ofFinite H
+    let : Fintype H := Fintype.ofFinite H
     let encode : C(X, H) → H → β := fun f h =>
       ⟨f ⁻¹' ({h} : Set H), by
         refine ⟨?_, ?_⟩
@@ -484,7 +484,7 @@ theorem cardinal_continuousMap_to_finite_le_rho
       simpa [eq_comm, encode] using hx'
     have hAlephLe : Cardinal.aleph0 ≤ Cardinal.lift (rho X) := by
       apply (Cardinal.aleph0_le_lift).2
-      simp only [rho, familyCardinal, mem_setOf_eq, Cardinal.aleph0_le_mk, β]
+      simp only [rho, familyCardinal, mem_ofPred_eq, Cardinal.aleph0_le_mk, β]
     have hHcardPos : 1 ≤ Fintype.card H := Fintype.card_pos_iff.mpr hH
     calc
       Cardinal.mk C(X, H) ≤ Cardinal.mk (H → β) :=
@@ -497,12 +497,9 @@ theorem cardinal_continuousMap_to_finite_le_rho
       _ = Cardinal.lift (rho X) :=
         Cardinal.power_nat_eq hAlephLe hHcardPos
   · have hEmpty : IsEmpty H := not_nonempty_iff.mp hH
-    letI : IsEmpty H := hEmpty
-    letI : Nonempty X := inferInstance
-    haveI : IsEmpty (X → H) := by infer_instance
-    haveI : IsEmpty C(X, H) := by
+    have : IsEmpty C(X, H) := by
       refine ⟨fun f => ?_⟩
-      exact isEmptyElim (f (Classical.choice ‹Nonempty X›))
+      exact isEmptyElim (f (Classical.choice (inferInstanceAs (Nonempty X))))
     have hzero : Cardinal.mk C(X, H) = 0 := by
       rw [Cardinal.mk_eq_zero_iff]
       infer_instance
@@ -583,11 +580,11 @@ theorem rho_eq_of_homeomorph
   · intro U
     apply Subtype.ext
     ext x
-    simp only [mem_setOf_eq, mem_preimage, Homeomorph.symm_apply_apply]
+    simp only [mem_preimage, Homeomorph.symm_apply_apply]
   · intro V
     apply Subtype.ext
     ext y
-    simp only [mem_setOf_eq, mem_preimage, Homeomorph.apply_symm_apply]
+    simp only [mem_preimage, Homeomorph.apply_symm_apply]
 
 /--
 For an infinite discrete space \(X\), the one-point compactification has exactly \(\#X\) clopen
@@ -731,7 +728,7 @@ theorem rho_closure_eq_cardinal_of_generatesAndConvergesToOneAlongOpenSubgroups_
         _ = X := hYunion
     have h1notY : (1 : G) ∉ Y := by
       simp only [mem_sdiff, mem_singleton_iff, not_true_eq_false, and_false, not_false_eq_true, Y]
-    letI : Infinite Y := Set.infinite_coe_iff.mpr hYinf
+    let : Infinite Y := Set.infinite_coe_iff.mpr hYinf
     have hYdiff : Y \ ({1} : Set G) = Y := by
       ext y
       by_cases hy : y = 1
@@ -741,7 +738,7 @@ theorem rho_closure_eq_cardinal_of_generatesAndConvergesToOneAlongOpenSubgroups_
     have hdiscY : IsDiscrete Y := by
       rcases closure_generatorsConvergingToOne (G := G) hYconv with ⟨hdisc, _⟩
       simpa [hYdiff] using hdisc
-    letI : DiscreteTopology ↥Y := (isDiscrete_iff_discreteTopology).mp hdiscY
+    let : DiscreteTopology ↥Y := (isDiscrete_iff_discreteTopology).mp hdiscY
     have hinsertY : (insert (1 : G) Y : Set G) = X := by
       ext y
       constructor
@@ -774,7 +771,7 @@ theorem rho_closure_eq_cardinal_of_generatesAndConvergesToOneAlongOpenSubgroups_
             (G := G) hYconv hYinf h1notY).symm)
       _ = Cardinal.mk Y := rho_onePoint_eq_cardinal_of_infinite_discrete Y
       _ = Cardinal.mk X := hcardY
-  · letI : Infinite X := Set.infinite_coe_iff.mpr hXinfinite
+  · let : Infinite X := Set.infinite_coe_iff.mpr hXinfinite
     have hXdiff : X \ ({1} : Set G) = X := by
       ext x
       by_cases hx : x = 1
@@ -784,7 +781,7 @@ theorem rho_closure_eq_cardinal_of_generatesAndConvergesToOneAlongOpenSubgroups_
     have hdiscX : IsDiscrete X := by
       rcases closure_generatorsConvergingToOne (G := G) hX.2 with ⟨hdisc, _⟩
       simpa [hXdiff] using hdisc
-    letI : DiscreteTopology ↥X := (isDiscrete_iff_discreteTopology).mp hdiscX
+    let : DiscreteTopology ↥X := (isDiscrete_iff_discreteTopology).mp hdiscX
     calc
       rho ↥(closure X) = rho (OnePoint X) := by
         exact rho_eq_of_homeomorph _ _
@@ -962,11 +959,9 @@ theorem localWeight_le_rho_of_closedGeneratingSet
     (hXgen : TopologicallyGenerates (G := G) X) (hXinfinite : Set.Infinite X) :
     localWeight G ≤ rho ↥X := by
   classical
-  letI : CompactSpace ↥X := by
+  let : CompactSpace ↥X := by
     simpa using hXclosed.isClosedEmbedding_subtypeVal.compactSpace
-  letI : T2Space ↥X := by infer_instance
-  letI : TotallyDisconnectedSpace ↥X := by infer_instance
-  letI : Infinite ↥X := hXinfinite.to_subtype
+  let : Infinite ↥X := hXinfinite.to_subtype
   rcases exists_openNormalNeighborhoodBasisAtOne_cardinal_le_localWeight (G := G) with
     ⟨ι, W, hWbasis, _hWcard⟩
   let B : Set (Set G) := Set.range fun i : ι => (((W i : Subgroup G) : Set G))
@@ -979,7 +974,7 @@ theorem localWeight_le_rho_of_closedGeneratingSet
         Infinite { U : Set ↥X // U ∈ ({ U : Set ↥X | IsClopen U } : Set (Set ↥X)) } :=
       infinite_familySubtype_of_basis (X := ↥X)
         (B := ({ U : Set ↥X | IsClopen U } : Set (Set ↥X))) hBasis
-    letI : Infinite { U : Set ↥X // IsClopen U } := by
+    let : Infinite { U : Set ↥X // IsClopen U } := by
       change Infinite { U : Set ↥X // U ∈ ({ U : Set ↥X | IsClopen U } : Set (Set ↥X)) }
       exact hInfClopen
     unfold rho familyCardinal
@@ -1035,7 +1030,6 @@ theorem localWeight_le_rho_of_closedGeneratingSet
             simp only [Equiv.permCongr_apply, Equiv.Perm.coe_one, id_eq, Equiv.apply_symm_apply]
           rw [← hperm_one]
           exact e.permCongr.injective.eq_iff
-        letI : ((U₁ : Subgroup G)).Normal := U₁.isNormal'
         calc
           (φ₁.ker : Subgroup G) = (MulAction.toPermHom G (G ⧸ (U₁ : Subgroup G))).ker :=
             hkerAction
@@ -1061,7 +1055,6 @@ theorem localWeight_le_rho_of_closedGeneratingSet
             simp only [Equiv.permCongr_apply, Equiv.Perm.coe_one, id_eq, Equiv.apply_symm_apply]
           rw [← hperm_one]
           exact e.permCongr.injective.eq_iff
-        letI : ((U₂ : Subgroup G)).Normal := U₂.isNormal'
         calc
           (φ₂.ker : Subgroup G) = (MulAction.toPermHom G (G ⧸ (U₂ : Subgroup G))).ker :=
             hkerAction
@@ -1152,7 +1145,6 @@ theorem aleph0_le_localWeight_of_infinite_profiniteGroup
       (G := G) with ⟨ι, W, hWbasis, hWcard⟩
   have hιfinite : Finite ι := by
     exact Cardinal.lt_aleph0_iff_finite.mp (lt_of_le_of_lt hWcard hlt)
-  letI : Finite ι := hιfinite
   let U : Set G := ⋂ i : ι, (((W i : Subgroup G) : Set G))
   have hUopen : IsOpen U := by
     refine isOpen_iInter_of_finite ?_
@@ -1183,9 +1175,8 @@ theorem aleph0_le_localWeight_of_infinite_profiniteGroup
   have hUeq : U = ({1} : Set G) := Subset.antisymm hUsubset hsingleton_subset
   have hOneOpen : IsOpen ({1} : Set G) := by
     simpa [hUeq] using hUopen
-  letI : DiscreteTopology G := discreteTopology_of_isOpen_singleton_one hOneOpen
+  let : DiscreteTopology G := discreteTopology_of_isOpen_singleton_one hOneOpen
   have hfinite : Finite G := finite_of_compact_of_discrete
-  letI : Finite G := hfinite
   exact not_finite G
 
 
@@ -1249,7 +1240,7 @@ theorem localWeight_eq_weight_of_infinite_profiniteGroup
       _ ≤ Cardinal.sum (fun _ : ι => ℵ₀) := by
         refine Cardinal.sum_le_sum _ _ ?_
         intro i
-        letI : Finite (G ⧸ (W i : Subgroup G)) :=
+        let : Finite (G ⧸ (W i : Subgroup G)) :=
           openNormalSubgroup_finiteQuotient (G := G) (W i)
         exact Cardinal.mk_le_aleph0_iff.mpr inferInstance
       _ = Cardinal.mk ι * ℵ₀ := by

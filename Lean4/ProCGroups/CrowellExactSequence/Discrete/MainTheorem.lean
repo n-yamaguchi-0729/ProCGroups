@@ -1,5 +1,7 @@
 import ProCGroups.CrowellExactSequence.Discrete.Exactness
 
+set_option autoImplicit false
+
 /-!
 # Crowell Exact Sequence / Discrete / Main Theorem
 
@@ -61,7 +63,7 @@ theorem discreteCrowellLinearSequence_isExact
     (psi : MonoidHom G H) (hpsi : Function.Surjective psi) :
     letI := kernelAbelianizationModuleOfSurjective psi hpsi
     (discreteCrowellLinearSequence (H := H) psi hpsi).IsExact := by
-  letI := kernelAbelianizationModuleOfSurjective psi hpsi
+  let := kernelAbelianizationModuleOfSurjective psi hpsi
   unfold FourTermLinearSequence.IsExact
   rcases Morishita2024.crowellExactSequence_of_surjective (H := H) psi hpsi with
     ⟨hinj, hhead, hmiddle, hsurj⟩
@@ -137,7 +139,7 @@ theorem discreteBlanchfieldLyndonLinearSequence_isExact
     (r : Nat) (psi : MonoidHom (FreeGroup (Fin r)) H) (hpsi : Function.Surjective psi) :
     letI := kernelAbelianizationModuleOfSurjective psi hpsi
     (discreteBlanchfieldLyndonLinearSequence (H := H) r psi hpsi).IsExact := by
-  letI := kernelAbelianizationModuleOfSurjective psi hpsi
+  let := kernelAbelianizationModuleOfSurjective psi hpsi
   unfold FourTermLinearSequence.IsExact
   rcases
       Morishita2024.freeGroupPresentation_blanchfieldLyndonExactSequence

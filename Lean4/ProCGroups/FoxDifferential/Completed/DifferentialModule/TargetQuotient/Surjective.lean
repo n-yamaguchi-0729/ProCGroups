@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.DifferentialModule.TargetQuotient.StageMap
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — differential module — target quotient — surjective
 

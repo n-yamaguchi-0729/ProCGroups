@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.DifferentialModule.Map.Limit
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — differential module — map — surjective
 
@@ -41,37 +43,37 @@ theorem primePowerCompletedGroupAlgebraMap_surjective
   let T := primePowerCompletedGroupAlgebraSystem ℓ G
   let f : PrimePowerCompletedGroupAlgebra ℓ G → PrimePowerCompletedGroupAlgebra ℓ H :=
     primePowerCompletedGroupAlgebraMap (ℓ := ℓ) (G := G) (H := H) ψ
-  letI : Nonempty (PrimePowerCompletedGroupAlgebraIndex H) :=
+  let : Nonempty (PrimePowerCompletedGroupAlgebraIndex H) :=
     ⟨(0, _root_.CompletedGroupAlgebra.terminalCompletedGroupAlgebraIndex H)⟩
-  letI : ∀ i : PrimePowerCompletedGroupAlgebraIndex H, TopologicalSpace (S.X i) :=
+  let : ∀ i : PrimePowerCompletedGroupAlgebraIndex H, TopologicalSpace (S.X i) :=
     fun i => S.topologicalSpace i
-  letI : ∀ i : PrimePowerCompletedGroupAlgebraIndex H, DiscreteTopology (S.X i) :=
+  let : ∀ i : PrimePowerCompletedGroupAlgebraIndex H, DiscreteTopology (S.X i) :=
     fun _ => ⟨rfl⟩
-  letI : ∀ i : PrimePowerCompletedGroupAlgebraIndex H, CompactSpace (S.X i) :=
+  let : ∀ i : PrimePowerCompletedGroupAlgebraIndex H, CompactSpace (S.X i) :=
     fun i => by
-      letI : Finite (S.X i) := by
+      let : Finite (S.X i) := by
         dsimp [S, primePowerCompletedGroupAlgebraSystem]
         infer_instance
-      letI : Fintype (S.X i) := Fintype.ofFinite _
+      let : Fintype (S.X i) := Fintype.ofFinite _
       infer_instance
-  letI : ∀ i : PrimePowerCompletedGroupAlgebraIndex H, T2Space (S.X i) :=
+  let : ∀ i : PrimePowerCompletedGroupAlgebraIndex H, T2Space (S.X i) :=
     fun _ => inferInstance
-  letI : ∀ i : PrimePowerCompletedGroupAlgebraIndex G, TopologicalSpace (T.X i) :=
+  let : ∀ i : PrimePowerCompletedGroupAlgebraIndex G, TopologicalSpace (T.X i) :=
     fun i => T.topologicalSpace i
-  letI : ∀ i : PrimePowerCompletedGroupAlgebraIndex G, DiscreteTopology (T.X i) :=
+  let : ∀ i : PrimePowerCompletedGroupAlgebraIndex G, DiscreteTopology (T.X i) :=
     fun _ => ⟨rfl⟩
-  letI : ∀ i : PrimePowerCompletedGroupAlgebraIndex G, CompactSpace (T.X i) :=
+  let : ∀ i : PrimePowerCompletedGroupAlgebraIndex G, CompactSpace (T.X i) :=
     fun i => by
-      letI : Finite (T.X i) := by
+      let : Finite (T.X i) := by
         dsimp [T, primePowerCompletedGroupAlgebraSystem]
         infer_instance
-      letI : Fintype (T.X i) := Fintype.ofFinite _
+      let : Fintype (T.X i) := Fintype.ofFinite _
       infer_instance
-  letI : ∀ i : PrimePowerCompletedGroupAlgebraIndex G, T2Space (T.X i) :=
+  let : ∀ i : PrimePowerCompletedGroupAlgebraIndex G, T2Space (T.X i) :=
     fun _ => inferInstance
-  letI : CompactSpace (PrimePowerCompletedGroupAlgebra ℓ G) :=
+  let : CompactSpace (PrimePowerCompletedGroupAlgebra ℓ G) :=
     inferInstance
-  letI : T2Space (PrimePowerCompletedGroupAlgebra ℓ H) :=
+  let : T2Space (PrimePowerCompletedGroupAlgebra ℓ H) :=
     S.t2Space_inverseLimit
   have hf_continuous : Continuous f :=
     continuous_primePowerCompletedGroupAlgebraMap (ℓ := ℓ) (G := G) (H := H) ψ

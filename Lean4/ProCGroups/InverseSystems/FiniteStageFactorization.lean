@@ -1,5 +1,7 @@
 import ProCGroups.InverseSystems.ProfiniteSpace
 
+set_option autoImplicit false
+
 /-!
 # Factorization through finite stages
 
@@ -72,9 +74,11 @@ def homeomorph_inverseLimit_finiteSubsetProductSystem {α : Type u} (X : α → 
       intro b hb
       have hb' : b = a.1 := by simpa using hb
       exact hb' ▸ a.2
-    have hcompat := congrFun (y.2 ({a.1} : Finset α) F hs) ⟨a.1, by simp only
-        [Finset.mem_singleton]⟩
-    simpa [fromS, S, finiteSubsetProductSystem] using hcompat.symm
+    have hcompat := congrFun
+      (S.projection_compatible y ({a.1} : Finset α) F hs)
+      ⟨a.1, by simp only [Finset.mem_singleton]⟩
+    change S.projection F y a = fromS y a.1 at hcompat
+    exact hcompat.symm
   have hcontinuous_toS : Continuous toS := by
     exact Continuous.subtype_mk
       (by
@@ -108,8 +112,7 @@ theorem InverseSystem.factors_through_projection_finite
     (ρ : S.inverseLimit → Y) (hρ : Continuous ρ) :
     ∃ k : I, ∃ ρ' : S.X k → Y, Continuous ρ' ∧ ρ = ρ' ∘ S.projection k := by
   classical
-  letI : Fintype Y := Fintype.ofFinite Y
-  letI : CompactSpace S.inverseLimit := inferInstance
+  let : Fintype Y := Fintype.ofFinite Y
   let Uy : Y → Set S.inverseLimit := fun y => ρ ⁻¹' ({y} : Set Y)
   have hUy_clopen : ∀ y, IsClopen (Uy y) := by
     intro y
@@ -278,7 +281,6 @@ instance finiteSubsetProductSystem_instIsTopologicalGroup {α : Type u} (X : α 
   intro s
   classical
   dsimp [finiteSubsetProductSystem]
-  letI : ∀ a : s, IsTopologicalGroup (X a.1) := fun _ => inferInstance
   exact Pi.topologicalGroup
 
 /-- The finite-subset product system is a group-valued inverse system. -/
@@ -317,7 +319,6 @@ theorem InverseSystem.factors_through_projection_finite_group_hom [Nonempty I]
     ∃ k : I, ∃ βk : S.X k →* H, Continuous βk ∧ β = βk ∘ S.projection k := by
   classical
   let rangeβ : S.inverseLimit → Set.range β := fun x => ⟨β x, ⟨x, rfl⟩⟩
-  letI : Nonempty (Set.range β) := ⟨⟨β 1, ⟨1, rfl⟩⟩⟩
   have hrangeβ_continuous : Continuous rangeβ := by
     exact Continuous.subtype_mk _hβ fun x => ⟨x, rfl⟩
   rcases S.factors_through_projection_finite hdir rangeβ hrangeβ_continuous with
@@ -476,10 +477,8 @@ theorem InverseSystem.factors_through_projection_finite_group_hom [Nonempty I]
       intro j
       rcases hzall j with ⟨xy, hxy⟩
       exact ⟨⟨xy, hxy⟩⟩
-    letI : ∀ j : J, Nonempty (T.X j) := hnonemptyT
-    letI : ∀ j : J, CompactSpace (T.X j) := fun j => by
+    let : ∀ j : J, CompactSpace (T.X j) := fun j => by
       simpa [T] using (isCompact_iff_compactSpace.mp (hYclosed j).isCompact)
-    letI : ∀ j : J, T2Space (T.X j) := fun _ => inferInstance
     rcases T.nonempty_inverseLimit hdirJ with ⟨u⟩
     let xlim : (S.restrict J).inverseLimit := by
       refine ⟨fun j => (u.1 j).1.1, ?_⟩
@@ -489,11 +488,10 @@ theorem InverseSystem.factors_through_projection_finite_group_hom [Nonempty I]
       refine ⟨fun j => (u.1 j).1.2, ?_⟩
       intro i j hij
       exact congrArg Prod.snd (congrArg Subtype.val (u.2 i j hij))
-    letI : ∀ j : J, Group ((S.restrict J).X j) := fun j => by
-      change Group (S.X j.1)
-      infer_instance
     let e := S.homeomorph_restrict_cofinal J hdirJ hcofinal
     let j0 : J := ⟨i0, le_rfl⟩
+    let xj : S.X j0.1 := (S.restrict J).projection j0 xlim
+    let yj : S.X j0.1 := (S.restrict J).projection j0 ylim
     have hu0 :
         (βJ j0 ((u.1 j0).1.1) * βJ j0 ((u.1 j0).1.2),
           βJ j0 (((u.1 j0).1.1) * ((u.1 j0).1.2))) = z := by
@@ -528,16 +526,12 @@ theorem InverseSystem.factors_through_projection_finite_group_hom [Nonempty I]
                 simpa [Function.comp] using congrFun (hβJ_fac j0) (e.symm xlim * e.symm ylim)
         _ = βJ j0 (S.projection j0.1 (e.symm xlim) * S.projection j0.1 (e.symm ylim)) := by
               rw [projection_mul (S := S) j0.1 (e.symm xlim) (e.symm ylim)]
-        _ = βJ j0 ((S.restrict J).projection j0 xlim * (S.restrict J).projection j0 ylim) := by
+        _ = βJ j0 (xj * yj) := by
               rw [← hπx, ← hπy]
-              rfl
         _ = z.2 := by
           have hsnd := congrArg Prod.snd hu0
           change
-            βJ j0
-                ((S.restrict J).projection j0 xlim *
-                  (S.restrict J).projection j0 ylim) =
-              z.2 at hsnd
+            βJ j0 (xj * yj) = z.2 at hsnd
           exact hsnd
   have hnot_iInter : ∀ {t : H × H}, t ∉ Set.range η → ∃ j : J, t ∉ E j := by
     intro t ht
@@ -553,8 +547,7 @@ theorem InverseSystem.factors_through_projection_finite_group_hom [Nonempty I]
   have hjchoose : ∀ t ht, t ∉ E (jchoose t ht) := by
     intro t ht
     exact Classical.choose_spec (hnot_iInter ht)
-  letI : Fintype H := Fintype.ofFinite H
-  letI : Fintype (H × H) := Fintype.ofFinite (H × H)
+  let : Fintype H := Fintype.ofFinite H
   let used : Finset J := Finset.univ.image fun t : H × H =>
     if ht : t ∈ Set.range η then j0 else jchoose t ht
   have hused_nonempty : used.Nonempty := by
@@ -631,8 +624,7 @@ theorem InverseSystem.factors_through_projection_finite_addMonoidHom [Nonempty I
         apply Multiplicative.ext
         change S.map hij (S.map hjk x.toAdd) = S.map (hij.trans hjk) x.toAdd
         exact S.map_comp_apply hij hjk x.toAdd }
-  letI : ∀ i, Group (T.X i) := fun _ => inferInstance
-  letI : IsGroupSystem T :=
+  let : IsGroupSystem T :=
     { map_one := by
         intro i j hij
         apply Multiplicative.ext
@@ -645,12 +637,8 @@ theorem InverseSystem.factors_through_projection_finite_addMonoidHom [Nonempty I
         intro i j hij x
         apply Multiplicative.ext
         exact IsAddGroupSystem.map_neg (S := S) hij x.toAdd }
-  letI : ∀ i, IsTopologicalGroup (T.X i) := fun _ => inferInstance
-  letI : ∀ i, CompactSpace (T.X i) := fun _ => inferInstance
-  letI : ∀ i, T2Space (T.X i) := fun i =>
+  let : ∀ i, T2Space (T.X i) := fun i =>
     (additiveMultiplicativeHomeomorph (S.X i)).t2Space
-  letI : ∀ i, TotallyDisconnectedSpace (T.X i) := fun i =>
-    (additiveMultiplicativeHomeomorph (S.X i)).totallyDisconnectedSpace
   let toAddLimit : T.inverseLimit → S.inverseLimit := fun x =>
     ⟨fun i => (T.projection i x).toAdd, by
       intro i j hij
@@ -687,7 +675,7 @@ theorem InverseSystem.factors_through_projection_finite_addMonoidHom [Nonempty I
     change Continuous fun x => Multiplicative.ofAdd (β (toAddLimit x))
     exact (additiveMultiplicativeHomeomorph H).continuous_toFun.comp
       (hβ.comp htoAddLimit_continuous)
-  letI : Finite (Multiplicative H) := Finite.of_equiv H Multiplicative.ofAdd
+  let : Finite (Multiplicative H) := Finite.of_equiv H Multiplicative.ofAdd
   rcases T.factors_through_projection_finite_group_hom hdir βMul hβMul_continuous with
     ⟨k, γk, hγk_continuous, hγk_fac⟩
   let βk : S.X k →+ H :=

@@ -2,6 +2,8 @@ import Mathlib.Algebra.Category.Grp.Limits
 import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Basic
 import Mathlib.GroupTheory.QuotientGroup.Basic
 
+set_option autoImplicit false
+
 /-!
 # Pro C Groups / Categorical / Algebraic Pullbacks
 
@@ -25,7 +27,7 @@ variable [Group A] [Group G] [Group H] [Group H₁] [Group H₂] [Group K]
 /-- Concrete pullback subgroup of \(\beta_1\) and \(\beta_2\). -/
 def FiberProduct.subgroup (β₁ : H₁ →* H) (β₂ : H₂ →* H) : Subgroup (H₁ × H₂) where
   carrier := { x | β₁ x.1 = β₂ x.2 }
-  one_mem' := by simp only [Set.mem_setOf_eq, Prod.fst_one, map_one, Prod.snd_one]
+  one_mem' := by simp only [Set.mem_ofPred_eq, Prod.fst_one, map_one, Prod.snd_one]
   mul_mem' := by
     intro x y hx hy
     change β₁ x.1 = β₂ x.2 at hx

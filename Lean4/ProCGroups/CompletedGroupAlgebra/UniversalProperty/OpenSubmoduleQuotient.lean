@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.UniversalProperty.FiniteQuotient
 
+set_option autoImplicit false
+
 /-!
 # Lifts to open-submodule quotients
 
@@ -44,11 +46,9 @@ theorem completedGroupAlgebra_existsUnique_lift_to_openSubmoduleQuotient
       ∀ g : G, F (completedGroupAlgebraOf R G g) = Submodule.mkQ W (f g) := by
   let hdisc : IsDiscreteModule R (N ⧸ W) :=
     quotient_openSubmodule_isDiscreteModule R N W hW
-  letI : IsTopologicalAddGroup (N ⧸ W) := hdisc.1.2.1
-  letI : ContinuousAdd (N ⧸ W) := inferInstance
-  letI : ContinuousSMul R (N ⧸ W) := hdisc.1.2.2
-  letI : DiscreteTopology (N ⧸ W) := hdisc.2
-  letI : T2Space (N ⧸ W) := inferInstance
+  let : IsTopologicalAddGroup (N ⧸ W) := hdisc.1.2.1
+  let : ContinuousSMul R (N ⧸ W) := hdisc.1.2.2
+  let : DiscreteTopology (N ⧸ W) := hdisc.2
   have hqcont : Continuous (Submodule.mkQ W : N → N ⧸ W) := by
     change Continuous (Submodule.Quotient.mk (p := W))
     exact continuous_quotient_mk'
@@ -99,9 +99,8 @@ theorem completedGroupAlgebraLiftToOpenSubmoduleQuotient_factor
     quotient_openSubmodule_isDiscreteModule R N V hV
   let hdiscW : IsDiscreteModule R (N ⧸ W) :=
     quotient_openSubmodule_isDiscreteModule R N W hW
-  letI : DiscreteTopology (N ⧸ W) := hdiscW.2
-  letI : DiscreteTopology (N ⧸ V) := hdiscV.2
-  letI : T2Space (N ⧸ V) := inferInstance
+  let : DiscreteTopology (N ⧸ W) := hdiscW.2
+  let : DiscreteTopology (N ⧸ V) := hdiscV.2
   let factorCLM : N ⧸ W →L[R] N ⧸ V :=
     { toLinearMap := Submodule.factor hWV
       cont := continuous_of_discreteTopology }

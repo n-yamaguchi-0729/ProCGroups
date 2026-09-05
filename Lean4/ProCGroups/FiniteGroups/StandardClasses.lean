@@ -2,6 +2,8 @@ import Mathlib.GroupTheory.Nilpotent
 import Mathlib.NumberTheory.Padics.PadicVal.Basic
 import ProCGroups.FiniteGroups.AllFinite
 
+set_option autoImplicit false
+
 /-!
 # Standard classes of finite groups
 
@@ -106,7 +108,7 @@ def cyclic : FiniteGroupClass.{u} where
   finite_of_mem := fun hG => hG.1
   mem_of_mulEquiv := by
     intro G H _ _ e hG
-    letI : Finite G := hG.1
+    let : Finite G := hG.1
     exact ⟨Finite.of_equiv G e.toEquiv, e.isCyclic.mp hG.2⟩
 
 /-- The class of finite abelian groups. -/
@@ -115,7 +117,7 @@ def abelian : FiniteGroupClass.{u} where
   finite_of_mem := fun hG => hG.1
   mem_of_mulEquiv := by
     intro G H _ _ e hG
-    letI : Finite G := hG.1
+    let : Finite G := hG.1
     refine ⟨Finite.of_equiv G e.toEquiv, ?_⟩
     intro a b
     apply e.symm.injective
@@ -123,14 +125,14 @@ def abelian : FiniteGroupClass.{u} where
 
 /-- The class of finite solvable groups. -/
 def solvable : FiniteGroupClass.{u} where
-  pred := fun G [_] => Finite G ∧ IsSolvable G
+  pred := fun G [_] => Finite G ∧ Group.IsSolvable G
   finite_of_mem := fun hG => hG.1
   mem_of_mulEquiv := by
     intro G H _ _ e hG
-    letI : Finite G := hG.1
-    letI : IsSolvable G := hG.2
+    let : Finite G := hG.1
+    let : Group.IsSolvable G := hG.2
     exact ⟨Finite.of_equiv G e.toEquiv,
-      solvable_of_surjective (f := e.toMonoidHom) e.surjective⟩
+      Group.isSolvable_of_surjective (f := e.toMonoidHom) e.surjective⟩
 
 /-- The finite group class consisting of finite nilpotent groups. -/
 def nilpotent : FiniteGroupClass.{u} where
@@ -138,7 +140,7 @@ def nilpotent : FiniteGroupClass.{u} where
   finite_of_mem := fun hG => hG.1
   mem_of_mulEquiv := by
     intro G H _ _ e hG
-    letI : Finite G := hG.1
+    let : Finite G := hG.1
     exact ⟨Finite.of_equiv G e.toEquiv,
       (Group.isNilpotent_congr e).mp hG.2⟩
 
@@ -148,7 +150,7 @@ def pGroup (p : ℕ) [Fact (Nat.Prime p)] : FiniteGroupClass.{u} where
   finite_of_mem := fun hG => hG.1
   mem_of_mulEquiv := by
     intro G H _ _ e hG
-    letI : Finite G := hG.1
+    let : Finite G := hG.1
     exact ⟨Finite.of_equiv G e.toEquiv,
       hG.2.of_surjective e.toMonoidHom e.surjective⟩
 
@@ -223,7 +225,7 @@ def sigmaGroup (sigma : Set ℕ) : FiniteGroupClass.{u} where
   finite_of_mem := fun hG => hG.1
   mem_of_mulEquiv := by
     intro G H _ _ e hG
-    letI : Finite G := hG.1
+    let : Finite G := hG.1
     refine ⟨Finite.of_equiv G e.toEquiv, ?_⟩
     simpa [Nat.card_congr e.toEquiv] using hG.2
 
@@ -234,7 +236,7 @@ def abelianExponent (n : ℕ) : FiniteGroupClass.{u} where
   finite_of_mem := fun hG => hG.1
   mem_of_mulEquiv := by
     intro G H _ _ e hG
-    letI : Finite G := hG.1
+    let : Finite G := hG.1
     refine ⟨Finite.of_equiv G e.toEquiv, ?_, ?_⟩
     · intro a b
       apply e.symm.injective
@@ -252,7 +254,7 @@ theorem isPGroup_pi {ι : Type u} [Finite ι] {G : ι → Type v}
     [∀ i, Group (G i)] (hG : ∀ i, IsPGroup p (G i)) :
     IsPGroup p ((i : ι) → G i) := by
   classical
-  letI := Fintype.ofFinite ι
+  let : Fintype ι := Fintype.ofFinite ι
   intro g
   choose k hk using fun i => hG i (g i)
   let N : ℕ := Finset.univ.sup k
@@ -274,10 +276,9 @@ theorem pGroup_formation (p : ℕ) [Fact (Nat.Prime p)] :
   · intro G _ N _ hG
     rcases hG with ⟨hfin, hpG⟩
     refine ⟨?_, hpG.to_quotient N⟩
-    letI : Finite G := hfin
     infer_instance
   · intro ι _ G _ H _ f hf _hsurj hH
-    letI : ∀ i, Finite (H i) := fun i => (hH i).1
+    let : ∀ i, Finite (H i) := fun i => (hH i).1
     have hPi : IsPGroup p ((i : ι) → H i) := isPGroup_pi (p := p) fun i => (hH i).2
     exact ⟨Finite.of_injective f hf, hPi.of_injective f hf⟩
 
@@ -319,10 +320,7 @@ theorem pGroup_extensionClosed (p : ℕ) [Fact (Nat.Prime p)] :
   intro E _ N _ hN hQ
   rcases hN with ⟨hNfin, hpN⟩
   rcases hQ with ⟨hQfin, hpQ⟩
-  letI : Finite N := hNfin
-  letI : Finite (E ⧸ N) := hQfin
   have hEfin : Finite E := finite_of_finite_normalSubgroup_and_quotient (N := N)
-  letI : Finite E := hEfin
   have hker :
       IsPGroup p ((QuotientGroup.mk' N).ker : Subgroup E) := by
     exact hpN.of_equiv (MulEquiv.subgroupCongr (QuotientGroup.ker_mk' N).symm)
@@ -371,8 +369,7 @@ theorem sigmaGroup_quotientClosed (sigma : Set ℕ) : QuotientClosed (sigmaGroup
   intro G _ N _ hG
   rcases hG with ⟨hfin, hsigma⟩
   refine ⟨?_, ?_⟩
-  · letI : Finite G := hfin
-    infer_instance
+  · infer_instance
   · exact IsSigmaNumber.of_dvd (sigma := sigma) hsigma (Subgroup.card_quotient_dvd_card N)
 
 /-- `sigmaGroup` is closed under finite products. -/
@@ -380,7 +377,7 @@ theorem sigmaGroup_finiteProductClosed (sigma : Set ℕ) : FiniteProductClosed (
     := by
   intro ι _ A _ hA
   refine ⟨?_, ?_⟩
-  · letI : ∀ i, Finite (A i) := fun i => (hA i).1
+  · let : ∀ i, Finite (A i) := fun i => (hA i).1
     infer_instance
   · simpa [Nat.card_pi] using
       IsSigmaNumber.prod (sigma := sigma) Finset.univ (fun i => Nat.card (A i))
@@ -401,10 +398,7 @@ theorem sigmaGroup_extensionClosed (sigma : Set ℕ) :
   intro E _ N _ hN hQ
   rcases hN with ⟨hNfin, hsigmaN⟩
   rcases hQ with ⟨hQfin, hsigmaQ⟩
-  letI : Finite N := hNfin
-  letI : Finite (E ⧸ N) := hQfin
   have hEfin : Finite E := finite_of_finite_normalSubgroup_and_quotient (N := N)
-  letI : Finite E := hEfin
   refine ⟨hEfin, ?_⟩
   have hcard :
       Nat.card E = Nat.card (E ⧸ N) * Nat.card N := by
@@ -430,10 +424,10 @@ theorem sigmaGroup_cyclicZMod
     {sigma : Set ℕ} {n : ℕ} (hn : 0 < n)
     (hsigma : IsSigmaNumber sigma n) :
     sigmaGroup sigma (ULift.{u} (Multiplicative (ZMod n))) := by
-  letI : NeZero n := ⟨Nat.ne_of_gt hn⟩
+  let : NeZero n := ⟨Nat.ne_of_gt hn⟩
   let A := ULift.{u} (Multiplicative (ZMod n))
   let e : A ≃* Multiplicative (ZMod n) := MulEquiv.ulift
-  letI : Finite A := Finite.of_equiv (Multiplicative (ZMod n)) e.symm.toEquiv
+  let : Finite A := Finite.of_equiv (Multiplicative (ZMod n)) e.symm.toEquiv
   refine ⟨inferInstance, ?_⟩
   have hcard : Nat.card A = n := by
     calc
@@ -447,10 +441,10 @@ theorem sigmaGroup_nontrivialCyclic
     ∃ (A : Type u) (_ : Group A) (_ : Finite A),
       sigmaGroup sigma A ∧ IsCyclic A ∧ Nontrivial A := by
   rcases hsigma with ⟨p, hpsigma, hp⟩
-  letI : Fact (1 < p) := ⟨hp.one_lt⟩
+  let : Fact (1 < p) := ⟨hp.one_lt⟩
   let A := ULift.{u} (Multiplicative (ZMod p))
   let e : A ≃* Multiplicative (ZMod p) := MulEquiv.ulift
-  letI : Finite A := Finite.of_equiv (Multiplicative (ZMod p)) e.symm.toEquiv
+  let : Finite A := Finite.of_equiv (Multiplicative (ZMod p)) e.symm.toEquiv
   have hcyc : IsCyclic A :=
     isCyclic_of_surjective e.symm.toMonoidHom e.symm.surjective
   have hnon : Nontrivial A := e.toEquiv.nontrivial
@@ -467,10 +461,9 @@ theorem sigmaGroup_prod_multiplicativeZMod
     (hNsigma : IsSigmaNumber sigma N) :
     sigmaGroup sigma (Q × Multiplicative (ZMod N)) := by
   rcases hQ with ⟨hQfin, hQsigma⟩
-  letI : Finite Q := hQfin
-  letI : NeZero N := ⟨Nat.ne_of_gt hNpos⟩
-  letI : Finite (Multiplicative (ZMod N)) :=
-    @Finite.of_equiv _ _ (show Finite (ZMod N) by infer_instance) Multiplicative.toAdd
+  let : NeZero N := ⟨Nat.ne_of_gt hNpos⟩
+  let : Finite (Multiplicative (ZMod N)) :=
+    Finite.of_equiv (ZMod N) Multiplicative.ofAdd
   refine ⟨inferInstance, ?_⟩
   have hcard : Nat.card (Multiplicative (ZMod N)) = N := by
     simp only [Nat.card_eq_fintype_card, Fintype.card_multiplicative, ZMod.card]
@@ -538,27 +531,28 @@ theorem abelian_subgroupClosed : SubgroupClosed abelian := by
   intro G _ H hG
   rcases hG with ⟨hfin, hcomm⟩
   refine ⟨Finite.of_injective ((↑) : H → G) Subtype.coe_injective, ?_⟩
-  letI : CommGroup G := { toGroup := inferInstance, mul_comm := hcomm }
   intro a b
-  exact mul_comm a b
+  exact Subtype.ext (hcomm a.val b.val)
 
 /-- Finite abelian groups are closed under quotients. -/
 theorem abelian_quotientClosed : QuotientClosed abelian := by
   intro G _ N _ hG
   rcases hG with ⟨hfin, hcomm⟩
   refine ⟨?_, ?_⟩
-  · letI : Finite G := hfin
-    infer_instance
-  · letI : CommGroup G := { toGroup := inferInstance, mul_comm := hcomm }
-    intro a b
-    exact mul_comm a b
+  · infer_instance
+  · intro a b
+    rcases QuotientGroup.mk'_surjective N a with ⟨x, rfl⟩
+    rcases QuotientGroup.mk'_surjective N b with ⟨y, rfl⟩
+    exact ((QuotientGroup.mk' N).map_mul x y).symm.trans
+      ((congrArg (QuotientGroup.mk' N) (hcomm x y)).trans
+        ((QuotientGroup.mk' N).map_mul y x))
 
 /-- Finite abelian groups are closed under finite direct products. -/
 theorem abelian_finiteProductClosed : FiniteProductClosed abelian := by
   intro ι _ G _ hG
   change Finite ((i : ι) → G i) ∧ ∀ a b : ((i : ι) → G i), a * b = b * a
   constructor
-  · letI : ∀ i, Finite (G i) := fun i => (hG i).1
+  · let : ∀ i, Finite (G i) := fun i => (hG i).1
     infer_instance
   · intro a b
     funext i
@@ -599,25 +593,21 @@ theorem abelianExponent_subgroupClosed (n : ℕ) : SubgroupClosed (abelianExpone
 theorem abelianExponent_quotientClosed (n : ℕ) : QuotientClosed (abelianExponent n) := by
   intro G _ N _ hG
   rcases hG with ⟨hfin, hcomm, hexp⟩
-  refine ⟨?_, ?_, ?_⟩
-  · letI : Finite G := hfin
-    infer_instance
-  · letI : CommGroup G := { toGroup := inferInstance, mul_comm := hcomm }
-    intro a b
-    exact mul_comm a b
-  · intro g
-    refine Quotient.inductionOn' g ?_
-    intro x
-    change QuotientGroup.mk' N (x ^ n) = 1
-    rw [hexp x]
-    rfl
+  have habelian : abelian (G ⧸ N) := abelian_quotientClosed N ⟨hfin, hcomm⟩
+  refine ⟨habelian.1, habelian.2, ?_⟩
+  intro g
+  refine Quotient.inductionOn' g ?_
+  intro x
+  change QuotientGroup.mk' N (x ^ n) = 1
+  rw [hexp x]
+  exact (QuotientGroup.mk' N).map_one
 
 /-- Finite products of finite abelian groups of bounded exponent again have bounded exponent. -/
 theorem abelianExponent_finiteProductClosed (n : ℕ) :
     FiniteProductClosed (abelianExponent n) := by
   intro ι _ G _ hG
   refine ⟨?_, ?_, ?_⟩
-  · letI : ∀ i, Finite (G i) := fun i => (hG i).1
+  · let : ∀ i, Finite (G i) := fun i => (hG i).1
     infer_instance
   · intro a b
     funext i
@@ -654,7 +644,6 @@ theorem cyclic_isomClosed : IsomClosed cyclic := by
   rcases hGH with ⟨e⟩
   rcases hG with ⟨hfin, hcyc⟩
   refine ⟨Finite.of_equiv G e.toEquiv, ?_⟩
-  letI : IsCyclic G := hcyc
   exact isCyclic_of_surjective e e.surjective
 
 /-- Finite cyclic groups are closed under quotients. -/
@@ -662,10 +651,8 @@ theorem cyclic_quotientClosed : QuotientClosed cyclic := by
   intro G _ N _ hG
   rcases hG with ⟨hfin, hcyc⟩
   refine ⟨?_, ?_⟩
-  · letI : Finite G := hfin
-    infer_instance
-  · letI : IsCyclic G := hcyc
-    exact isCyclic_of_surjective (QuotientGroup.mk' N) (QuotientGroup.mk'_surjective N)
+  · infer_instance
+  · exact isCyclic_of_surjective (QuotientGroup.mk' N) (QuotientGroup.mk'_surjective N)
 
 /-- Finite solvable groups are closed under isomorphism. -/
 theorem solvable_isomClosed : IsomClosed solvable := by
@@ -673,18 +660,15 @@ theorem solvable_isomClosed : IsomClosed solvable := by
   rcases hGH with ⟨e⟩
   rcases hG with ⟨hfin, hsolv⟩
   refine ⟨Finite.of_equiv G e.toEquiv, ?_⟩
-  letI : IsSolvable G := hsolv
-  exact solvable_of_surjective (f := e.toMonoidHom) e.surjective
+  exact Group.isSolvable_of_surjective (f := e.toMonoidHom) e.surjective
 
 /-- Finite solvable groups are closed under quotients. -/
 theorem solvable_quotientClosed : QuotientClosed solvable := by
   intro G _ N _ hG
   rcases hG with ⟨hfin, hsolv⟩
   refine ⟨?_, ?_⟩
-  · letI : Finite G := hfin
-    infer_instance
-  · letI : IsSolvable G := hsolv
-    infer_instance
+  · infer_instance
+  · infer_instance
 
 /-- Finite nilpotent groups are closed under isomorphism. -/
 theorem nilpotent_isomClosed : IsomClosed nilpotent := by
@@ -692,7 +676,6 @@ theorem nilpotent_isomClosed : IsomClosed nilpotent := by
   rcases hGH with ⟨e⟩
   rcases hG with ⟨hfin, hnil⟩
   refine ⟨Finite.of_equiv G e.toEquiv, ?_⟩
-  letI : Group.IsNilpotent G := hnil
   exact Group.nilpotent_of_mulEquiv e
 
 /-- Finite nilpotent groups are closed under quotients. -/
@@ -700,34 +683,28 @@ theorem nilpotent_quotientClosed : QuotientClosed nilpotent := by
   intro G _ N _ hG
   rcases hG with ⟨hfin, hnil⟩
   refine ⟨?_, ?_⟩
-  · letI : Finite G := hfin
-    infer_instance
-  · letI : Group.IsNilpotent G := hnil
-    infer_instance
+  · infer_instance
+  · infer_instance
 
 /-- Every finite cyclic group is finite nilpotent. -/
 theorem cyclic_to_nilpotent {G : Type u} [Group G] :
     cyclic G → nilpotent G := by
   rintro ⟨hfin, hcyc⟩
   refine ⟨hfin, ?_⟩
-  letI : IsCyclic G := hcyc
-  letI : CommGroup G := IsCyclic.commGroup
-  infer_instance
+  exact ⟨⟨1, (Subgroup.upperCentralSeries_one_eq_top_iff (G := G)).mpr
+    (IsCyclic.isMulCommutative (α := G))⟩⟩
 
 /-- Every finite cyclic group belongs to the finite solvable class. -/
 theorem cyclic_to_solvable {G : Type u} [Group G] :
     cyclic G → solvable G := by
   rintro ⟨hfin, hcyc⟩
-  refine ⟨hfin, ?_⟩
-  letI : IsCyclic G := hcyc
-  letI : CommGroup G := IsCyclic.commGroup
-  infer_instance
+  have hnil : Group.IsNilpotent G := (cyclic_to_nilpotent ⟨hfin, hcyc⟩).2
+  exact ⟨hfin, (inferInstance : Group.IsSolvable G)⟩
 
 /-- Every finite \(p\)-group belongs to the finite nilpotent class. -/
 theorem pGroup_to_nilpotent {p : ℕ} [Fact (Nat.Prime p)] {G : Type u} [Group G] :
     pGroup p G → nilpotent G := by
   rintro ⟨hfin, hpG⟩
-  letI : Finite G := hfin
   exact ⟨hfin, hpG.isNilpotent⟩
 
 /-- Every finite \(p\)-group belongs to the finite solvable class. -/
@@ -735,7 +712,7 @@ theorem pGroup_to_solvable {p : ℕ} [Fact (Nat.Prime p)] {G : Type u} [Group G]
     pGroup p G → solvable G := by
   rintro ⟨hfin, hpG⟩
   refine ⟨hfin, ?_⟩
-  letI : Group.IsNilpotent G := hpG.isNilpotent
+  let : Group.IsNilpotent G := hpG.isNilpotent
   infer_instance
 
 end FiniteGroupClass

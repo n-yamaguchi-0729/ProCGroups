@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.ProfiniteModules.Basic.Generators
 
+set_option autoImplicit false
+
 /-!
 # Open ideals in profinite rings
 
@@ -28,8 +30,7 @@ theorem finite_quotient_of_openIdeal
     [CompactSpace Λ]
     (I : Ideal Λ) (hI : IsOpen (I : Set Λ)) :
     Nonempty (Fintype (Λ ⧸ I)) := by
-  letI : ContinuousAdd Λ := inferInstance
-  haveI : Finite (Λ ⧸ I) :=
+  have : Finite (Λ ⧸ I) :=
     AddSubgroup.quotient_finite_of_isOpen I.toAddSubgroup hI
   exact ⟨Fintype.ofFinite (Λ ⧸ I)⟩
 
@@ -41,7 +42,6 @@ theorem profiniteRing_hasFiniteOpenIdealQuotientBasis_of_linearTopology
     (Λ : Type u) [Ring Λ] [TopologicalSpace Λ] [IsLinearTopology Λ Λ]
     [IsTopologicalRing Λ] [CompactSpace Λ] :
     HasFiniteOpenIdealQuotientBasis Λ := by
-  letI : ContinuousAdd Λ := inferInstance
   intro U hU
   rcases ((IsLinearTopology.hasBasis_open_ideal).mem_iff.mp hU) with
     ⟨I, hIopen, hIU⟩
@@ -52,7 +52,7 @@ theorem profiniteRing_isLinearTopology
     (Λ : Type u) [Ring Λ] [TopologicalSpace Λ] [IsTopologicalRing Λ]
     [CompactSpace Λ] [T2Space Λ] [TotallyDisconnectedSpace Λ] :
     IsLinearTopology Λ Λ := by
-  letI : ContinuousSMul Λ Λ :=
+  let : ContinuousSMul Λ Λ :=
     ContinuousSMul.mk (by simpa [smul_eq_mul] using continuous_mul)
   exact profiniteModule_isLinearTopology Λ Λ
 
@@ -64,7 +64,7 @@ theorem profiniteRing_hasFiniteOpenIdealQuotientBasis
     (Λ : Type u) [Ring Λ] [TopologicalSpace Λ] [IsTopologicalRing Λ]
     [CompactSpace Λ] [T2Space Λ] [TotallyDisconnectedSpace Λ] :
     HasFiniteOpenIdealQuotientBasis Λ := by
-  letI : IsLinearTopology Λ Λ := profiniteRing_isLinearTopology Λ
+  let : IsLinearTopology Λ Λ := profiniteRing_isLinearTopology Λ
   exact profiniteRing_hasFiniteOpenIdealQuotientBasis_of_linearTopology Λ
 
 /-- Proposition 5.1.2(d): a profinite ring has a basis of open ideals at zero. -/

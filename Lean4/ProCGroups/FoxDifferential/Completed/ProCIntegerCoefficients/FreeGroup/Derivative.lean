@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Common.FreeCrossedDifferential
 import ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.Core
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — \(\mathbb{Z}_C\) coefficients — free group — derivative
 

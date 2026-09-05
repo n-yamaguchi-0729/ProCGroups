@@ -1,5 +1,7 @@
 import Mathlib.Topology.Algebra.ClopenNhdofOne
 
+set_option autoImplicit false
+
 /-!
 # Open-normal neighborhood bases at the identity
 

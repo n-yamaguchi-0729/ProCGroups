@@ -1,6 +1,8 @@
 import ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.Index
 import ProCGroups.Completion.ProCInteger
 
+set_option autoImplicit false
+
 /-!
 # Completed Group Algebra / Basic / All Finite / Stage
 
@@ -72,12 +74,6 @@ theorem completedGroupAlgebraStageCoeffMap_comp
 theorem finite_completedGroupAlgebraStage [Finite R] (U : CompletedGroupAlgebraIndex G) :
     Finite (CompletedGroupAlgebraStage R G U) := by
   classical
-  letI : Fintype (CompletedGroupAlgebraQuotient G U) := Fintype.ofFinite _
-  letI : Fintype R := Fintype.ofFinite R
-  letI : DecidableEq (CompletedGroupAlgebraQuotient G U) := Classical.decEq _
-  letI : Finite (CompletedGroupAlgebraQuotient G U → R) := by
-    letI : Fintype (CompletedGroupAlgebraQuotient G U → R) := inferInstance
-    exact Finite.of_fintype _
   let f : CompletedGroupAlgebraStage R G U → CompletedGroupAlgebraQuotient G U → R :=
     fun x q => x.coeff q
   refine Finite.of_injective f ?_
@@ -158,13 +154,20 @@ theorem completedGroupAlgebraTransition_comp
     (completedGroupAlgebraTransition R G hUV).comp
         (completedGroupAlgebraTransition R G hVW) =
       completedGroupAlgebraTransition R G (hUV.trans hVW) := by
-  rw [completedGroupAlgebraTransition, completedGroupAlgebraTransition,
-    completedGroupAlgebraTransition, ← MonoidAlgebra.mapDomainRingHom_comp]
-  congr 1
-  exact OpenNormalSubgroupInClass.map_comp
-    (C := ProCGroups.FiniteGroupClass.allFinite) (G := G)
-    (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) (W := OrderDual.ofDual W)
-    hUV hVW
+  unfold completedGroupAlgebraTransition
+  exact
+    (MonoidAlgebra.mapDomainRingHom_comp (R := R)
+      (OpenNormalSubgroupInClass.map
+        (C := ProCGroups.FiniteGroupClass.allFinite) (G := G)
+        (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) hUV)
+      (OpenNormalSubgroupInClass.map
+        (C := ProCGroups.FiniteGroupClass.allFinite) (G := G)
+        (U := OrderDual.ofDual V) (V := OrderDual.ofDual W) hVW)).symm.trans
+      (congrArg (MonoidAlgebra.mapDomainRingHom R)
+        (OpenNormalSubgroupInClass.map_comp
+          (C := ProCGroups.FiniteGroupClass.allFinite) (G := G)
+          (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) (W := OrderDual.ofDual W)
+          hUV hVW))
 
 /--
 Coefficient change is performed stagewise: supports are unchanged and coefficients are

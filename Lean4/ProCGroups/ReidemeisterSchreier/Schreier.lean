@@ -1,5 +1,7 @@
 import Mathlib.Data.Nat.Basic
 
+set_option autoImplicit false
+
 /-!
 # Reidemeister Schreier / Schreier
 

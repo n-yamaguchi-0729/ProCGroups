@@ -1,6 +1,8 @@
 import ProCGroups.CrowellExactSequence.Discrete.SequenceMaps
 import ProCGroups.CrowellExactSequence.Discrete.Exactness
 
+set_option autoImplicit false
+
 /-!
 # Discrete Blanchfield--Lyndon sequence
 

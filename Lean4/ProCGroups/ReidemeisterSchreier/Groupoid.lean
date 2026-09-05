@@ -1,5 +1,7 @@
 import Mathlib.GroupTheory.FreeGroup.NielsenSchreier
 
+set_option autoImplicit false
+
 /-!
 # Reidemeister Schreier / Groupoid
 
@@ -9,6 +11,8 @@ the public API.
 -/
 
 open CategoryTheory CategoryTheory.SingleObj Quiver
+
+universe u
 
 namespace ReidemeisterSchreier.Groupoid
 
@@ -103,17 +107,25 @@ noncomputable def rootLoopOfHom
   · have htb :
         rootTreeHom T (treeVertexOfObject T (generatorObject b)) =
           rootTreeHom T (treeVertexOfObject T (generatorObject a)) ≫ generatorHom e := by
-      rw [rootTreeHom_eq T (Quiver.Path.cons default ⟨Sum.inl e, h⟩), rootHomOfPath,
-        treeEdgeHom]
-      rfl
+      let p : Quiver.Path (Quiver.root T)
+          (treeVertexOfObject T (generatorObject a)) := default
+      let edge : treeVertexOfObject T (generatorObject a) ⟶
+          treeVertexOfObject T (generatorObject b) := ⟨Sum.inl e, h⟩
+      exact (rootTreeHom_eq T (p.cons edge)).trans
+        (congrArg (fun q : rootObject T ⟶ generatorObject a => q ≫ generatorHom e)
+          (rootTreeHom_eq T p).symm)
     unfold rootLoopOfHom
     rw [← Category.assoc, ← htb, IsIso.hom_inv_id]
   · have hta :
         rootTreeHom T (treeVertexOfObject T (generatorObject a)) =
           rootTreeHom T (treeVertexOfObject T (generatorObject b)) ≫ inv (generatorHom e) := by
-      rw [rootTreeHom_eq T (Quiver.Path.cons default ⟨Sum.inr e, h⟩), rootHomOfPath,
-        treeEdgeHom]
-      rfl
+      let p : Quiver.Path (Quiver.root T)
+          (treeVertexOfObject T (generatorObject b)) := default
+      let edge : treeVertexOfObject T (generatorObject b) ⟶
+          treeVertexOfObject T (generatorObject a) := ⟨Sum.inr e, h⟩
+      exact (rootTreeHom_eq T (p.cons edge)).trans
+        (congrArg (fun q : rootObject T ⟶ generatorObject b => q ≫ inv (generatorHom e))
+          (rootTreeHom_eq T p).symm)
     unfold rootLoopOfHom
     rw [hta]
     simp only [Category.assoc, IsIso.inv_hom_id_assoc, IsIso.hom_inv_id]
@@ -212,11 +224,12 @@ noncomputable def endBasis
     congr
     apply uF'
     intro a b e
-    rw [rootFunctorOfMonoidHom_map]
-    change E (rootLoopOfHom T (IsFreeGroupoid.of e)) = dite _ _ _
-    split_ifs with h
-    · rw [rootLoopOfHom_eq_id T e h, ← End.one_def, E.map_one]
-    · exact hE ⟨⟨a, b, e⟩, h⟩
+    have hEval : E (rootLoopOfHom T (generatorHom e)) = f' e := by
+      by_cases h : e ∈ Quiver.wideSubquiverSymmetrify T a b
+      · rw [rootLoopOfHom_eq_id T e h, ← End.one_def, E.map_one]
+        simp only [f', dif_pos h]
+      · simpa only [f', dif_neg h] using hE ⟨⟨a, b, e⟩, h⟩
+    exact (rootFunctorOfMonoidHom_map T E (generatorHom e)).trans hEval
 
 /-- The explicit spanning-tree basis evaluates to the corresponding explicit-root loop. -/
 @[simp] theorem endBasis_apply

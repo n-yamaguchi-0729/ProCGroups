@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.DifferentialModule.Map.Comap
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — differential module — map — stage
 
@@ -98,7 +100,7 @@ theorem primePowerCompletedGroupAlgebraMapStage_surjective
       (primePowerCompletedGroupAlgebraMapStage (ℓ := ℓ) (G := G) (H := H) ψ i) := by
   intro x
   refine MonoidAlgebra.induction_linear
-    (p := fun x : PrimePowerCompletedGroupAlgebraStage ℓ H i =>
+    (motive := fun x : PrimePowerCompletedGroupAlgebraStage ℓ H i =>
       ∃ y, primePowerCompletedGroupAlgebraMapStage
           (ℓ := ℓ) (G := G) (H := H) ψ i y = x)
     x ?_ ?_ ?_
@@ -190,7 +192,7 @@ theorem primePowerCompletedGroupAlgebraMapStage_compatible
   apply RingHom.ext
   intro x
   refine MonoidAlgebra.induction_on
-    (p := fun x =>
+    (motive := fun x =>
       ((primePowerCompletedGroupAlgebraTransition (ℓ := ℓ) (G := H) hij).comp
           (primePowerCompletedGroupAlgebraMapStage (ℓ := ℓ) (G := G) (H := H) ψ j)) x =
         ((primePowerCompletedGroupAlgebraMapStage (ℓ := ℓ) (G := G) (H := H) ψ i).comp
@@ -224,7 +226,7 @@ theorem primePowerCompletedGroupAlgebraMapStage_compatible
               (V := OrderDual.ofDual
                 (completedGroupAlgebraComapIndex (G := G) (H := H) ψ j.2))
               (completedGroupAlgebraComapIndex_mono (G := G) (H := H) ψ hij.2)) q))
-    rw [primePowerCompletedGroupAlgebraMapStage_of]
+    erw [primePowerCompletedGroupAlgebraMapStage_of]
     exact congrArg (MonoidAlgebra.of (ModNCompletedCoeff (ℓ ^ i.1))
       (_root_.CompletedGroupAlgebra.CompletedGroupAlgebraQuotient H i.2))
       (congrFun

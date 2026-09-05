@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.UniversalProperty.Basic
 
+set_option autoImplicit false
+
 /-!
 # Lifts to finite and discrete quotients
 
@@ -50,7 +52,7 @@ theorem completedGroupAlgebraLiftOfFiniteQuotient_apply_of
         (completedGroupAlgebraOf R G g) =
       f (openNormalSubgroupInClassProj
         (C := ProCGroups.FiniteGroupClass.allFinite) (G := G) U g) := by
-  letI : TopologicalSpace (CompletedGroupAlgebraStage R G U) :=
+  let : TopologicalSpace (CompletedGroupAlgebraStage R G U) :=
     (completedGroupAlgebraSystem R G).topologicalSpace U
   change finiteGroupAlgebraLift R (CompletedGroupAlgebraQuotient G U) N f
       (completedGroupAlgebraProjection R G U (completedGroupAlgebraOf R G g)) =
@@ -148,7 +150,6 @@ theorem completedGroupAlgebra_existsUnique_lift_to_discreteModule
     (f : G → N) (hf : Continuous f) :
     ∃! F : CompletedGroupAlgebraCarrier R G →L[R] N,
       ∀ g : G, F (completedGroupAlgebraOf R G g) = f g := by
-  letI : T2Space N := inferInstance
   rcases exists_completedGroupAlgebraIndex_factor_continuous_discrete
       (G := G) N f hf with
     ⟨U, fbar, hfac⟩

@@ -1,10 +1,13 @@
 import Mathlib.GroupTheory.SpecificGroups.Cyclic
 import Mathlib.Topology.Algebra.Nonarchimedean.Basic
+import Mathlib.Topology.Instances.ZMod
 import ProCGroups.Completion.UniversalProperty
 import ProCGroups.FiniteGroups.StandardClasses
 import ProCGroups.FiniteGeneration.CharacteristicChainsAndIndices
 import ProCGroups.ProC.Category.Basic
 import ProCGroups.ProC.OpenNormalSubgroups.LimitPresentation
+
+set_option autoImplicit false
 
 /-!
 # Pro C Groups / Free pro-C / Basic
@@ -243,7 +246,7 @@ theorem to_alongOpenSubgroups {μ : X → G}
     hμ.eventually hU
   change {x : X | μ x ∈ U} ∈ Filter.cofinite at heventually
   rw [Filter.mem_cofinite] at heventually
-  simpa only [Set.compl_setOf, SetLike.mem_coe] using heventually
+  simpa only [Set.compl_ofPred, SetLike.mem_coe] using heventually
 
 /-- Convergence is preserved by a continuous homomorphism. -/
 theorem comp
@@ -293,7 +296,15 @@ theorem comp
     (hμ : FamilyConvergesToOneAlongOpenSubgroups (G := G) μ) (f : G →ₜ* H) :
     FamilyConvergesToOneAlongOpenSubgroups (G := H) (fun x => f (μ x)) := by
   intro U
-  simpa using hμ (OpenSubgroup.comap (f := (f : G →* H)) f.continuous U)
+  have hfinite := hμ (U.comap f.toMonoidHom f.continuous)
+  have hset :
+      {x : X | μ x ∉ (U.comap f.toMonoidHom f.continuous : Set G)} =
+        {x : X | f (μ x) ∉ (U : Set H)} := by
+    ext x
+    exact not_congr
+      (OpenSubgroup.mem_comap (H := U) (f := f.toMonoidHom)
+        (hf := f.continuous) (x := μ x))
+  exact hset ▸ hfinite
 
 /-- Range convergence implies family convergence for injectively indexed families. -/
 theorem of_set_of_injective {μ : X → G}
@@ -309,7 +320,7 @@ theorem of_set_of_injective {μ : X → G}
       exact ⟨⟨x, rfl⟩, hxU⟩
     · rintro ⟨⟨x, rfl⟩, hxU⟩
       exact ⟨x, hxU, rfl⟩
-  letI : Finite (μ '' {x : X | μ x ∉ (U : Set G)}) := by
+  let : Finite (μ '' {x : X | μ x ∉ (U : Set G)}) := by
     rw [himage]
     exact (hμ U).to_subtype
   exact Finite.Set.finite_of_finite_image {x : X | μ x ∉ (U : Set G)} (by
@@ -660,9 +671,6 @@ theorem exists_nontrivial_topologicallyCyclic_proC_of_finiteGroupClass
   rcases hcyc with ⟨A, _instGroupA, _instFiniteA, hCA, hAcyc, hAnontriv⟩
   let _ : TopologicalSpace A := ⊥
   let _ : DiscreteTopology A := ⟨rfl⟩
-  let _ : IsTopologicalGroup A := by infer_instance
-  letI : IsCyclic A := hAcyc
-  letI : Nontrivial A := hAnontriv
   have hAProC : ProCGroups.ProC.HasOpenNormalBasisInClass C A := by
     exact ProCGroups.ProC.HasOpenNormalBasisInClass.of_finite_discrete
       (C := C) (G := A) hquot hCA
@@ -733,7 +741,7 @@ theorem finite_generatingFamily_is_basis
     { toMonoidHom := σ
       continuous_toFun := hσ.1 }
   have hFG : _root_.ProCGroups.FiniteGeneration.TopologicallyFinitelyGenerated F := by
-    letI : Fintype Y := Fintype.ofFinite Y
+    let : Fintype Y := Fintype.ofFinite Y
     refine ⟨Finset.univ.image μ, ?_⟩
     simpa [Finset.coe_image] using hgen
   rcases
@@ -906,8 +914,6 @@ theorem finite_of_topologicallyFinitelyGenerated_epimorphicallyFreeProCGroupOnCo
   · have hXinf : Infinite X := by
       by_contra hXnotinf
       exact hXfin (not_infinite_iff_finite.mp hXnotinf)
-    letI : Infinite X := hXinf
-    letI : Nonempty X := Infinite.nonempty (α := X)
     rcases
         (FiniteGeneration.topologicallyFinitelyGenerated_iff_exists_topologicallyGeneratedByAtMost
           (G := F)).mp hfg with
@@ -1149,7 +1155,7 @@ theorem existsUnique_lift_of_convergesToOneAlongOpenSubgroups_of_finiteGroupClas
     ∃! f : F →* G, Continuous f ∧ ∀ x, f (ι x) = φ x := by
   classical
   let K : ClosedSubgroup G := Generation.closedSubgroupGenerated (G := G) (Set.range φ)
-  letI : CompactSpace ↥(K : Subgroup G) := by
+  let : CompactSpace ↥(K : Subgroup G) := by
     exact
       (show IsClosed (((K : Subgroup G) : Set G)) from
           K.2).isClosedEmbedding_subtypeVal.compactSpace
@@ -1274,13 +1280,7 @@ theorem generator_pow_ne_one_of_sigma
     ProCGroups.FiniteGroupClass.IsSigmaNumber.prime_pow_of_mem
       (sigma := σ) (p := p) (k := N + 1) hpσ hp
   let T := ULift.{u} (Multiplicative (ZMod M))
-  letI : NeZero M := ⟨Nat.ne_of_gt hMpos⟩
-  letI : Finite T := by
-    let e : T ≃ Multiplicative (ZMod M) := Equiv.ulift
-    exact Finite.of_equiv (Multiplicative (ZMod M)) e.symm
-  letI : TopologicalSpace T := ⊥
-  letI : DiscreteTopology T := ⟨rfl⟩
-  letI : IsTopologicalGroup T := by infer_instance
+  let : NeZero M := ⟨Nat.ne_of_gt hMpos⟩
   let φ : X → T :=
     fun j => if j = i then ULift.up (Multiplicative.ofAdd (1 : ZMod M)) else 1
   have hφconv : FamilyConvergesToOneAlongOpenSubgroups (G := T) φ := by
@@ -1862,7 +1862,7 @@ theorem basisCard_eq_topologicalRank_of_finiteBasis
     [Finite Fdata.basis] :
     Cardinal.mk Fdata.basis = Generation.topologicalRank Fdata.carrier := by
   classical
-  letI : Fintype Fdata.basis := Fintype.ofFinite Fdata.basis
+  let : Fintype Fdata.basis := Fintype.ofFinite Fdata.basis
   rcases exists_nontrivial_topologicallyCyclic_proC_of_finiteGroupClass C hquot hcyc with
     ⟨A, _instGroupA, _instTopA, _instTopGroupA, _instCompactA, _instT2A, _instTDA,
       hA, a, ha1, hgena⟩
@@ -1925,7 +1925,6 @@ theorem basisCard_eq_topologicalRank_of_finiteBasis
       exact
         (one_not_mem_range_of_epimorphicallyFreeProCGroupOnConvergingSet
           (hι := Fdata.isEpimorphicallyFree) hnontrivial) ⟨b, hb1⟩
-    letI : IsEmpty Fdata.basis := hEmpty
     have hcard0 : Cardinal.mk Fdata.basis = 0 := by simp only [Cardinal.mk_eq_zero]
     rw [hdEq0]
     exact hcard0

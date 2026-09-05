@@ -1,6 +1,8 @@
 import Mathlib.Topology.Algebra.LinearTopology
 import ProCGroups.CompletedGroupAlgebra.ProfiniteModules.Basic.Definitions
 
+set_option autoImplicit false
+
 /-!
 # Open submodules of profinite modules
 
@@ -126,7 +128,6 @@ theorem profiniteModule_isLinearTopology
     [IsTopologicalAddGroup M] [ContinuousSMul Λ M] [CompactSpace M] [T2Space M]
     [TotallyDisconnectedSpace M] :
     IsLinearTopology Λ M := by
-  letI : ContinuousAdd M := inferInstance
   rw [isLinearTopology_iff_hasBasis_open_submodule]
   refine Filter.hasBasis_iff.mpr ?_
   intro U
@@ -153,8 +154,7 @@ theorem finite_quotient_of_openSubmodule
     [TopologicalSpace M] [Module Λ M] [IsTopologicalAddGroup M] [CompactSpace M]
     (N : Submodule Λ M) (hN : IsOpen (N : Set M)) :
     Nonempty (Fintype (M ⧸ N)) := by
-  letI : ContinuousAdd M := inferInstance
-  haveI : Finite (M ⧸ N) :=
+  have : Finite (M ⧸ N) :=
     AddSubgroup.quotient_finite_of_isOpen N.toAddSubgroup hN
   exact ⟨Fintype.ofFinite (M ⧸ N)⟩
 
@@ -165,8 +165,7 @@ theorem quotient_openSubmodule_isDiscreteModule
     [IsTopologicalAddGroup M] [ContinuousSMul Λ M]
     (N : Submodule Λ M) (hN : IsOpen (N : Set M)) :
     IsDiscreteModule Λ (M ⧸ N) := by
-  letI : ContinuousAdd M := inferInstance
-  haveI : DiscreteTopology (M ⧸ N) :=
+  have : DiscreteTopology (M ⧸ N) :=
     QuotientAddGroup.discreteTopology (N := N.toAddSubgroup) hN
   exact ⟨⟨inferInstance, inferInstance, inferInstance⟩, inferInstance⟩
 

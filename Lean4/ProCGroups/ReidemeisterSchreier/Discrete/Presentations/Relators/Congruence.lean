@@ -1,5 +1,7 @@
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Basic
 
+set_option autoImplicit false
+
 /-!
 # Relator maps and normal-closure congruence
 

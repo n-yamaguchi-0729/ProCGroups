@@ -2,6 +2,8 @@ import Mathlib.Topology.Algebra.IsUniformGroup.DiscreteSubgroup
 import ProCGroups.FiniteStepSolvableQuotients.Abelianization
 import ProCGroups.ProC.Quotients.ClosedNormal
 
+set_option autoImplicit false
+
 /-!
 # Faithful actions on topological abelianizations
 
@@ -68,7 +70,7 @@ theorem quotientConjAbelianization_injective_of_continuousMulEquiv_image
           invFun := fun y => ⟨e.symm y.1, by
             have hy : y.1 ∈
                 (N : Subgroup G).map (ContinuousMonoidHom.toContinuousMonoidHom e).toMonoidHom := by
-              simp [Nmap]
+              exact y.property
             rcases hy with ⟨x, hxN, hxy⟩
             have hs : e.symm y.1 = x := by
               apply e.injective
@@ -101,7 +103,7 @@ theorem quotientConjAbelianization_injective_of_continuousMulEquiv_image
             change e.symm y.1 ∈ (N : Subgroup G)
             have hy : y.1 ∈
                 (N : Subgroup G).map (ContinuousMonoidHom.toContinuousMonoidHom e).toMonoidHom := by
-              simp [Nmap]
+              exact y.property
             rcases hy with ⟨x, hxN, hxy⟩
             have hs : e.symm y.1 = x := by
               apply e.injective
@@ -136,7 +138,7 @@ theorem quotientConjAbelianization_injective_of_continuousMulEquiv_image
         · intro hx
           have hx' : e x ∈
               (N : Subgroup G).map (ContinuousMonoidHom.toContinuousMonoidHom e).toMonoidHom := by
-            simpa [Nmap] using hx
+            exact hx
           rcases hx' with ⟨y, hyN, hyx⟩
           have hxy : x = y := by
             apply e.injective
@@ -218,7 +220,10 @@ theorem quotientConjAbelianization_injective_of_continuousMulEquiv_image
     have hqMap_mk :
         qMap (QuotientGroup.mk' (N : Subgroup G) g) =
           QuotientGroup.mk' (Nmap : Subgroup H) (e g) := by
-      dsimp [qMap]
+      exact QuotientGroup.map_mk' (N : Subgroup G) (Nmap : Subgroup H)
+        (ContinuousMonoidHom.toContinuousMonoidHom e).toMonoidHom
+        (fun x hx => show e x ∈ (N : Subgroup G).map
+          (ContinuousMonoidHom.toContinuousMonoidHom e).toMonoidHom from ⟨x, hx, rfl⟩) g
     have hcongr_apply
         (a₀ : TopologicalAbelianization ((N : Subgroup G) : Type u)) :
         (MulAut.congr eAb.toMulEquiv)
@@ -265,7 +270,7 @@ theorem isAbFaithful_of_continuousMulEquiv
           invFun := fun y => ⟨e.symm y.1, by
             have hy : y.1 ∈
                 (K : Subgroup G).map (ContinuousMonoidHom.toContinuousMonoidHom e).toMonoidHom := by
-              simp [Kmap]
+              exact y.property
             rcases hy with ⟨x, hxK, hxy⟩
             have hs : e.symm y.1 = x := by
               apply e.injective
@@ -298,7 +303,7 @@ theorem isAbFaithful_of_continuousMulEquiv
             change e.symm y.1 ∈ (K : Subgroup G)
             have hy : y.1 ∈
                 (K : Subgroup G).map (ContinuousMonoidHom.toContinuousMonoidHom e).toMonoidHom := by
-              simp [Kmap]
+              exact y.property
             rcases hy with ⟨x, hxK, hxy⟩
             have hs : e.symm y.1 = x := by
               apply e.injective
@@ -825,12 +830,10 @@ theorem openSubgroup_center_eq_bot_of_isAbFaithful
     (hG : IsAbFaithful G) (H : OpenSubgroup G) :
     Subgroup.center ↥((H : Subgroup G)) = ⊥ := by
   have hHClosed : IsClosed (((H : OpenSubgroup G) : Set G)) := H.isClosed
-  haveI : CompactSpace ↥((H : OpenSubgroup G) : Subgroup G) := by
+  have : CompactSpace ↥((H : OpenSubgroup G) : Subgroup G) := by
     exact
       (show IsClosed (((H : Subgroup G) : Set G)) from
           hHClosed).isClosedEmbedding_subtypeVal.compactSpace
-  haveI : TotallyDisconnectedSpace ↥((H : OpenSubgroup G) : Subgroup G) := by
-    infer_instance
   exact
     center_eq_bot_of_injective_action_on_openNormalsTop
       (Q := ↥((H : OpenSubgroup G) : Subgroup G))
@@ -1042,6 +1045,11 @@ theorem
       (by
         intro x hx
         exact hx)
+  have hqMap_mk (g : ↥(Hpre : Subgroup G)) :
+      qMap (QuotientGroup.mk' (Npre : Subgroup ↥(Hpre : Subgroup G)) g) =
+        QuotientGroup.mk' (N : Subgroup ↥(H : Subgroup Q)) (φH g) :=
+    QuotientGroup.map_mk' (Npre : Subgroup ↥(Hpre : Subgroup G))
+      (N : Subgroup ↥(H : Subgroup Q)) φH.toMonoidHom (fun x hx => hx) g
   have hqMapKer : qMap.ker = ⊥ := by
     exact
       TopologicalGroup.ker_map_eq_bot_of_comap_eq
@@ -1060,7 +1068,7 @@ theorem
     obtain ⟨h, rfl⟩ := QuotientGroup.mk'_surjective (N : Subgroup ↥(H : Subgroup Q)) q
     rcases hφHsurj h with ⟨g, rfl⟩
     refine ⟨QuotientGroup.mk' (Npre : Subgroup ↥(Hpre : Subgroup G)) g, ?_⟩
-    simp only [QuotientGroup.mk'_apply, QuotientGroup.map_mk, MonoidHom.coe_coe, qMap]
+    exact hqMap_mk g
   let eQ :
       (↥(Hpre : Subgroup G) ⧸ (Npre : Subgroup ↥(Hpre : Subgroup G))) ≃*
         (↥(H : Subgroup Q) ⧸ (N : Subgroup ↥(H : Subgroup Q))) :=
@@ -1153,7 +1161,7 @@ theorem
       change
         qMap (QuotientGroup.mk' (Npre : Subgroup ↥(Hpre : Subgroup G)) g) =
           QuotientGroup.mk' (N : Subgroup ↥(H : Subgroup Q)) (φH g)
-      dsimp [qMap]
+      exact hqMap_mk g
     have hcongr_apply
         (a₀ : TopologicalAbelianization
           ↥(Npre : Subgroup ↥(Hpre : Subgroup G))) :
@@ -1283,13 +1291,12 @@ theorem center_le_lastDerivedSubgroup_of_isAbFaithful
     Subgroup.center (MaxSolvQuot G m) ≤ lastDerivedSubgroup (G := G) m := by
   by_cases hm1 : m = 1
   · subst hm1
-    simp only [closedDerivedSeries_succ, closedDerivedSeries_zero, lastDerivedSubgroup,
-        topDerivedTop, tsub_self,
-  le_top]
+    change Subgroup.center (MaxSolvQuot G 1) ≤ (⊤ : Subgroup (MaxSolvQuot G 1))
+    exact le_top
   have hm2 : 2 ≤ m := Nat.succ_le_of_lt (lt_of_le_of_ne hm (Ne.symm hm1))
   intro z hz
   let Q : Type u := MaxSolvQuot G m
-  letI : TotallyDisconnectedSpace Q := by
+  let : TotallyDisconnectedSpace Q := by
     dsimp [Q, MaxSolvQuot]
     exact ProCGroups.totallyDisconnectedSpace_quotient_closedNormal
       (topDerivedTop G m)
@@ -1298,7 +1305,6 @@ theorem center_le_lastDerivedSubgroup_of_isAbFaithful
   have hKNormal : K.Normal := by
     dsimp [K, lastDerivedSubgroup]
     infer_instance
-  letI : K.Normal := hKNormal
   have hKClosed : IsClosed ((K : Subgroup Q) : Set Q) := by
     dsimp [K, lastDerivedSubgroup]
     infer_instance
@@ -1316,7 +1322,7 @@ theorem center_le_lastDerivedSubgroup_of_isAbFaithful
     { toSubgroup := N
       isOpen' := hN.1
       isNormal' := hN.2.2 }
-  letI : (U : Subgroup Q).Normal := U.isNormal'
+  have hUNormal : (U : Subgroup Q).Normal := U.isNormal'
   have hρinj :
       Function.Injective
         (quotientConjugationTopologicalAbelianizationMap

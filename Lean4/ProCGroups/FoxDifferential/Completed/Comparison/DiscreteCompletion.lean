@@ -2,6 +2,8 @@ import ProCGroups.FoxDifferential.Discrete.Naturality
 import ProCGroups.FoxDifferential.Completed.Comparison.FiniteStage
 import ProCGroups.Completion.ProCIntegerPrimePower
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — comparison — discrete completion
 
@@ -335,7 +337,7 @@ theorem exists_eq_nsmul_relFreeFoxDeriv_of_residueUnivDiff_eq_zero
         (H := foxAlgebraicStageTargetQuotient (X := X) N)
         X (QuotientGroup.mk' N) w = n • y := by
   classical
-  letI : Fintype X := Fintype.ofFinite X
+  let : Fintype X := Fintype.ofFinite X
   exact
     exists_eq_nsmul_relFreeFoxDeriv_of_foxAlgebraicStageDerivativeVector_eq_zero
       (X := X) N w
@@ -403,7 +405,7 @@ theorem zcFreeGroupFoxDerivative_finiteStageProjection_discreteReduction
         (foxAlgebraicStageGroupRingReduction (X := X) N j.1.modulus
           (FoxCalculus.relativeFreeGroupFoxDerivative
             (H := zcFiniteStageTarget X N) X (QuotientGroup.mk' N) w i))) := by
-  letI : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
+  let : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
   rw [zcFreeGroupFoxDerivative_finiteStageProjection C N j i w]
   rw [foxAlgebraicStageDerivative_eq_discreteReduction (X := X) N j.1.modulus i w]
 
@@ -446,7 +448,7 @@ theorem zcFreeGroupFoxDerivative_unique_finiteStageProjection_discreteReduction
   refine zcFreeGroupFoxDerivative_unique_finiteStageProjection
     (C := C) (X := X) N i delta ?_
   intro w j
-  letI : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
+  let : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
   rw [hprojection w j]
   rw [← foxAlgebraicStageDerivative_eq_discreteReduction (X := X) N j.1.modulus i w]
 
@@ -498,7 +500,7 @@ theorem zcFreeGroupFoxDerivativeVector_unique_finiteStageProjection_discreteRedu
     (C := C) (X := X) N delta ?_
   intro w j
   funext i
-  letI : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
+  let : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
   have hcoord := congrFun (hprojection w j) i
   rw [hcoord]
   rw [← foxAlgebraicStageDerivative_eq_discreteReduction (X := X) N j.1.modulus i w]
@@ -554,7 +556,7 @@ theorem zcFreeGroupFoxDerivative_fundFormula_finiteStageProj_discreteReduction
     (C := C) (X := X) N w j]
   apply Finset.sum_congr rfl
   intro i hi
-  letI : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
+  let : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
   rw [foxAlgebraicStageDerivative_eq_discreteReduction (X := X) N j.1.modulus i w]
 
 /--
@@ -723,11 +725,11 @@ theorem relFreeFoxDeriv_eq_zero_of_zcFreeFoxDerivVec_eq_zero_allFinite_of_surj
     FoxCalculus.relativeFreeGroupFoxDerivative (H := H) X ψ w = 0 := by
   let N : Subgroup (FreeGroup X) := ψ.ker
   let Q : Type u := foxAlgebraicStageTargetQuotient (X := X) N
-  letI : TopologicalSpace Q := ⊥
-  letI : DiscreteTopology Q := ⟨rfl⟩
-  letI : IsTopologicalGroup Q := inferInstance
+  let : TopologicalSpace Q := ⊥
+  let : DiscreteTopology Q := ⟨rfl⟩
+  let : IsTopologicalGroup Q := inferInstance
   let e : Q ≃* H := QuotientGroup.quotientKerEquivOfSurjective ψ hψ
-  letI : Finite Q := Finite.of_injective e e.injective
+  let : Finite Q := Finite.of_injective e e.injective
   let q : FreeGroup X →* Q := QuotientGroup.mk' N
   have he_apply (g : FreeGroup X) : e (q g) = ψ g := by
     change QuotientGroup.quotientKerEquivOfSurjective ψ hψ
@@ -806,9 +808,9 @@ theorem relFreeFoxDeriv_eq_zero_of_zcFreeFoxDerivVec_eq_zero_pGroup_of_surj
     FoxCalculus.relativeFreeGroupFoxDerivative (H := H) X ψ w = 0 := by
   let N : Subgroup (FreeGroup X) := ψ.ker
   let Q : Type u := foxAlgebraicStageTargetQuotient (X := X) N
-  letI : TopologicalSpace Q := ⊥
-  letI : DiscreteTopology Q := ⟨rfl⟩
-  letI : IsTopologicalGroup Q := inferInstance
+  let : TopologicalSpace Q := ⊥
+  let : DiscreteTopology Q := ⟨rfl⟩
+  let : IsTopologicalGroup Q := inferInstance
   let e : Q ≃* H := QuotientGroup.quotientKerEquivOfSurjective ψ hψ
   let q : FreeGroup X →* Q := QuotientGroup.mk' N
   have he_apply (g : FreeGroup X) : e (q g) = ψ g := by

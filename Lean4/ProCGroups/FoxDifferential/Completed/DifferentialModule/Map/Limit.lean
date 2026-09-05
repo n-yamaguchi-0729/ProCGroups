@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.DifferentialModule.Map.Stage
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — differential module — map — limit
 
@@ -143,18 +145,18 @@ theorem continuous_primePowerCompletedGroupAlgebraMap
     Continuous (primePowerCompletedGroupAlgebraMap (ℓ := ℓ) (G := G) (H := H) ψ) := by
   let S := primePowerCompletedGroupAlgebraSystem ℓ H
   let T := primePowerCompletedGroupAlgebraSystem ℓ G
-  letI : ∀ i : PrimePowerCompletedGroupAlgebraIndex H, TopologicalSpace (S.X i) :=
+  let : ∀ i : PrimePowerCompletedGroupAlgebraIndex H, TopologicalSpace (S.X i) :=
     fun i => S.topologicalSpace i
-  letI : ∀ i : PrimePowerCompletedGroupAlgebraIndex G, TopologicalSpace (T.X i) :=
+  let : ∀ i : PrimePowerCompletedGroupAlgebraIndex G, TopologicalSpace (T.X i) :=
     fun i => T.topologicalSpace i
   refine Continuous.subtype_mk (continuous_pi fun i => ?_) (fun x =>
     (primePowerCompletedGroupAlgebraMap (ℓ := ℓ) (G := G) (H := H) ψ x).2)
   let sourceIndex : PrimePowerCompletedGroupAlgebraIndex G :=
     (i.1, completedGroupAlgebraComapIndex (G := G) (H := H) ψ i.2)
-  letI : TopologicalSpace (PrimePowerCompletedGroupAlgebraStage ℓ G sourceIndex) :=
+  let : TopologicalSpace (PrimePowerCompletedGroupAlgebraStage ℓ G sourceIndex) :=
     T.topologicalSpace sourceIndex
-  letI : DiscreteTopology (PrimePowerCompletedGroupAlgebraStage ℓ G sourceIndex) := ⟨rfl⟩
-  letI : TopologicalSpace (PrimePowerCompletedGroupAlgebraStage ℓ H i) :=
+  let : DiscreteTopology (PrimePowerCompletedGroupAlgebraStage ℓ G sourceIndex) := ⟨rfl⟩
+  let : TopologicalSpace (PrimePowerCompletedGroupAlgebraStage ℓ H i) :=
     S.topologicalSpace i
   have hstage :
       Continuous

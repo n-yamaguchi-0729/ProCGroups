@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Completed.FreeProC.SemidirectKernelBasis
 import ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.Augmentation
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — continuous — topology
 
@@ -61,12 +63,12 @@ instance instDiscreteTopologyZCCompletedGroupAlgebraStage
 instance instCompactSpaceZCCompletedGroupAlgebraStage
     (i : ZCCompletedGroupAlgebraIndex C G) :
     CompactSpace (ZCCompletedGroupAlgebraStage C G i) := by
-  letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
-  letI : Finite (ZCCompletedGroupAlgebraStage C G i) :=
+  let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+  let : Finite (ZCCompletedGroupAlgebraStage C G i) :=
     finite_modNCompletedGroupAlgebraStageInClass
       (n := i.1.modulus) (G := G) C
       i.2
-  letI : Fintype (ZCCompletedGroupAlgebraStage C G i) := Fintype.ofFinite _
+  let : Fintype (ZCCompletedGroupAlgebraStage C G i) := Fintype.ofFinite _
   infer_instance
 
 /-- Each finite-stage \(\mathbb{Z}_C\)-completed group algebra is a \(T_2\) space. -/
@@ -86,17 +88,17 @@ instance instCompactSpaceZCCompletedGroupAlgebra :
     CompactSpace (ZCCompletedGroupAlgebra C G) := by
   let S := zcCompletedGroupAlgebraSystem C G
   change CompactSpace S.inverseLimit
-  letI : ∀ i : ZCCompletedGroupAlgebraIndex C G, TopologicalSpace (S.X i) := fun _ =>
+  let : ∀ i : ZCCompletedGroupAlgebraIndex C G, TopologicalSpace (S.X i) := fun _ =>
     inferInstance
-  letI : ∀ i : ZCCompletedGroupAlgebraIndex C G, CompactSpace (S.X i) := fun i => by
+  let : ∀ i : ZCCompletedGroupAlgebraIndex C G, CompactSpace (S.X i) := fun i => by
     dsimp [S, zcCompletedGroupAlgebraSystem]
     change @CompactSpace (ZCCompletedGroupAlgebraStage C G i) ⊥
-    letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
-    letI : Finite (ZCCompletedGroupAlgebraStage C G i) :=
+    let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+    let : Finite (ZCCompletedGroupAlgebraStage C G i) :=
       finite_modNCompletedGroupAlgebraStageInClass
         (n := i.1.modulus) (G := G) C i.2
     exact Finite.compactSpace
-  letI : ∀ i : ZCCompletedGroupAlgebraIndex C G, T2Space (S.X i) := fun i => by
+  let : ∀ i : ZCCompletedGroupAlgebraIndex C G, T2Space (S.X i) := fun i => by
     dsimp [S, zcCompletedGroupAlgebraSystem]
     change @T2Space (ZCCompletedGroupAlgebraStage C G i) ⊥
     exact @DiscreteTopology.toT2Space _ ⊥ ⟨rfl⟩
@@ -107,9 +109,9 @@ instance instT2SpaceZCCompletedGroupAlgebra :
     T2Space (ZCCompletedGroupAlgebra C G) := by
   let S := zcCompletedGroupAlgebraSystem C G
   change T2Space S.inverseLimit
-  letI : ∀ i : ZCCompletedGroupAlgebraIndex C G, TopologicalSpace (S.X i) := fun _ =>
+  let : ∀ i : ZCCompletedGroupAlgebraIndex C G, TopologicalSpace (S.X i) := fun _ =>
     inferInstance
-  letI : ∀ i : ZCCompletedGroupAlgebraIndex C G, T2Space (S.X i) := fun i => by
+  let : ∀ i : ZCCompletedGroupAlgebraIndex C G, T2Space (S.X i) := fun i => by
     dsimp [S, zcCompletedGroupAlgebraSystem]
     change @T2Space (ZCCompletedGroupAlgebraStage C G i) ⊥
     exact @DiscreteTopology.toT2Space _ ⊥ ⟨rfl⟩
@@ -135,9 +137,9 @@ instance instTotallyDisconnectedSpaceZCCompletedGroupAlgebra :
     TotallyDisconnectedSpace (ZCCompletedGroupAlgebra C G) := by
   let S := zcCompletedGroupAlgebraSystem C G
   change TotallyDisconnectedSpace S.inverseLimit
-  letI : ∀ i : ZCCompletedGroupAlgebraIndex C G, TopologicalSpace (S.X i) := fun _ =>
+  let : ∀ i : ZCCompletedGroupAlgebraIndex C G, TopologicalSpace (S.X i) := fun _ =>
     inferInstance
-  letI : ∀ i : ZCCompletedGroupAlgebraIndex C G, TotallyDisconnectedSpace (S.X i) := fun i => by
+  let : ∀ i : ZCCompletedGroupAlgebraIndex C G, TotallyDisconnectedSpace (S.X i) := fun i => by
     dsimp [S, zcCompletedGroupAlgebraSystem]
     change @TotallyDisconnectedSpace (ZCCompletedGroupAlgebraStage C G i) ⊥
     exact @TotallySeparatedSpace.totallyDisconnectedSpace _ ⊥
@@ -228,7 +230,7 @@ theorem continuous_zcGroupLike : Continuous (zcGroupLike C G) := by
       ((zcGroupLike C G g : ZCCompletedGroupAlgebra C G) :
         (i : ZCCompletedGroupAlgebraIndex C G) → ZCCompletedGroupAlgebraStage C G i)) := by
     refine continuous_pi fun i => ?_
-    letI : DiscreteTopology (CompletedGroupAlgebraQuotientInClass G C i.2) :=
+    let : DiscreteTopology (CompletedGroupAlgebraQuotientInClass G C i.2) :=
       QuotientGroup.discreteTopology
         (ProCGroups.openNormalSubgroup_isOpen (G := G)
           ((OrderDual.ofDual i.2).1 : OpenNormalSubgroup G))
@@ -253,10 +255,10 @@ theorem continuous_zcCompletedGroupAlgebraAugmentation
       (zcCompletedGroupAlgebraAugmentation C G x :
         (i : ProCIntegerIndex C) → ProCIntegerStage C i)) := by
     refine continuous_pi fun i => ?_
-    letI : Fact (0 < i.modulus) := ⟨i.positive⟩
+    let : Fact (0 < i.modulus) := ⟨i.positive⟩
     let U := zcCompletedGroupAlgebraTopIndex C G
-    letI : TopologicalSpace (ModNCompletedGroupAlgebraStageInClass i.modulus G C U) := ⊥
-    letI : DiscreteTopology (ModNCompletedGroupAlgebraStageInClass i.modulus G C U) := ⟨rfl⟩
+    let : TopologicalSpace (ModNCompletedGroupAlgebraStageInClass i.modulus G C U) := ⊥
+    let : DiscreteTopology (ModNCompletedGroupAlgebraStageInClass i.modulus G C U) := ⟨rfl⟩
     exact
       (continuous_of_discreteTopology :
         Continuous (modNCompletedGroupAlgebraStageAugmentationInClass i.modulus G C U)).comp
@@ -536,10 +538,10 @@ theorem finiteGroupClass_multiplicative_modNCompletedGroupAlgebraStageInClass_me
     (i : ProCIntegerIndex C) (U : CompletedGroupAlgebraIndexInClass H C) :
     C (Multiplicative (ModNCompletedGroupAlgebraStageInClass i.modulus H C U)) := by
   classical
-  letI : Fact (0 < i.modulus) := ⟨i.positive⟩
+  let : Fact (0 < i.modulus) := ⟨i.positive⟩
   let Q := CompletedGroupAlgebraQuotientInClass H C U
-  letI : Finite Q := ProCGroups.FiniteGroupClass.finite (C := C) (OrderDual.ofDual U).2
-  letI : Fintype Q := Fintype.ofFinite Q
+  let : Finite Q := ProCGroups.FiniteGroupClass.finite (C := C) (OrderDual.ofDual U).2
+  let : Fintype Q := Fintype.ofFinite Q
   let e :
       Multiplicative (ModNCompletedGroupAlgebraStageInClass i.modulus H C U) ≃*
         (Q → ULift.{u} (Multiplicative (ModNCompletedCoeff i.modulus))) :=
@@ -626,8 +628,8 @@ instance instFiniteZCCompletedGroupAlgebraMultiplicativeSystemStage
     (i : ZCCompletedGroupAlgebraIndex C H) :
     Finite ((zcCompletedGroupAlgebraMultiplicativeSystem C H).X i) := by
   dsimp [zcCompletedGroupAlgebraMultiplicativeSystem]
-  letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
-  letI : Finite (ZCCompletedGroupAlgebraStage C H i) :=
+  let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+  let : Finite (ZCCompletedGroupAlgebraStage C H i) :=
     finite_modNCompletedGroupAlgebraStageInClass
       (n := i.1.modulus) (G := H) C i.2
   exact @Finite.of_equiv _ _ (inferInstance : Finite (ZCCompletedGroupAlgebraStage C H i))
@@ -761,37 +763,37 @@ theorem hasOpenNormalBasisInClass_multiplicative_zcCompletedGroupAlgebra
     (hForm : ProCGroups.FiniteGroupClass.Formation C) :
         ProCGroups.ProC.HasOpenNormalBasisInClass C (Multiplicative (ZCCompletedGroupAlgebra C
         H)) := by
-  letI : ProCGroups.FiniteGroupClass.ContainsTrivialQuotients C :=
+  let : ProCGroups.FiniteGroupClass.ContainsTrivialQuotients C :=
     hForm.containsTrivialQuotients
-  letI : Nonempty (ProCIntegerIndex C) :=
+  let : Nonempty (ProCIntegerIndex C) :=
     ⟨ProCIntegerIndex.terminal hForm.containsTrivialQuotients⟩
-  letI : Nonempty (CompletedGroupAlgebraIndexInClass H C) :=
+  let : Nonempty (CompletedGroupAlgebraIndexInClass H C) :=
     ⟨_root_.CompletedGroupAlgebra.terminalCompletedGroupAlgebraIndexInClass (G := H) C⟩
-  letI : Nonempty (ZCCompletedGroupAlgebraIndex C H) := inferInstance
+  let : Nonempty (ZCCompletedGroupAlgebraIndex C H) := inferInstance
   let S := zcCompletedGroupAlgebraMultiplicativeSystem C H
-  letI : ∀ i : ZCCompletedGroupAlgebraIndex C H, Group (S.X i) := fun i => by
+  let : ∀ i : ZCCompletedGroupAlgebraIndex C H, Group (S.X i) := fun i => by
     dsimp [S, zcCompletedGroupAlgebraMultiplicativeSystem]
     infer_instance
-  letI : ∀ i : ZCCompletedGroupAlgebraIndex C H, IsTopologicalGroup (S.X i) := fun i => by
+  let : ∀ i : ZCCompletedGroupAlgebraIndex C H, IsTopologicalGroup (S.X i) := fun i => by
     dsimp [S, zcCompletedGroupAlgebraMultiplicativeSystem]
     exact instIsTopologicalGroupZCCompletedGroupAlgebraMultiplicativeSystemStage C H i
-  letI : ∀ i : ZCCompletedGroupAlgebraIndex C H, CompactSpace (S.X i) := fun i => by
+  let : ∀ i : ZCCompletedGroupAlgebraIndex C H, CompactSpace (S.X i) := fun i => by
     dsimp [S, zcCompletedGroupAlgebraMultiplicativeSystem]
-    letI : DiscreteTopology (Multiplicative (ZCCompletedGroupAlgebraStage C H i)) := ⟨rfl⟩
-    letI : Finite (Multiplicative (ZCCompletedGroupAlgebraStage C H i)) :=
-      instFiniteZCCompletedGroupAlgebraMultiplicativeSystemStage C H i
-    infer_instance
-  letI : ∀ i : ZCCompletedGroupAlgebraIndex C H, T2Space (S.X i) := fun i => by
+    change @CompactSpace (Multiplicative (ZCCompletedGroupAlgebraStage C H i)) ⊥
+    exact @Finite.compactSpace
+      (Multiplicative (ZCCompletedGroupAlgebraStage C H i)) ⊥
+      (instFiniteZCCompletedGroupAlgebraMultiplicativeSystemStage C H i)
+  let : ∀ i : ZCCompletedGroupAlgebraIndex C H, T2Space (S.X i) := fun i => by
     dsimp [S, zcCompletedGroupAlgebraMultiplicativeSystem]
     change @T2Space (Multiplicative (ZCCompletedGroupAlgebraStage C H i)) ⊥
     exact @DiscreteTopology.toT2Space _ ⊥ ⟨rfl⟩
-  letI : ∀ i : ZCCompletedGroupAlgebraIndex C H, TotallyDisconnectedSpace (S.X i) := fun i => by
+  let : ∀ i : ZCCompletedGroupAlgebraIndex C H, TotallyDisconnectedSpace (S.X i) := fun i => by
     dsimp [S, zcCompletedGroupAlgebraMultiplicativeSystem]
     change @TotallyDisconnectedSpace
       (Multiplicative (ZCCompletedGroupAlgebraStage C H i)) ⊥
     exact @TotallySeparatedSpace.totallyDisconnectedSpace _ ⊥
       (@TotallySeparatedSpace.of_discrete _ ⊥ ⟨rfl⟩)
-  letI : ProCGroups.InverseSystems.IsGroupSystem S := by
+  let : ProCGroups.InverseSystems.IsGroupSystem S := by
     dsimp [S]
     infer_instance
   have hS : ProCGroups.ProC.HasOpenNormalBasisInClass C (S.inverseLimit) := by
@@ -800,15 +802,15 @@ theorem hasOpenNormalBasisInClass_multiplicative_zcCompletedGroupAlgebra
       (directed_zcCompletedGroupAlgebraIndex_of_formation C H hForm)
       (fun i => by
         dsimp [S, zcCompletedGroupAlgebraMultiplicativeSystem]
-        letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
-        letI : Finite (ZCCompletedGroupAlgebraStage C H i) :=
+        let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+        let : Finite (ZCCompletedGroupAlgebraStage C H i) :=
           finite_modNCompletedGroupAlgebraStageInClass
             (n := i.1.modulus) (G := H) C
             i.2
-        letI : Finite (Multiplicative (ZCCompletedGroupAlgebraStage C H i)) :=
+        let : Finite (Multiplicative (ZCCompletedGroupAlgebraStage C H i)) :=
           @Finite.of_equiv _ _ (inferInstance : Finite (ZCCompletedGroupAlgebraStage C H i))
             Multiplicative.toAdd
-        letI : DiscreteTopology (Multiplicative (ZCCompletedGroupAlgebraStage C H i)) := ⟨rfl⟩
+        let : DiscreteTopology (Multiplicative (ZCCompletedGroupAlgebraStage C H i)) := ⟨rfl⟩
         exact ProCGroups.ProC.HasOpenNormalBasisInClass.of_finite_discrete (C := C)
           (G := Multiplicative (ZCCompletedGroupAlgebraStage C H i))
           hForm.quotientClosed
@@ -850,10 +852,10 @@ multiplicatively, has an open-normal \(C\)-basis. -/
 theorem hasOpenNormalBasisInClass_multiplicative_zcFreeFoxCoordinates
     (hForm : ProCGroups.FiniteGroupClass.Formation C) : ProCGroups.ProC.HasOpenNormalBasisInClass C
       (Multiplicative (ZCFreeFoxCoordinates C (X := X) (H := H))) := by
-  letI : T2Space (Multiplicative (ZCCompletedGroupAlgebra C H)) := by
+  let : T2Space (Multiplicative (ZCCompletedGroupAlgebra C H)) := by
     change T2Space (ZCCompletedGroupAlgebra C H)
     infer_instance
-  letI : TotallyDisconnectedSpace
+  let : TotallyDisconnectedSpace
       (Multiplicative (ZCCompletedGroupAlgebra C H)) := by
     change TotallyDisconnectedSpace (ZCCompletedGroupAlgebra C H)
     infer_instance

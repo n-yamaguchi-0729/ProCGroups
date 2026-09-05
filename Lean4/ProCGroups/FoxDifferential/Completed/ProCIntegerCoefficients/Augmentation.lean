@@ -3,6 +3,8 @@ import ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.Augmentation
 import Mathlib.Algebra.Exact.Basic
 import Mathlib.RingTheory.Ideal.Maps
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — \(\mathbb{Z}_C\) coefficients — augmentation
 
@@ -66,8 +68,8 @@ theorem zcCompletedGroupAlgebraAugmentationFamily_compatible
     proCIntegerTransition (C := C) hij
         (zcCompletedGroupAlgebraAugmentationFamily C H x j) =
       zcCompletedGroupAlgebraAugmentationFamily C H x i := by
-  letI : Fact (0 < i.modulus) := ⟨i.positive⟩
-  letI : Fact (0 < j.modulus) := ⟨j.positive⟩
+  let : Fact (0 < i.modulus) := ⟨i.positive⟩
+  let : Fact (0 < j.modulus) := ⟨j.positive⟩
   let U := zcCompletedGroupAlgebraTopIndex C H
   have hx := x.2 (i, U) (j, U) ⟨hij, le_rfl⟩
   dsimp [zcCompletedGroupAlgebraAugmentationFamily]
@@ -153,7 +155,7 @@ theorem proCIntegerProj_zcCompletedGroupAlgebraAugmentation_eq_stage
       modNCompletedGroupAlgebraStageAugmentationInClass i.1.modulus H C i.2
         (zcCompletedGroupAlgebraProjection C H i x) := by
   let T := zcCompletedGroupAlgebraTopIndex C H
-  letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+  let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
   have hT : T ≤ i.2 := zcCompletedGroupAlgebraTopIndex_le C H i.2
   have hx := x.2 (i.1, T) i ⟨le_rfl, hT⟩
   dsimp [zcCompletedGroupAlgebraAugmentationFamily]
@@ -175,8 +177,11 @@ theorem zcCompletedGroupAlgebraAugmentation_groupLike (h : H) :
   ext i
   simp only [proCIntegerProj_zcCompletedGroupAlgebraAugmentation,
       zcCompletedGroupAlgebraAugmentationFamily,
-  zcCompletedGroupAlgebraProjection_groupLike, OrderDual.ofDual_toDual, MonoidAlgebra.of_apply,
-  modNCompletedGroupAlgebraStageAugmentationInClass_single, proCIntegerProj_one]
+    zcCompletedGroupAlgebraProjection_groupLike, OrderDual.ofDual_toDual,
+    proCIntegerProj_one]
+  exact modNCompletedGroupAlgebraStageAugmentationInClass_of
+    (n := i.modulus) (G := H) C (zcCompletedGroupAlgebraTopIndex C H)
+      (QuotientGroup.mk h)
 
 /-- The completed Fox boundary has augmentation zero. -/
 @[simp]
@@ -319,8 +324,8 @@ theorem zcCompletedGroupAlgebraAugmentation_surjective :
       (1 : CompletedGroupAlgebraQuotientInClass H C i.2)
       (proCIntegerProj (C := C) i.1 a)
   · intro i j hij
-    letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
-    letI : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
+    let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+    let : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
     have ha :
         modNCompletedCoeffMap (n := i.1.modulus) (m := j.1.modulus) hij.1
             (proCIntegerProj (C := C) j.1 a) =
@@ -341,7 +346,7 @@ theorem zcCompletedGroupAlgebraAugmentation_surjective :
         algebraMap (ModNCompletedCoeff j.1.modulus)
           (ModNCompletedGroupAlgebraStageInClass j.1.modulus H C i.2)
           (proCIntegerProj (C := C) j.1 a)
-      rw [MonoidAlgebra.mapDomain_algebraMap]
+      erw [MonoidAlgebra.mapDomain_algebraMap]
     change
       modNCompletedGroupAlgebraStageCoeffMapInClass
           (n := i.1.modulus) (m := j.1.modulus) (G := H) C i.2 hij.1
@@ -365,7 +370,7 @@ theorem zcCompletedGroupAlgebraAugmentation_surjective :
     rw [modNCompletedGroupAlgebraStageCoeffMapInClass_single_apply, ha]
   · ext i
     let T := zcCompletedGroupAlgebraTopIndex C H
-    letI : Fact (0 < i.modulus) := ⟨i.positive⟩
+    let : Fact (0 < i.modulus) := ⟨i.positive⟩
     change
       (modNCompletedGroupAlgebraStageAugmentationInClass i.modulus H C T)
           (MonoidAlgebra.single

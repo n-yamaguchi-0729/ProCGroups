@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Completed.FreeProC.ProCIntegerBifilteredStageRightProjection
 import ProCGroups.FiniteGeneration.Basic
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — free pro-\(C\) — finite quotient stages
 
@@ -50,8 +52,15 @@ theorem freeProCFiniteQuotientStageHom_of
     freeProCFiniteQuotientStageHom (C := C) φ U (FreeGroup.of x) =
       (QuotientGroup.mk (φ x) :
         CompletedGroupAlgebraQuotientInClass H C U) := by
-  simp only [freeProCFiniteQuotientStageHom, openNormalSubgroupInClassProj, QuotientGroup.mk'_apply,
-  FreeGroup.lift_apply_of]
+  change
+    FreeGroup.lift
+        (fun y : X =>
+          QuotientGroup.mk'
+            (((OrderDual.ofDual U).1 : OpenNormalSubgroup H) : Subgroup H) (φ y))
+        (FreeGroup.of x) =
+      QuotientGroup.mk'
+        (((OrderDual.ofDual U).1 : OpenNormalSubgroup H) : Subgroup H) (φ x)
+  exact FreeGroup.lift_apply_of
 
 /-- The free quotient-stage map is the quotient projection after the original free-group map. -/
 theorem freeProCFiniteQuotientStageHom_eq_comp
@@ -59,13 +68,24 @@ theorem freeProCFiniteQuotientStageHom_eq_comp
     freeProCFiniteQuotientStageHom (C := C) φ U =
       (openNormalSubgroupInClassProj (C := C) (G := H) U).comp (FreeGroup.lift φ) := by
   ext x
-  unfold freeProCFiniteQuotientStageHom
-  rw [FreeGroup.lift_apply_of]
   change
-    openNormalSubgroupInClassProj (C := C) (G := H) U (φ x) =
-      openNormalSubgroupInClassProj (C := C) (G := H) U
+    FreeGroup.lift
+        (fun y : X =>
+          QuotientGroup.mk'
+            (((OrderDual.ofDual U).1 : OpenNormalSubgroup H) : Subgroup H) (φ y))
+        (FreeGroup.of x) =
+      QuotientGroup.mk'
+        (((OrderDual.ofDual U).1 : OpenNormalSubgroup H) : Subgroup H)
         (FreeGroup.lift φ (FreeGroup.of x))
-  rw [FreeGroup.lift_apply_of]
+  exact
+    (FreeGroup.lift_apply_of
+      (f := fun y : X =>
+        QuotientGroup.mk'
+          (((OrderDual.ofDual U).1 : OpenNormalSubgroup H) : Subgroup H) (φ y))).trans
+      (congrArg
+        (QuotientGroup.mk'
+          (((OrderDual.ofDual U).1 : OpenNormalSubgroup H) : Subgroup H))
+        (FreeGroup.lift_apply_of (f := φ)).symm)
 
 /-- Compatibility of finite quotient-stage maps under quotient refinement. -/
 theorem freeProCFiniteQuotientStageHom_transition
@@ -102,17 +122,21 @@ theorem freeProCFiniteQuotientStageKernel_antitone
       freeProCFiniteQuotientStageKernel (C := C) φ U := by
   intro w hw
   change freeProCFiniteQuotientStageHom (C := C) φ U w = 1
-  calc
-    freeProCFiniteQuotientStageHom (C := C) φ U w
-        =
-          (OpenNormalSubgroupInClass.map
-            (C := C) (G := H)
-            (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) hUV)
-            (freeProCFiniteQuotientStageHom (C := C) φ V w) :=
-          (freeProCFiniteQuotientStageHom_transition (C := C) φ hUV w).symm
-    _ = 1 := by
-      rw [show freeProCFiniteQuotientStageHom (C := C) φ V w = 1 from hw]
-      exact map_one _
+  have htransition :
+      freeProCFiniteQuotientStageHom (C := C) φ U w =
+        (OpenNormalSubgroupInClass.map
+          (C := C) (G := H)
+          (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) hUV)
+          (freeProCFiniteQuotientStageHom (C := C) φ V w) :=
+    (freeProCFiniteQuotientStageHom_transition (C := C) φ hUV w).symm
+  have hmapped :
+      (OpenNormalSubgroupInClass.map
+        (C := C) (G := H)
+        (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) hUV)
+        (freeProCFiniteQuotientStageHom (C := C) φ V w) = 1 := by
+    rw [show freeProCFiniteQuotientStageHom (C := C) φ V w = 1 from hw]
+    exact map_one _
+  exact htransition.trans hmapped
 
 /--
 If the original family topologically generates \(H\), then its image generates every discrete
@@ -200,10 +224,27 @@ theorem freeProCFiniteQuotientStageQMap_generator
         (QuotientGroup.mk (φ x)) =
       QuotientGroup.mk'
         (freeProCFiniteQuotientStageKernel (C := C) φ U) (FreeGroup.of x) := by
-  apply (freeProCFiniteQuotientStageTargetEquiv (C := C) φ U hsurj).injective
-  rw [freeProCFiniteQuotientStageTargetEquiv_mk]
-  simp only [freeProCFiniteQuotientStageQMap, MulEquiv.toMonoidHom_eq_coe, MonoidHom.coe_coe,
-  MulEquiv.apply_symm_apply, freeProCFiniteQuotientStageHom_of]
+  let e := freeProCFiniteQuotientStageTargetEquiv (C := C) φ U hsurj
+  apply e.injective
+  change
+    e (e.symm (QuotientGroup.mk (φ x))) =
+      e (QuotientGroup.mk'
+        (freeProCFiniteQuotientStageKernel (C := C) φ U) (FreeGroup.of x))
+  have hroundtrip :
+      e (e.symm (QuotientGroup.mk (φ x))) =
+        (QuotientGroup.mk (φ x) : CompletedGroupAlgebraQuotientInClass H C U) :=
+    e.apply_symm_apply _
+  have hgenerator :
+      (QuotientGroup.mk (φ x) : CompletedGroupAlgebraQuotientInClass H C U) =
+        freeProCFiniteQuotientStageHom (C := C) φ U (FreeGroup.of x) :=
+    (freeProCFiniteQuotientStageHom_of (C := C) φ U x).symm
+  have hequivalence :
+      freeProCFiniteQuotientStageHom (C := C) φ U (FreeGroup.of x) =
+        e (QuotientGroup.mk'
+          (freeProCFiniteQuotientStageKernel (C := C) φ U) (FreeGroup.of x)) :=
+    (freeProCFiniteQuotientStageTargetEquiv_mk (C := C) φ U hsurj
+      (FreeGroup.of x)).symm
+  exact hroundtrip.trans (hgenerator.trans hequivalence)
 
 /--
 The compatibility between the canonical \(F_X/kernel \to H/U\) equivalences and quotient
@@ -242,11 +283,29 @@ theorem freeProCFiniteQuotientStageQMap_transition
       foxAlgebraicStageTargetQuotientMap
         (X := X) (freeProCFiniteQuotientStageKernel_antitone (C := C) φ hUV)
         (freeProCFiniteQuotientStageQMap (C := C) φ V hsurjV q) := by
-  apply (freeProCFiniteQuotientStageTargetEquiv (C := C) φ U hsurjU).injective
-  rw [freeProCFiniteQuotientStageTargetEquiv_transition
-    (C := C) φ hUV hsurjU hsurjV]
-  simp only [freeProCFiniteQuotientStageQMap, MulEquiv.toMonoidHom_eq_coe, MonoidHom.coe_coe,
-  MulEquiv.apply_symm_apply]
+  let eU := freeProCFiniteQuotientStageTargetEquiv (C := C) φ U hsurjU
+  let eV := freeProCFiniteQuotientStageTargetEquiv (C := C) φ V hsurjV
+  let m : CompletedGroupAlgebraQuotientInClass H C V →*
+      CompletedGroupAlgebraQuotientInClass H C U :=
+    OpenNormalSubgroupInClass.map
+      (C := C) (G := H)
+      (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) hUV
+  apply eU.injective
+  change
+    eU (eU.symm (m q)) =
+      eU (foxAlgebraicStageTargetQuotientMap
+        (X := X) (freeProCFiniteQuotientStageKernel_antitone (C := C) φ hUV)
+        (eV.symm q))
+  calc
+    eU (eU.symm (m q)) = m q := eU.apply_symm_apply _
+    _ = m (eV (eV.symm q)) :=
+      congrArg (fun y : CompletedGroupAlgebraQuotientInClass H C V => m y)
+        (eV.apply_symm_apply q).symm
+    _ = eU (foxAlgebraicStageTargetQuotientMap
+          (X := X) (freeProCFiniteQuotientStageKernel_antitone (C := C) φ hUV)
+          (eV.symm q)) :=
+      (freeProCFiniteQuotientStageTargetEquiv_transition
+        (C := C) φ hUV hsurjU hsurjV (eV.symm q)).symm
 
 end OneStage
 

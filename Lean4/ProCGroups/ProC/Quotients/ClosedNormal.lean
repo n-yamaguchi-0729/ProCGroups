@@ -1,6 +1,8 @@
 import ProCGroups.Generation.Basic
 import ProCGroups.ProC.Quotients.LeftQuotientProjectionSections
 
+set_option autoImplicit false
+
 /-!
 # Quotients by closed normal subgroups
 
@@ -23,7 +25,6 @@ theorem totallyDisconnectedSpace_quotient_closedNormal
     [CompactSpace G] [T2Space G] [TotallyDisconnectedSpace G]
     (N : Subgroup G) [N.Normal] (hN : IsClosed (N : Set G)) :
     TotallyDisconnectedSpace (G ⧸ N) := by
-  letI : IsClosed (N : Set G) := hN
   let q : G →* G ⧸ N := QuotientGroup.mk' N
   have hsep : Pairwise (fun a b : G ⧸ N =>
       ∃ U : Set (G ⧸ N), IsClopen U ∧ a ∈ U ∧ b ∈ Uᶜ) := by
@@ -87,7 +88,7 @@ theorem totallyDisconnectedSpace_quotient_closedNormal
     · simp [U, q]
     · change (q x)⁻¹ * q y ∉ Kbar
       simpa [g, q] using hqgKbar
-  letI : TotallySeparatedSpace (G ⧸ N) :=
+  let : TotallySeparatedSpace (G ⧸ N) :=
     totallySeparatedSpace_iff_exists_isClopen.2 hsep
   infer_instance
 
@@ -155,7 +156,6 @@ theorem topologicallyGenerates_union_closedNormal_iff_quotient
     (hNclosed : IsClosed (N : Set G)) {X : Set G} :
     TopologicallyGenerates (G := G) (X ∪ (N : Set G)) ↔
       TopologicallyGenerates (G := G ⧸ N) ((QuotientGroup.mk' N) '' X) := by
-  letI : IsClosed (N : Set G) := hNclosed
   constructor
   · intro hX
     have himg :
@@ -255,7 +255,6 @@ theorem isClosed_image_closedNormal_quotient
     {N N' : Subgroup G} [N'.Normal]
     (hNclosed : IsClosed (N : Set G)) (hN'closed : IsClosed (N' : Set G)) :
     IsClosed ((N.map (QuotientGroup.mk' N') : Subgroup (G ⧸ N')) : Set (G ⧸ N')) := by
-  letI : IsClosed (N' : Set G) := hN'closed
   have hNcompact : IsCompact (N : Set G) := hNclosed.isCompact
   have himage : IsCompact ((QuotientGroup.mk' N') '' (N : Set G)) :=
     hNcompact.image continuous_quotient_mk'
@@ -281,7 +280,6 @@ noncomputable def quotientQuotientContinuousMulEquiv
     (hN'N : N' ≤ N) :
     ((G ⧸ N') ⧸ N.map (QuotientGroup.mk' N')) ≃ₜ* G ⧸ N := by
   let K : Subgroup (G ⧸ N') := N.map (QuotientGroup.mk' N')
-  letI : IsClosed (N : Set G) := hNclosed
   let f : ((G ⧸ N') ⧸ K) →* G ⧸ N :=
     QuotientGroup.quotientQuotientEquivQuotientAux N' N hN'N
   have hfcont : Continuous f := by
@@ -309,9 +307,7 @@ theorem topologicallyGenerates_of_quotient_section_union_kernel
     TopologicallyGenerates (G := G ⧸ N')
       (σ '' Y ∪ ((QuotientGroup.mk' N') '' T)) := by
   classical
-  letI : IsClosed (N' : Set G) := hN'closed
   let K : Subgroup (G ⧸ N') := N.map (QuotientGroup.mk' N')
-  letI : K.Normal := by infer_instance
   let X : Set (G ⧸ N') := σ '' Y ∪ ((QuotientGroup.mk' N') '' T)
   have hKclosed : IsClosed (K : Set (G ⧸ N')) := by
     simpa [K] using

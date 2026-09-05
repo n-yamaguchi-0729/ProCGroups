@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.Basic.InClass.Index
 
+set_option autoImplicit false
+
 /-!
 # Completed Group Algebra / Basic / Within a Class / Stage
 
@@ -78,14 +80,8 @@ theorem finite_completedGroupAlgebraStageInClass
     [Finite R] (U : CompletedGroupAlgebraIndexInClass G C) :
     Finite (CompletedGroupAlgebraStageInClass C R G U) := by
   classical
-  letI : Finite (CompletedGroupAlgebraQuotientInClass G C U) :=
+  let : Finite (CompletedGroupAlgebraQuotientInClass G C U) :=
     finite_completedGroupAlgebraQuotientInClass G C U
-  letI : Fintype (CompletedGroupAlgebraQuotientInClass G C U) := Fintype.ofFinite _
-  letI : Fintype R := Fintype.ofFinite R
-  letI : DecidableEq (CompletedGroupAlgebraQuotientInClass G C U) := Classical.decEq _
-  letI : Finite (CompletedGroupAlgebraQuotientInClass G C U → R) := by
-    letI : Fintype (CompletedGroupAlgebraQuotientInClass G C U → R) := inferInstance
-    exact Finite.of_fintype _
   let f :
       CompletedGroupAlgebraStageInClass C R G U →
         CompletedGroupAlgebraQuotientInClass G C U → R := fun x q => x.coeff q
@@ -171,13 +167,20 @@ theorem completedGroupAlgebraTransitionInClass_comp
     (completedGroupAlgebraTransitionInClass C R G hUV).comp
         (completedGroupAlgebraTransitionInClass C R G hVW) =
       completedGroupAlgebraTransitionInClass C R G (hUV.trans hVW) := by
-  rw [completedGroupAlgebraTransitionInClass, completedGroupAlgebraTransitionInClass,
-    completedGroupAlgebraTransitionInClass, ← MonoidAlgebra.mapDomainRingHom_comp]
-  congr 1
-  exact OpenNormalSubgroupInClass.map_comp
-    (C := C) (G := G)
-    (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) (W := OrderDual.ofDual W)
-    hUV hVW
+  unfold completedGroupAlgebraTransitionInClass
+  exact
+    (MonoidAlgebra.mapDomainRingHom_comp (R := R)
+      (OpenNormalSubgroupInClass.map
+        (C := C) (G := G)
+        (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) hUV)
+      (OpenNormalSubgroupInClass.map
+        (C := C) (G := G)
+        (U := OrderDual.ofDual V) (V := OrderDual.ofDual W) hVW)).symm.trans
+      (congrArg (MonoidAlgebra.mapDomainRingHom R)
+        (OpenNormalSubgroupInClass.map_comp
+          (C := C) (G := G)
+          (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) (W := OrderDual.ofDual W)
+          hUV hVW))
 
 /-- \(C\)-indexed stage transitions commute with coefficient change. -/
 @[simp]

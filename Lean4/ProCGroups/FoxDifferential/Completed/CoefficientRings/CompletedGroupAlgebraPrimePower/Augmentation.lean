@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.Module
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — coefficient rings — prime-power completed group algebra — augmentation
 
@@ -36,11 +38,8 @@ def primePowerCompletedGroupAlgebraAugmentation :
     PrimePowerCompletedGroupAlgebra ℓ G → PrimePowerCompletedCoeff ℓ G := by
   intro x
   refine ⟨fun i => ?_, ?_⟩
-  · letI : Fact (0 < ℓ ^ i.1) := ⟨primePower_pos ℓ i.1⟩
-    exact modNCompletedGroupAlgebraStageAugmentation (ℓ ^ i.1) G i.2 (x.1 i)
+  · exact modNCompletedGroupAlgebraStageAugmentation (ℓ ^ i.1) G i.2 (x.1 i)
   · intro i j hij
-    letI : Fact (0 < ℓ ^ i.1) := ⟨primePower_pos ℓ i.1⟩
-    letI : Fact (0 < ℓ ^ j.1) := ⟨primePower_pos ℓ j.1⟩
     calc
       modNCompletedCoeffMap
           (n := ℓ ^ i.1) (m := ℓ ^ j.1)

@@ -1,5 +1,9 @@
 import ProCGroups.ReidemeisterSchreier.FreeGroup.PrefixParent
 
+set_option autoImplicit false
+
+universe u
+
 /-!
 # Reidemeister Schreier / Discrete / Open Subgroups / Words / Basic
 

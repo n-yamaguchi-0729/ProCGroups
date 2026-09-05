@@ -1,5 +1,7 @@
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.GeneratorAddition
 
+set_option autoImplicit false
+
 /-!
 # Reidemeister Schreier / Discrete / Presentations / Tietze / Generator Deletion
 
@@ -252,9 +254,13 @@ def equiv (delete : Z → Prop) [DecidablePred delete] :
   right_inv z := by
     cases z with
     | inl x =>
-        simp only [Kept, Deleted, x.property, ↓reduceDIte, Subtype.coe_eta]
+        simp only [Kept, Deleted, x.property, ↓reduceDIte]
+        exact congrArg (fun z : Kept delete => (Sum.inl z : Sum (Kept delete) (Deleted delete)))
+          (Subtype.ext rfl)
     | inr y =>
-        simp only [Kept, Deleted, y.property, ↓reduceDIte, Subtype.coe_eta]
+        simp only [Kept, Deleted, y.property, ↓reduceDIte]
+        exact congrArg (fun z : Deleted delete => (Sum.inr z : Sum (Kept delete) (Deleted delete)))
+          (Subtype.ext rfl)
 
 /-- The partition equivalence sends a generator satisfying the deletion predicate to the
 deleted summand. -/

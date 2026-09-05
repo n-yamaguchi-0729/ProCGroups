@@ -4,6 +4,8 @@ import ProCGroups.ProC.OpenNormalSubgroups.Basic
 import ProCGroups.ProC.OpenNormalSubgroups.ClosedAndCosets
 import ProCGroups.Profinite.Basic
 
+set_option autoImplicit false
+
 /-!
 # Detecting topological generation in finite quotients
 
@@ -39,50 +41,42 @@ theorem topologicallyGenerates_iff_forall_projection_inverseLimit
     TopologicallyGenerates (G := S.inverseLimit) X ↔
       ∀ i, TopologicallyGenerates (G := S.X i) (S.projection i '' X) := by
   classical
+  let π : (i : I) → S.inverseLimit →* S.X i :=
+    fun i => ProCGroups.InverseSystems.projectionHom (S := S) i
+  have hπ (i : I) : (π i : S.inverseLimit → S.X i) = S.projection i := by
+    funext x
+    exact ProCGroups.InverseSystems.projectionHom_apply (S := S) i x
+  have hmap (i : I) :
+      (Subgroup.closure X).map (π i) = Subgroup.closure (S.projection i '' X) := by
+    exact (MonoidHom.map_closure (π i) X).trans
+      (congrArg (fun f : S.inverseLimit → S.X i => Subgroup.closure (f '' X)) (hπ i))
   constructor
   · intro hX i
-    let πi : S.inverseLimit →* S.X i := {
-      toFun := fun x => S.projection i x
-      map_one' := rfl
-      map_mul' := by
-        intro x y
-        rfl
-    }
-    have hπsurj : Function.Surjective πi := S.surjective_π hdir hsurj i
-    have hmap :
-        (Subgroup.closure X).map πi = Subgroup.closure (S.projection i '' X) := by
-      simpa [πi] using (MonoidHom.map_closure πi X)
+    have hπsurj : Function.Surjective (π i) :=
+      (hπ i).symm ▸ S.surjective_π hdir hsurj i
     have htop :
-        ((Subgroup.closure X).map πi).topologicalClosure = ⊤ := by
+        ((Subgroup.closure X).map (π i)).topologicalClosure = ⊤ := by
       have hX' : (Subgroup.closure X).topologicalClosure = ⊤ := by
-        simpa [TopologicallyGenerates] using hX
+        simpa only [TopologicallyGenerates] using hX
       exact DenseRange.topologicalClosure_map_subgroup
-        (f := πi) (hf := S.continuous_projection i) (hf' := hπsurj.denseRange) hX'
-    simpa [TopologicallyGenerates, hmap] using htop
+        (f := π i) (hf := (hπ i).symm ▸ S.continuous_projection i)
+        (hf' := hπsurj.denseRange) hX'
+    simpa only [TopologicallyGenerates, hmap i] using htop
   · intro hproj
     let Y : Set S.inverseLimit :=
       (((Subgroup.closure X).topologicalClosure : Subgroup S.inverseLimit) : Set S.inverseLimit)
     have hYclosed : IsClosed Y := Subgroup.isClosed_topologicalClosure _
     have hprojY : ∀ i, S.projection i '' Y = (Set.univ : Set (S.X i)) := by
       intro i
-      let πi : S.inverseLimit →* S.X i := {
-        toFun := fun x => S.projection i x
-        map_one' := rfl
-        map_mul' := by
-          intro x y
-          rfl
-      }
-      have hmap :
-          (Subgroup.closure X).map πi = Subgroup.closure (S.projection i '' X) := by
-        simpa [πi] using (MonoidHom.map_closure πi X)
       have hsubset :
           ((Subgroup.closure (S.projection i '' X) : Subgroup (S.X i)) : Set (S.X i)) ⊆
               S.projection i '' Y := by
         intro y hy
-        have hy' : y ∈ (Subgroup.closure X).map πi := by
-          simpa [hmap] using hy
+        have hy' : y ∈ (Subgroup.closure X).map (π i) := by
+          rw [hmap i]
+          exact hy
         rcases hy' with ⟨z, hz, rfl⟩
-        exact ⟨z, Subgroup.le_topologicalClosure _ hz, rfl⟩
+        exact ⟨z, Subgroup.le_topologicalClosure _ hz, congrFun (hπ i).symm z⟩
       have hclosedImg : IsClosed (S.projection i '' Y) := by
         exact (hYclosed.isCompact.image (S.continuous_projection i)).isClosed
       have hdense :
@@ -198,14 +192,12 @@ theorem topologicallyGenerates_union_subgroup_iff_forall_openNormalQuotient
     push Not at hxNotAll
     rcases hxNotAll with ⟨V, hVopen, hHV, hxV⟩
     have hVfin : Subgroup.FiniteIndex V := by
-      letI : Finite (G ⧸ V) := Subgroup.quotient_finite_of_isOpen V hVopen
+      let : Finite (G ⧸ V) := Subgroup.quotient_finite_of_isOpen V hVopen
       exact Subgroup.finiteIndex_of_finite_quotient
-    letI : Subgroup.FiniteIndex V := hVfin
     let U : OpenNormalSubgroup G :=
       { toSubgroup := Subgroup.normalCore V
         isOpen' := Subgroup.isOpen_of_isClosed_of_finiteIndex _ (V.normalCore_isClosed
           (Subgroup.isClosed_of_isOpen V hVopen)) }
-    letI : (U : Subgroup G).Normal := U.isNormal'
     have hNU : N ≤ (U : Subgroup G) :=
       (Subgroup.normal_le_normalCore).2 (hNleH.trans hHV)
     have hUV : (U : Subgroup G) ≤ V := by
@@ -229,9 +221,9 @@ theorem topologicallyGenerates_union_subgroup_iff_forall_openNormalQuotient
     have hclosure_le_qH :
         (Subgroup.closure (((QuotientGroup.mk' (U : Subgroup G)) '' X))).topologicalClosure ≤
           qH := by
-      letI : DiscreteTopology (G ⧸ (U : Subgroup G)) :=
-        QuotientGroup.discreteTopology U.toOpenSubgroup.isOpen'
       have hqHclosed : IsClosed (qH : Set (G ⧸ (U : Subgroup G))) := by
+        let : DiscreteTopology (G ⧸ (U : Subgroup G)) :=
+          OpenNormalSubgroup.quotientDiscrete (G := G) U
         exact isClosed_discrete (qH : Set (G ⧸ (U : Subgroup G)))
       exact Subgroup.topologicalClosure_minimal _ hcl_le_qH hqHclosed
     let qx : G ⧸ (U : Subgroup G) := QuotientGroup.mk' (U : Subgroup G) x

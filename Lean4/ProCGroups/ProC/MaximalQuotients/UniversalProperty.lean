@@ -4,6 +4,8 @@ import ProCGroups.ProC.Quotients.ClosedNormal
 import ProCGroups.ProC.Subgroups.Closed
 import ProCGroups.Topologies.QuotientMaps
 
+set_option autoImplicit false
+
 /-!
 # The pro-\(C\) residual quotient
 
@@ -67,7 +69,7 @@ theorem map_proCResidualCore_le_of_hom
   intro N hN
   rw [Set.mem_range] at hN
   rcases hN with ⟨N, rfl⟩
-  letI : IsClosed (N.toSubgroup : Set H) := N.isClosed'
+  have : IsClosed (N.toSubgroup : Set H) := N.isClosed'
   refine Subgroup.map_le_iff_le_comap.2 ?_
   let α : G →ₜ* H ⧸ N.toSubgroup :=
     { toMonoidHom := (QuotientGroup.mk' N.toSubgroup).comp φ
@@ -105,7 +107,7 @@ theorem proCResidualCore_le_ker_of_continuousMonoidHom_to_proC
     (φ : G →ₜ* H) (hH : HasOpenNormalBasisInClass C H) :
     proCResidualCore C G ≤ φ.toMonoidHom.ker := by
   let K : Subgroup G := φ.toMonoidHom.ker
-  letI : K.Normal := MonoidHom.normal_ker φ.toMonoidHom
+  have : K.Normal := MonoidHom.normal_ker φ.toMonoidHom
   have hquot : HasOpenNormalBasisInClass C (G ⧸ K) := by
     simpa [K] using hasOpenNormalBasisInClass_quotient_ker hHer φ hH
   simpa [K] using
@@ -177,7 +179,7 @@ theorem map_proCResidualCore_eq_of_surjective
       HasOpenNormalBasisInClass C (G ⧸ proCResidualCore C G)) :
     (proCResidualCore C G).map φ = proCResidualCore C H := by
   let R : Subgroup G := proCResidualCore C G
-  letI : R.Normal := proCResidualCore_normal C G
+  have : R.Normal := proCResidualCore_normal C G
   let N : Subgroup H := R.map φ
   have hNnormal : N.Normal := by
     refine ⟨?_⟩
@@ -186,15 +188,12 @@ theorem map_proCResidualCore_eq_of_surjective
     rcases hφsurj h with ⟨g, rfl⟩
     exact (Subgroup.mem_map).2 ⟨g * x * g⁻¹, (show R.Normal from inferInstance).conj_mem x hx g, by
       simp only [mul_assoc, map_mul, map_inv]⟩
-  letI : N.Normal := hNnormal
   have hRclosed : IsClosed (R : Set G) := by
     simpa [R] using proCResidualCore_isClosed C G
-  letI : IsClosed (R : Set G) := hRclosed
-  letI : TotallyDisconnectedSpace (G ⧸ R) :=
+  have : TotallyDisconnectedSpace (G ⧸ R) :=
     ProCGroups.totallyDisconnectedSpace_quotient_closedNormal R hRclosed
   have hNclosed : IsClosed (N : Set H) := by
     simpa [N, Subgroup.coe_map] using (hRclosed.isCompact.image hφ).isClosed
-  letI : IsClosed (N : Set H) := hNclosed
   have hmap_le :
       R.map φ ≤ proCResidualCore C H :=
     map_proCResidualCore_le_of_hom (C := C) hC.hereditary φ hφ
@@ -213,7 +212,6 @@ theorem map_proCResidualCore_eq_of_surjective
       rcases hφsurj h with ⟨g, rfl⟩
       exact ⟨g, rfl⟩
     exact QuotientGroup.map_surjective_of_surjective (N := R) (M := N) φ hmkφ_surj hRle
-  letI : T2Space (H ⧸ N) := by infer_instance
   have hNquot : HasOpenNormalBasisInClass C (H ⧸ N) :=
     HasOpenNormalBasisInClass.of_surjective hC.melnikovFormation.formation hcoreQuot βₜ hβsurj
   have hcoreH_le : proCResidualCore C H ≤ N :=

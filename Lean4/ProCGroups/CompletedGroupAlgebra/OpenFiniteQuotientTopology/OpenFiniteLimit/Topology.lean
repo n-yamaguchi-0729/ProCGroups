@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.OpenFiniteQuotientTopology.OpenFiniteLimit.System
 
+set_option autoImplicit false
+
 /-!
 # Completed Group Algebra / Open Finite Quotient Topology / Open Finite Limit / Topology
 
@@ -36,9 +38,9 @@ theorem completedGroupAlgebraOpenFiniteQuotientStage_isTopologicalRing
     letI : TopologicalSpace (CompletedGroupAlgebraOpenQuotientStage R G K) :=
       completedGroupAlgebraOpenFiniteQuotientStageTopology R G K
     IsTopologicalRing (CompletedGroupAlgebraOpenQuotientStage R G K) := by
-  letI : TopologicalSpace (CompletedGroupAlgebraOpenQuotientStage R G K) :=
+  let : TopologicalSpace (CompletedGroupAlgebraOpenQuotientStage R G K) :=
     completedGroupAlgebraOpenFiniteQuotientStageTopology R G K
-  haveI : DiscreteTopology (CompletedGroupAlgebraOpenQuotientStage R G K) :=
+  have : DiscreteTopology (CompletedGroupAlgebraOpenQuotientStage R G K) :=
     completedGroupAlgebraOpenFiniteQuotientStage_discrete R G K
   infer_instance
 
@@ -52,8 +54,8 @@ theorem completedGroupAlgebraOpenFiniteQuotientStage_fintype
   let I : Ideal R := (OrderDual.ofDual K.1).1
   have hIopen : IsOpen (I : Set R) := (OrderDual.ofDual K.1).2
   rcases finite_quotient_of_openIdeal R I hIopen with ⟨hIfin⟩
-  letI : Fintype (R ⧸ I) := hIfin
-  letI : Fintype (CompletedGroupAlgebraQuotient G K.2) :=
+  let : Fintype (R ⧸ I) := hIfin
+  let : Fintype (CompletedGroupAlgebraQuotient G K.2) :=
     Fintype.ofFinite (CompletedGroupAlgebraQuotient G K.2)
   exact ⟨Fintype.ofEquiv
     (CompletedGroupAlgebraQuotient G K.2 → R ⧸ I)
@@ -81,16 +83,16 @@ instance instIsTopologicalRingCompletedGroupAlgebraOpenFiniteQuotientLimit :
 theorem completedGroupAlgebraOpenFiniteQuotientLimit_compactSpace
     [IsTopologicalRing R] [CompactSpace R] :
     CompactSpace (CompletedGroupAlgebraOpenFiniteQuotientLimit R G) := by
-  letI : ∀ K : CompletedGroupAlgebraOpenQuotientIndex R G,
+  let : ∀ K : CompletedGroupAlgebraOpenQuotientIndex R G,
       CompactSpace ((completedGroupAlgebraOpenFiniteQuotientSystem R G).X K) := fun K => by
-    letI : Fintype ((completedGroupAlgebraOpenFiniteQuotientSystem R G).X K) :=
+    let : Fintype ((completedGroupAlgebraOpenFiniteQuotientSystem R G).X K) :=
       Classical.choice (completedGroupAlgebraOpenFiniteQuotientStage_fintype R G K)
-    letI : DiscreteTopology ((completedGroupAlgebraOpenFiniteQuotientSystem R G).X K) :=
+    let : DiscreteTopology ((completedGroupAlgebraOpenFiniteQuotientSystem R G).X K) :=
       completedGroupAlgebraOpenFiniteQuotientStage_discrete R G K
     infer_instance
-  letI : ∀ K : CompletedGroupAlgebraOpenQuotientIndex R G,
+  let : ∀ K : CompletedGroupAlgebraOpenQuotientIndex R G,
       T2Space ((completedGroupAlgebraOpenFiniteQuotientSystem R G).X K) := fun K => by
-    letI : DiscreteTopology ((completedGroupAlgebraOpenFiniteQuotientSystem R G).X K) :=
+    let : DiscreteTopology ((completedGroupAlgebraOpenFiniteQuotientSystem R G).X K) :=
       completedGroupAlgebraOpenFiniteQuotientStage_discrete R G K
     infer_instance
   change CompactSpace
@@ -100,9 +102,9 @@ theorem completedGroupAlgebraOpenFiniteQuotientLimit_compactSpace
 /-- The open-finite quotient limit is Hausdorff. -/
 theorem completedGroupAlgebraOpenFiniteQuotientLimit_t2Space :
     T2Space (CompletedGroupAlgebraOpenFiniteQuotientLimit R G) := by
-  letI : ∀ K : CompletedGroupAlgebraOpenQuotientIndex R G,
+  let : ∀ K : CompletedGroupAlgebraOpenQuotientIndex R G,
       T2Space ((completedGroupAlgebraOpenFiniteQuotientSystem R G).X K) := fun K => by
-    letI : DiscreteTopology ((completedGroupAlgebraOpenFiniteQuotientSystem R G).X K) :=
+    let : DiscreteTopology ((completedGroupAlgebraOpenFiniteQuotientSystem R G).X K) :=
       completedGroupAlgebraOpenFiniteQuotientStage_discrete R G K
     infer_instance
   exact (completedGroupAlgebraOpenFiniteQuotientSystem R G).t2Space_inverseLimit
@@ -110,10 +112,10 @@ theorem completedGroupAlgebraOpenFiniteQuotientLimit_t2Space :
 /-- The open-finite quotient limit is totally disconnected. -/
 theorem completedGroupAlgebraOpenFiniteQuotientLimit_totallyDisconnectedSpace :
     TotallyDisconnectedSpace (CompletedGroupAlgebraOpenFiniteQuotientLimit R G) := by
-  letI : ∀ K : CompletedGroupAlgebraOpenQuotientIndex R G,
+  let : ∀ K : CompletedGroupAlgebraOpenQuotientIndex R G,
       TotallyDisconnectedSpace ((completedGroupAlgebraOpenFiniteQuotientSystem R G).X K) := fun K =>
     by
-      letI : DiscreteTopology ((completedGroupAlgebraOpenFiniteQuotientSystem R G).X K) :=
+      let : DiscreteTopology ((completedGroupAlgebraOpenFiniteQuotientSystem R G).X K) :=
         completedGroupAlgebraOpenFiniteQuotientStage_discrete R G K
       infer_instance
   exact (completedGroupAlgebraOpenFiniteQuotientSystem R G).totallyDisconnectedSpace_inverseLimit

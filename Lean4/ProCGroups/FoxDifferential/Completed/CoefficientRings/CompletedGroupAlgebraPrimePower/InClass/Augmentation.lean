@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.InClass.System.Ring.Projection
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: coefficient rings — prime-power completed group algebra — in class — augmentation
 
@@ -39,30 +41,24 @@ def primePowerCompletedCoeffSystemInClass
   X := fun i => ModNCompletedCoeff (ℓ ^ i.1)
   topologicalSpace := fun _ => ⊥
   map := fun {i j} hij =>
-    letI : Fact (0 < ℓ ^ i.1) := ⟨primePower_pos ℓ i.1⟩
-    letI : Fact (0 < ℓ ^ j.1) := ⟨primePower_pos ℓ j.1⟩
     modNCompletedCoeffMap
       (n := ℓ ^ i.1) (m := ℓ ^ j.1)
       (primePow_dvd_primePow (ℓ := ℓ) hij.1)
   continuous_map := by
     intro i j hij
-    letI : TopologicalSpace (ModNCompletedCoeff (ℓ ^ i.1)) := ⊥
-    letI : TopologicalSpace (ModNCompletedCoeff (ℓ ^ j.1)) := ⊥
-    letI : DiscreteTopology (ModNCompletedCoeff (ℓ ^ j.1)) := ⟨rfl⟩
+    let : TopologicalSpace (ModNCompletedCoeff (ℓ ^ i.1)) := ⊥
+    let : TopologicalSpace (ModNCompletedCoeff (ℓ ^ j.1)) := ⊥
+    let : DiscreteTopology (ModNCompletedCoeff (ℓ ^ j.1)) := ⟨rfl⟩
     exact continuous_of_discreteTopology
   map_id := by
     intro i
     funext x
-    letI : Fact (0 < ℓ ^ i.1) := ⟨primePower_pos ℓ i.1⟩
     exact congrFun
       (congrArg DFunLike.coe
         (modNCompletedCoeffMap_rfl (n := ℓ ^ i.1))) x
   map_comp := by
     intro i j k hij hjk
     funext x
-    letI : Fact (0 < ℓ ^ i.1) := ⟨primePower_pos ℓ i.1⟩
-    letI : Fact (0 < ℓ ^ j.1) := ⟨primePower_pos ℓ j.1⟩
-    letI : Fact (0 < ℓ ^ k.1) := ⟨primePower_pos ℓ k.1⟩
     exact congrFun
       (congrArg DFunLike.coe
         (modNCompletedCoeffMap_comp
@@ -102,8 +98,6 @@ instance instZeroPrimePowerCompletedCoeffInClass
   zero := ⟨fun _ => 0, by
     dsimp [PrimePowerCompletedCoeffCompatibleInClass]
     intro i j hij
-    letI : Fact (0 < ℓ ^ i.1) := ⟨primePower_pos ℓ i.1⟩
-    letI : Fact (0 < ℓ ^ j.1) := ⟨primePower_pos ℓ j.1⟩
     exact map_zero
       (modNCompletedCoeffMap
         (n := ℓ ^ i.1) (m := ℓ ^ j.1)
@@ -120,8 +114,6 @@ instance instAddPrimePowerCompletedCoeffInClass
       (show ZMod (ℓ ^ i.1) from x.1 i) + (show ZMod (ℓ ^ i.1) from y.1 i), by
     dsimp [PrimePowerCompletedCoeffCompatibleInClass]
     intro i j hij
-    letI : Fact (0 < ℓ ^ i.1) := ⟨primePower_pos ℓ i.1⟩
-    letI : Fact (0 < ℓ ^ j.1) := ⟨primePower_pos ℓ j.1⟩
     change modNCompletedCoeffMap
         (n := ℓ ^ i.1) (m := ℓ ^ j.1)
         (primePow_dvd_primePow (ℓ := ℓ) hij.1)
@@ -140,8 +132,6 @@ instance instNegPrimePowerCompletedCoeffInClass
   neg x := ⟨fun i => -(show ZMod (ℓ ^ i.1) from x.1 i), by
     dsimp [PrimePowerCompletedCoeffCompatibleInClass]
     intro i j hij
-    letI : Fact (0 < ℓ ^ i.1) := ⟨primePower_pos ℓ i.1⟩
-    letI : Fact (0 < ℓ ^ j.1) := ⟨primePower_pos ℓ j.1⟩
     change modNCompletedCoeffMap
         (n := ℓ ^ i.1) (m := ℓ ^ j.1)
         (primePow_dvd_primePow (ℓ := ℓ) hij.1)
@@ -161,8 +151,6 @@ instance instSubPrimePowerCompletedCoeffInClass
       (show ZMod (ℓ ^ i.1) from x.1 i) - (show ZMod (ℓ ^ i.1) from y.1 i), by
     dsimp [PrimePowerCompletedCoeffCompatibleInClass]
     intro i j hij
-    letI : Fact (0 < ℓ ^ i.1) := ⟨primePower_pos ℓ i.1⟩
-    letI : Fact (0 < ℓ ^ j.1) := ⟨primePower_pos ℓ j.1⟩
     change modNCompletedCoeffMap
         (n := ℓ ^ i.1) (m := ℓ ^ j.1)
         (primePow_dvd_primePow (ℓ := ℓ) hij.1)
@@ -222,12 +210,9 @@ def primePowerCompletedGroupAlgebraAugmentationInClass
       PrimePowerCompletedCoeffInClass ℓ G C := by
   intro x
   refine ⟨fun i => ?_, ?_⟩
-  · letI : Fact (0 < ℓ ^ i.1) := ⟨primePower_pos ℓ i.1⟩
-    exact modNCompletedGroupAlgebraStageAugmentationInClass (ℓ ^ i.1) G C i.2 (x.1 i)
+  · exact modNCompletedGroupAlgebraStageAugmentationInClass (ℓ ^ i.1) G C i.2 (x.1 i)
   · dsimp [PrimePowerCompletedCoeffCompatibleInClass]
     intro i j hij
-    letI : Fact (0 < ℓ ^ i.1) := ⟨primePower_pos ℓ i.1⟩
-    letI : Fact (0 < ℓ ^ j.1) := ⟨primePower_pos ℓ j.1⟩
     calc
       modNCompletedCoeffMap
           (n := ℓ ^ i.1) (m := ℓ ^ j.1)
@@ -235,7 +220,8 @@ def primePowerCompletedGroupAlgebraAugmentationInClass
           (modNCompletedGroupAlgebraStageAugmentationInClass (ℓ ^ j.1) G C j.2 (x.1 j))
         =
       modNCompletedGroupAlgebraStageAugmentationInClass (ℓ ^ i.1) G C i.2
-        (primePowerCompletedGroupAlgebraTransitionInClass (ℓ := ℓ) (G := G) C hij (x.1 j)) := by
+        (primePowerCompletedGroupAlgebraTransitionInClass
+          (ℓ := ℓ) (G := G) C hij (x.1 j)) := by
           symm
           exact congrFun
             (congrArg DFunLike.coe

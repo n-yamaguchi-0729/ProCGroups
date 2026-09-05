@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraModN.System.CompletionMap
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — coefficient rings — mod-\(n\) completed group algebra — augmentation
 
@@ -64,7 +66,7 @@ theorem modNCompletedGroupAlgebraStageAugmentation_compatible
   apply RingHom.ext
   intro x
   refine MonoidAlgebra.induction_on
-    (p := fun x =>
+    (motive := fun x =>
       ((modNCompletedGroupAlgebraStageAugmentation n G U).comp
           (modNCompletedGroupAlgebraTransition n G hUV)) x =
         modNCompletedGroupAlgebraStageAugmentation n G V x)
@@ -85,8 +87,9 @@ theorem modNCompletedGroupAlgebraStageAugmentation_compatible
           (1 : _root_.CompletedGroupAlgebra.CompletedGroupAlgebraQuotient G V →*
             ModNCompletedCoeff n)
           (MonoidAlgebra.of (ModNCompletedCoeff n) _ q)
-    rw [MonoidAlgebra.lift_single, MonoidAlgebra.lift_of]
-    simp only [MonoidHom.one_apply, one_smul]
+    erw [MonoidAlgebra.lift_single, MonoidAlgebra.lift_of]
+    change (1 : ModNCompletedCoeff n) • 1 = 1
+    exact one_smul _ _
   · intro x y hx hy
     simp only [RingHom.map_add, hx, hy]
   · intro a x hx
@@ -112,7 +115,7 @@ theorem modNCompletedGroupAlgebraStageAugmentation_compatible
               ModNCompletedCoeff n)
             (algebraMap (ModNCompletedCoeff n)
               (ModNCompletedGroupAlgebraStage n G V) a)
-      rw [MonoidAlgebra.mapDomain_algebraMap]
+      erw [MonoidAlgebra.mapDomain_algebraMap]
       exact
         (MonoidAlgebra.lift (ModNCompletedCoeff n) (ModNCompletedCoeff n)
             (_root_.CompletedGroupAlgebra.CompletedGroupAlgebraQuotient G U)
@@ -139,7 +142,7 @@ theorem modNCompletedGroupAlgebraStageAugmentation_comp_stageMap
   apply RingHom.ext
   intro x
   refine MonoidAlgebra.induction_on
-    (p := fun x =>
+    (motive := fun x =>
       ((modNCompletedGroupAlgebraStageAugmentation n G U).comp
           (modNCompletedGroupAlgebraStageMap n G U)) x =
         (MonoidAlgebra.lift (ModNCompletedCoeff n) (ModNCompletedCoeff n) G
@@ -158,8 +161,9 @@ theorem modNCompletedGroupAlgebraStageAugmentation_comp_stageMap
         MonoidAlgebra.lift (ModNCompletedCoeff n) (ModNCompletedCoeff n) G
           (1 : G →* ModNCompletedCoeff n)
           (MonoidAlgebra.of (ModNCompletedCoeff n) G g)
-    rw [MonoidAlgebra.lift_single, MonoidAlgebra.lift_of]
-    simp only [MonoidHom.one_apply, one_smul]
+    erw [MonoidAlgebra.lift_single, MonoidAlgebra.lift_of]
+    change (1 : ModNCompletedCoeff n) • 1 = 1
+    exact one_smul _ _
   · intro x y hx hy
     simp only [hx, hy, map_add]
   · intro a x hx
@@ -172,7 +176,7 @@ theorem modNCompletedGroupAlgebraStageAugmentation_comp_stageMap
         modNCompletedGroupAlgebraStageAugmentation n G U
             (MonoidAlgebra.mapDomain _
               (algebraMap (ModNCompletedCoeff n) (ModNCompletedGroupRing n G) a)) = a
-      rw [MonoidAlgebra.mapDomain_algebraMap]
+      erw [MonoidAlgebra.mapDomain_algebraMap]
       change
         MonoidAlgebra.lift (ModNCompletedCoeff n) (ModNCompletedCoeff n)
             (_root_.CompletedGroupAlgebra.CompletedGroupAlgebraQuotient G U)

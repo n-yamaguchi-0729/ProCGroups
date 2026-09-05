@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.Coeff.AddCommGroup
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: coefficient rings — prime-power completed group algebra — coeff — ring
 
@@ -40,8 +42,6 @@ units.
 instance instOnePrimePowerCompletedCoeff : One (PrimePowerCompletedCoeff ℓ G) where
   one := ⟨fun i => (1 : ZMod (ℓ ^ i.1)), by
     intro i j hij
-    letI : Fact (0 < ℓ ^ i.1) := ⟨primePower_pos ℓ i.1⟩
-    letI : Fact (0 < ℓ ^ j.1) := ⟨primePower_pos ℓ j.1⟩
     exact map_one
       (modNCompletedCoeffMap
         (n := ℓ ^ i.1) (m := ℓ ^ j.1)
@@ -55,8 +55,6 @@ instance instMulPrimePowerCompletedCoeff : Mul (PrimePowerCompletedCoeff ℓ G) 
   mul x y := ⟨fun i =>
       (show ZMod (ℓ ^ i.1) from x.1 i) * (show ZMod (ℓ ^ i.1) from y.1 i), by
     intro i j hij
-    letI : Fact (0 < ℓ ^ i.1) := ⟨primePower_pos ℓ i.1⟩
-    letI : Fact (0 < ℓ ^ j.1) := ⟨primePower_pos ℓ j.1⟩
     change modNCompletedCoeffMap
         (n := ℓ ^ i.1) (m := ℓ ^ j.1)
         (primePow_dvd_primePow (ℓ := ℓ) hij.1)
@@ -72,8 +70,6 @@ from finite-stage natural number casts.
 instance instNatCastPrimePowerCompletedCoeff : NatCast (PrimePowerCompletedCoeff ℓ G) where
   natCast n := ⟨fun i => (n : ZMod (ℓ ^ i.1)), by
     intro i j hij
-    letI : Fact (0 < ℓ ^ i.1) := ⟨primePower_pos ℓ i.1⟩
-    letI : Fact (0 < ℓ ^ j.1) := ⟨primePower_pos ℓ j.1⟩
     exact map_natCast
       (modNCompletedCoeffMap
         (n := ℓ ^ i.1) (m := ℓ ^ j.1)
@@ -86,8 +82,6 @@ finite-stage integer casts.
 instance instIntCastPrimePowerCompletedCoeff : IntCast (PrimePowerCompletedCoeff ℓ G) where
   intCast n := ⟨fun i => (n : ZMod (ℓ ^ i.1)), by
     intro i j hij
-    letI : Fact (0 < ℓ ^ i.1) := ⟨primePower_pos ℓ i.1⟩
-    letI : Fact (0 < ℓ ^ j.1) := ⟨primePower_pos ℓ j.1⟩
     exact map_intCast
       (modNCompletedCoeffMap
         (n := ℓ ^ i.1) (m := ℓ ^ j.1)
@@ -121,8 +115,6 @@ stage.
 instance instPowPrimePowerCompletedCoeff : Pow (PrimePowerCompletedCoeff ℓ G) ℕ where
   pow x n := ⟨fun i => (show ZMod (ℓ ^ i.1) from x.1 i) ^ n, by
     intro i j hij
-    letI : Fact (0 < ℓ ^ i.1) := ⟨primePower_pos ℓ i.1⟩
-    letI : Fact (0 < ℓ ^ j.1) := ⟨primePower_pos ℓ j.1⟩
     change modNCompletedCoeffMap
         (n := ℓ ^ i.1) (m := ℓ ^ j.1)
         (primePow_dvd_primePow (ℓ := ℓ) hij.1)

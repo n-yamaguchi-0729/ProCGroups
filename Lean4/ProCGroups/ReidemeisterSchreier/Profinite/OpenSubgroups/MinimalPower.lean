@@ -1,5 +1,7 @@
 import ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.BasisFiniteRank
 
+set_option autoImplicit false
+
 /-!
 # Pointed bases controlled by a minimal generator power
 
@@ -165,21 +167,17 @@ theorem exists_finiteConvergingSetBasis_openSubgroup_of_minimalGeneratorPower
           Set.range (e ∘ Fdata.inclusion) ∧
         Finite Fdata.basis := by
   classical
-  letI : TopologicalSpace X := ⊥
-  letI : DiscreteTopology X := ⟨rfl⟩
-  letI : Fintype X := Fintype.ofFinite X
+  let : TopologicalSpace X := ⊥
+  let : DiscreteTopology X := ⟨rfl⟩
+  let : Fintype X := Fintype.ofFinite X
   rcases
       exists_compactPointedBasis_openSubgroup_of_minGeneratorPower
         C hForm hSub hIso hExt hF H x hN hpow hmin with
     ⟨κ, _hκcont, _hκbase, hκone, hxpowRange, _hκcompact, _hκclosed, hκfree⟩
-  letI : Finite (OpenSubgroupRightQuotient H) :=
-    finite_openSubgroupRightQuotient (F := F) H
-  letI : Finite (OnePoint X) := Finite.of_fintype (OnePoint X)
-  letI : Finite (Set.range κ) := (Set.finite_range κ).to_subtype
   let x0 : Set.range κ :=
     ⟨κ (openSubgroupRightCoset H (1 : F), OnePoint.infty),
       ⟨(openSubgroupRightCoset H (1 : F), OnePoint.infty), rfl⟩⟩
-  letI : DiscreteTopology (Set.range κ) :=
+  let : DiscreteTopology (Set.range κ) :=
     DiscreteTopology.of_finite_of_isClosed_singleton fun _ => isClosed_singleton
   let B : Type u := {y : Set.range κ // y ≠ x0}
   let μ : B → ↥(H : Subgroup F) := fun y => y.1.1
@@ -254,7 +252,7 @@ theorem exists_basis_openSubgroup_of_extensionClosed_finiteRank_of_minimalGenera
       exists_finiteConvergingSetBasis_openSubgroup_of_minimalGeneratorPower
         (C := C) hForm hSub hIso' hExt' hF H x hN hpow hpow_ne hmin with
     ⟨Fdata, eData, hxrange, hFin⟩
-  letI : Finite Fdata.basis := hFin
+  let : Finite Fdata.basis := hFin
   rcases exists_basis_openSubgroup_of_extensionClosed_finiteRank
       (C := C) hVar hIso hExt hcyc hF H with
     ⟨Fexact, hFexactEquiv, hExactCard⟩
@@ -265,7 +263,7 @@ theorem exists_basis_openSubgroup_of_extensionClosed_finiteRank_of_minimalGenera
               Subgroup F))) :
             Cardinal) := hExactCard
       _ < Cardinal.aleph0 := Cardinal.natCast_lt_aleph0
-  letI : Finite Fexact.basis := Cardinal.lt_aleph0_iff_finite.mp hFexactLt
+  let : Finite Fexact.basis := Cardinal.lt_aleph0_iff_finite.mp hFexactLt
   have hExactBasis :
       Cardinal.mk Fexact.basis = Generation.topologicalRank Fexact.carrier :=
     basisCard_eq_topologicalRank_of_finiteBasis C hQuot hcyc Fexact

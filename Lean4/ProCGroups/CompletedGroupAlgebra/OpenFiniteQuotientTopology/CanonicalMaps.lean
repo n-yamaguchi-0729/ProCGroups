@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.Basic.ClassComparison
 
+set_option autoImplicit false
+
 /-!
 # Completed Group Algebra / Open Finite Quotient Topology / Canonical Maps
 
@@ -132,9 +134,24 @@ theorem completedGroupAlgebraStageMapInClass_compatible
     (completedGroupAlgebraTransitionInClass C R G hUV).comp
         (completedGroupAlgebraStageMapInClass C R G V) =
       completedGroupAlgebraStageMapInClass C R G U := by
-  rw [completedGroupAlgebraTransitionInClass, completedGroupAlgebraStageMapInClass,
-    completedGroupAlgebraStageMapInClass, ← MonoidAlgebra.mapDomainRingHom_comp]
-  congr 1
+  unfold completedGroupAlgebraTransitionInClass completedGroupAlgebraStageMapInClass
+  have hproj :
+      (OpenNormalSubgroupInClass.map
+        (C := C) (G := G)
+        (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) hUV).comp
+          (openNormalSubgroupInClassProj (C := C) (G := G) V) =
+        openNormalSubgroupInClassProj (C := C) (G := G) U := by
+    ext g
+    exact congrFun
+      (openNormalSubgroupInClassProj_compatible
+        (C := C) (G := G) U V hUV) g
+  exact
+    (MonoidAlgebra.mapDomainRingHom_comp (R := R)
+      (OpenNormalSubgroupInClass.map
+        (C := C) (G := G)
+        (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) hUV)
+      (openNormalSubgroupInClassProj (C := C) (G := G) V)).symm.trans
+      (congrArg (MonoidAlgebra.mapDomainRingHom R) hproj)
 
 /-- The \(C\)-indexed finite-stage quotient maps form a compatible family. -/
 theorem completedGroupAlgebraStageMapInClass_compatibleMaps
@@ -301,9 +318,9 @@ theorem denseRange_toCompletedGroupAlgebraInClass
     (hForm : ProCGroups.FiniteGroupClass.Formation C) (hG : HasOpenNormalBasisInClass C G) :
     DenseRange (toCompletedGroupAlgebraInClass C R G) := by
   let S := completedGroupAlgebraSystemInClass C R G
-  letI : Nonempty (OpenNormalSubgroupInClass C G) :=
+  let : Nonempty (OpenNormalSubgroupInClass C G) :=
     HasOpenNormalBasisInClass.openNormalSubgroupInClass_nonempty hG
-  letI : Nonempty (CompletedGroupAlgebraIndexInClass G C) := inferInstance
+  let : Nonempty (CompletedGroupAlgebraIndexInClass G C) := inferInstance
   have hdir :
       Directed (α := CompletedGroupAlgebraIndexInClass G C) (· ≤ ·) fun U => U :=
     directed_openNormalSubgroupInClass (C := C) (G := G) hForm
@@ -449,9 +466,27 @@ theorem completedGroupAlgebraStageMap_compatible
     {U V : CompletedGroupAlgebraIndex G} (hUV : U ≤ V) :
     (completedGroupAlgebraTransition R G hUV).comp (completedGroupAlgebraStageMap R G V) =
       completedGroupAlgebraStageMap R G U := by
-  rw [completedGroupAlgebraTransition, completedGroupAlgebraStageMap,
-    completedGroupAlgebraStageMap, ← MonoidAlgebra.mapDomainRingHom_comp]
-  congr 1
+  unfold completedGroupAlgebraTransition completedGroupAlgebraStageMap
+  have hproj :
+      (OpenNormalSubgroupInClass.map
+        (C := ProCGroups.FiniteGroupClass.allFinite) (G := G)
+        (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) hUV).comp
+          (openNormalSubgroupInClassProj
+            (C := ProCGroups.FiniteGroupClass.allFinite) (G := G) V) =
+        openNormalSubgroupInClassProj
+          (C := ProCGroups.FiniteGroupClass.allFinite) (G := G) U := by
+    ext g
+    exact congrFun
+      (openNormalSubgroupInClassProj_compatible
+        (C := ProCGroups.FiniteGroupClass.allFinite) (G := G) U V hUV) g
+  exact
+    (MonoidAlgebra.mapDomainRingHom_comp (R := R)
+      (OpenNormalSubgroupInClass.map
+        (C := ProCGroups.FiniteGroupClass.allFinite) (G := G)
+        (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) hUV)
+      (openNormalSubgroupInClassProj
+        (C := ProCGroups.FiniteGroupClass.allFinite) (G := G) V)).symm.trans
+      (congrArg (MonoidAlgebra.mapDomainRingHom R) hproj)
 
 /--
 The finite-stage quotient maps form a compatible family into the completed group algebra system.

@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FreeProC.StageApproximation
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — free pro-\(C\) — quotient kernel basis
 
@@ -54,7 +56,7 @@ theorem HasIdentityQuotientKernelNeighbourhoodBasis.to_left
       (continuous_const : Continuous fun _ : Y => y).mul continuous_id
     exact hU.preimage hmul
   have hWone : (1 : Y) ∈ W := by
-    simp only [Set.mem_setOf_eq, mul_one, hyU, W]
+    simp only [Set.mem_ofPred_eq, mul_one, hyU, W]
   rcases hbasis W hWopen hWone with ⟨j, hj⟩
   refine ⟨j, ?_⟩
   intro z hz

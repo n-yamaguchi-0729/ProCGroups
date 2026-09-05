@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Completed.FreeProC.BifilteredCoefficientStageProjection
 import ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.Core
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — free pro-\(C\) — pro c integer stage coeff projection
 
@@ -46,7 +48,7 @@ def zcCompletedGroupAlgebraStageToFoxAlgebraicStage
       foxAlgebraicStageTargetQuotient (X := X) N) :
     ZCCompletedGroupAlgebraStage C H i →+*
       foxAlgebraicStageTargetGroupAlgebra (X := X) N n := by
-  letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+  let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
   letI : Algebra (ModNCompletedCoeff i.1.modulus) (ModNCompletedCoeff n) :=
     ZMod.algebra' (R := ModNCompletedCoeff n) (m := n) (n := i.1.modulus) hmod
   letI : Algebra (ModNCompletedCoeff i.1.modulus)
@@ -72,7 +74,7 @@ theorem zcCompletedGroupAlgebraStageToFoxAlgebraicStage_of
           (CompletedGroupAlgebraQuotientInClass H C i.2) q) =
       MonoidAlgebra.of (ModNCompletedCoeff n)
         (foxAlgebraicStageTargetQuotient (X := X) N) (qmap q) := by
-  letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+  let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
   simp only [zcCompletedGroupAlgebraStageToFoxAlgebraicStage, AlgHom.toRingHom_eq_coe,
       MonoidAlgebra.of_apply,
   RingHom.coe_coe, MonoidAlgebra.lift_single, MonoidHom.coe_comp, Function.comp_apply,
@@ -92,8 +94,8 @@ theorem zcCompletedGroupAlgebraStageToFoxAlgebraicStage_single
         (MonoidAlgebra.single q a) =
       MonoidAlgebra.single (qmap q)
         (modNCompletedCoeffMap (n := n) (m := i.1.modulus) hmod a) := by
-  letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
-  letI : Algebra (ModNCompletedCoeff i.1.modulus) (ModNCompletedCoeff n) :=
+  let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+  let : Algebra (ModNCompletedCoeff i.1.modulus) (ModNCompletedCoeff n) :=
     ZMod.algebra' (R := ModNCompletedCoeff n) (m := n) (n := i.1.modulus) hmod
   have hcoeff :
       algebraMap (ModNCompletedCoeff i.1.modulus) (ModNCompletedCoeff n) a =
@@ -131,7 +133,7 @@ theorem zcCompletedGroupAlgebraStageToFoxAlgebraicStage_self_injective
       (zcCompletedGroupAlgebraStageToFoxAlgebraicStage
         (C := C) (X := X) (H := H) N i.1.modulus i dvd_rfl qmap) := by
   classical
-  letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+  let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
   have hstage :
       zcCompletedGroupAlgebraStageToFoxAlgebraicStage
           (C := C) (X := X) (H := H) N i.1.modulus i dvd_rfl qmap =
@@ -199,8 +201,8 @@ theorem zcCompletedGroupAlgebraFoxAlgebraicStageCoeffMap_groupLike
         (foxAlgebraicStageTargetQuotient (X := X) N)
         (qmap (QuotientGroup.mk h)) := by
   rw [zcCompletedGroupAlgebraFoxAlgebraicStageCoeffMap_apply,
-    zcCompletedGroupAlgebraProjection_groupLike,
-    zcCompletedGroupAlgebraStageToFoxAlgebraicStage_of]
+    zcCompletedGroupAlgebraProjection_groupLike]
+  erw [zcCompletedGroupAlgebraStageToFoxAlgebraicStage_of]
 
 omit [DecidableEq X] [Fact (0 < n)] in
 /-- Group-like formula rewritten through a named finite right quotient map. -/
@@ -298,10 +300,10 @@ theorem zcCompletedGroupAlgebraStageToFoxAlgebraicStage_transition
       zcCompletedGroupAlgebraStageToFoxAlgebraicStage
         (C := C) (X := X) (H := H) M n i hmod_i qmap_i
         (zcCompletedGroupAlgebraTransition C H hij x) := by
-  letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
-  letI : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
+  let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+  let : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
   refine MonoidAlgebra.induction_linear
-    (p := fun x : ZCCompletedGroupAlgebraStage C H j =>
+    (motive := fun x : ZCCompletedGroupAlgebraStage C H j =>
       foxAlgebraicStageBifilteredTargetGroupAlgebraMap (X := X) hNM hnm
           (zcCompletedGroupAlgebraStageToFoxAlgebraicStage
             (C := C) (X := X) (H := H) N m j hmod_j qmap_j x) =
@@ -350,7 +352,7 @@ theorem zcCompletedGroupAlgebraStageToFoxAlgebraicStage_transition
               (U := OrderDual.ofDual i.2) (V := OrderDual.ofDual j.2) hij.2) q)
             (modNCompletedCoeffMap
               (n := i.1.modulus) (m := j.1.modulus) hij.1 a)) := by
-          rw [zcCompletedGroupAlgebraStageToFoxAlgebraicStage_single]
+          erw [zcCompletedGroupAlgebraStageToFoxAlgebraicStage_single]
       _ = zcCompletedGroupAlgebraStageToFoxAlgebraicStage
           (C := C) (X := X) (H := H) M n i hmod_i qmap_i
           (zcCompletedGroupAlgebraTransition C H hij

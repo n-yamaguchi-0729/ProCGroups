@@ -3,6 +3,8 @@ import ProCGroups.InverseSystems.Basic
 import ProCGroups.ProC.OpenNormalSubgroups.Basic
 import ProCGroups.ProC.OpenNormalSubgroups.BasisAtOne
 
+set_option autoImplicit false
+
 /-!
 # Open-normal quotient bases in a finite-group class
 
@@ -274,7 +276,7 @@ theorem map_surjective {U V : OpenNormalSubgroupInClass C G}
 /-- The identity transition map is the identity monoid homomorphism. -/
 theorem map_id (U : OpenNormalSubgroupInClass C G) :
     map (C := C) (G := G) (le_rfl : (U.1 : Subgroup G) ≤ (U.1 : Subgroup G)) = MonoidHom.id _ := by
-  simp only [map, QuotientGroup.map_id]
+  exact QuotientGroup.map_id (N := (U.1 : Subgroup G)) (h := fun _ hx => hx)
 
 /-- Maps induced on topological abelianizations compose as expected. -/
 theorem map_comp {U V W : OpenNormalSubgroupInClass C G}
@@ -341,10 +343,6 @@ def openNormalSubgroupInClassSystem (C : FiniteGroupClass.{u})
       (U := OrderDual.ofDual U) (V := OrderDual.ofDual V) hUV
   continuous_map := by
     intro U V hUV
-    letI : DiscreteTopology
-        (G ⧸ (((OrderDual.ofDual U).1 : OpenNormalSubgroup G) : Subgroup G)) :=
-      QuotientGroup.discreteTopology
-        (openNormalSubgroup_isOpen (G := G) ((OrderDual.ofDual U).1 : OpenNormalSubgroup G))
     exact continuous_of_discreteTopology
   map_id := by
     intro U
@@ -539,7 +537,7 @@ theorem exists_openNormalSubgroupInClass_eq_on_right_coset_of_continuous_discret
     change IsOpen ((fun x : G => f (x * g₀)) ⁻¹' ({f g₀} : Set A))
     exact isOpen_discrete _ |>.preimage (hf.comp (continuous_id.mul continuous_const))
   have h1W : (1 : G) ∈ W := by
-    simp only [Set.mem_setOf_eq, one_mul, W]
+    simp only [Set.mem_ofPred_eq, one_mul, W]
   rcases hG.exists_openNormalSubgroupInClass_sub_open_nhds_of_one hW h1W with ⟨U, hUW⟩
   refine ⟨U, ?_⟩
   intro g hg

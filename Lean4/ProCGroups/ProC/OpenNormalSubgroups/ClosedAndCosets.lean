@@ -1,5 +1,7 @@
 import ProCGroups.Profinite.OpenSubgroups
 
+set_option autoImplicit false
+
 /-!
 # Closed subgroups and cosets
 
@@ -24,7 +26,7 @@ theorem closedSubgroup_eq_sInf_open [CompactSpace G] [TotallyDisconnectedSpace G
   ext x
   constructor
   · intro hx
-    simp only [Subgroup.mem_sInf, Set.mem_setOf_eq]
+    simp only [Subgroup.mem_sInf, Set.mem_ofPred_eq]
     intro N hN
     exact hN.2 hx
   · intro hx
@@ -34,7 +36,7 @@ theorem closedSubgroup_eq_sInf_open [CompactSpace G] [TotallyDisconnectedSpace G
       change IsOpen ((fun y : G => x * y⁻¹) ⁻¹' ((H : Set G)ᶜ))
       exact H.isClosed'.isOpen_compl.preimage (continuous_const.mul continuous_inv)
     have h1W : (1 : G) ∈ W := by
-      simp only [W, Set.mem_setOf_eq, inv_one, mul_one]
+      simp only [W, Set.mem_ofPred_eq, inv_one, mul_one]
       exact hxH
     rcases ProfiniteGrp.exist_openNormalSubgroup_sub_open_nhds_of_one
         (G := G) hW h1W with ⟨N, hNW⟩
@@ -47,7 +49,7 @@ theorem closedSubgroup_eq_sInf_open [CompactSpace G] [TotallyDisconnectedSpace G
       exact Subgroup.mem_sup_left hy
     have hxK : x ∈ (K : Subgroup G) := by
       have hxall : ∀ N : Subgroup G, IsOpen (N : Set G) ∧ (H : Subgroup G) ≤ N → x ∈ N := by
-        simpa only [Subgroup.mem_sInf, Set.mem_setOf_eq] using hx
+        simpa only [Subgroup.mem_sInf, Set.mem_ofPred_eq] using hx
       exact hxall (K : Subgroup G) ⟨openSubgroup_isOpen (G := G) K, hHK⟩
     rcases
         (Subgroup.mem_sup_of_normal_right (s := (H : Subgroup G)) (t := (N : Subgroup G))).1

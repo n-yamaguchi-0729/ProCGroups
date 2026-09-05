@@ -2,6 +2,8 @@ import ProCGroups.FoxDifferential.Completed.DifferentialModule.Identity
 import ProCGroups.FoxDifferential.Completed.FiniteStage.MagnusQuotient
 import ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.Naturality
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — comparison — finite stage
 
@@ -56,8 +58,7 @@ def zcCompletedGroupAlgebraScalarStage
   map_mul' u v := by
     simp only [zcCompletedGroupAlgebraScalar, MonoidHom.coe_comp, QuotientGroup.coe_mk',
         Function.comp_apply,
-  map_mul, zcCompletedGroupAlgebraProjection_mul, zcCompletedGroupAlgebraProjection_groupLike,
-  MonoidAlgebra.of_apply, MonoidAlgebra.single_mul_single, mul_one]
+  map_mul, zcCompletedGroupAlgebraProjection_mul, zcCompletedGroupAlgebraProjection_groupLike]
 
 /--
 Projecting the completed coefficient homomorphism agrees with the finite-stage quotient map
@@ -72,7 +73,7 @@ theorem zcCompletedGroupAlgebraScalarStage_apply
        modNCompletedGroupAlgebraStageMapInClass j.1.modulus
         (zcFiniteStageTarget X N) C j.2
         (foxAlgebraicStageCoefficient (X := X) N j.1.modulus w)) := by
-  letI : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
+  let : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
   rw [foxAlgebraicStageCoefficient_apply, modNCompletedGroupAlgebraStageMapInClass_of]
   rfl
 
@@ -111,13 +112,13 @@ def foxAlgebraicStageDerivativeVectorZCStageMap
     ScalarCrossedHom (zcCompletedGroupAlgebraScalarStage C N j)
       (X → ZCCompletedGroupAlgebraStage C (zcFiniteStageTarget X N) j) where
   toFun w i :=
-    letI : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
+    let : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
     modNCompletedGroupAlgebraStageMapInClass j.1.modulus
       (zcFiniteStageTarget X N) C j.2
       (foxAlgebraicStageDerivative (X := X) N j.1.modulus i w)
   map_mul' u v := by
     funext i
-    letI : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
+    let : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
     have h :=
       congrArg
         (modNCompletedGroupAlgebraStageMapInClass j.1.modulus
@@ -142,7 +143,7 @@ theorem zcFreeGroupFoxDerivativeVector_finiteStageProjection
         modNCompletedGroupAlgebraStageMapInClass j.1.modulus
           (zcFiniteStageTarget X N) C j.2
           (foxAlgebraicStageDerivative (X := X) N j.1.modulus i w) := by
-  letI : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
+  let : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
   let projected := zcFreeGroupFoxDerivativeVectorStage C N j
   let staged := foxAlgebraicStageDerivativeVectorZCStageMap C N j
   have hprojected :
@@ -244,7 +245,7 @@ theorem foxAlgebraicStageDerivative_zcStageMap_eq_zero_of_zcUniversalDifferentia
      modNCompletedGroupAlgebraStageMapInClass j.1.modulus
       (zcFiniteStageTarget X N) C j.2
       (foxAlgebraicStageDerivative (X := X) N j.1.modulus i w)) = 0 := by
-  letI : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
+  let : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
   have hcompleted :
       zcFreeGroupFoxDerivative C (QuotientGroup.mk' N) i w = 0 :=
     zcFreeGroupFoxDerivative_eq_zero_of_zcUniversalDifferential_eq_zero
@@ -289,7 +290,7 @@ theorem foxAlgebraicStageDerivative_eq_zero_of_zcUniversalDifferential_eq_zero
     (i : X) {w : FreeGroup X}
     (hw : zcUniversalDifferential C (QuotientGroup.mk' N) w = 0) :
     foxAlgebraicStageDerivative (X := X) N j.modulus i w = 0 := by
-  letI : Fact (0 < j.modulus) := ⟨j.positive⟩
+  let : Fact (0 < j.modulus) := ⟨j.positive⟩
   let U : CompletedGroupAlgebraIndexInClass (zcFiniteStageTarget X N) C :=
     identityCompletedGroupAlgebraIndexInClassOfMem C (zcFiniteStageTarget X N) hIso hCtarget
   have hstage :
@@ -332,7 +333,7 @@ theorem foxAlgebraicStageDerivative_eq_zero_of_zcFreeGroupFoxDerivative_eq_zero
     (i : X) {w : FreeGroup X}
     (hw : zcFreeGroupFoxDerivative C (QuotientGroup.mk' N) i w = 0) :
     foxAlgebraicStageDerivative (X := X) N j.modulus i w = 0 := by
-  letI : Fact (0 < j.modulus) := ⟨j.positive⟩
+  let : Fact (0 < j.modulus) := ⟨j.positive⟩
   let U : CompletedGroupAlgebraIndexInClass (zcFiniteStageTarget X N) C :=
     identityCompletedGroupAlgebraIndexInClassOfMem C (zcFiniteStageTarget X N) hIso hCtarget
   have hstage :
@@ -391,7 +392,7 @@ theorem foxAlgebraicStageDerivativeVector_eq_zero_of_zcFreeFoxDerivVec_identityP
           (zcFreeGroupFoxDerivativeVector C (QuotientGroup.mk' N) w i)) = 0) :
     foxAlgebraicStageDerivativeVector (X := X) N j.modulus w = 0 := by
   funext i
-  letI : Fact (0 < j.modulus) := ⟨j.positive⟩
+  let : Fact (0 < j.modulus) := ⟨j.positive⟩
   let U : CompletedGroupAlgebraIndexInClass (zcFiniteStageTarget X N) C :=
     identityCompletedGroupAlgebraIndexInClassOfMem C (zcFiniteStageTarget X N) hIso hCtarget
   have hstage :
@@ -582,9 +583,9 @@ theorem foxAlgebraicStageDerivativeVector_eq_zero_of_zcUnivDiff_eq_zero_of_surj
     foxAlgebraicStageDerivativeVector (X := X) ψ.ker j.modulus w = 0 := by
   let N : Subgroup (FreeGroup X) := ψ.ker
   let Q : Type u := foxAlgebraicStageTargetQuotient (X := X) N
-  letI : TopologicalSpace Q := ⊥
-  letI : DiscreteTopology Q := ⟨rfl⟩
-  letI : IsTopologicalGroup Q := inferInstance
+  let : TopologicalSpace Q := ⊥
+  let : DiscreteTopology Q := ⟨rfl⟩
+  let : IsTopologicalGroup Q := inferInstance
   let e : Q ≃* H := QuotientGroup.quotientKerEquivOfSurjective ψ hψ
   let q : FreeGroup X →* Q := QuotientGroup.mk' N
   have hQ : C.pred Q :=
@@ -643,8 +644,8 @@ theorem mem_commutator_ker_of_zcUnivDiff_eq_zero_of_finite_magnus_surj
       simpa [MonoidHom.mem_ker, MonoidHom.comp_apply] using hwker⟩ : β.ker) ∈
       commutator β.ker := by
   classical
-  letI : Fintype X := Fintype.ofFinite X
-  letI : Finite β.ker := C.finite hCker
+  let : Fintype X := Fintype.ofFinite X
+  let : Finite β.ker := C.finite hCker
   rcases ProCGroups.Completion.ProCIntegerIndex.exists_index_kills_finite_group_of_mem
       (C := C) hForm hC hCker with ⟨j, hpow⟩
   have hψ : Function.Surjective (β.comp α) := by

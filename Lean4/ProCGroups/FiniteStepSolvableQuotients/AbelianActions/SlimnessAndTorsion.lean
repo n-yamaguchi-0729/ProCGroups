@@ -2,6 +2,8 @@ import ProCGroups.FiniteStepSolvableQuotients.AbelianActions.Faithful
 import ProCGroups.GroupTheory.CentralizerNormalizerCommensurator
 import ProCGroups.ProC.GroupPredicates.Abelian
 
+set_option autoImplicit false
+
 /-!
 # Slimness and torsion from abelianization actions
 
@@ -84,10 +86,7 @@ theorem isSlim_of_isSlimModulo_bot
 /-- A multiplicatively commutative group can be bundled as a commutative group. -/
 @[reducible] def commGroupOfIsMulCommutative
     {G : Type u} [Group G] [IsMulCommutative G] : CommGroup G :=
-  { ‹Group G› with
-    mul_comm := by
-      intro a b
-      exact IsMulCommutative.is_comm.comm a b }
+  open scoped IsMulCommutative in inferInstanceAs (CommGroup G)
 
 /--
 Torsion-freeness of open-subgroup abelianizations implies ordinary torsion-freeness in the
@@ -98,8 +97,8 @@ theorem isMulTorsionFree_of_isAbTorsionFree_isMulCommutative
     [IsTopologicalGroup G] [T1Space G]
     (hG : IsAbTorsionFree G) :
     IsMulTorsionFree G := by
-  letI : CommGroup G := commGroupOfIsMulCommutative (G := G)
-  exact isMulTorsionFree_of_isAbTorsionFree_commGroup (G := G) hG
+  exact (open scoped IsMulCommutative in
+    isMulTorsionFree_of_isAbTorsionFree_commGroup (G := G) hG)
 
 /-- Multiplicative torsion-freeness implies the usual finite-order formulation. -/
 theorem isTorsionFreeGroup_of_isMulTorsionFree
@@ -120,7 +119,7 @@ theorem eq_one_mulAut_of_forall_mem_subgroup
     φ = 1 := by
   ext a
   let C : Subgroup A := B.normalCore
-  letI : C.FiniteIndex := Subgroup.finiteIndex_normalCore (H := B)
+  let : C.FiniteIndex := Subgroup.finiteIndex_normalCore (H := B)
   have hidx : C.index ≠ 0 := by
     simpa [C] using (Subgroup.finiteIndex_iff (H := C)).mp ‹C.FiniteIndex›
   have haC : a ^ C.index ∈ C := C.pow_index_mem a
@@ -150,24 +149,21 @@ theorem exists_openSubgroup_nontrivial_topologicalAbelianizationImage
     (Subgroup.closedCommutator (T : Subgroup G)) a
   let A := TopologicalAbelianization ↥(T : Subgroup G)
   have hxne : TopologicalAbelianization.mk ↥(T : Subgroup G) x ≠ 1 := hne
-  haveI : CompactSpace ↥(T : Subgroup G) := by
+  have : CompactSpace ↥(T : Subgroup G) := by
     exact
       (show IsClosed (((T : Subgroup G) : Set G)) from
           T.2).isClosedEmbedding_subtypeVal.compactSpace
-  letI : T2Space ↥(T : Subgroup G) := inferInstance
-  letI : TotallyDisconnectedSpace ↥(T : Subgroup G) := inferInstance
   let C : Subgroup ↥(T : Subgroup G) :=
     Subgroup.closedCommutator (T : Subgroup G)
-  letI : C.Normal := by dsimp [C]; infer_instance
+  let : C.Normal := by dsimp [C]; infer_instance
   have hCclosed : IsClosed (C : Set ↥(T : Subgroup G)) := by
     simp [C]
-  letI : IsClosed (C : Set ↥(T : Subgroup G)) := hCclosed
-  letI : CompactSpace A := by
+  let : CompactSpace A := by
     simpa [A, C] using
       (inferInstance : CompactSpace (↥(T : Subgroup G) ⧸ C))
-  letI : T2Space A := by
+  let : T2Space A := by
     simpa [A, C] using (inferInstance : T2Space (↥(T : Subgroup G) ⧸ C))
-  letI : TotallyDisconnectedSpace A := by
+  let : TotallyDisconnectedSpace A := by
     simpa [A, C] using
       (ProCGroups.totallyDisconnectedSpace_quotient_closedNormal C hCclosed)
   obtain ⟨Uab, hxUab⟩ :=
@@ -237,7 +233,6 @@ theorem exists_openSubgroup_nontrivial_topologicalAbelianizationImage
   let qLcont : L →ₜ* A ⧸ (Uab : Subgroup A) :=
     { toMonoidHom := qL
       continuous_toFun := by
-        letI : DiscreteTopology L := inferInstance
         exact continuous_of_discreteTopology }
   let qHaux : ↥(H : Subgroup G) →* L :=
     { toFun := fun y =>
@@ -372,12 +367,12 @@ theorem isAbTorsionFree_closedSubgroup
     {K : Subgroup G} (hKClosed : IsClosed (K : Set G)) :
     IsAbTorsionFree ↥K := by
   let T : ClosedSubgroup G := ⟨K, hKClosed⟩
-  letI : IsTopologicalGroup T := by
+  let : IsTopologicalGroup T := by
     change IsTopologicalGroup ↥(T : Subgroup G)
     infer_instance
   intro N
   let N0 : OpenSubgroup T := N
-  letI : IsTopologicalGroup ↥(N0 : Subgroup T) := by
+  let : IsTopologicalGroup ↥(N0 : Subgroup T) := by
     infer_instance
   let N' : ClosedSubgroup G := ProCGroups.ProC.closedSubgroupOfOpenSubgroup (G := G) T N0
   have hN'tf :
@@ -417,7 +412,6 @@ theorem isAbTorsionFree_closedSubgroup
         TopologicalAbelianization ↥(N' : Subgroup G) :=
     TopologicalAbelianization.congr (G := ↥(N0 : Subgroup T))
       (H := ↥(N' : Subgroup G)) eN
-  letI : IsMulTorsionFree (TopologicalAbelianization ↥(N' : Subgroup G)) := hN'tf
   exact eAb.symm.isMulTorsionFree
 
 /--
@@ -432,11 +426,9 @@ theorem isTorsionFreeGroup_of_isAbTorsionFree_of_closedCommSubgroup
     IsTorsionFreeGroup ↥K := by
   have hKab : IsAbTorsionFree ↥K := isAbTorsionFree_closedSubgroup (G := G) hG hKClosed
   let T : ClosedSubgroup G := ⟨K, hKClosed⟩
-  haveI : CompactSpace ↥K := by
+  have : CompactSpace ↥K := by
     exact hKClosed.isClosedEmbedding_subtypeVal.compactSpace
-  letI : T2Space ↥K := inferInstance
-  letI : T1Space ↥K := inferInstance
-  letI : IsMulTorsionFree ↥K :=
+  let : IsMulTorsionFree ↥K :=
     isMulTorsionFree_of_isAbTorsionFree_isMulCommutative (G := ↥K) hKab
   exact isTorsionFreeGroup_of_isMulTorsionFree (G := ↥K)
 
@@ -479,7 +471,7 @@ theorem isTorsionFreeGroup_maxSolvQuot_of_isAbTorsionFree
   | succ m =>
       cases m with
       | zero =>
-          letI : IsMulTorsionFree (MaxSolvQuot G 1) :=
+          let : IsMulTorsionFree (MaxSolvQuot G 1) :=
             isMulTorsionFree_maxSolvQuot_one_of_isMulTorsionFree_topologicalAbelianization
               G (isMulTorsionFree_topologicalAbelianization_of_isAbTorsionFree (G := G) hG)
           exact isTorsionFreeGroup_of_isMulTorsionFree (G := MaxSolvQuot G 1)
@@ -532,7 +524,6 @@ theorem isTorsionFreeGroup_maxSolvQuot_of_isAbTorsionFree
           have hquotTF : IsMulTorsionFree (D1 ⧸ D2.subgroupOf D1) := by
             let e : D1 ⧸ D2.subgroupOf D1 ≃* MaxSolvQuot D1 1 :=
               QuotientGroup.quotientMulEquivOfEq hsub
-            letI : IsMulTorsionFree (MaxSolvQuot D1 1) := hbaseTF
             exact e.symm.isMulTorsionFree
           have hmapTF' : IsMulTorsionFree ↥(Subgroup.map (QuotientGroup.mk' D2) D1) := by
             let φ : D1 →* Subgroup.map (QuotientGroup.mk' D2) D1 :=
@@ -558,7 +549,6 @@ theorem isTorsionFreeGroup_maxSolvQuot_of_isAbTorsionFree
             let e : D1 ⧸ D2.subgroupOf D1 ≃* Subgroup.map (QuotientGroup.mk' D2) D1 :=
               (QuotientGroup.quotientMulEquivOfEq hφKer.symm).trans
                 (QuotientGroup.quotientKerEquivOfSurjective φ hφSurj)
-            letI : IsMulTorsionFree (D1 ⧸ D2.subgroupOf D1) := hquotTF
             exact e.isMulTorsionFree
           have hkerTF : IsTorsionFreeGroup ↥(π.ker) := by
             have hker : π.ker = Subgroup.map (QuotientGroup.mk' D2) D1 := by
@@ -571,8 +561,7 @@ theorem isTorsionFreeGroup_maxSolvQuot_of_isAbTorsionFree
                 left_inv := by intro x; ext; rfl
                 right_inv := by intro x; ext; rfl
                 map_mul' := by intro x y; ext; rfl }
-            letI : IsMulTorsionFree ↥(Subgroup.map (QuotientGroup.mk' D2) D1) := hmapTF'
-            letI : IsMulTorsionFree ↥(π.ker) := eKer.symm.isMulTorsionFree
+            let : IsMulTorsionFree ↥(π.ker) := eKer.symm.isMulTorsionFree
             exact isTorsionFreeGroup_of_isMulTorsionFree (G := ↥(π.ker))
           intro z hz
           have hzπ : IsOfFinOrder (π z) := MonoidHom.isOfFinOrder π hz
@@ -592,8 +581,7 @@ theorem isTorsionFreeGroup_of_isAbTorsionFree_of_closedSubgroup
     {K : Subgroup G} (hKClosed : IsClosed (K : Set G))
     (hG : IsAbTorsionFree G) :
     IsTorsionFreeGroup ↥K := by
-  haveI : CompactSpace ↥K := hKClosed.isClosedEmbedding_subtypeVal.compactSpace
-  haveI : TotallyDisconnectedSpace ↥K := by infer_instance
+  have : CompactSpace ↥K := hKClosed.isClosedEmbedding_subtypeVal.compactSpace
   have hKab : IsAbTorsionFree ↥K :=
     isAbTorsionFree_closedSubgroup (G := G) (K := K) hG hKClosed
   exact isTorsionFreeGroup_of_isAbTorsionFree (G := ↥K) hKab
@@ -704,7 +692,6 @@ theorem mem_openNormal_of_action_trivial_on_finiteIndexSubgroup
       (Q ⧸ (U : Subgroup Q)) →*
         MulAut (TopologicalAbelianization ↥(U : Subgroup Q)) :=
     quotientConjugationTopologicalAbelianizationMap (G := Q) (N := (U : Subgroup Q))
-  letI : IsMulTorsionFree (TopologicalAbelianization ↥(U : Subgroup Q)) := hUtf
   have hρc : ρ (QuotientGroup.mk' (U : Subgroup Q) c) = 1 := by
     exact
       eq_one_mulAut_of_forall_mem_subgroup
@@ -744,7 +731,6 @@ theorem centralizer_subgroup_le_of_torsionFree_and_inj_action_on_openNormalSuper
           ((TopologicalAbelianization ↥(U : Subgroup Q)) ⧸
             subgroupImageInTopologicalAbelianization (Q := Q) S U)) :
     Subgroup.centralizer (S : Set Q) ≤ K := by
-  letI : K.Normal := hKNormal
   let Kclosed : ClosedSubgroup Q := ⟨K, hKClosed⟩
   have hK_eq :
       K =
@@ -760,15 +746,15 @@ theorem centralizer_subgroup_le_of_torsionFree_and_inj_action_on_openNormalSuper
     { toSubgroup := N
       isOpen' := hN.1
       isNormal' := hN.2.2 }
+  have hUNormal : (U : Subgroup Q).Normal := U.isNormal'
   let B : Subgroup (TopologicalAbelianization ↥(U : Subgroup Q)) :=
     subgroupImageInTopologicalAbelianization (Q := Q) S U
-  letI : Finite ((TopologicalAbelianization ↥(U : Subgroup Q)) ⧸ B) := hLarge U hN.2.1
-  letI : B.FiniteIndex := Subgroup.finiteIndex_of_finite_quotient (H := B)
+  let : Finite ((TopologicalAbelianization ↥(U : Subgroup Q)) ⧸ B) := hLarge U hN.2.1
+  let : B.FiniteIndex := Subgroup.finiteIndex_of_finite_quotient (H := B)
   exact
     mem_openNormal_of_action_trivial_on_finiteIndexSubgroup
       (Q := Q) U (hTF U hN.2.1) (hFaithful U hN.2.1) (c := c) (B := B) (by
         intro a ha
-        letI : (U : Subgroup Q).Normal := U.isNormal'
         rcases ha with ⟨x, hx, rfl⟩
         have hxSU : (x : Q) ∈ S ⊓ (U : Subgroup Q) := by
           simpa [Subgroup.mem_subgroupOf] using hx
@@ -776,7 +762,7 @@ theorem centralizer_subgroup_le_of_torsionFree_and_inj_action_on_openNormalSuper
         have hcomm : c * (x : Q) = (x : Q) * c := by
           exact (Subgroup.mem_centralizer_iff.mp hc (x : Q) hxS).symm
         exact
-    quotientConjAbMap_apply_mk_of_commute
+          quotientConjAbMap_apply_mk_of_commute
             (G := Q) (N := (U : Subgroup Q)) (g := c) (x := x) hcomm)
 
 /--
@@ -825,9 +811,9 @@ theorem centralizer_openSubgroup_le_of_torsionFree_and_inj_action_on_openNormalS
             Set ↥(U : Subgroup Q))) at hopen
     simpa [B, subgroupImageInTopologicalAbelianization, A] using hopen
   have hUClosed : IsClosed ((U : Subgroup Q) : Set Q) := U.isClosed
-  haveI : CompactSpace ↥(U : Subgroup Q) := by
+  have : CompactSpace ↥(U : Subgroup Q) := by
     exact hUClosed.isClosedEmbedding_subtypeVal.compactSpace
-  letI : CompactSpace A := by
+  let : CompactSpace A := by
     dsimp [A]
     infer_instance
   exact Subgroup.quotient_finite_of_isOpen B hBOpen
@@ -891,7 +877,6 @@ noncomputable def openNormalTransferTerm
     (N : OpenNormalSubgroup G)
     (q : G ⧸ (N : Subgroup G)) (g : G) :
     ↥(N : Subgroup G) := by
-  letI : (N : Subgroup G).Normal := N.isNormal'
   let ρ : G ⧸ (N : Subgroup G) → G :=
     quotientOpenSubgroupSection (N : Subgroup G)
   let π : G →* G ⧸ (N : Subgroup G) :=
@@ -929,7 +914,6 @@ noncomputable def openNormalTransferTopologicalAbelianizationPre
     (N : OpenNormalSubgroup G) [Finite (G ⧸ (N : Subgroup G))] :
     G →ₜ* TopologicalAbelianization ↥(N : Subgroup G) := by
   classical
-  letI : (N : Subgroup G).Normal := N.isNormal'
   letI : Fintype (G ⧸ (N : Subgroup G)) := Fintype.ofFinite _
   refine
     { toMonoidHom :=
@@ -995,16 +979,13 @@ noncomputable def openNormalTransferTopologicalAbelianizationPre
               _ = _ := rfl }
       continuous_toFun := by
         exact continuous_finsetProd Finset.univ fun q _ => by
-          letI : (N : Subgroup G).Normal := N.isNormal'
           let ρ : G ⧸ (N : Subgroup G) → G :=
             quotientOpenSubgroupSection (N : Subgroup G)
           let π : G →ₜ* (G ⧸ (N : Subgroup G)) :=
             { toMonoidHom := QuotientGroup.mk' (N : Subgroup G)
               continuous_toFun := continuous_quotient_mk' }
           have hρcont : Continuous ρ := by
-            letI : ContinuousMul G := (‹IsTopologicalGroup G›).toContinuousMul
-            letI : ContinuousInv G := (‹IsTopologicalGroup G›).toContinuousInv
-            letI : DiscreteTopology (G ⧸ (N : Subgroup G)) :=
+            let : DiscreteTopology (G ⧸ (N : Subgroup G)) :=
               QuotientGroup.discreteTopology N.isOpen'
             simpa [ρ] using
               (continuous_of_discreteTopology :
@@ -1049,8 +1030,7 @@ theorem openNormalTransferTopologicalAbelianization_eq_pow_of_fixed
           continuous_toFun := continuous_subtype_val } a) =
       a ^ Nat.card (G ⧸ (N : Subgroup G)) := by
   classical
-  letI : (N : Subgroup G).Normal := N.isNormal'
-  letI : Fintype (G ⧸ (N : Subgroup G)) := Fintype.ofFinite _
+  let : Fintype (G ⧸ (N : Subgroup G)) := Fintype.ofFinite _
   let ιN : ↥(N : Subgroup G) →ₜ* G :=
     { toMonoidHom := (N : Subgroup G).subtype
       continuous_toFun := continuous_subtype_val }
@@ -1172,8 +1152,7 @@ theorem fixedPoint_eq_one_of_openNormal_torsionFreeAb
           continuous_toFun := continuous_subtype_val } a = 1) :
     a = 1 := by
   classical
-  letI : (N : Subgroup G).Normal := N.isNormal'
-  letI : Fintype (G ⧸ (N : Subgroup G)) := Fintype.ofFinite _
+  let : Fintype (G ⧸ (N : Subgroup G)) := Fintype.ofFinite _
   have hpow :=
     openNormalTransferTopologicalAbelianization_eq_pow_of_fixed (G := G) N hfix
   have hpow' :
@@ -1198,7 +1177,6 @@ theorem fixedPoint_eq_one_of_openNormal_torsionFreeAb
   have hcard : Nat.card (G ⧸ (N : Subgroup G)) ≠ 0 := by
     rw [Nat.card_eq_fintype_card]
     exact Fintype.card_ne_zero
-  letI : IsMulTorsionFree (TopologicalAbelianization ↥(N : Subgroup G)) := hNtf
   have hpowEq :
       a ^ Nat.card (G ⧸ (N : Subgroup G)) =
         (1 : TopologicalAbelianization ↥(N : Subgroup G)) ^ Nat.card (G ⧸ (N : Subgroup G)) := by
@@ -1220,25 +1198,21 @@ theorem exists_openNormalSubgroup_nontrivial_topologicalAbelianizationInclusion
       topologicalAbelianizationInclusion hKH a ≠ 1 := by
   classical
   let T : ClosedSubgroup G := ⟨K, hKClosed⟩
-  letI : K.Normal := hKNormal
-  haveI : CompactSpace ↥K := by
+  have : CompactSpace ↥K := by
     exact hKClosed.isClosedEmbedding_subtypeVal.compactSpace
-  letI : T2Space ↥K := inferInstance
-  letI : TotallyDisconnectedSpace ↥K := inferInstance
   obtain ⟨x, rfl⟩ := QuotientGroup.mk'_surjective
     (Subgroup.closedCommutator K) a
   let A := TopologicalAbelianization ↥K
   have hxne : TopologicalAbelianization.mk ↥K x ≠ 1 := hne
   let C : Subgroup ↥K := Subgroup.closedCommutator K
-  letI : C.Normal := by dsimp [C]; infer_instance
+  let : C.Normal := by dsimp [C]; infer_instance
   have hCclosed : IsClosed (C : Set ↥K) := by
     simp [C]
-  letI : IsClosed (C : Set ↥K) := hCclosed
-  letI : CompactSpace A := by
+  let : CompactSpace A := by
     simpa [A, C] using (inferInstance : CompactSpace (↥K ⧸ C))
-  letI : T2Space A := by
+  let : T2Space A := by
     simpa [A, C] using (inferInstance : T2Space (↥K ⧸ C))
-  letI : TotallyDisconnectedSpace A := by
+  let : TotallyDisconnectedSpace A := by
     simpa [A, C] using
       (ProCGroups.totallyDisconnectedSpace_quotient_closedNormal C hCclosed)
   obtain ⟨Uab, hxUab⟩ :=
@@ -1259,7 +1233,6 @@ theorem exists_openNormalSubgroup_nontrivial_topologicalAbelianizationInclusion
     change qA (TopologicalAbelianization.mk ↥K y) = 1
     exact (QuotientGroup.eq_one_iff (N := (Uab : Subgroup A))
       (TopologicalAbelianization.mk ↥K y)).2 hy
-  letI : T2Space G := inferInstance
   obtain ⟨V, hVK⟩ :=
     exists_openNormalSubgroup_inter_closedSubgroup_le (G := G) T N0.toOpenSubgroup
   let Hsub : Subgroup G := K ⊔ (V : Subgroup G)
@@ -1435,8 +1408,6 @@ theorem noFixedPoints_of_torsionFree_on_openNormalSupergroups
     let _ : K.Normal := hKNormal
     HasNoNontrivialFixedPoints
       (quotientConjugationTopologicalAbelianizationMap (G := G) (N := K)) := by
-  letI : K.Normal := hKNormal
-  letI : T1Space G := inferInstance
   change HasNoNontrivialFixedPoints
     (quotientConjugationTopologicalAbelianizationMap (G := G) (N := K))
   intro a hfix
@@ -1449,7 +1420,6 @@ theorem noFixedPoints_of_torsionFree_on_openNormalSupergroups
         quotientConjugationTopologicalAbelianizationMap (G := G) (N := (H : Subgroup G)) q
             (topologicalAbelianizationInclusion hKH a) =
           topologicalAbelianizationInclusion hKH a := by
-    letI : K.Normal := hKNormal
     intro q
     obtain ⟨g, rfl⟩ := QuotientGroup.mk'_surjective (H : Subgroup G) q
     obtain ⟨x, rfl⟩ := QuotientGroup.mk'_surjective
@@ -1562,7 +1532,6 @@ theorem isMulTorsionFree_topologicalAbelianization_of_aboveLastDerived_of_isAbTo
     exact
       isMulTorsionFree_maxSolvQuot_one_of_isMulTorsionFree_topologicalAbelianization
         ↥((Hpre : Subgroup G)) hpreTF
-  letI : IsMulTorsionFree (MaxSolvQuot ↥((Hpre : Subgroup G)) 1) := hpreTF'
   change IsMulTorsionFree (MaxSolvQuot ↥(H : Subgroup Q) 1)
   exact e.isMulTorsionFree
 
@@ -1592,7 +1561,7 @@ theorem topDerivedTop_eq_bot_maxSolvQuot
     topDerivedTop (MaxSolvQuot G m) m = ⊥ := by
   let Q : Type u := MaxSolvQuot G m
   let π : G →ₜ* Q := continuousToMaxSolvQuot G m
-  letI : T2Space Q := by
+  let : T2Space Q := by
     dsimp [Q, MaxSolvQuot]
     infer_instance
   have hπsurj : Function.Surjective π := by
@@ -1629,15 +1598,15 @@ theorem center_eq_bot_maxSolvQuot_of_isAbTorsionFree_of_isAbFaithful
     {m : ℕ} (hm : 2 ≤ m) :
     Subgroup.center (MaxSolvQuot G m) = ⊥ := by
   let Q : Type u := MaxSolvQuot G m
-  letI : CompactSpace Q := by dsimp [Q, MaxSolvQuot]; infer_instance
-  letI : T2Space Q := by dsimp [Q, MaxSolvQuot]; infer_instance
-  letI : TotallyDisconnectedSpace Q := by
+  let : CompactSpace Q := by dsimp [Q, MaxSolvQuot]; infer_instance
+  let : T2Space Q := by dsimp [Q, MaxSolvQuot]; infer_instance
+  let : TotallyDisconnectedSpace Q := by
     dsimp [Q, MaxSolvQuot]
     exact ProCGroups.totallyDisconnectedSpace_quotient_closedNormal
       (topDerivedTop G m)
       (show IsClosed ((topDerivedTop G m : Subgroup G) : Set G) by infer_instance)
   let K : Subgroup Q := lastDerivedSubgroup (G := G) m
-  letI : K.Normal := by
+  let : K.Normal := by
     dsimp [K, lastDerivedSubgroup]
     infer_instance
   have hm1 : 1 ≤ m := by
@@ -1705,14 +1674,14 @@ theorem centralizer_subgroup_le_lastDerived_of_abTorsionFree_faithful
       ≤ lastDerivedSubgroup (G := G) m := by
   by_cases hm1 : m = 1
   · subst hm1
-    simp only [closedDerivedSeries_succ, closedDerivedSeries_zero, lastDerivedSubgroup,
-        topDerivedTop, tsub_self,
-  le_top]
+    change Subgroup.centralizer (S : Set (MaxSolvQuot G 1)) ≤
+      (⊤ : Subgroup (MaxSolvQuot G 1))
+    exact le_top
   have hm2 : 2 ≤ m := Nat.succ_le_of_lt (lt_of_le_of_ne hm (Ne.symm hm1))
   let Q : Type u := MaxSolvQuot G m
-  letI : CompactSpace Q := by dsimp [Q, MaxSolvQuot]; infer_instance
-  letI : T2Space Q := by dsimp [Q, MaxSolvQuot]; infer_instance
-  letI : TotallyDisconnectedSpace Q := by
+  let : CompactSpace Q := by dsimp [Q, MaxSolvQuot]; infer_instance
+  let : T2Space Q := by dsimp [Q, MaxSolvQuot]; infer_instance
+  let : TotallyDisconnectedSpace Q := by
     dsimp [Q, MaxSolvQuot]
     exact ProCGroups.totallyDisconnectedSpace_quotient_closedNormal
       (topDerivedTop G m)
@@ -1752,14 +1721,14 @@ theorem
       ≤ lastDerivedSubgroup (G := G) m := by
   by_cases hm1 : m = 1
   · subst hm1
-    simp only [closedDerivedSeries_succ, closedDerivedSeries_zero, lastDerivedSubgroup,
-        topDerivedTop, tsub_self,
-  le_top]
+    change Subgroup.centralizer (H : Set (MaxSolvQuot G 1)) ≤
+      (⊤ : Subgroup (MaxSolvQuot G 1))
+    exact le_top
   have hm2 : 2 ≤ m := Nat.succ_le_of_lt (lt_of_le_of_ne hm (Ne.symm hm1))
   let Q : Type u := MaxSolvQuot G m
-  letI : CompactSpace Q := by dsimp [Q, MaxSolvQuot]; infer_instance
-  letI : T2Space Q := by dsimp [Q, MaxSolvQuot]; infer_instance
-  letI : TotallyDisconnectedSpace Q := by
+  let : CompactSpace Q := by dsimp [Q, MaxSolvQuot]; infer_instance
+  let : T2Space Q := by dsimp [Q, MaxSolvQuot]; infer_instance
+  let : TotallyDisconnectedSpace Q := by
     dsimp [Q, MaxSolvQuot]
     exact ProCGroups.totallyDisconnectedSpace_quotient_closedNormal
       (topDerivedTop G m)

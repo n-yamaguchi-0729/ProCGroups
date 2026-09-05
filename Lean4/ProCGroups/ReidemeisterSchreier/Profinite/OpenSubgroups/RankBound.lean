@@ -1,6 +1,9 @@
 import ProCGroups.ReidemeisterSchreier.Discrete.OpenSubgroups.FreeBasis
 import ProCGroups.GroupTheory.Subgroups
 import ProCGroups.FiniteGeneration.Basic
+import Mathlib.SetTheory.Cardinal.Finite
+
+set_option autoImplicit false
 
 /-!
 # Cardinal and finite-rank Schreier bounds
@@ -53,9 +56,8 @@ Schreier value.
 @[simp 900] theorem schreierRankTransformCardinal_mk_finite (X : Type u) [Finite X] (n : ℕ) :
     schreierRankTransformCardinal (Cardinal.mk X) n =
       (_root_.ReidemeisterSchreier.Schreier.rankTransform (Nat.card X) n : Cardinal) := by
-  classical
-  letI : Fintype X := Fintype.ofFinite X
-  simp only [Cardinal.mk_fintype, schreierRankTransformCardinal_natCast, Nat.card_eq_fintype_card]
+  rw [← Nat.cast_card (α := X)]
+  exact schreierRankTransformCardinal_natCast (Nat.card X) n
 
 /--
 For an infinite input cardinal, the finite-index Schreier rank transform is the same infinite
@@ -97,7 +99,7 @@ theorem topologicalRank_openSubgroup_le_rankTransform_of_topologicalRank_eq_nat
       have hsingleton :
           ({1} : Set G) = (Set.univ : Set G) := by
         exact (closure_eq_iff_isClosed.mpr isClosed_singleton).symm.trans hdenseOne.closure_eq
-      haveI : Subsingleton G := ⟨fun x y => by
+      have : Subsingleton G := ⟨fun x y => by
         have hx : x = 1 := by
           have hxmem : x ∈ ({1} : Set G) := by
             simp only [hsingleton, mem_univ]
@@ -182,7 +184,6 @@ theorem topologicalRank_openSubgroup_le_rankTransform_of_topologicalRank_eq_nat
           closure (((U : Subgroup G) : Set G) ∩ (D : Set G))
         exact hD_dense.open_subset_closure_inter U.isOpen'
       let L : Subgroup (FreeGroup (Fin (n + 1))) := Subgroup.comap φ (U : Subgroup G)
-      letI : Finite (G ⧸ (U : Subgroup G)) := ProCGroups.openSubgroup_finiteQuotient (G := G) U
       have hDindex :
           (U : Subgroup G).relIndex D = (U : Subgroup G).index := by
         change ((U : Subgroup G).subgroupOf D).index = (U : Subgroup G).index
@@ -227,7 +228,7 @@ theorem topologicalRank_openSubgroup_le_rankTransform_of_topologicalRank_eq_nat
       have hLindex_ne_zero : L.index ≠ 0 := by
         rw [hLindex]
         exact Subgroup.index_ne_zero_of_finite (H := (U : Subgroup G))
-      haveI : Finite (FreeGroup (Fin (n + 1)) ⧸ L) :=
+      have : Finite (FreeGroup (Fin (n + 1)) ⧸ L) :=
         (Subgroup.index_ne_zero_iff_finite (H := L)).1 hLindex_ne_zero
       obtain ⟨Y, ⟨eL⟩, hYcard⟩ :=
         exists_freeBasis_subgroupOfFreeGroup_of_rankTransform
@@ -243,8 +244,8 @@ theorem topologicalRank_openSubgroup_le_rankTransform_of_topologicalRank_eq_nat
         rw [hYcard', _root_.ReidemeisterSchreier.Schreier.rankTransform_succ]
         simp only [Nat.add_comm, ne_eq, Nat.add_eq_zero_iff, mul_eq_zero, one_ne_zero,
             and_false, not_false_eq_true]
-      haveI : Finite Y := Nat.finite_of_card_ne_zero hYnonzero
-      letI : Fintype Y := Fintype.ofFinite Y
+      have : Finite Y := Nat.finite_of_card_ne_zero hYnonzero
+      let : Fintype Y := Fintype.ofFinite Y
       let φU : L →* ↥(U : Subgroup G) := {
         toFun := fun x => ⟨φ x.1, x.2⟩
         map_one' := by simp only [OneMemClass.coe_one, map_one, Subgroup.mk_eq_one, φ]

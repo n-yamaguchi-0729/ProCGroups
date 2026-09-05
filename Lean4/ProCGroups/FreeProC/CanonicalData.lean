@@ -2,6 +2,8 @@ import ProCGroups.Completion.ProCIntegerPrimePower
 import ProCGroups.FreeProC.Basic
 import ProCGroups.ProC.InverseLimits.Predicates
 
+set_option autoImplicit false
+
 /-!
 # Pro C Groups / Free pro-C / Canonical Data
 

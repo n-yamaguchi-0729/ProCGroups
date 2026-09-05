@@ -2,6 +2,8 @@ import ProCGroups.FoxDifferential.Common.CrossedDifferentialModule
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraModN.InClass.StageCoeffMap
 import ProCGroups.Completion.ProCInteger
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — \(\mathbb{Z}_C\) coefficients — core
 
@@ -80,23 +82,12 @@ theorem zcCompletedGroupAlgebraTransition_of
         ((OpenNormalSubgroupInClass.map
           (C := C) (G := H)
           (U := OrderDual.ofDual i.2) (V := OrderDual.ofDual j.2) hij.2) q) := by
-  letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
-  letI : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
-  rw [zcCompletedGroupAlgebraTransition, RingHom.comp_apply]
-  change
-    modNCompletedGroupAlgebraStageCoeffMapInClass
-        (n := i.1.modulus) (m := j.1.modulus) (G := H) C i.2 hij.1
-        (MonoidAlgebra.mapDomain
-          (OpenNormalSubgroupInClass.map
-            (C := C) (G := H)
-            (U := OrderDual.ofDual i.2) (V := OrderDual.ofDual j.2) hij.2)
-          (MonoidAlgebra.single q 1)) =
-      MonoidAlgebra.single
-        ((OpenNormalSubgroupInClass.map
-          (C := C) (G := H)
-          (U := OrderDual.ofDual i.2) (V := OrderDual.ofDual j.2) hij.2) q) 1
-  rw [MonoidAlgebra.mapDomain_single,
-    modNCompletedGroupAlgebraStageCoeffMapInClass_single_apply, map_one]
+  let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+  let : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
+  erw [zcCompletedGroupAlgebraTransition, RingHom.comp_apply,
+    modNCompletedGroupAlgebraTransitionInClass_of,
+    modNCompletedGroupAlgebraStageCoeffMapInClass_single_apply]
+  rw [map_one]
   rfl
 
 /--
@@ -116,24 +107,10 @@ theorem zcCompletedGroupAlgebraTransition_single
           (C := C) (G := H)
           (U := OrderDual.ofDual i.2) (V := OrderDual.ofDual j.2) hij.2) q)
         (modNCompletedCoeffMap (n := i.1.modulus) (m := j.1.modulus) hij.1 a) := by
-  letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
-  letI : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
-  rw [zcCompletedGroupAlgebraTransition, RingHom.comp_apply]
-  change
-    modNCompletedGroupAlgebraStageCoeffMapInClass
-        (n := i.1.modulus) (m := j.1.modulus) (G := H) C i.2 hij.1
-        (MonoidAlgebra.mapDomain
-          (OpenNormalSubgroupInClass.map
-            (C := C) (G := H)
-            (U := OrderDual.ofDual i.2) (V := OrderDual.ofDual j.2) hij.2)
-          (MonoidAlgebra.single q a)) =
-      MonoidAlgebra.single
-        ((OpenNormalSubgroupInClass.map
-          (C := C) (G := H)
-          (U := OrderDual.ofDual i.2) (V := OrderDual.ofDual j.2) hij.2) q)
-        (modNCompletedCoeffMap
-          (n := i.1.modulus) (m := j.1.modulus) hij.1 a)
-  rw [MonoidAlgebra.mapDomain_single,
+  let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+  let : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
+  erw [zcCompletedGroupAlgebraTransition, RingHom.comp_apply,
+    modNCompletedGroupAlgebraTransitionInClass_single,
     modNCompletedGroupAlgebraStageCoeffMapInClass_single_apply]
   rfl
 
@@ -147,7 +124,7 @@ theorem zcCompletedGroupAlgebraTransition_id
     (H : Type u) [Group H] [TopologicalSpace H] [IsTopologicalGroup H]
     (i : ZCCompletedGroupAlgebraIndex C H) :
     zcCompletedGroupAlgebraTransition C H (le_rfl : i ≤ i) = RingHom.id _ := by
-  letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+  let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
   rw [zcCompletedGroupAlgebraTransition]
   rw [modNCompletedGroupAlgebraTransitionInClass_id,
     modNCompletedGroupAlgebraStageCoeffMapInClass_rfl]
@@ -163,33 +140,22 @@ theorem zcCompletedGroupAlgebraTransition_comp
     (zcCompletedGroupAlgebraTransition C H hij).comp
         (zcCompletedGroupAlgebraTransition C H hjk) =
       zcCompletedGroupAlgebraTransition C H (hij.trans hjk) := by
-  letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
-  letI : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
-  letI : Fact (0 < k.1.modulus) := ⟨k.1.positive⟩
+  let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+  let : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
+  let : Fact (0 < k.1.modulus) := ⟨k.1.positive⟩
   apply RingHom.ext
   intro x
   refine MonoidAlgebra.induction_on
-    (p := fun x =>
+    (motive := fun x =>
       ((zcCompletedGroupAlgebraTransition C H hij).comp
           (zcCompletedGroupAlgebraTransition C H hjk)) x =
         zcCompletedGroupAlgebraTransition C H (hij.trans hjk) x)
     x ?_ ?_ ?_
   · intro q
-    rw [RingHom.comp_apply, zcCompletedGroupAlgebraTransition_of C H hjk,
+    erw [RingHom.comp_apply,
+      zcCompletedGroupAlgebraTransition_of C H hjk,
+      zcCompletedGroupAlgebraTransition_of C H hij,
       zcCompletedGroupAlgebraTransition_of C H (hij.trans hjk)]
-    change
-      zcCompletedGroupAlgebraTransition C H hij
-          (MonoidAlgebra.of (ModNCompletedCoeff j.1.modulus)
-            (CompletedGroupAlgebraQuotientInClass H C j.2)
-            ((OpenNormalSubgroupInClass.map
-              (C := C) (G := H)
-              (U := OrderDual.ofDual j.2) (V := OrderDual.ofDual k.2) hjk.2) q)) =
-        MonoidAlgebra.of (ModNCompletedCoeff i.1.modulus)
-          (CompletedGroupAlgebraQuotientInClass H C i.2)
-          ((OpenNormalSubgroupInClass.map
-            (C := C) (G := H)
-            (U := OrderDual.ofDual i.2) (V := OrderDual.ofDual k.2) (hij.2.trans hjk.2)) q)
-    rw [zcCompletedGroupAlgebraTransition_of C H hij]
     congr 1
     exact congrFun
       (congrArg DFunLike.coe
@@ -225,9 +191,9 @@ def zcCompletedGroupAlgebraSystem
   map := fun {i j} hij => zcCompletedGroupAlgebraTransition C H hij
   continuous_map := by
     intro i j hij
-    letI : TopologicalSpace (ZCCompletedGroupAlgebraStage C H i) := ⊥
-    letI : TopologicalSpace (ZCCompletedGroupAlgebraStage C H j) := ⊥
-    letI : DiscreteTopology (ZCCompletedGroupAlgebraStage C H j) := ⟨rfl⟩
+    let : TopologicalSpace (ZCCompletedGroupAlgebraStage C H i) := ⊥
+    let : TopologicalSpace (ZCCompletedGroupAlgebraStage C H j) := ⊥
+    let : DiscreteTopology (ZCCompletedGroupAlgebraStage C H j) := ⟨rfl⟩
     exact continuous_of_discreteTopology
   map_id := by
     intro i
@@ -684,24 +650,8 @@ def zcCompletedGroupAlgebraCoeff
         (1 : CompletedGroupAlgebraQuotientInClass H C i.2)
         (proCIntegerProj (C := C) i.1 a), by
     intro i j hij
-    letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
-    letI : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
-    rw [zcCompletedGroupAlgebraTransition, RingHom.comp_apply]
-    change
-      modNCompletedGroupAlgebraStageCoeffMapInClass
-          (n := i.1.modulus) (m := j.1.modulus) (G := H) C i.2 hij.1
-          (MonoidAlgebra.mapDomain
-            (OpenNormalSubgroupInClass.map
-              (C := C) (G := H)
-              (U := OrderDual.ofDual i.2) (V := OrderDual.ofDual j.2) hij.2)
-            (MonoidAlgebra.single
-              (1 : CompletedGroupAlgebraQuotientInClass H C j.2)
-              (proCIntegerProj (C := C) j.1 a))) =
-        MonoidAlgebra.single
-          (1 : CompletedGroupAlgebraQuotientInClass H C i.2)
-          (proCIntegerProj (C := C) i.1 a)
-    rw [MonoidAlgebra.mapDomain_single,
-      modNCompletedGroupAlgebraStageCoeffMapInClass_single_apply]
+    let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+    let : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
     have ha : modNCompletedCoeffMap (n := i.1.modulus) (m := j.1.modulus) hij.1
         (proCIntegerProj (C := C) j.1 a) =
         proCIntegerProj (C := C) i.1 a :=
@@ -713,7 +663,8 @@ def zcCompletedGroupAlgebraCoeff
             (1 : CompletedGroupAlgebraQuotientInClass H C j.2) =
           (1 : CompletedGroupAlgebraQuotientInClass H C i.2) :=
       map_one _
-    rw [hmap, ha]⟩
+    rw [zcCompletedGroupAlgebraTransition_single C H hij, hmap, ha]
+    rfl⟩
 
 /--
 Coefficient change is performed stagewise: supports are unchanged and coefficients are
@@ -735,7 +686,7 @@ def zcCompletedGroupAlgebraCoeffMap
   map_one' := by
     apply Subtype.ext
     funext i
-    letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+    let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
     change
       MonoidAlgebra.single
           (1 : CompletedGroupAlgebraQuotientInClass H C i.2)
@@ -758,7 +709,7 @@ def zcCompletedGroupAlgebraCoeffMap
   map_mul' a b := by
     apply Subtype.ext
     funext i
-    letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+    let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
     change MonoidAlgebra.single
         (1 : CompletedGroupAlgebraQuotientInClass H C i.2)
         (proCIntegerProj (C := C) i.1 (a * b)) =
@@ -801,8 +752,8 @@ def zcGroupLike
             (CompletedGroupAlgebraQuotientInClass H C j.2) (QuotientGroup.mk h)) =
         MonoidAlgebra.of (ModNCompletedCoeff i.1.modulus)
           (CompletedGroupAlgebraQuotientInClass H C i.2) (QuotientGroup.mk h)
-    rw [zcCompletedGroupAlgebraTransition_of C H hij]
-    rfl⟩
+    exact zcCompletedGroupAlgebraTransition_of C H hij
+      (QuotientGroup.mk h : CompletedGroupAlgebraQuotientInClass H C j.2)⟩
   map_one' := by
     apply Subtype.ext
     funext i
@@ -923,36 +874,12 @@ theorem zcCompletedGroupAlgebraTransition_sameCoeff
       MonoidAlgebra.mapDomainRingHom (ModNCompletedCoeff coeff.modulus)
         (OpenNormalSubgroupInClass.map
           (C := C) (G := H) (U := U) (V := V) hUV) := by
-  letI : Fact (0 < coeff.modulus) := ⟨coeff.positive⟩
-  apply MonoidAlgebra.ringHom_ext
-  · intro r
-    rw [zcCompletedGroupAlgebraTransition_single]
-    change
-      MonoidAlgebra.single
-          ((OpenNormalSubgroupInClass.map
-            (C := C) (G := H) (U := U) (V := V) hUV) 1)
-          ((modNCompletedCoeffMap (n := coeff.modulus)
-            (m := coeff.modulus) dvd_rfl) r) =
-        MonoidAlgebra.mapDomain
-          (OpenNormalSubgroupInClass.map
-            (C := C) (G := H) (U := U) (V := V) hUV)
-          (MonoidAlgebra.single 1 r)
-    rw [MonoidAlgebra.mapDomain_single]
-    simp only [map_one, modNCompletedCoeffMap, ZMod.castHom_self, RingHom.id_apply]
-  · intro q
-    rw [zcCompletedGroupAlgebraTransition_single]
-    change
-      MonoidAlgebra.single
-          ((OpenNormalSubgroupInClass.map
-            (C := C) (G := H) (U := U) (V := V) hUV) q)
-          ((modNCompletedCoeffMap (n := coeff.modulus)
-            (m := coeff.modulus) dvd_rfl) (1 : ModNCompletedCoeff coeff.modulus)) =
-        MonoidAlgebra.mapDomain
-          (OpenNormalSubgroupInClass.map
-            (C := C) (G := H) (U := U) (V := V) hUV)
-          (MonoidAlgebra.single q (1 : ModNCompletedCoeff coeff.modulus))
-    rw [MonoidAlgebra.mapDomain_single]
-    simp only [modNCompletedCoeffMap, ZMod.castHom_self, RingHom.id_apply]
+  let : Fact (0 < coeff.modulus) := ⟨coeff.positive⟩
+  rw [zcCompletedGroupAlgebraTransition,
+    modNCompletedGroupAlgebraStageCoeffMapInClass_rfl]
+  simp only [RingHomCompTriple.comp_eq]
+  unfold modNCompletedGroupAlgebraTransitionInClass
+  rfl
 
 /--
 After coefficient change, projection of multiplication by a group-like element is computed in
@@ -968,11 +895,15 @@ theorem zcCompletedGroupAlgebraProjection_coeffMap_mul_groupLike
       MonoidAlgebra.single
         (QuotientGroup.mk h : CompletedGroupAlgebraQuotientInClass H C i.2)
         (proCIntegerProj (C := C) i.1 a) := by
-  letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
-  rw [zcCompletedGroupAlgebraProjection_mul, zcCompletedGroupAlgebraProjection_coeffMap,
-    zcCompletedGroupAlgebraProjection_groupLike]
-  rw [MonoidAlgebra.of_apply, MonoidAlgebra.single_mul_single, one_mul, mul_one]
-  rfl
+  let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+  erw [zcCompletedGroupAlgebraProjection_mul,
+    zcCompletedGroupAlgebraProjection_coeffMap,
+    zcCompletedGroupAlgebraProjection_groupLike,
+    MonoidAlgebra.of_apply,
+    MonoidAlgebra.single_mul_single]
+  rw [mul_one]
+  congr 1
+  exact one_mul _
 
 /-- Every finite-stage projection from the pro-\(C\) completed group algebra is surjective. -/
 theorem zcCompletedGroupAlgebraProjection_surjective
@@ -981,8 +912,8 @@ theorem zcCompletedGroupAlgebraProjection_surjective
     (i : ZCCompletedGroupAlgebraIndex C H) :
     Function.Surjective (zcCompletedGroupAlgebraProjection C H i) := by
   classical
-  letI : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
-  letI : DecidableEq (CompletedGroupAlgebraQuotientInClass H C i.2) := Classical.decEq _
+  let : Fact (0 < i.1.modulus) := ⟨i.1.positive⟩
+  let : DecidableEq (CompletedGroupAlgebraQuotientInClass H C i.2) := Classical.decEq _
   intro x
   induction x using MonoidAlgebra.induction with
   | zero =>

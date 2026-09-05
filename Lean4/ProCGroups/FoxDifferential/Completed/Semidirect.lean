@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.Core
 import ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.FreeGroup.Fundamental
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — semidirect
 
@@ -112,8 +114,7 @@ instance instGroupZCCompletedFoxSemidirect : Group (ZCCompletedFoxSemidirect C X
     ext
     · simp only [mul_left, mul_right, map_mul, Pi.add_apply, Pi.smul_apply, smul_eq_mul, add_assoc,
   zcCompletedGroupAlgebraProjection_add, zcCompletedGroupAlgebraProjection_mul,
-  zcCompletedGroupAlgebraProjection_groupLike, MonoidAlgebra.of_apply,
-  MonoidAlgebra.single_mul_single, mul_one, MonoidAlgebra.coeff_add, smul_add, smul_smul]
+  zcCompletedGroupAlgebraProjection_groupLike, MonoidAlgebra.coeff_add, smul_add, smul_smul]
     · simp only [mul_right, mul_assoc]
   one_mul a := by
     ext

@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Discrete.KernelBoundary.IdentityAugmentation
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: discrete — kernel boundary — basic
 
@@ -215,9 +217,18 @@ theorem kernelAbelianizationConjOfSurjective_eq_surjInv
     have hmul' := congrArg (fun u : MulAut (Abelianization ψ.ker) =>
         u * kernelAbelianizationConj ψ g₂) hmul
     simpa [mul_assoc] using hmul'
-  unfold kernelAbelianizationConjOfSurjective QuotientGroup.quotientKerEquivOfSurjective
-    QuotientGroup.quotientKerEquivOfRightInverse
-  simpa [g₁, g₂, quotientKernelAbelianizationConj] using hsame
+  change quotientKernelAbelianizationConj ψ
+      ((QuotientGroup.quotientKerEquivOfSurjective (φ := ψ) hψ).symm h) =
+    kernelAbelianizationConj ψ g₂
+  have hq :
+      (QuotientGroup.quotientKerEquivOfSurjective (φ := ψ) hψ).symm h =
+        QuotientGroup.mk' ψ.ker g₁ := by
+    apply (QuotientGroup.quotientKerEquivOfSurjective (φ := ψ) hψ).injective
+    rw [MulEquiv.apply_symm_apply]
+    exact hg₁.symm
+  rw [hq]
+  change kernelAbelianizationConj ψ g₁ = kernelAbelianizationConj ψ g₂
+  exact hsame
 
 /--
 For a surjective homomorphism, the conjugation action on the kernel abelianization is rewritten
@@ -298,11 +309,20 @@ theorem kernelAbelianizationActionRingHomOfSurjective_of
     (ψ : G →* H) (hψ : Function.Surjective ψ) (h : H) :
     kernelAbelianizationActionRingHomOfSurjective ψ hψ (MonoidAlgebra.of ℤ H h) =
       kernelAbelianizationModuleEndOfSurjective ψ hψ h := by
-  ext x
-  simp only [kernelAbelianizationActionRingHomOfSurjective, MonoidAlgebra.of_apply,
-  MonoidAlgebra.liftNCRingHom_single, eq_intCast, Int.cast_one, one_mul,
-  kernelAbelianizationModuleEndOfSurjective_apply,
-      kernelAbelianizationConjOfSurjective_eq_surjInv, toMul_ofMul]
+  let f := Int.castRingHom (Module.End ℤ (KernelAbelianizationAdd ψ))
+  let g := kernelAbelianizationModuleEndOfSurjective ψ hψ
+  have hcomm : ∀ z h, Commute (f z) (g h) := by
+    intro z h
+    ext x
+    simp only [f, g, eq_intCast, Module.End.mul_apply,
+      kernelAbelianizationModuleEndOfSurjective_apply,
+      kernelAbelianizationConjOfSurjective_eq_surjInv, Module.End.intCast_apply,
+      toMul_zsmul, toMul_ofMul, map_smul]
+  change
+    MonoidAlgebra.liftNCRingHom f g hcomm (MonoidAlgebra.single h 1) = g h
+  exact
+    (MonoidAlgebra.liftNCRingHom_single f g hcomm h 1).trans (by
+      rw [map_one, one_mul])
 
 /--
 The \(\mathbb{Z}[H]\)-module structure on \(\ker(\psi)^{\mathrm{ab}}\) induced by surjective
@@ -348,7 +368,7 @@ theorem kernelAbelianizationBoundaryAdd_commOfSurjective
     letI := kernelAbelianizationModuleOfSurjective ψ hψ
     kernelAbelianizationBoundaryAdd ψ ((MonoidAlgebra.of ℤ H h : GroupRing H) • x) =
       (MonoidAlgebra.of ℤ H h : GroupRing H) • kernelAbelianizationBoundaryAdd ψ x := by
-  letI := kernelAbelianizationModuleOfSurjective ψ hψ
+  let := kernelAbelianizationModuleOfSurjective ψ hψ
   change kernelAbelianizationBoundaryAdd ψ
       ((kernelAbelianizationActionRingHomOfSurjective ψ hψ (MonoidAlgebra.of ℤ H h)) x) =
     (MonoidAlgebra.of ℤ H h : GroupRing H) • kernelAbelianizationBoundaryAdd ψ x
@@ -381,7 +401,7 @@ theorem kernelAbelianizationBoundaryLinearOfSurjective_of
     (ψ : G →* H) (hψ : Function.Surjective ψ) (n : ψ.ker) :
     kernelAbelianizationBoundaryLinearOfSurjective ψ hψ
         (Additive.ofMul (Abelianization.of n)) = universalDifferential ψ n.1 := by
-  letI := kernelAbelianizationModuleOfSurjective ψ hψ
+  let := kernelAbelianizationModuleOfSurjective ψ hψ
   change kernelAbelianizationBoundaryAdd ψ (Additive.ofMul (Abelianization.of n)) =
     universalDifferential ψ n.1
   exact kernelAbelianizationBoundaryAdd_of ψ n
@@ -396,7 +416,7 @@ theorem kernelAbelianizationBoundaryLinearOfSurjective_apply
     (ψ : G →* H) (hψ : Function.Surjective ψ) (x : KernelAbelianizationAdd ψ) :
     kernelAbelianizationBoundaryLinearOfSurjective ψ hψ x =
       kernelAbelianizationBoundaryAdd ψ x := by
-  letI := kernelAbelianizationModuleOfSurjective ψ hψ
+  let := kernelAbelianizationModuleOfSurjective ψ hψ
   rfl
 
 omit [DecidableEq H] [DecidableEq G] in

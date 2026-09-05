@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Common.CrossedDifferentialModule
 import Mathlib.Algebra.MonoidAlgebra.MapDomain
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: discrete — differential module — basic
 

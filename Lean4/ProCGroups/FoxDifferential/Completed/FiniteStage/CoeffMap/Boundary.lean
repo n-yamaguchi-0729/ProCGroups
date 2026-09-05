@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.CoeffMap.Target
 import ProCGroups.FoxDifferential.Completed.FiniteStage.BoundaryCycles
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — finite stage — coeff map — boundary
 

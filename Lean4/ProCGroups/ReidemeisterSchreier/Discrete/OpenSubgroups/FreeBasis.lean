@@ -1,6 +1,11 @@
 import ProCGroups.ReidemeisterSchreier.Discrete.OpenSubgroups.PrefixTree
 import ProCGroups.ReidemeisterSchreier.Quiver
 import ProCGroups.ReidemeisterSchreier.Schreier
+import Mathlib.Data.Set.Card
+
+set_option autoImplicit false
+
+universe u
 
 /-!
 # Reidemeister Schreier / Discrete / Open Subgroups / Free Basis
@@ -22,16 +27,16 @@ noncomputable def FreeGroupBasis.actionGroupoidGeneratorTotalEquiv
     letI : IsFreeGroupoid (CategoryTheory.ActionCategory G A) :=
       FreeGroupBasis.actionGroupoidIsFree b
     Quiver.Total (IsFreeGroupoid.Generators (CategoryTheory.ActionCategory G A)) ≃ A × ι := by
-  letI : IsFreeGroupoid (CategoryTheory.ActionCategory G A) :=
-    FreeGroupBasis.actionGroupoidIsFree b
   refine
-    { toFun := fun e => (e.left.back, e.hom.1)
+    { toFun := fun e =>
+        ((@Quiver.Total.left (IsFreeGroupoid.Generators (CategoryTheory.ActionCategory G A))
+            (FreeGroupBasis.actionGroupoidIsFree b).quiverGenerators e).back,
+          (@Quiver.Total.hom (IsFreeGroupoid.Generators (CategoryTheory.ActionCategory G A))
+            (FreeGroupBasis.actionGroupoidIsFree b).quiverGenerators e).1)
       invFun := fun ai =>
-        { left := show IsFreeGroupoid.Generators (CategoryTheory.ActionCategory G A) from
-            ((ai.1 : A) : CategoryTheory.ActionCategory G A)
-          right := show IsFreeGroupoid.Generators (CategoryTheory.ActionCategory G A) from
-            ((b ai.2 • ai.1 : A) : CategoryTheory.ActionCategory G A)
-          hom := ⟨ai.2, rfl⟩ }
+        @Quiver.Total.mk (IsFreeGroupoid.Generators (CategoryTheory.ActionCategory G A))
+          (FreeGroupBasis.actionGroupoidIsFree b).quiverGenerators
+          ⟨(), ai.1⟩ ⟨(), b ai.2 • ai.1⟩ ⟨ai.2, rfl⟩
       left_inv := ?_
       right_inv := ?_ }
   · intro e
@@ -77,6 +82,65 @@ noncomputable def schreierComplementEdgesBasis
     (ReidemeisterSchreier.Groupoid.endBasis (schreierPrefixTree (X := X) hT)).map
       (schreierRootEndMulEquiv (X := X) hT)
 
+/-- Complement edges are equivalent to nontrivial Schreier pairs. -/
+noncomputable def schreierComplementEdgesEquivNontrivialPairs
+    {X : Type u} [DecidableEq X] {L : Subgroup (FreeGroup X)} {T : Set (FreeGroup X)}
+    (hT : IsRightSchreierTransversal (X := X) L T) :
+    schreierComplementEdges (X := X) hT ≃ NontrivialSchreierPair (X := X) hT := by
+  classical
+  letI := schreierTransversalRightCosetAction (X := X) hT
+  letI : IsFreeGroupoid (CategoryTheory.ActionCategory (FreeGroup X) T) :=
+    FreeGroupBasis.actionGroupoidIsFree (FreeGroup.inverseBasis X)
+  let C :
+      Set (Quiver.Total
+        (IsFreeGroupoid.Generators (CategoryTheory.ActionCategory (FreeGroup X) T))) :=
+    ((Quiver.wideSubquiverEquivSetTotal <|
+      Quiver.wideSubquiverSymmetrify (schreierPrefixTree (X := X) hT))ᶜ : Set _)
+  change ↑C ≃ NontrivialSchreierPair (X := X) hT
+  let eTotal :
+      Quiver.Total (IsFreeGroupoid.Generators (CategoryTheory.ActionCategory (FreeGroup X) T)) ≃
+        T × X :=
+    FreeGroupBasis.actionGroupoidGeneratorTotalEquiv (FreeGroup.inverseBasis X)
+  refine
+    { toFun := fun i =>
+        ⟨eTotal i.1, by
+          intro hgen
+          have hgen' :
+              schreierGenerator (X := X) hT
+                (((show T from CategoryTheory.ActionCategory.back i.1.left) : T) : FreeGroup X)
+                i.1.hom.1 = 1 := by
+            simpa [eTotal, FreeGroupBasis.actionGroupoidGeneratorTotalEquiv] using hgen
+          exact i.2 (show i.1 ∈ Quiver.wideSubquiverEquivSetTotal
+              (Quiver.wideSubquiverSymmetrify (schreierPrefixTree (X := X) hT)) from
+            (schreierGenerator_eq_one_iff_mem_prefixTree (X := X) (hT := hT) (e := i.1.hom)).1
+                hgen')⟩
+      invFun := fun p =>
+        let e := eTotal.symm p.1
+        ⟨e, by
+          intro he
+          have hgen' :
+              schreierGenerator (X := X) hT
+                (((show T from CategoryTheory.ActionCategory.back e.left) : T) : FreeGroup X)
+                e.hom.1 = 1 :=
+            (schreierGenerator_eq_one_iff_mem_prefixTree (X := X) (hT := hT) (e := e.hom)).2
+              (show e.hom ∈ Quiver.wideSubquiverSymmetrify (schreierPrefixTree (X := X) hT)
+                  e.left e.right from he)
+          have hgen'' :
+              schreierGenerator (X := X) hT
+                (((eTotal e).1 : T) : FreeGroup X) (eTotal e).2 = 1 := by
+            simpa [eTotal, FreeGroupBasis.actionGroupoidGeneratorTotalEquiv] using hgen'
+          rw [eTotal.apply_symm_apply p.1] at hgen''
+          exact p.2 hgen''⟩
+      left_inv := by
+        intro i
+        apply Subtype.ext
+        simp only [Equiv.symm_apply_apply, eTotal]
+      right_inv := by
+        intro p
+        apply Subtype.ext
+        simp only [ne_eq, Equiv.apply_symm_apply, eTotal]}
+
+
 /--
 Auxiliary bridge from nontrivial Schreier pairs to the classical Schreier generator value set.
 -/
@@ -108,7 +172,11 @@ private noncomputable def nontrivialSchreierPairsEquivSchreierGeneratorSet
       (schreierRootEndMulEquiv (X := X) hT)
   have hval : ∀ i : ↑C, (b i : L) = (((toSch i : ↥(schreierGeneratorSet (X := X) hT)) : L)⁻¹) := by
     intro i
-    rw [FreeGroupBasis.map_apply, ReidemeisterSchreier.Groupoid.endBasis_apply]
+    refine (FreeGroupBasis.map_apply
+      (ReidemeisterSchreier.Groupoid.endBasis (schreierPrefixTree (X := X) hT))
+      (schreierRootEndMulEquiv (X := X) hT) i).trans ?_
+    refine (congrArg (schreierRootEndMulEquiv (X := X) hT)
+      (ReidemeisterSchreier.Groupoid.endBasis_apply (schreierPrefixTree (X := X) hT) i)).trans ?_
     have htree : ∀ {a b : IsFreeGroupoid.Generators (CategoryTheory.ActionCategory (FreeGroup X) T)}
         (e : a ⟶ b),
         e ∈ Quiver.wideSubquiverSymmetrify (schreierPrefixTree (X := X) hT) a b →
@@ -173,110 +241,10 @@ private noncomputable def nontrivialSchreierPairsEquivSchreierGeneratorSet
     apply Subtype.ext
     simpa [toSch, a, e] using hz.symm
   let eC : ↑C ≃ ↥(schreierGeneratorSet (X := X) hT) := Equiv.ofBijective toSch ⟨hto_inj, hto_surj⟩
-  let ePair :
-      ↑C ≃ NontrivialSchreierPair (X := X) hT := by
-    let eTotal :
-        Quiver.Total (IsFreeGroupoid.Generators (CategoryTheory.ActionCategory (FreeGroup X) T)) ≃
-          T × X :=
-      FreeGroupBasis.actionGroupoidGeneratorTotalEquiv (FreeGroup.inverseBasis X)
-    refine
-      { toFun := fun i =>
-          ⟨eTotal i.1, by
-            intro hgen
-            have hgen' :
-                schreierGenerator (X := X) hT
-                  (((show T from CategoryTheory.ActionCategory.back i.1.left) : T) : FreeGroup X)
-                  i.1.hom.1 = 1 := by
-              simpa [eTotal, FreeGroupBasis.actionGroupoidGeneratorTotalEquiv] using hgen
-            exact i.2 (show i.1 ∈ Quiver.wideSubquiverEquivSetTotal
-                (Quiver.wideSubquiverSymmetrify (schreierPrefixTree (X := X) hT)) from
-              schreierGenerator_eq_one_implies_mem_prefixTree (X := X) hT i.1.hom hgen')⟩
-        invFun := fun p =>
-          let e := eTotal.symm p.1
-          ⟨e, by
-            intro he
-            have htreeLabel :=
-              schreierLabelFunctor_map_of_eq_one_of_mem_tree (X := X) hT e.hom
-                (show e.hom ∈ Quiver.wideSubquiverSymmetrify (schreierPrefixTree (X := X) hT)
-                    e.left e.right from he)
-            rw [schreierLabelFunctor_map_of (X := X) hT e.hom] at htreeLabel
-            have hgen' :
-                schreierGenerator (X := X) hT
-                  (((show T from CategoryTheory.ActionCategory.back e.left) : T) : FreeGroup X)
-                  e.hom.1 = 1 := inv_eq_one.mp htreeLabel
-            have hgen'' :
-                schreierGenerator (X := X) hT
-                  (((eTotal e).1 : T) : FreeGroup X) (eTotal e).2 = 1 := by
-              simpa [eTotal, FreeGroupBasis.actionGroupoidGeneratorTotalEquiv] using hgen'
-            rw [eTotal.apply_symm_apply p.1] at hgen''
-            exact p.2 hgen''⟩
-        left_inv := by
-          intro i
-          apply Subtype.ext
-          simp only [Equiv.symm_apply_apply, eTotal]
-        right_inv := by
-          intro p
-          apply Subtype.ext
-          simp only [ne_eq, Equiv.apply_symm_apply, eTotal]}
+  let ePair : ↑C ≃ NontrivialSchreierPair (X := X) hT :=
+    schreierComplementEdgesEquivNontrivialPairs (X := X) hT
   exact ePair.symm.trans eC
 
-/-- Complement edges are equivalent to nontrivial Schreier pairs. -/
-noncomputable def schreierComplementEdgesEquivNontrivialPairs
-    {X : Type u} [DecidableEq X] {L : Subgroup (FreeGroup X)} {T : Set (FreeGroup X)}
-    (hT : IsRightSchreierTransversal (X := X) L T) :
-    schreierComplementEdges (X := X) hT ≃ NontrivialSchreierPair (X := X) hT := by
-  classical
-  letI := schreierTransversalRightCosetAction (X := X) hT
-  letI : IsFreeGroupoid (CategoryTheory.ActionCategory (FreeGroup X) T) :=
-    FreeGroupBasis.actionGroupoidIsFree (FreeGroup.inverseBasis X)
-  let C :
-      Set (Quiver.Total
-        (IsFreeGroupoid.Generators (CategoryTheory.ActionCategory (FreeGroup X) T))) :=
-    ((Quiver.wideSubquiverEquivSetTotal <|
-      Quiver.wideSubquiverSymmetrify (schreierPrefixTree (X := X) hT))ᶜ : Set _)
-  change ↑C ≃ NontrivialSchreierPair (X := X) hT
-  let eTotal :
-      Quiver.Total (IsFreeGroupoid.Generators (CategoryTheory.ActionCategory (FreeGroup X) T)) ≃
-        T × X :=
-    FreeGroupBasis.actionGroupoidGeneratorTotalEquiv (FreeGroup.inverseBasis X)
-  refine
-    { toFun := fun i =>
-        ⟨eTotal i.1, by
-          intro hgen
-          have hgen' :
-              schreierGenerator (X := X) hT
-                (((show T from CategoryTheory.ActionCategory.back i.1.left) : T) : FreeGroup X)
-                i.1.hom.1 = 1 := by
-            simpa [eTotal, FreeGroupBasis.actionGroupoidGeneratorTotalEquiv] using hgen
-          exact i.2 (show i.1 ∈ Quiver.wideSubquiverEquivSetTotal
-              (Quiver.wideSubquiverSymmetrify (schreierPrefixTree (X := X) hT)) from
-            (schreierGenerator_eq_one_iff_mem_prefixTree (X := X) (hT := hT) (e := i.1.hom)).1
-                hgen')⟩
-      invFun := fun p =>
-        let e := eTotal.symm p.1
-        ⟨e, by
-          intro he
-          have hgen' :
-              schreierGenerator (X := X) hT
-                (((show T from CategoryTheory.ActionCategory.back e.left) : T) : FreeGroup X)
-                e.hom.1 = 1 :=
-            (schreierGenerator_eq_one_iff_mem_prefixTree (X := X) (hT := hT) (e := e.hom)).2
-              (show e.hom ∈ Quiver.wideSubquiverSymmetrify (schreierPrefixTree (X := X) hT)
-                  e.left e.right from he)
-          have hgen'' :
-              schreierGenerator (X := X) hT
-                (((eTotal e).1 : T) : FreeGroup X) (eTotal e).2 = 1 := by
-            simpa [eTotal, FreeGroupBasis.actionGroupoidGeneratorTotalEquiv] using hgen'
-          rw [eTotal.apply_symm_apply p.1] at hgen''
-          exact p.2 hgen''⟩
-      left_inv := by
-        intro i
-        apply Subtype.ext
-        simp only [Equiv.symm_apply_apply, eTotal]
-      right_inv := by
-        intro p
-        apply Subtype.ext
-        simp only [ne_eq, Equiv.apply_symm_apply, eTotal]}
 
 /--
 The Schreier free basis indexed by nontrivial Schreier pairs. This is the preferred
@@ -361,18 +329,16 @@ theorem natCard_schreierComplementEdges_eq_rankTransform_direct
     Nat.card (schreierComplementEdges (X := X) hT) =
       _root_.ReidemeisterSchreier.Schreier.rankTransform (Nat.card X) (Nat.card T) := by
   classical
-  letI := schreierTransversalRightCosetAction (X := X) hT
-  letI : IsFreeGroupoid (CategoryTheory.ActionCategory (FreeGroup X) T) :=
+  let : MulAction (FreeGroup X) T := schreierTransversalRightCosetAction (X := X) hT
+  let : IsFreeGroupoid (CategoryTheory.ActionCategory (FreeGroup X) T) :=
     FreeGroupBasis.actionGroupoidIsFree (FreeGroup.inverseBasis X)
   let Ttree :
       WideSubquiver
         (Quiver.Symmetrify
           (IsFreeGroupoid.Generators (CategoryTheory.ActionCategory (FreeGroup X) T))) :=
     schreierPrefixTree (X := X) hT
-  letI : Quiver.Arborescence Ttree := by
-    dsimp [Ttree]
-    infer_instance
-  let totalGen :=
+  let : Quiver.Arborescence Ttree := schreierPrefixTree_arborescence (X := X) hT
+  let totalGen : Type u :=
     Quiver.Total (IsFreeGroupoid.Generators (CategoryTheory.ActionCategory (FreeGroup X) T))
   let covered : Set totalGen :=
     Quiver.wideSubquiverEquivSetTotal (Quiver.wideSubquiverSymmetrify Ttree)
@@ -382,45 +348,18 @@ theorem natCard_schreierComplementEdges_eq_rankTransform_direct
   have hroot : Quiver.root Ttree = root := by
     change root = root
     rfl
-  letI : Fintype X := Fintype.ofFinite X
-  letI : Fintype T := Fintype.ofFinite T
-  haveI : Finite (CategoryTheory.ActionCategory (FreeGroup X) T) :=
-    Finite.of_equiv T (CategoryTheory.ActionCategory.objEquiv (FreeGroup X) T)
-  haveI : Finite Ttree :=
-    Finite.of_equiv (CategoryTheory.ActionCategory (FreeGroup X) T)
-      (show _ ≃ Ttree from Equiv.refl _)
-  haveI : Finite totalGen :=
-    Finite.of_equiv (T × X)
-      (FreeGroupBasis.actionGroupoidGeneratorTotalEquiv (FreeGroup.inverseBasis X)).symm
-  letI : Fintype totalGen := Fintype.ofFinite totalGen
-  letI : Fintype (schreierComplementEdges (X := X) hT) :=
-    Fintype.ofFinite (schreierComplementEdges (X := X) hT)
-  letI : Fintype {e : totalGen // e ∈ covered} :=
-    Fintype.ofFinite {e : totalGen // e ∈ covered}
-  letI : Fintype {a : CategoryTheory.ActionCategory (FreeGroup X) T // a ≠ root} :=
-    Fintype.ofFinite {a : CategoryTheory.ActionCategory (FreeGroup X) T // a ≠ root}
-  letI : Fintype {v : Ttree // v ≠ Quiver.root Ttree} :=
-    Fintype.ofFinite {v : Ttree // v ≠ Quiver.root Ttree}
-  haveI : Finite (Quiver.Total Ttree) :=
-    Finite.of_equiv {v : Ttree // v ≠ Quiver.root Ttree}
-      (Quiver.Arborescence.totalEquivNonRoot Ttree).symm
-  letI : Fintype (Quiver.Total Ttree) := Fintype.ofFinite (Quiver.Total Ttree)
+  let eTotal : totalGen ≃ T × X :=
+    FreeGroupBasis.actionGroupoidGeneratorTotalEquiv
+      (ι := X) (G := FreeGroup X) (A := T) (FreeGroup.inverseBasis X)
+  have : Finite totalGen := Finite.of_equiv (T × X) eTotal.symm
   have hYcard :
-      Fintype.card (schreierComplementEdges (X := X) hT) =
-        Fintype.card totalGen - Fintype.card {e : totalGen // e ∈ covered} := by
-    change
-      Fintype.card {e : totalGen // e ∈ ((covered : Set totalGen)ᶜ)} =
-        Fintype.card totalGen - Fintype.card {e : totalGen // e ∈ covered}
-    simpa only [Set.mem_compl_iff] using
-      (Fintype.card_subtype_compl (fun e : totalGen => e ∈ covered) :
-        Fintype.card {e : totalGen // ¬ e ∈ covered} =
-          Fintype.card totalGen - Fintype.card {e : totalGen // e ∈ covered})
-  have hTotal :
-      Fintype.card totalGen = Fintype.card T * Fintype.card X := by
-    simpa [totalGen, Fintype.card_prod] using
-      Fintype.card_congr
-        (FreeGroupBasis.actionGroupoidGeneratorTotalEquiv
-          (ι := X) (G := FreeGroup X) (A := T) (FreeGroup.inverseBasis X))
+      Nat.card (schreierComplementEdges (X := X) hT) =
+        Nat.card totalGen - Nat.card {e : totalGen // e ∈ covered} := by
+    change Nat.card ↥(coveredᶜ) = Nat.card totalGen - Nat.card ↥covered
+    simpa only [Nat.card_coe_set_eq] using
+      (Set.ncard_compl covered (Set.toFinite covered) (Set.toFinite coveredᶜ))
+  have hTotal : Nat.card totalGen = Nat.card T * Nat.card X :=
+    (Nat.card_congr eTotal).trans (Nat.card_prod T X)
   let eObjNonRoot :
       {a : CategoryTheory.ActionCategory (FreeGroup X) T // a ≠ root} ≃
         {t : T // t ≠ rootT} := {
@@ -441,20 +380,21 @@ theorem natCard_schreierComplementEdges_eq_rankTransform_direct
       intro t
       apply Subtype.ext
       simp only [ne_eq, Equiv.symm_apply_apply]}
-  haveI : Subsingleton {t : T // t = rootT} :=
-    ⟨fun t t' => Subtype.ext (by simp only [t.property, t'.property])⟩
-  have hOne :
-      Fintype.card {t : T // t = rootT} = 1 := by
-    exact Fintype.card_ofSubsingleton (⟨rootT, rfl⟩ : {t : T // t = rootT})
+  have hOne : Nat.card {t : T // t = rootT} = 1 :=
+    Nat.card_eq_one_iff_exists.mpr ⟨⟨rootT, rfl⟩, fun t => Subtype.ext t.property⟩
   have hTcompl :
-      Fintype.card {t : T // t ≠ rootT} = Fintype.card T - 1 := by
-    calc
-      Fintype.card {t : T // t ≠ rootT}
-          = Fintype.card T - Fintype.card {t : T // t = rootT} := by
-              exact Fintype.card_subtype_compl (fun t : T => t = rootT)
-      _ = Fintype.card T - 1 := by rw [hOne]
+      Nat.card {t : T // t ≠ rootT} = Nat.card T - 1 := by
+    have hcompl :
+        Nat.card {t : T // t ≠ rootT} =
+          Nat.card T - Nat.card {t : T // t = rootT} := by
+      change Nat.card ↥({t : T | t = rootT}ᶜ) =
+        Nat.card T - Nat.card ↥({t : T | t = rootT})
+      simpa only [Nat.card_coe_set_eq] using
+        (Set.ncard_compl {t : T | t = rootT}
+          (Set.toFinite {t : T | t = rootT}) (Set.toFinite {t : T | t = rootT}ᶜ))
+    exact hcompl.trans (congrArg (fun n : ℕ => Nat.card T - n) hOne)
   have hNonRoot :
-      Fintype.card {v : Ttree // v ≠ Quiver.root Ttree} = Fintype.card T - 1 := by
+      Nat.card {v : Ttree // v ≠ Quiver.root Ttree} = Nat.card T - 1 := by
     let eRootNonRoot :
         {v : Ttree // v ≠ Quiver.root Ttree} ≃
           {a : CategoryTheory.ActionCategory (FreeGroup X) T // a ≠ root} := {
@@ -466,35 +406,28 @@ theorem natCard_schreierComplementEdges_eq_rankTransform_direct
       right_inv a := by
         apply Subtype.ext
         rfl }
-    exact (Fintype.card_congr eRootNonRoot).trans
-      ((Fintype.card_congr eObjNonRoot).trans hTcompl)
+    exact (Nat.card_congr eRootNonRoot).trans
+      ((Nat.card_congr eObjNonRoot).trans hTcompl)
   have hCovered :
-      Fintype.card {e : totalGen // e ∈ covered} = Fintype.card T - 1 := by
+      Nat.card {e : totalGen // e ∈ covered} = Nat.card T - 1 := by
     calc
-      Fintype.card {e : totalGen // e ∈ covered}
-          = Fintype.card (Quiver.Total Ttree) := by
-              simpa [totalGen, covered] using
-                Fintype.card_congr (Quiver.coveredArrowEquivTotal Ttree)
-      _ = Fintype.card {v : Ttree // v ≠ Quiver.root Ttree} := by
-            simpa using Fintype.card_congr (Quiver.Arborescence.totalEquivNonRoot Ttree)
-      _ = Fintype.card T - 1 := hNonRoot
-  have hYcalcF :
-      Fintype.card (schreierComplementEdges (X := X) hT) =
-        Fintype.card T * Fintype.card X - (Fintype.card T - 1) := by
-    rw [hYcard, hTotal, hCovered]
+      Nat.card {e : totalGen // e ∈ covered}
+          = Nat.card (Quiver.Total Ttree) := by
+              exact Nat.card_congr (Quiver.coveredArrowEquivTotal Ttree)
+      _ = Nat.card {v : Ttree // v ≠ Quiver.root Ttree} := by
+            exact Nat.card_congr (Quiver.Arborescence.totalEquivNonRoot Ttree)
+      _ = Nat.card T - 1 := hNonRoot
   have hYcalc :
       Nat.card (schreierComplementEdges (X := X) hT) =
         Nat.card T * Nat.card X - (Nat.card T - 1) := by
-    simpa [Nat.card_eq_fintype_card] using hYcalcF
+    rw [hYcard, hTotal, hCovered]
   by_cases hX0 : Nat.card X = 0
-  · have hX0F : Fintype.card X = 0 := by
-      simpa [Nat.card_eq_fintype_card] using hX0
-    calc
+  · calc
       Nat.card (schreierComplementEdges (X := X) hT)
           = Nat.card T * Nat.card X - (Nat.card T - 1) := hYcalc
-      _ = 0 := by simp only [Nat.card_eq_fintype_card, hX0F, mul_zero, zero_tsub]
+      _ = 0 := by simp only [hX0, mul_zero, zero_tsub]
       _ = _root_.ReidemeisterSchreier.Schreier.rankTransform (Nat.card X) (Nat.card T) := by
-            simp only [Schreier.rankTransform, Nat.card_eq_fintype_card, hX0F, ↓reduceIte]
+            simp only [Schreier.rankTransform, hX0, ↓reduceIte]
   · obtain ⟨r, hr⟩ := Nat.exists_eq_succ_of_ne_zero hX0
     rw [hr] at hYcalc ⊢
     calc
@@ -505,9 +438,8 @@ theorem natCard_schreierComplementEdges_eq_rankTransform_direct
       _ = Nat.card T * r + (Nat.card T - (Nat.card T - 1)) := by
             rw [Nat.add_sub_assoc (Nat.sub_le _ _)]
       _ = Nat.card T * r + 1 := by
-            have hTpos : 0 < Nat.card T := by
-              simpa [Nat.card_eq_fintype_card] using
-                (Fintype.card_pos_iff.mpr ⟨rootT⟩)
+            have hTpos : 0 < Nat.card T :=
+              Nat.card_pos_iff.mpr ⟨⟨rootT⟩, ‹Finite T›⟩
             obtain ⟨n, hn⟩ := Nat.exists_eq_succ_of_ne_zero (Nat.ne_of_gt hTpos)
             rw [hn]
             simp only [Nat.succ_eq_add_one, add_tsub_cancel_right, add_tsub_cancel_left]
@@ -548,10 +480,10 @@ theorem natCard_nontrivialSchreierPairs_eq_rankTransform
       _root_.ReidemeisterSchreier.Schreier.rankTransform (Nat.card X) (Nat.card (FreeGroup X ⧸
           L)) := by
   classical
-  haveI : Finite (Quotient (QuotientGroup.rightRel L)) :=
+  have : Finite (Quotient (QuotientGroup.rightRel L)) :=
     Finite.of_equiv (FreeGroup X ⧸ L)
       (QuotientGroup.quotientRightRelEquivQuotientLeftRel L).symm
-  haveI : Finite T :=
+  have : Finite T :=
     Finite.of_equiv (Quotient (QuotientGroup.rightRel L)) hT.1.rightQuotientEquiv
   have hTcard :
       Nat.card T = Nat.card (FreeGroup X ⧸ L) := by

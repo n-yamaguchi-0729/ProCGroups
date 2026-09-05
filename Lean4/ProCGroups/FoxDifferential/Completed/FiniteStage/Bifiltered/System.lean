@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.FiniteStage.Bifiltered.Transition
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — finite stage — bifiltered — system
 
@@ -54,7 +56,7 @@ theorem foxAlgebraicStageTargetGroupAlgebraMap_rfl :
   apply RingHom.ext
   intro x
   refine MonoidAlgebra.induction_on
-    (p := fun x =>
+    (motive := fun x =>
       foxAlgebraicStageTargetGroupAlgebraMap (X := X) (N := N) (M := N) (le_rfl : N ≤ N) n x =
         x)
     x ?_ ?_ ?_
@@ -118,7 +120,7 @@ theorem foxAlgebraicStageBifilteredTargetGroupAlgebraMap_comp :
   apply RingHom.ext
   intro x
   refine MonoidAlgebra.induction_on
-    (p := fun x =>
+    (motive := fun x =>
       ((foxAlgebraicStageBifilteredTargetGroupAlgebraMap
           (X := X) (N := N₁) (M := N₂) h₁₂ h₀₁n).comp
         (foxAlgebraicStageBifilteredTargetGroupAlgebraMap

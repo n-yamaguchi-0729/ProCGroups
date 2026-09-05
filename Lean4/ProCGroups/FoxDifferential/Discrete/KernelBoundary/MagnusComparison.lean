@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Discrete.KernelBoundary.MagnusKernel
 import ProCGroups.FoxDifferential.Discrete.FoxCalculus.Boundary
 
+set_option autoImplicit false
+
 /-!
 # Fox Differential / Discrete / Kernel Boundary / Magnus Comparison
 

@@ -1,6 +1,8 @@
 import ProCGroups.CompletedGroupAlgebra.InClassFunctoriality.GroupLike
 import ProCGroups.CompletedGroupAlgebra.UniversalProperty.Basic
 
+set_option autoImplicit false
+
 /-!
 # Comparison maps for in-class completions
 
@@ -71,12 +73,8 @@ theorem completedGroupAlgebraToInClass_restrictScalars_sub_one_smul
       Module.compHom A (completedGroupAlgebraToInClassRingHom (R := R) (G := G) C )
     (completedGroupAlgebraOf R G g - 1) • a =
       (completedGroupAlgebraOfInClass C R G g - 1) • a := by
-  letI : Module (CompletedGroupAlgebraCarrier R G) A :=
-    Module.compHom A (completedGroupAlgebraToInClassRingHom (R := R) (G := G) C )
-  change (completedGroupAlgebraToInClassRingHom (R := R) (G := G) C
-      (completedGroupAlgebraOf R G g - 1)) • a =
-    (completedGroupAlgebraOfInClass C R G g - 1) • a
-  rw [completedGroupAlgebraToInClass_of_sub_one]
+  exact congrArg (fun z : CompletedGroupAlgebraInClass C R G => z • a)
+    (completedGroupAlgebraToInClass_of_sub_one (R := R) (G := G) C g)
 
 /--
 The comparison map from a class-indexed completion sends class-indexed group-like elements to
@@ -132,13 +130,8 @@ theorem completedGroupAlgebraFromInClass_restrictScalars_sub_one_smul
       Module.compHom A (completedGroupAlgebraFromInClassRingHom (R := R) (G := G) C hForm hG)
     (completedGroupAlgebraOfInClass C R G g - 1) • a =
       (completedGroupAlgebraOf R G g - 1) • a := by
-  letI : Module (CompletedGroupAlgebraInClass C R G) A :=
-    Module.compHom A (completedGroupAlgebraFromInClassRingHom (R := R) (G := G) C hForm hG)
-  change (completedGroupAlgebraFromInClassRingHom (R := R) (G := G) C hForm hG
-      (completedGroupAlgebraOfInClass C R G g - 1)) • a =
-    (completedGroupAlgebraOf R G g - 1) • a
-  rw [completedGroupAlgebraFromInClassRingHom_apply,
-    completedGroupAlgebraFromInClass_of_sub_one]
+  exact congrArg (fun z : CompletedGroupAlgebraCarrier R G => z • a)
+    (completedGroupAlgebraFromInClass_of_sub_one (R := R) (G := G) C hForm hG g)
 
 /--
 The class-indexed completed group-algebra map sends the completed group-like element of \(g\) to

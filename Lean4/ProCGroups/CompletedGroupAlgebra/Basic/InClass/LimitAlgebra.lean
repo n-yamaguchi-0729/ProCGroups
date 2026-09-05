@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.Basic.InClass.System
 
+set_option autoImplicit false
+
 /-!
 # Completed Group Algebra / Basic / Within a Class / Limit Algebra
 
@@ -50,14 +52,14 @@ def completedGroupAlgebraInClassCompatibleFamilyEquiv
       (completedGroupAlgebraSystemInClass C R G).inverseLimit :=
   Equiv.refl _
 
-local instance
+local instance instRingCompletedGroupAlgebraSystemInClassStage
     (C : ProCGroups.FiniteGroupClass.{v})
     (U : CompletedGroupAlgebraIndexInClass G C) :
     Ring ((completedGroupAlgebraSystemInClass C R G).X U) := by
   change Ring (CompletedGroupAlgebraStageInClass C R G U)
   infer_instance
 
-local instance
+local instance instModuleCompletedGroupAlgebraSystemInClassStage
     (C : ProCGroups.FiniteGroupClass.{v})
     (U : CompletedGroupAlgebraIndexInClass G C) :
     Module R ((completedGroupAlgebraSystemInClass C R G).X U) := by
@@ -109,16 +111,44 @@ theorem completedGroupAlgebraInClass_ext
 /-- The \(C\)-indexed tower is a module-valued inverse system over the coefficient ring. -/
 instance instIsModuleSystemCompletedGroupAlgebraSystemInClass
     (C : ProCGroups.FiniteGroupClass.{v}) :
-    IsModuleSystem R (completedGroupAlgebraSystemInClass C R G) where
-  map_smul := completedGroupAlgebraTransitionInClass_smul
-    (R := R) (G := G) C
+    @IsModuleSystem _ _ R _ (completedGroupAlgebraSystemInClass C R G)
+      (fun U => @Ring.toAddCommGroup _
+        (instRingCompletedGroupAlgebraSystemInClassStage
+          (G := G) (R := R) C U))
+      (fun U => instModuleCompletedGroupAlgebraSystemInClassStage
+        (G := G) (R := R) C U) :=
+  @IsModuleSystem.mk _ _ R _ (completedGroupAlgebraSystemInClass C R G)
+    (fun U => @Ring.toAddCommGroup _
+      (instRingCompletedGroupAlgebraSystemInClassStage
+        (G := G) (R := R) C U))
+    (fun U => instModuleCompletedGroupAlgebraSystemInClassStage
+      (G := G) (R := R) C U)
+    (completedGroupAlgebraTransitionInClass_smul (R := R) (G := G) C)
 
 /-- The \(C\)-indexed module structure is inherited from the generic module inverse limit. -/
 instance instModuleCoeffCompletedGroupAlgebraInClass
     (C : ProCGroups.FiniteGroupClass.{v}) :
-    Module R (CompletedGroupAlgebraInClass C R G) :=
-  inferInstanceAs
-    (Module R (completedGroupAlgebraSystemInClass C R G).inverseLimit)
+    Module R (CompletedGroupAlgebraInClass C R G) := by
+  change Module R (completedGroupAlgebraSystemInClass C R G).inverseLimit
+  exact @instModuleInverseLimitOfIsModuleSystem
+    _ _ (completedGroupAlgebraSystemInClass C R G)
+    (fun U => @Ring.toAddCommGroup _
+      (instRingCompletedGroupAlgebraSystemInClassStage
+        (G := G) (R := R) C U))
+    (@isAddGroupSystemOfIsRingSystem _ _ (completedGroupAlgebraSystemInClass C R G)
+      (fun U => instRingCompletedGroupAlgebraSystemInClassStage
+        (G := G) (R := R) C U)
+      (instIsRingSystemCompletedGroupAlgebraSystemInClass G R C))
+    R inferInstance
+    (fun U => instModuleCompletedGroupAlgebraSystemInClassStage
+      (G := G) (R := R) C U)
+    (@IsModuleSystem.mk _ _ R _ (completedGroupAlgebraSystemInClass C R G)
+      (fun U => @Ring.toAddCommGroup _
+        (instRingCompletedGroupAlgebraSystemInClassStage
+          (G := G) (R := R) C U))
+      (fun U => instModuleCompletedGroupAlgebraSystemInClassStage
+        (G := G) (R := R) C U)
+      (completedGroupAlgebraTransitionInClass_smul (R := R) (G := G) C))
 
 /-- Stagewise coefficient change on the \(C\)-indexed completion. -/
 def completedGroupAlgebraCoeffMapInClass
@@ -233,10 +263,33 @@ instance instAlgebraCompletedGroupAlgebraInClass
     intro r x
     apply completedGroupAlgebraInClass_ext (R := R) (G := G) C
     intro U
-    change r • completedGroupAlgebraProjectionInClass C R G U x =
-      algebraMap R (CompletedGroupAlgebraStageInClass C R G U) r *
-        completedGroupAlgebraProjectionInClass C R G U x
-    rw [Algebra.smul_def]
+    have hproj :
+        completedGroupAlgebraProjectionInClass C R G U (r • x) =
+          r • completedGroupAlgebraProjectionInClass C R G U x := by
+      let _ : Module R
+          (completedGroupAlgebraSystemInClass C R G).inverseLimit :=
+        instModuleCoeffCompletedGroupAlgebraInClass (G := G) (R := R) C
+      change
+        (completedGroupAlgebraSystemInClass C R G).projection U
+            (r • completedGroupAlgebraInClassCompatibleFamilyEquiv
+              (R := R) (G := G) C x) =
+          r • (completedGroupAlgebraSystemInClass C R G).projection U
+            (completedGroupAlgebraInClassCompatibleFamilyEquiv
+              (R := R) (G := G) C x)
+      rfl
+    calc
+      completedGroupAlgebraProjectionInClass C R G U (r • x) =
+          r • completedGroupAlgebraProjectionInClass C R G U x := hproj
+      _ = algebraMap R (CompletedGroupAlgebraStageInClass C R G U) r *
+          completedGroupAlgebraProjectionInClass C R G U x :=
+        Algebra.smul_def r (completedGroupAlgebraProjectionInClass C R G U x)
+      _ = completedGroupAlgebraProjectionInClass C R G U
+          (completedGroupAlgebraAlgebraMapInClass (R := R) (G := G) C r) *
+            completedGroupAlgebraProjectionInClass C R G U x := by rfl
+      _ = completedGroupAlgebraProjectionInClass C R G U
+          (completedGroupAlgebraAlgebraMapInClass (R := R) (G := G) C r * x) :=
+        (map_mul (completedGroupAlgebraProjectionInClass C R G U)
+          (completedGroupAlgebraAlgebraMapInClass (R := R) (G := G) C r) x).symm
 
 end
 

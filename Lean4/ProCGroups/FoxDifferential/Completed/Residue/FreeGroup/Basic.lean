@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Common.FreeCrossedDifferential
 import ProCGroups.FoxDifferential.Completed.Residue.Core
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — residue — free group — basic
 

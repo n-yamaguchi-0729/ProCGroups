@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Completed.Continuous.Naturality
 import ProCGroups.FoxDifferential.Completed.Comparison.QuotientFamily
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — comparison — source projection
 
@@ -45,7 +47,6 @@ theorem freeProCZCCompletedFoxBoundary_finiteStageProjection
   intro x _
   simp only [zcCompletedGroupAlgebraProjection, zcCompletedGroupAlgebraProjection_mul,
   zcCompletedGroupAlgebraProjection_sub, zcCompletedGroupAlgebraProjection_groupLike,
-      MonoidAlgebra.of_apply,
   zcCompletedGroupAlgebraProjection_one]
 
 /-- Finite-stage projection of the source-shaped completed Fox boundary map, with generator
@@ -127,9 +128,9 @@ theorem ZCFiniteStageQuotientBundle.finite_completedGroupAlgebraStage
     letI : TopologicalSpace B.Target := B.targetTopology
     letI : IsTopologicalGroup B.Target := B.targetIsTopologicalGroup
     Finite (ZCCompletedGroupAlgebraStage C B.Target j) := by
-  letI : TopologicalSpace B.Target := B.targetTopology
-  letI : IsTopologicalGroup B.Target := B.targetIsTopologicalGroup
-  letI : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
+  let : TopologicalSpace B.Target := B.targetTopology
+  let : IsTopologicalGroup B.Target := B.targetIsTopologicalGroup
+  let : Fact (0 < j.1.modulus) := ⟨j.1.positive⟩
   exact
     finite_modNCompletedGroupAlgebraStageInClass
       (n := j.1.modulus) (G := B.Target) C j.2

@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Completed.DifferentialModule.TargetQuotient.Basic
 import ProCGroups.FoxDifferential.Completed.DifferentialModule.Map.GroupLike
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — differential module — target quotient — stage map
 
@@ -122,19 +124,60 @@ theorem primePowerCompletedGroupAlgebraMapStage_targetQuotient_transition_source
       rcases QuotientGroup.mk'_surjective
           (foxCommutatorPowerSubgroup (F := FreeGroup X) N (ℓ ^ j.1)) q with
         ⟨w, rfl⟩
+      let qSource :
+          _root_.CompletedGroupAlgebra.CompletedGroupAlgebraQuotient (FreeGroup X)
+            (foxAlgebraicStagePrimePowerSourceCompletedIndex
+              (ℓ := ℓ) (X := X) N hfinite j.1) :=
+        QuotientGroup.mk'
+          (foxCommutatorPowerSubgroup (F := FreeGroup X) N (ℓ ^ j.1)) w
+      have hsourceComap :
+          (((OrderDual.ofDual
+              (foxAlgebraicStagePrimePowerSourceCompletedIndex
+                (ℓ := ℓ) (X := X) N hfinite j.1)).1 :
+                OpenNormalSubgroup (FreeGroup X)) : Subgroup (FreeGroup X)) ≤
+            (((OrderDual.ofDual
+              (completedGroupAlgebraComapIndex
+                (G := FreeGroup X)
+                (H := foxAlgebraicStageTargetQuotient (X := X) N)
+                (foxAlgebraicStageTargetQuotientContinuousMonoidHom (X := X) N)
+                j.2)).1 : OpenNormalSubgroup (FreeGroup X)) : Subgroup (FreeGroup X)) := by
+        change
+          completedGroupAlgebraComapIndex
+              (G := FreeGroup X)
+              (H := foxAlgebraicStageTargetQuotient (X := X) N)
+              (foxAlgebraicStageTargetQuotientContinuousMonoidHom (X := X) N) j.2 ≤
+            foxAlgebraicStagePrimePowerSourceCompletedIndex
+              (ℓ := ℓ) (X := X) N hfinite j.1
+        exact
+          foxAlgebraicStagePrimePowerSourceCompletedIndex_le_targetQuotientComap
+            (ℓ := ℓ) (X := X) N hfinite j
+      let qComap :
+          _root_.CompletedGroupAlgebra.CompletedGroupAlgebraQuotient (FreeGroup X)
+            (completedGroupAlgebraComapIndex
+              (G := FreeGroup X)
+              (H := foxAlgebraicStageTargetQuotient (X := X) N)
+              (foxAlgebraicStageTargetQuotientContinuousMonoidHom (X := X) N) j.2) :=
+        (OpenNormalSubgroupInClass.map
+          (C := ProCGroups.FiniteGroupClass.allFinite) (G := FreeGroup X)
+          (U := OrderDual.ofDual
+            (completedGroupAlgebraComapIndex
+              (G := FreeGroup X)
+              (H := foxAlgebraicStageTargetQuotient (X := X) N)
+              (foxAlgebraicStageTargetQuotientContinuousMonoidHom (X := X) N) j.2))
+          (V := OrderDual.ofDual
+            (foxAlgebraicStagePrimePowerSourceCompletedIndex
+              (ℓ := ℓ) (X := X) N hfinite j.1)) hsourceComap) qSource
       change
         leftMap
             (MonoidAlgebra.of (ModNCompletedCoeff (ℓ ^ j.1))
-              (FreeGroup X ⧸
-                foxCommutatorPowerSubgroup (F := FreeGroup X) N (ℓ ^ j.1))
-              (QuotientGroup.mk'
-                (foxCommutatorPowerSubgroup (F := FreeGroup X) N (ℓ ^ j.1)) w)) =
+              (_root_.CompletedGroupAlgebra.CompletedGroupAlgebraQuotient (FreeGroup X)
+                (foxAlgebraicStagePrimePowerSourceCompletedIndex
+                  (ℓ := ℓ) (X := X) N hfinite j.1)) qSource) =
           rightMap
             (MonoidAlgebra.of (ModNCompletedCoeff (ℓ ^ j.1))
-              (FreeGroup X ⧸
-                foxCommutatorPowerSubgroup (F := FreeGroup X) N (ℓ ^ j.1))
-              (QuotientGroup.mk'
-                  (foxCommutatorPowerSubgroup (F := FreeGroup X) N (ℓ ^ j.1)) w))
+              (_root_.CompletedGroupAlgebra.CompletedGroupAlgebraQuotient (FreeGroup X)
+                (foxAlgebraicStagePrimePowerSourceCompletedIndex
+                  (ℓ := ℓ) (X := X) N hfinite j.1)) qSource)
       dsimp [leftMap, rightMap]
       change
         primePowerCompletedGroupAlgebraMapStage
@@ -147,8 +190,7 @@ theorem primePowerCompletedGroupAlgebraMapStage_targetQuotient_transition_source
                 (_root_.CompletedGroupAlgebra.CompletedGroupAlgebraQuotient (FreeGroup X)
                   (foxAlgebraicStagePrimePowerSourceCompletedIndex
                     (ℓ := ℓ) (X := X) N hfinite j.1))
-                (QuotientGroup.mk'
-                  (foxCommutatorPowerSubgroup (F := FreeGroup X) N (ℓ ^ j.1)) w))) =
+                qSource)) =
           modNCompletedGroupAlgebraStageMap (ℓ ^ j.1)
             (foxAlgebraicStageTargetQuotient (X := X) N) j.2
             (foxCommutatorPowerGroupAlgebraMap (F := FreeGroup X) N (ℓ ^ j.1)
@@ -156,9 +198,8 @@ theorem primePowerCompletedGroupAlgebraMapStage_targetQuotient_transition_source
                 (_root_.CompletedGroupAlgebra.CompletedGroupAlgebraQuotient (FreeGroup X)
                   (foxAlgebraicStagePrimePowerSourceCompletedIndex
                     (ℓ := ℓ) (X := X) N hfinite j.1))
-                (QuotientGroup.mk'
-                  (foxCommutatorPowerSubgroup (F := FreeGroup X) N (ℓ ^ j.1)) w)))
-      rw [primePowerCompletedGroupAlgebraTransition_of]
+                qSource))
+      erw [primePowerCompletedGroupAlgebraTransition_of]
       change
         primePowerCompletedGroupAlgebraMapStage
             (ℓ := ℓ) (G := FreeGroup X)
@@ -169,27 +210,14 @@ theorem primePowerCompletedGroupAlgebraMapStage_targetQuotient_transition_source
                 (completedGroupAlgebraComapIndex
                   (G := FreeGroup X) (H := foxAlgebraicStageTargetQuotient (X := X) N)
                   (foxAlgebraicStageTargetQuotientContinuousMonoidHom (X := X) N) j.2))
-              ((OpenNormalSubgroupInClass.map
-                (C := ProCGroups.FiniteGroupClass.allFinite) (G := FreeGroup X)
-                (U := OrderDual.ofDual
-                  (completedGroupAlgebraComapIndex
-                    (G := FreeGroup X) (H := foxAlgebraicStageTargetQuotient (X := X) N)
-                    (foxAlgebraicStageTargetQuotientContinuousMonoidHom (X := X) N) j.2))
-                (V := OrderDual.ofDual
-                  (foxAlgebraicStagePrimePowerSourceCompletedIndex
-                    (ℓ := ℓ) (X := X) N hfinite j.1))
-                (foxAlgebraicStagePrimePowerSourceCompletedIndex_le_targetQuotientComap
-                  (ℓ := ℓ) (X := X) N hfinite j))
-                (QuotientGroup.mk'
-                  (foxCommutatorPowerSubgroup (F := FreeGroup X) N (ℓ ^ j.1)) w))) =
+              qComap) =
           modNCompletedGroupAlgebraStageMap (ℓ ^ j.1)
             (foxAlgebraicStageTargetQuotient (X := X) N) j.2
             (foxCommutatorPowerGroupAlgebraMap (F := FreeGroup X) N (ℓ ^ j.1)
               (MonoidAlgebra.of (ModNCompletedCoeff (ℓ ^ j.1))
                 (FreeGroup X ⧸
                   foxCommutatorPowerSubgroup (F := FreeGroup X) N (ℓ ^ j.1))
-                (QuotientGroup.mk'
-                  (foxCommutatorPowerSubgroup (F := FreeGroup X) N (ℓ ^ j.1)) w)))
+                qSource))
       rw [primePowerCompletedGroupAlgebraMapStage_of,
         foxCommutatorPowerGroupAlgebraMap_of,
         modNCompletedGroupAlgebraStageMap_of]

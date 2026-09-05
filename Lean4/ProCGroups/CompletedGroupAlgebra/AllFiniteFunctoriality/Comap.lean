@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.Index
 
+set_option autoImplicit false
+
 /-!
 # Completed Group Algebra / All Finite Functoriality / Comap
 
@@ -45,7 +47,7 @@ def completedGroupAlgebraComapIndex
     change φ (a⁻¹ * b) ∈ (V₀ : Subgroup H)
     have hv : (φ a)⁻¹ * φ b ∈ (V₀ : Subgroup H) := QuotientGroup.eq.1 hxy
     simpa using hv
-  letI : Finite (H ⧸ (V₀ : Subgroup H)) := (OrderDual.ofDual V).2
+  let : Finite (H ⧸ (V₀ : Subgroup H)) := (OrderDual.ofDual V).2
   exact Finite.of_injective f hf
 
 omit [IsTopologicalGroup G] [IsTopologicalGroup H] in

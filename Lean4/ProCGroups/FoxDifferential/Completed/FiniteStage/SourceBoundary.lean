@@ -2,6 +2,8 @@ import ProCGroups.FoxDifferential.Completed.FiniteStage.RelationIdeal
 import ProCGroups.FoxDifferential.Completed.FiniteStage.BoundaryQuotient
 import ProCGroups.FoxDifferential.Completed.FiniteStage.SemidirectCycles
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — finite stage — source boundary
 

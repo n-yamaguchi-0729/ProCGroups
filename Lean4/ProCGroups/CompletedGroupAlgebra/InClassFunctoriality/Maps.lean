@@ -1,5 +1,7 @@
 import ProCGroups.CompletedGroupAlgebra.InClassFunctoriality.StageMaps
 
+set_option autoImplicit false
+
 /-!
 # Completed Group Algebra / Functoriality Within a Class / Maps
 
@@ -55,7 +57,7 @@ def completedGroupAlgebraMapInClass
               (completedGroupAlgebraComapIndexInClass
                 (G := G) (H := H) C hHer φ hφ W) x)
           rw [RingHom.comp_apply, RingHom.comp_apply] at hcomp
-          simp only [Function.comp_apply]
+          simp only
           rw [← completedGroupAlgebraProjectionInClass_compatible
             (R := R) (G := G) C
             (completedGroupAlgebraComapIndexInClass_mono
@@ -150,7 +152,7 @@ theorem continuous_completedGroupAlgebraMapInClass
     (φ : G →* H) (hφ : Continuous φ) :
     Continuous (completedGroupAlgebraMapInClass (G := G) (H := H) C hHer R φ hφ) := by
   let S := completedGroupAlgebraSystemInClass C R H
-  letI : ∀ V, TopologicalSpace (CompletedGroupAlgebraStageInClass C R H V) :=
+  let : ∀ V, TopologicalSpace (CompletedGroupAlgebraStageInClass C R H V) :=
     fun V => (completedGroupAlgebraSystemInClass C R H).topologicalSpace V
   let π : ∀ V : CompletedGroupAlgebraIndexInClass H C,
       CompletedGroupAlgebraInClass C R G →
@@ -163,7 +165,7 @@ theorem continuous_completedGroupAlgebraMapInClass
             (G := G) (H := H) C hHer φ hφ V) x)
   have hπ : ∀ V, Continuous (π V) := by
     intro V
-    letI : TopologicalSpace
+    let : TopologicalSpace
         (CompletedGroupAlgebraStageInClass C R G
           (completedGroupAlgebraComapIndexInClass (G := G) (H := H) C hHer φ hφ V)) :=
       (completedGroupAlgebraSystemInClass C R G).topologicalSpace
@@ -183,7 +185,7 @@ theorem continuous_completedGroupAlgebraMapInClass
         (completedGroupAlgebraComapIndexInClass
           (G := G) (H := H) C hHer φ hφ W) x)
     rw [RingHom.comp_apply, RingHom.comp_apply] at hcomp
-    simp only [S, π, Function.comp_apply]
+    simp only [S, π]
     rw [← completedGroupAlgebraProjectionInClass_compatible
       (R := R) (G := G) C
       (completedGroupAlgebraComapIndexInClass_mono
@@ -231,9 +233,9 @@ theorem completedGroupAlgebraMapInClass_surjective_of_surjective
     Function.Surjective
       (completedGroupAlgebraMapInClass (G := G) (H := H) C hHer R φ hφ) := by
   let f := completedGroupAlgebraMapInClass (G := G) (H := H) C hHer R φ hφ
-  letI : CompactSpace (CompletedGroupAlgebraInClass C R G) :=
+  let : CompactSpace (CompletedGroupAlgebraInClass C R G) :=
     completedGroupAlgebraInClass_compactSpace (R := R) (G := G) C
-  letI : T2Space (CompletedGroupAlgebraInClass C R H) :=
+  let : T2Space (CompletedGroupAlgebraInClass C R H) :=
     completedGroupAlgebraInClass_t2Space (R := R) (G := H) C
   have hfcont : Continuous f :=
     continuous_completedGroupAlgebraMapInClass (R := R) (G := G) (H := H)
@@ -283,7 +285,7 @@ theorem completedGroupAlgebraInClassRingHom_ext_of_comp_toCompleted
     (hfg : f.comp (toCompletedGroupAlgebraInClassRingHom C R G) =
       g.comp (toCompletedGroupAlgebraInClassRingHom C R G)) :
     f = g := by
-  letI : T2Space (CompletedGroupAlgebraInClass C R H) :=
+  let : T2Space (CompletedGroupAlgebraInClass C R H) :=
     completedGroupAlgebraInClass_t2Space (R := R) (G := H) C
   have hdense : DenseRange (toCompletedGroupAlgebraInClassRingHom C R G) := by
     change DenseRange (toCompletedGroupAlgebraInClass C R G)

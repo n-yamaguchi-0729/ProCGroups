@@ -3,6 +3,8 @@ import ProCGroups.Profinite.OpenSubgroups
 import ProCGroups.Topologies.QuotientMaps
 import ProCGroups.Topologies.ContinuousMulEquiv
 
+set_option autoImplicit false
+
 /-!
 # Basic operations on open normal subgroups
 
@@ -279,9 +281,8 @@ def normalCore [ContinuousMul G] [CompactSpace G] (U : OpenSubgroup G) :
       isOpen' := by
         have hclosed : IsClosed ((U : Subgroup G) : Set G) :=
           openSubgroup_isClosed (G := G) U
-        letI : (U : Subgroup G).FiniteIndex := by
-          letI : Finite (G ⧸ (U : Subgroup G)) := openSubgroup_finiteQuotient (G := G) U
-          exact Subgroup.finiteIndex_of_finite_quotient
+        let : (U : Subgroup G).FiniteIndex :=
+          Subgroup.finiteIndex_of_finite_quotient (H := (U : Subgroup G))
         exact Subgroup.isOpen_of_isClosed_of_finiteIndex _
           ((U : Subgroup G).normalCore_isClosed hclosed) }
   isNormal' := by

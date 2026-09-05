@@ -1,5 +1,7 @@
 import ProCGroups.FoxDifferential.Completed.Residue.FreeGroup.Boundary
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — residue — free group — fundamental
 

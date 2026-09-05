@@ -2,6 +2,8 @@ import ProCGroups.InverseSystems.Basic
 import Mathlib.Topology.Category.TopCat.Limits.Basic
 import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Limits
 
+set_option autoImplicit false
+
 /-!
 # Categorical inverse limits
 

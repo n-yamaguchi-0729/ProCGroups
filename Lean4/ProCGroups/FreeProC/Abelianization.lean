@@ -3,6 +3,8 @@ import Mathlib.Topology.Instances.ZMod
 import ProCGroups.Abelian.TopologicalAbelianization
 import ProCGroups.FreeProC.Basic
 
+set_option autoImplicit false
+
 /-!
 # Pro C Groups / Free pro-C / Abelianization
 
@@ -36,15 +38,8 @@ theorem exists_freeAbelianizationCyclicCoordinate
         Multiplicative.ofAdd (1 : ZMod L) := by
   classical
   let C : ProCGroups.FiniteGroupClass.{u} := ProCGroups.FiniteGroupClass.sigmaGroup sigma
-  letI : NeZero L := ⟨Nat.ne_of_gt hLpos⟩
+  let : NeZero L := ⟨Nat.ne_of_gt hLpos⟩
   let T : Type u := ULift.{u} (Multiplicative (ZMod L))
-  letI : Group T := inferInstance
-  letI : CommGroup T := inferInstance
-  letI : TopologicalSpace T := ⊥
-  letI : DiscreteTopology T := ⟨rfl⟩
-  letI : IsTopologicalGroup T := by infer_instance
-  letI : Finite T := by
-    exact Finite.of_equiv (Multiplicative (ZMod L)) Equiv.ulift.symm
   let φ : Fin r → T :=
     fun j => if j = i then ULift.up (Multiplicative.ofAdd (1 : ZMod L)) else 1
   have hφ : FamilyConvergesToOneAlongOpenSubgroups (G := T) φ :=
@@ -62,9 +57,6 @@ theorem exists_freeAbelianizationCyclicCoordinate
         (ProCGroups.FiniteGroupClass.sigmaGroup_subgroupClosed sigma)
         htarget φ hφ with
     ⟨χF, hχF, _⟩
-  letI : TopologicalSpace (Multiplicative (ZMod L)) := ⊥
-  letI : DiscreteTopology (Multiplicative (ZMod L)) := ⟨rfl⟩
-  letI : IsTopologicalGroup (Multiplicative (ZMod L)) := by infer_instance
   let down : T →ₜ* Multiplicative (ZMod L) :=
     { toMonoidHom := (MulEquiv.ulift : T ≃* Multiplicative (ZMod L)).toMonoidHom
       continuous_toFun := continuous_of_discreteTopology }

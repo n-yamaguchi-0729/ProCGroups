@@ -1,5 +1,7 @@
 import ProCGroups.LocalWeight.ClosedNormalDataAndTransfiniteSeries
 
+set_option autoImplicit false
+
 /-!
 # Local weight from convergent generating sets
 
@@ -32,9 +34,8 @@ theorem localWeight_eq_rho_of_closedGeneratingSet
   have hGinf : Infinite G := by
     classical
     by_contra hfin
-    letI : Finite G := not_infinite_iff_finite.mp hfin
+    let : Finite G := not_infinite_iff_finite.mp hfin
     exact hXinfinite (Set.toFinite X)
-  letI : Infinite G := hGinf
   have hle : localWeight G ≤ rho ↥X :=
     localWeight_le_rho_of_closedGeneratingSet
       (G := G) X hXclosed hXgen hXinfinite

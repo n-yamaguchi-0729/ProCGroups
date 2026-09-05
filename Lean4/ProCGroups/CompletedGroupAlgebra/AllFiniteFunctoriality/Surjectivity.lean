@@ -1,6 +1,8 @@
 import ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.Map
 import ProCGroups.CompletedGroupAlgebra.OpenFiniteQuotientTopology.OpenFiniteComparison
 
+set_option autoImplicit false
+
 /-!
 # Surjectivity of completed group-algebra maps
 
@@ -33,9 +35,9 @@ theorem completedGroupAlgebraMap_surjective_of_surjective
     (hφsurj : Function.Surjective φ) :
     Function.Surjective (completedGroupAlgebraMap (G := G) (H := H) R φ hφ) := by
   let f := completedGroupAlgebraMap (G := G) (H := H) R φ hφ
-  letI : CompactSpace (CompletedGroupAlgebraCarrier R G) :=
+  let : CompactSpace (CompletedGroupAlgebraCarrier R G) :=
     completedGroupAlgebra_compactSpace (R := R) (G := G)
-  letI : T2Space (CompletedGroupAlgebraCarrier R H) :=
+  let : T2Space (CompletedGroupAlgebraCarrier R H) :=
     completedGroupAlgebra_t2Space (R := R) (G := H)
   have hfcont : Continuous f :=
     continuous_completedGroupAlgebraMap (R := R) (G := G) (H := H) φ hφ

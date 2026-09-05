@@ -1,6 +1,8 @@
 import ProCGroups.FoxDifferential.Completed.Continuous.Universal.Basic
 import ProCGroups.InverseSystems.Utilities
 
+set_option autoImplicit false
+
 /-!
 # Fox differential: completed — continuous — universal — finite stage
 
@@ -332,6 +334,7 @@ theorem zcCompletedDifferentialModuleStagePsi_sourceProj
       QuotientGroup.mk' ((OrderDual.ofDual i.target.2).1 : Subgroup H) (ψ g) := by
   simp only [zcCompletedDifferentialModuleStageSourceProj, QuotientGroup.mk'_apply,
   zcCompletedDifferentialModuleStagePsi_coe]
+  rfl
 
 omit [IsTopologicalGroup G] in
 /--
@@ -347,7 +350,7 @@ theorem zcCompletedDifferentialModuleStageScalar_sourceProj
         (zcCompletedDifferentialModuleStageTarget C ψ i)
         (QuotientGroup.mk' ((OrderDual.ofDual i.target.2).1 : Subgroup H) (ψ g)) := by
   simp only [zcCompletedDifferentialModuleStageSourceProj, QuotientGroup.mk'_apply,
-  zcCompletedDifferentialModuleStageScalar_coe, MonoidAlgebra.of_apply]
+  zcCompletedDifferentialModuleStageScalar_coe]
 
 /--
 The source-identity finite stage attached to a \(\psi\)-stage. It has the same source quotient
@@ -548,7 +551,7 @@ theorem zcCompletedDifferentialModuleIdentitySourceStageToStage_universal
           (zcCompletedDifferentialModuleStageScalar C (MonoidHom.id G)
             (zcCompletedDifferentialModuleIdentitySourceIndex C ψ i)) q) =
       universalCrossedDifferential (zcCompletedDifferentialModuleStageScalar C ψ i) q := by
-  letI : Module
+  let : Module
       (zcCompletedDifferentialModuleStageRing C (MonoidHom.id G)
         (zcCompletedDifferentialModuleIdentitySourceIndex C ψ i))
       (ZCCompletedDifferentialModuleStage C ψ i) :=
@@ -588,7 +591,6 @@ theorem zcCompletedDifferentialModuleStage_completed_groupLike_smul
   rw [zcCompletedDifferentialModuleStage_completed_smul]
   simp only [zcCompletedGroupAlgebraScalar, MonoidHom.coe_comp, Function.comp_apply,
   zcCompletedGroupAlgebraProjectionRingHom_apply, zcCompletedGroupAlgebraProjection_groupLike,
-      MonoidAlgebra.of_apply,
   zcCompletedDifferentialModuleStageSourceProj_apply, QuotientGroup.mk'_apply,
   zcCompletedDifferentialModuleStageScalar_coe]
 
@@ -815,7 +817,7 @@ theorem zcCompletedDifferentialModulePreStageMap_relationElement
   zcCompletedDifferentialModulePreStageMap_single,
       zcCompletedDifferentialModuleStageSourceProj_apply,
   QuotientGroup.mk'_apply, QuotientGroup.mk_mul, zcCompletedGroupAlgebraProjection_one, map_add,
-  zcCompletedGroupAlgebraProjection_groupLike, MonoidAlgebra.of_apply,
+  zcCompletedGroupAlgebraProjection_groupLike,
       zcCompletedDifferentialModuleStageScalar_coe]
 
 omit [IsTopologicalGroup G] in
@@ -1199,6 +1201,7 @@ theorem zcCompletedDifferentialModuleStageTargetTransition_id
   rcases QuotientGroup.mk'_surjective ((OrderDual.ofDual i.target.2).1 : Subgroup H) x
     with ⟨h, rfl⟩
   simp only [QuotientGroup.mk'_apply, zcCompletedDifferentialModuleStageTargetTransition_coe]
+  rfl
 
 omit [IsTopologicalGroup G] in
 /-- Successive target transitions agree with the target transition for the composite refinement. -/
@@ -1213,6 +1216,7 @@ theorem zcCompletedDifferentialModuleStageTargetTransition_comp
   rcases QuotientGroup.mk'_surjective ((OrderDual.ofDual k.target.2).1 : Subgroup H) x
     with ⟨h, rfl⟩
   simp only [QuotientGroup.mk'_apply, zcCompletedDifferentialModuleStageTargetTransition_coe]
+  rfl
 
 omit [IsTopologicalGroup G] in
 /-- The source-to-target stage map commutes with the source and target transition maps. -/
@@ -1228,6 +1232,7 @@ theorem zcCompletedDifferentialModuleStagePsi_transition
   simp only [QuotientGroup.mk'_apply, zcCompletedDifferentialModuleStagePsi_coe,
   zcCompletedDifferentialModuleStageTargetTransition_coe,
       zcCompletedDifferentialModuleStageSourceTransition_coe]
+  rfl
 
 omit [IsTopologicalGroup G] in
 /--
@@ -1243,7 +1248,7 @@ theorem zcCompletedDifferentialModuleStageScalar_transition
         (zcCompletedDifferentialModuleStageSourceTransition C ψ hij x) := by
   rcases QuotientGroup.mk'_surjective (j.source.1 : Subgroup G) x with ⟨g, rfl⟩
   rw [zcCompletedDifferentialModuleStageScalar_mk]
-  rw [zcCompletedGroupAlgebraTransition_of]
+  erw [zcCompletedGroupAlgebraTransition_of]
   change
     MonoidAlgebra.of (ModNCompletedCoeff i.target.1.modulus)
         (zcCompletedDifferentialModuleStageTarget C ψ i)
@@ -1384,7 +1389,7 @@ theorem zcCompletedDifferentialModuleStageTransition_universal
     zcCompletedDifferentialModuleStageTransition C ψ hij
         (zcCompletedDifferentialModuleStageDifferential C ψ j g) =
       zcCompletedDifferentialModuleStageDifferential C ψ i g := by
-  letI : Module (zcCompletedDifferentialModuleStageRing C ψ j)
+  let : Module (zcCompletedDifferentialModuleStageRing C ψ j)
       (ZCCompletedDifferentialModuleStage C ψ i) :=
     Module.compHom _ (zcCompletedGroupAlgebraTransition C H hij.2)
   change
@@ -1690,13 +1695,13 @@ theorem zcCompletedDifferentialModuleStageTransition_comp
             (zcCompletedDifferentialModuleStageScalar C ψ k) q := by
       rw [← Finsupp.smul_single_one]
       rfl
-    letI : Module (zcCompletedDifferentialModuleStageRing C ψ k)
+    let : Module (zcCompletedDifferentialModuleStageRing C ψ k)
         (ZCCompletedDifferentialModuleStage C ψ j) :=
       Module.compHom _ (zcCompletedGroupAlgebraTransition C H hjk.2)
-    letI : Module (zcCompletedDifferentialModuleStageRing C ψ j)
+    let : Module (zcCompletedDifferentialModuleStageRing C ψ j)
         (ZCCompletedDifferentialModuleStage C ψ i) :=
       Module.compHom _ (zcCompletedGroupAlgebraTransition C H hij.2)
-    letI : Module (zcCompletedDifferentialModuleStageRing C ψ k)
+    let : Module (zcCompletedDifferentialModuleStageRing C ψ k)
         (ZCCompletedDifferentialModuleStage C ψ i) :=
       Module.compHom _ (zcCompletedGroupAlgebraTransition C H (hij.trans hjk).2)
     rw [hsingle]
