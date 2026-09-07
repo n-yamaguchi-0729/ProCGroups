@@ -1,3 +1,5 @@
+import ProCGroups.ProP.ClosedChainStabilization
+import ProCGroups.ProP.CountableRelatorFiniteWitness
 import ProCGroups.ProP.BurnsideBasis
 import ProCGroups.ProP.ContinuousH1
 import ProCGroups.ProP.ElementaryAbelianRank
@@ -14,6 +16,7 @@ import ProCGroups.ProP.PowerCommutatorUniversal
 import ProCGroups.ProP.Presentation.All
 import ProCGroups.ProP.ProfiniteFrattini
 import ProCGroups.ProP.Zassenhaus.All
+import ProCGroups.ProP.MinimalEpimorphism
 
 set_option autoImplicit false
 

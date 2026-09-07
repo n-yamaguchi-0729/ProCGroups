@@ -1,3 +1,4 @@
+import ProCGroups.ProP.Zassenhaus.OpenNormal
 import ProCGroups.ProP.Zassenhaus.AugmentationFiltration
 import ProCGroups.ProP.Zassenhaus.Basic
 import ProCGroups.ProP.Zassenhaus.DegreeTwo

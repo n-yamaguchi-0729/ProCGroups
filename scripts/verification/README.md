@@ -37,4 +37,4 @@ python3 -B -m unittest discover -s tests/verification -p 'test_*.py' -v
 
 The workflow shows the complete setup and verification commands. Use a new output directory for every attempt. Source-level maintenance scripts predating this verification workflow remain in the repository where present; they are not silently treated as passing current-snapshot checks.
 
-This publication setup has passed the small Python fixtures and static workflow parsing. The new full public-snapshot CI pipeline has not yet been executed. Runtime acceptance requires its actual CI logs and receipts.
+Verification status is specific to a repository commit. Use the matching GitHub Actions run and its logs and receipts to check runtime acceptance of the current source snapshot.

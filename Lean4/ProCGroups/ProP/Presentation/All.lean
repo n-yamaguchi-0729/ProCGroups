@@ -1,3 +1,4 @@
+import ProCGroups.ProP.Presentation.FiniteGeneration
 import ProCGroups.ProP.Presentation.Basic
 import ProCGroups.ProP.Presentation.GeneratorRank
 import ProCGroups.ProP.Presentation.InitialForm

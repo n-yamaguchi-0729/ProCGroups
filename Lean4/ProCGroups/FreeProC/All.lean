@@ -8,6 +8,7 @@ import ProCGroups.FreeProC.FiniteRankSourceData
 import ProCGroups.FreeProC.FinitelyGenerated
 import ProCGroups.FreeProC.SolvableQuotients
 import ProCGroups.FreeProC.Universe
+import ProCGroups.FreeProC.Construction
 
 set_option autoImplicit false
 

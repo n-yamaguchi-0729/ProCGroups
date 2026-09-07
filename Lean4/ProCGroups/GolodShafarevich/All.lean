@@ -1,3 +1,6 @@
+import ProCGroups.GolodShafarevich.CountableRelatorTarget
+import ProCGroups.GolodShafarevich.CountableRelators
+import ProCGroups.GolodShafarevich.WeightedFiniteCriterion
 import ProCGroups.GolodShafarevich.FiniteCriterion
 import ProCGroups.GolodShafarevich.FiniteDimensions
 import ProCGroups.GolodShafarevich.GeneratorGap

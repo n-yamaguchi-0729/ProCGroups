@@ -1,3 +1,4 @@
+import ProCGroups.FiniteGeneration.OpenSubgroups
 import ProCGroups.FiniteGeneration.Basic
 import ProCGroups.FiniteGeneration.CharacteristicChainsAndIndices
 

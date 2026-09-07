@@ -11,6 +11,7 @@ Documentation and the library catalog: [Yamaguchi Lean 4 Library](https://n-yama
 
 - Profinite and pro-\(\mathcal C\) groups, finite quotients, and inverse limits.
 - Free pro-\(\mathcal C\) groups, free products, finite generation, and presentations.
+- Weighted and countable-relator Golod–Shafarevich criteria for pro-\(p\) groups.
 - Completed group algebras, Fox differentials, Reidemeister–Schreier theory,
   and the Crowell exact sequence.
 
