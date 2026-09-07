@@ -141,6 +141,50 @@ class VerifyTests(unittest.TestCase):
         self.assertTrue(observed["print_success_message"])
         self.assertFalse(V.read_json(runner.out / "final.json")["passed"])
 
+    def test_coverage_report_survives_stage_receipt_and_remains_hash_bound(self):
+        target = (("str", "Owner"), ("str", "target"))
+        expected = json.loads(json.dumps(self.fixture([target], [target], V.ALLOWED_PARTS)))
+        exported = (self.base / "export.ndjson").read_text()
+        runner = V.Pipeline(self.args())
+        actual_stage = runner.stage
+        def inputs():
+            runner.manifest = {"roots": ["Fixture.All"]}
+            runner.lean = Path("/unexecuted/lean")
+            runner.export_core_dir = Path("/unexecuted/exporter")
+            runner.selector_path = runner.out / "safe-union.txt"
+            runner.inventory = {"selector-0": {"nameParts": [{k: v} for k, v in target]}}
+            runner.selectors = ["selector-0"]
+        def stage(name, command=None, **kwargs):
+            if name == "export":
+                runner.exported.write_text(exported)
+            elif name == "coverage":
+                # Run the real validator and stage writer with execute()'s actual artifact list.
+                return actual_stage(name, command, **kwargs)
+            elif name == "nanoda":
+                raise V.VerificationError("fixture stops after coverage")
+        with patch.object(runner, "inputs", side_effect=inputs), \
+             patch.object(runner, "capture", return_value="/unexecuted/search"), \
+             patch.object(runner, "guard", return_value="fixture-hash"), \
+             patch.object(runner, "stage", side_effect=stage), \
+             patch.object(V.subprocess, "run", side_effect=AssertionError("No subprocess allowed")):
+            self.assertEqual(runner.execute(), 1)
+        report_path = runner.out / "coverage-report.json"
+        receipt_path = runner.out / "coverage.json"
+        self.assertEqual(V.read_json(report_path), expected)
+        receipt = V.read_json(receipt_path)
+        self.assertTrue(receipt["passed"])
+        self.assertEqual(receipt["stage"], "coverage")
+        self.assertNotIn(str(receipt_path), receipt["artifactSha256"])
+        self.assertEqual(receipt["artifactSha256"][str(report_path)], V.digest(report_path))
+        for path, digest in receipt["artifactSha256"].items():
+            self.assertEqual(V.digest(Path(path)), digest)
+        final = V.read_json(runner.out / "final.json")
+        self.assertEqual(final["error"], "fixture stops after coverage")
+        self.assertEqual([s["stage"] for s in final["stages"]], ["coverage"])
+        self.assertEqual(final["stages"][0]["sha256"], V.digest(receipt_path))
+        self.assertEqual(runner.sealed[str(report_path)], V.digest(report_path))
+        self.assertEqual(runner.sealed[str(receipt_path)], V.digest(receipt_path))
+
     def test_existing_output_is_not_reused_or_overwritten(self):
         runner = V.Pipeline(self.args())
         runner.out.mkdir()

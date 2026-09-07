@@ -359,7 +359,7 @@ class Pipeline:
 
     def check_export(self):
         self.coverage = export_coverage(self.exported, self.inventory, self.selectors)
-        write_json(self.out / "coverage.json", self.coverage)
+        write_json(self.out / "coverage-report.json", self.coverage)
         require(self.coverage["allSelectedPresent"], "Export omitted selected declarations")
         require(not self.coverage["unexpectedAxiomNameParts"], "Export has unpermitted structural axiom")
         lean = self.coverage["metadata"]["lean"]
@@ -414,7 +414,7 @@ class Pipeline:
             export_env = {"LEAN_PATH": search + os.pathsep + str(self.export_core_dir)}
             self.stage("export", [str(self.lean), "-j1", "--run", str(HERE / "ExportSelected.lean"),
                        str(self.selector_path), *roots], output=self.exported, environment=export_env)
-            self.stage("coverage", validate=self.check_export, artifacts=[self.out / "coverage.json"])
+            self.stage("coverage", validate=self.check_export, artifacts=[self.out / "coverage-report.json"])
             config = {"export_file_path": str(self.exported), "use_stdin": False,
                       "permitted_axioms": sorted(ALLOWED), "unpermitted_axiom_hard_error": True,
                       "unsafe_permit_all_axioms": False, "num_threads": 1,
