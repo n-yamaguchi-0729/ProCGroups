@@ -49,10 +49,10 @@ noncomputable def Quiver.coveredArrowEquivTotal
     rcases e with ⟨⟨a, b, f⟩, hf⟩
     dsimp
     by_cases hpos : T a b (Sum.inl f)
-    · rw [dif_pos hpos]
+    · rw [dite_eq_left hpos]
     · rcases hf with h | h
       · exact False.elim (hpos h)
-      · rw [dif_neg hpos]
+      · rw [dite_eq_right hpos]
   · let edgeStep {a b : T} (e : a ⟶ b) :
         (default : Quiver.Path (Quiver.root T) a).length + 1 =
           (default : Quiver.Path (Quiver.root T) b).length := by
@@ -90,7 +90,7 @@ noncomputable def Quiver.coveredArrowEquivTotal
                 rw [← h₂]
                 exact Nat.lt_succ_self _
               exact (Nat.lt_asymm hab hba).elim
-            rw [dif_neg hnot]
+            rw [dite_eq_right hnot]
 
 namespace Quiver
 

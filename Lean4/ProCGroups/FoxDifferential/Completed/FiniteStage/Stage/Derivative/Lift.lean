@@ -47,7 +47,7 @@ theorem foxAlgebraicStageLift_right (w : FreeGroup X) :
     (foxAlgebraicStageLift (X := X) N n w).right =
       QuotientGroup.mk' N w := by
   induction w using FreeGroup.induction_on with
-  | C1 =>
+  | one =>
       simp only [foxAlgebraicStageLift, QuotientGroup.mk'_apply, map_one,
           FoxAlgebraicStageSemidirect.one_right]
   | of x =>

@@ -1,3 +1,6 @@
+import ProCGroups.FreeProC.Characterization.AbelianKernelOpenSubgroup
+import ProCGroups.FreeProC.Characterization.AbelianKernelEmbeddingProblems
+import ProCGroups.FreeProC.Characterization.OpenSubgroupFiniteQuotient
 import ProCGroups.FreeProC.Characterization.EmbeddingProblems
 import ProCGroups.FreeProC.Characterization.Quasifree
 

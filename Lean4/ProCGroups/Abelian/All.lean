@@ -1,3 +1,5 @@
+import ProCGroups.Abelian.CharacterDetection
+import ProCGroups.Abelian.FiniteInvariantQuotients
 import ProCGroups.Abelian.TopologicalAbelianization
 import ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
 import ProCGroups.Abelian.TopologicalAbelianizationLimits

@@ -1,7 +1,12 @@
+import ProCGroups.FiniteGroups.PrimeSigma
+import ProCGroups.FiniteGroups.InducedFunctions
+import ProCGroups.FiniteGroups.SigmaMonotonicity
 import ProCGroups.FiniteGroups.AllFinite
 import ProCGroups.FiniteGroups.Classes
 import ProCGroups.FiniteGroups.Solvable
 import ProCGroups.FiniteGroups.StandardClasses
+
+import ProCGroups.FiniteGroups.PGroupFormation
 
 set_option autoImplicit false
 

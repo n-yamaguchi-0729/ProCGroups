@@ -1,3 +1,5 @@
+import ProCGroups.GroupTheory.SplitSemidirect
+import ProCGroups.GroupTheory.SemidirectSubgroups
 import ProCGroups.GroupTheory.CentralizerNormalizerCommensurator
 import ProCGroups.GroupTheory.Conjugation
 import ProCGroups.GroupTheory.Subgroups

@@ -135,7 +135,7 @@ theorem finiteStageRight_comp_lift_eq_quotientMk
     (w : FreeGroup X) :
     stageRight (FreeGroup.lift φ w) = QuotientGroup.mk' N w := by
   induction w using FreeGroup.induction_on with
-  | C1 =>
+  | one =>
       simp only [map_one]
   | of x =>
       simpa using hright_generators x

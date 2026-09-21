@@ -49,7 +49,7 @@ def freeCrossedHomActionLift :
 theorem freeCrossedHomActionLift_right (w : FreeGroup X) :
     (freeCrossedHomActionLift action basisValue w).right = w := by
   induction w using FreeGroup.induction_on with
-  | C1 => simp only [freeCrossedHomActionLift, map_one, SemidirectProduct.one_right]
+  | one => simp only [freeCrossedHomActionLift, map_one, SemidirectProduct.one_right]
   | of x => simp only [freeCrossedHomActionLift, FreeGroup.lift_apply_of]
   | inv_of x hx => simpa using congrArg Inv.inv hx
   | mul x y hx hy =>
@@ -81,7 +81,7 @@ theorem freeCrossedHomForAction_unique
   apply CrossedHom.ext
   intro w
   induction w using FreeGroup.induction_on with
-  | C1 => rw [CrossedHom.map_one, CrossedHom.map_one]
+  | one => rw [CrossedHom.map_one, CrossedHom.map_one]
   | of x => rw [hbasis x, freeCrossedHomForAction_of]
   | inv_of x hx => rw [CrossedHom.map_inv, CrossedHom.map_inv, hx]
   | mul u v hu hv => rw [CrossedHom.map_mul, CrossedHom.map_mul, hu, hv]

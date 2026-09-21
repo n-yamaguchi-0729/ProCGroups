@@ -78,7 +78,7 @@ theorem foxAlgebraicStageSemidirectCoeffMap_lift
         (foxAlgebraicStageLift (X := X) N m₀ w) =
       foxAlgebraicStageLift (X := X) N n₀ w := by
   induction w using FreeGroup.induction_on with
-  | C1 =>
+  | one =>
       simp only [foxAlgebraicStageLift, QuotientGroup.mk'_apply, map_one]
   | of x =>
       apply FoxAlgebraicStageSemidirect.ext

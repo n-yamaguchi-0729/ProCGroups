@@ -442,7 +442,7 @@ theorem isTorsionFreeGroup_of_isAbTorsionFree
   have hKClosed : IsClosed (((Subgroup.zpowers g : Subgroup G) : Set G)) := by
     simpa using
       (show (((Subgroup.zpowers g : Subgroup G) : Set G)).Finite from by
-        simpa using (finite_zpowers (a := g)).2 hg).isClosed
+        exact Set.finite_coe_iff.mp ((finite_zpowers (a := g)).2 hg)).isClosed
   have hKtf : IsTorsionFreeGroup ↥(Subgroup.zpowers g) :=
     isTorsionFreeGroup_of_isAbTorsionFree_of_closedCommSubgroup
       (G := G) (K := Subgroup.zpowers g) hKClosed hG

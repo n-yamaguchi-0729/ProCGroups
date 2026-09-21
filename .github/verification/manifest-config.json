@@ -5,10 +5,10 @@
     ]
   },
   "roots": [
-    "ProCGroups"
+    "ProCGroups.All"
   ],
-  "leanToolchain": "leanprover/lean4:v4.33.0",
-  "mathlibRevision": "6f1ef4e5dd604a435bddba4747b13970cd65d2a1",
+  "leanToolchain": "leanprover/lean4:v4.34.0",
+  "mathlibRevision": "5ed2965256430c3649e86755f9576b54eca72435",
   "mathlibRepository": "https://github.com/leanprover-community/mathlib4",
   "externalModuleRoots": [
     "Mathlib",
@@ -25,8 +25,7 @@
     ".lake"
   ],
   "excludedPaths": [
-    "scripts/verification",
-    "tests"
+    ".github/verification"
   ],
   "enforceSourcePolicy": true
 }

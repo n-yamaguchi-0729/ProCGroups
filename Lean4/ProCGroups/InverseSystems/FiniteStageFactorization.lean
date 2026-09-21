@@ -281,7 +281,7 @@ instance finiteSubsetProductSystem_instIsTopologicalGroup {α : Type u} (X : α 
   intro s
   classical
   dsimp [finiteSubsetProductSystem]
-  exact Pi.topologicalGroup
+  exact Pi.isTopologicalGroup
 
 /-- The finite-subset product system is a group-valued inverse system. -/
 instance finiteSubsetProductSystem_instIsGroupSystem {α : Type u} (X : α → Type v)

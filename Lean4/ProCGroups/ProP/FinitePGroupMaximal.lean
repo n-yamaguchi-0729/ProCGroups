@@ -18,7 +18,7 @@ theorem isCoatom_normal_of_isPGroup
     {p : ℕ} {G : Type u} [Group G] [Finite G] [Fact (Nat.Prime p)]
     (hG : IsPGroup p G) {M : Subgroup G} (hM : IsCoatom M) :
     M.Normal := by
-  exact ((Group.isNilpotent_of_finite_tfae (G := G)).out 0 2 rfl rfl).mp
+  exact ((Group.isNilpotent_of_finite_tfae (G := G)).out 1 3 rfl rfl).mp
     hG.isNilpotent M hM
 
 /-- A quotient by a maximal normal subgroup has no nontrivial proper subgroups. -/

@@ -72,7 +72,7 @@ theorem exists_projection_preimage_subset [Nonempty I]
               S.map (hj i hi) ⁻¹' Us i := by
           ext z
           by_cases h : i ∈ s
-          · rw [dif_pos h]
+          · rw [dite_eq_left h]
           · exact (h.elim hi)
         rw [hif] at hyji
         simpa [Set.mem_preimage] using hyji

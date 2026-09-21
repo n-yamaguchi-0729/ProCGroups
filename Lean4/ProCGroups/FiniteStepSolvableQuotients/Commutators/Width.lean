@@ -149,7 +149,7 @@ theorem exists_generating_family_of_rank_le
     refine ⟨e aS, ?_⟩
     dsimp [x]
     let hEx : ∃ b : {a : K // a ∈ S}, e b = e aS := ⟨aS, rfl⟩
-    rw [dif_pos hEx]
+    rw [dite_eq_left hEx]
     change ((Classical.choose hEx : {a : K // a ∈ S}) : K) = (aS : K)
     exact congrArg Subtype.val (e.injective (Classical.choose_spec hEx))
   refine ⟨x, le_antisymm le_top ?_⟩

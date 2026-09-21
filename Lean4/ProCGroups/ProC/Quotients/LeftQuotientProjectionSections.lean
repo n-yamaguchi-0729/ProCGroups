@@ -85,7 +85,7 @@ noncomputable def closedSubgroupOfOpenSubgroup
   toSubgroup := (N : Subgroup T).map ((T : Subgroup G).subtype)
   isClosed' := by
     have : IsTopologicalGroup ↥(T : Subgroup G) :=
-      Topology.IsInducing.subtypeVal.topologicalGroup (T : Subgroup G).subtype
+      Topology.IsInducing.subtypeVal.isTopologicalGroup (T : Subgroup G).subtype
     have hNclosed : IsClosed ((N : Subgroup T) : Set T) :=
       Subgroup.isClosed_of_isOpen (N : Subgroup T) N.isOpen'
     have hNcompact : IsCompact ((N : Subgroup T) : Set T) := hNclosed.isCompact

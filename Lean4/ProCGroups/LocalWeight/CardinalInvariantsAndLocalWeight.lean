@@ -757,7 +757,7 @@ theorem rho_closure_eq_cardinal_of_generatesAndConvergesToOneAlongOpenSubgroups_
           exact Cardinal.add_one_eq (Cardinal.aleph0_le_mk Y)
         _ = Cardinal.mk (insert (1 : G) Y : Set G) :=
           (Cardinal.mk_insert h1notY).symm
-        _ = Cardinal.mk X := Cardinal.mk_congr (Equiv.setCongr hinsertY)
+        _ = Cardinal.mk X := Cardinal.mk_congr (Set.equivOfEq hinsertY)
     have hclosureX_eq : closure X = X := by
       simpa [Set.insert_eq_of_mem h1X] using hclosure
     have hclosureXY : closure X = closure Y := by

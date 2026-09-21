@@ -596,7 +596,7 @@ theorem build_transfiniteClosedNormalSeries_of_localWeight_le
         isClosed_iInter (fun a : Set.Iio lam =>
           openNormalSubgroup_isClosed (G := G) (Wμ ⟨a.1, lt_of_lt_of_le a.2 hlam⟩))
     · dsimp [seriesSub]
-      rw [dif_neg hlam]
+      rw [dite_eq_right hlam]
       simp only [Subgroup.coe_bot, finite_singleton, Finite.isClosed]
   have hseriesNormal : ∀ lam : Ordinal, (seriesSub lam).Normal := by
     intro lam
@@ -664,7 +664,7 @@ theorem build_transfiniteClosedNormalSeries_of_localWeight_le
             ∀ a : Set.Iio (succ lam),
               x.1 ∈ (Wμ ⟨a.1, lt_of_lt_of_le a.2 hsuccle⟩ : Subgroup G) := by
           change x.1 ∈ seriesSub (succ lam) at hxK
-          simp only [seriesSub, dif_pos hsuccle, Subgroup.mem_iInf] at hxK
+          simp only [seriesSub, dite_eq_left hsuccle, Subgroup.mem_iInf] at hxK
           exact hxK
         simpa [U] using hxall ⟨lam, show lam ∈ Set.Iio (succ lam) from lt_succ lam⟩
       · intro hxU
@@ -681,7 +681,7 @@ theorem build_transfiniteClosedNormalSeries_of_localWeight_le
             · simpa [U, haEq] using hxU
             · exact hxHall ⟨a.1, show a.1 ∈ Set.Iio lam from ha⟩
         change x.1 ∈ seriesSub (succ lam)
-        simp only [seriesSub, dif_pos hsuccle, Subgroup.mem_iInf]
+        simp only [seriesSub, dite_eq_left hsuccle, Subgroup.mem_iInf]
         exact hxKall
     have hKerEq : K.toSubgroup.subgroupOf H.toSubgroup = φ.ker := by
       ext x
@@ -736,7 +736,7 @@ theorem build_transfiniteClosedNormalSeries_of_localWeight_le
             ∀ b : Set.Iio (succ a.1),
               x ∈ (Wμ ⟨b.1, lt_of_lt_of_le b.2 hsμ⟩ : Subgroup G) := by
           change x ∈ seriesSub (succ a.1) at hxin
-          simp only [seriesSub, dif_pos hsμ, Subgroup.mem_iInf] at hxin
+          simp only [seriesSub, dite_eq_left hsμ, Subgroup.mem_iInf] at hxin
           exact hxin
         simpa using hxsucc ⟨a.1, show a.1 ∈ Set.Iio (succ a.1) from lt_succ a.1⟩
       simpa [seriesData, seriesSub, hlam, Subgroup.mem_iInf] using hxall

@@ -99,7 +99,7 @@ theorem foxAlgebraicStageDerivative_fundamental_formula
             (foxAlgebraicStageTargetQuotient (X := X) N)
             (QuotientGroup.mk' N (FreeGroup.of i)) - 1) := by
   induction w using FreeGroup.induction_on with
-  | C1 =>
+  | one =>
       simp only [QuotientGroup.mk'_apply, MonoidAlgebra.of_apply, MonoidAlgebra.one_def,
   sub_self, foxAlgebraicStageDerivative, foxAlgebraicStageDerivativeVector, map_one,
       FoxAlgebraicStageSemidirect.one_left,

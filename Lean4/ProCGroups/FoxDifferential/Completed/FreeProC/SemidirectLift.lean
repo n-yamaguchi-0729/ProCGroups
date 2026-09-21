@@ -158,7 +158,7 @@ theorem zcCompletedFoxSemidirectLift_freeGroupLift_mem_closedGeneratedTarget
         (C := C) φ : Subgroup
           (ZCCompletedFoxSemidirect C X H)) := by
   induction w using FreeGroup.induction_on with
-  | C1 =>
+  | one =>
       simp only [map_one, one_mem]
   | of x =>
       have hpoint :

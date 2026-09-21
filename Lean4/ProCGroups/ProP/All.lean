@@ -1,3 +1,4 @@
+import ProCGroups.ProP.CoprimeFixedLift
 import ProCGroups.ProP.ClosedChainStabilization
 import ProCGroups.ProP.CountableRelatorFiniteWitness
 import ProCGroups.ProP.BurnsideBasis

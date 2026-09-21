@@ -166,7 +166,7 @@ theorem zcCompletedFoxSemidirectLift_right
     (ψ : FreeGroup X →* H) (w : FreeGroup X) :
     (zcCompletedFoxSemidirectLift C ψ w).right = ψ w := by
   induction w using FreeGroup.induction_on with
-  | C1 =>
+  | one =>
       simp only [zcCompletedFoxSemidirectLift, map_one, ZCCompletedFoxSemidirect.one_right]
   | of x =>
       simp only [zcCompletedFoxSemidirectLift, FreeGroup.lift_apply_of]

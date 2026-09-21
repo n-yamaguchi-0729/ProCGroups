@@ -769,7 +769,7 @@ instance instIsTopologicalGroupProCIntegerMultiplicativeSystemStage
     IsTopologicalGroup ((proCIntegerMultiplicativeSystem C).X i) := by
   have : DiscreteTopology ((proCIntegerMultiplicativeSystem C).X i) :=
     inferInstanceAs (DiscreteTopology (Multiplicative (ZMod i.modulus)))
-  exact topologicalGroup_of_discreteTopology
+  exact isTopologicalGroup_of_discreteTopology
 
 /-- The pro-\(C\) integer multiplicative system carries the induced group-system structure. -/
 instance instIsGroupSystemProCIntegerMultiplicativeSystem

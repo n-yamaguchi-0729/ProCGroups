@@ -1,8 +1,7 @@
 #!/usr/bin/env python3
 """Mandatory serial build → inventory → export → nanoda → official kernel replay.
 
-Only the Python coverage/failure fixtures have been tested. Tool checkout setup
-is external. No skip-stage or relaxed-axiom option is provided.
+No skip-stage or relaxed-axiom option is provided.
 """
 import argparse
 from collections import Counter
@@ -18,14 +17,14 @@ import sys
 import time
 import generate_manifest
 
-LEAN = "leanprover/lean4:v4.33.0"
-LEAN_COMMIT = "d8b18978322de05a8f3dba51ef03cf5461676c17"
-EXPORT_COMMIT = "15f6055e299ad5b89345e533cc2192f4cc00f659"
-NANODA_COMMIT = "68d5ca9db226849b41a6fff59d796ff19d0a8840"
+LEAN = "leanprover/lean4:v4.34.0"
+LEAN_COMMIT = "293d5d0c0c3f3dded4688b3ccd6a33939ac5102b"
+EXPORT_COMMIT = "076e8e57707e813375e8f9da8bf989799ace9680"
+NANODA_COMMIT = "4c544ed4099c8227f07d5de77ad1e69fb0740a27"
 ALLOWED = {"propext", "Classical.choice", "Quot.sound"}
 ALLOWED_PARTS = {(("str", "propext"),), (("str", "Classical"), ("str", "choice")),
                  (("str", "Quot"), ("str", "sound"))}
-WRAPPERS = ("Inventory.lean", "ExportSelected.lean", "ReplaySix.lean")
+WRAPPERS = ("Inventory.lean", "ExportSelected.lean", "ReplayKernel.lean")
 INVENTORY_FILES = ("summary.json", "declarations.jsonl",
                    "exceptional-declarations.jsonl", "modules.json")
 HERE = Path(__file__).resolve().parent
@@ -206,10 +205,9 @@ class Pipeline:
         require(self.manifest_path.is_file(), "Missing module manifest")
         self.manifest, self.paths = physical_manifest(self.root, self.manifest_path)
         self.check_physical_snapshot()
-        self.paths += [HERE / "generate_manifest.py", HERE / "manifest-config.json",
-                       HERE / "setup_tools.py", self.root / ".github/workflows/lean.yml"]
-        self.paths += [p for p in (self.root / "tests/verification").rglob("*")
+        self.paths += [p for p in HERE.rglob("*")
                        if p.is_file() and "__pycache__" not in p.parts]
+        self.paths.append(self.root / ".github/workflows/lean.yml")
         for name in WRAPPERS:
             path = HERE / name
             require(path.is_file(), "Missing audit wrapper: " + name)
@@ -229,7 +227,7 @@ class Pipeline:
         # Bind all built exporter olean parts, including server/private companions.
         self.paths += sorted(core_dir.rglob("*.olean*"))
         version = self.capture(["lake", "env", "lean", "--version"])
-        require("version 4.33.0" in version and LEAN_COMMIT in version, "Active Lean version mismatch")
+        require("version 4.34.0" in version and LEAN_COMMIT in version, "Active Lean version mismatch")
         prefix = Path(self.capture(["lake", "env", "lean", "--print-prefix"])).resolve()
         self.lean = prefix / "bin/lean"
         require(self.lean.is_file(), "Missing active Lean executable")
@@ -363,7 +361,7 @@ class Pipeline:
         require(self.coverage["allSelectedPresent"], "Export omitted selected declarations")
         require(not self.coverage["unexpectedAxiomNameParts"], "Export has unpermitted structural axiom")
         lean = self.coverage["metadata"]["lean"]
-        require(lean["version"] == "4.33.0" and lean["githash"] == LEAN_COMMIT, "Exporter version mismatch")
+        require(lean["version"] == "4.34.0" and lean["githash"] == LEAN_COMMIT, "Exporter version mismatch")
         return {"completeSafeUnion": True, "selectedRootCount": len(self.selectors)}
 
     def check_nanoda(self):
@@ -383,7 +381,7 @@ class Pipeline:
         imports = [r for r in records if r.get("phase") == "inventory"]
         require(len(completed) == len(imports) == 1 and completed[0].get("result") == "PASS",
                 "Missing official kernel replay completion")
-        require(completed[0].get("kernel") == "official Lean 4.33.0", "Replay kernel identity mismatch")
+        require(completed[0].get("kernel") == "official Lean 4.34.0", "Replay kernel identity mismatch")
         require(imports[0]["roots"] == self.manifest["roots"], "Replay root mismatch")
         require(set(self.manifest["moduleRows"]) <= set(imports[0]["loaded_modules"]),
                 "Replay omitted physical manifest modules")
@@ -426,7 +424,7 @@ class Pipeline:
             self.sealed[str(config_path)] = digest(config_path)
             self.stage("nanoda", [str(self.nanoda), str(config_path)], validate=self.check_nanoda)
             self.stage("replay", ["lake", "env", str(self.lean), "-j1", "--run",
-                       str(HERE / "ReplaySix.lean"), *roots], validate=self.check_replay)
+                       str(HERE / "ReplayKernel.lean"), *roots], validate=self.check_replay)
             self.guard()
             self.check_physical_snapshot()
             require([r["stage"] for r in self.stages] ==

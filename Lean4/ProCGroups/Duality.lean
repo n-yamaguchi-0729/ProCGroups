@@ -48,7 +48,8 @@ theorem properClosedAddSubgroup_addCircle_finite
   have haFin : IsOfFinAddOrder a :=
     (addOrderOf_ne_zero_iff).mp haorder
   have hBfiniteSet : (B : Set (AddCircle p)).Finite := by
-    simpa [hBgen] using ((finite_zmultiples (a := a)).2 haFin)
+    rw [hBgen]
+    exact Set.finite_coe_iff.mp haFin.finite_zmultiples
   exact hBfiniteSet.to_subtype
 
 /-- Transport a multiplicative subgroup of `Circle` to the standard additive circle

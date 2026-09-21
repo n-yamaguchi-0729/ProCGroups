@@ -58,18 +58,21 @@ theorem exists_term_le_openSubgroup_of_iInf_le [CompactSpace G]
     refine ⟨max i j, ?_, ?_⟩
     · exact hmono (Nat.le_max_left i j)
     · exact hmono (Nat.le_max_right i j)
+  have havoid' : Disjoint K (⋂ n, (((H n : Subgroup G) : Set G))) := by
+    rw [Set.disjoint_left]
+    intro x hxK hxH
+    have hx : x ∈ K ∩ ⋂ n, (((H n : Subgroup G) : Set G)) := ⟨hxK, hxH⟩
+    rw [havoid] at hx
+    exact hx
   rcases hKcompact.elim_directed_family_closed
-      (fun n => (((H n : Subgroup G) : Set G))) hclosed havoid hdir with ⟨n, hn⟩
+      (fun n => (((H n : Subgroup G) : Set G))) hclosed
+      havoid' hdir with ⟨n, hn⟩
   refine ⟨n, ?_⟩
   intro x hx
   by_contra hxU
   have hxK : x ∈ K := by
     simpa [K] using hxU
-  have hmem : x ∈ K ∩ (((H n : Subgroup G) : Set G)) := by
-    exact ⟨hxK, hx⟩
-  have : x ∈ (∅ : Set G) := by
-    simp only [hn, Set.mem_empty_iff_false] at hmem
-  simp only [Set.mem_empty_iff_false] at this
+  exact (Set.disjoint_left.mp hn) hxK hx
 
 /--
 Preparatory countable-chain / neighborhood-basis equivalence for profinite groups: for a

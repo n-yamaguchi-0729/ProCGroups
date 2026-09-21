@@ -103,10 +103,10 @@ theorem freeGroup_mk_substitutionWord {Y : Type*} [DecidableEq Y]
       cases b
       · rw [freeGroupSubstitutionWord_cons_false, ← FreeGroup.mul_mk,
           ← FreeGroup.inv_mk, FreeGroup.mk_toWord, ih]
-        simp only [FreeGroup.lift_mk, List.map_cons, cond_false, List.prod_cons]
+        simp only [FreeGroup.lift_mk, List.map_cons, Bool.cond_false, List.prod_cons]
       · rw [freeGroupSubstitutionWord_cons_true, ← FreeGroup.mul_mk,
           FreeGroup.mk_toWord, ih]
-        simp only [FreeGroup.lift_mk, List.map_cons, cond_true, List.prod_cons]
+        simp only [FreeGroup.lift_mk, List.map_cons, Bool.cond_true, List.prod_cons]
 
 /-- The lifted generator maps to the corresponding word in the free-group presentation. -/
 theorem freeGroup_toWord_lift_mk {Y : Type*} [DecidableEq Y]

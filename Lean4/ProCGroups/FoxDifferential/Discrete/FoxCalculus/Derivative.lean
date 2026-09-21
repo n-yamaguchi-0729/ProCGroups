@@ -61,7 +61,7 @@ def relativeFreeGroupFoxDerivative (w : FreeGroup X) :
 theorem relativeFreeGroupFoxLift_right (w : FreeGroup X) :
     (relativeFreeGroupFoxLift (H := H) X ψ w).right = ψ w := by
   induction w using FreeGroup.induction_on with
-  | C1 =>
+  | one =>
       simp only [relativeFreeGroupFoxLift, map_one, SemidirectProduct.one_right]
   | of x =>
       simp only [relativeFreeGroupFoxLift, FreeGroup.lift_apply_of]

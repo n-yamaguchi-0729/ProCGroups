@@ -50,7 +50,7 @@ theorem presentationModPFiniteStageRightMap_presentationWord
         (P.quotient (FreeGroup.lift (presentationChosenGenerator P) w)) =
       QuotientGroup.mk' (presentationModPFiniteStageKernel P U hU) w := by
   induction w using FreeGroup.induction_on with
-  | C1 => simp only [map_one]
+  | one => simp only [map_one]
   | of i =>
       rw [FreeGroup.lift_apply_of]
       exact presentationModPFiniteStageRightMap_generator P U hU i

@@ -36,16 +36,17 @@ noncomputable def FreeGroupBasis.actionGroupoidGeneratorTotalEquiv
       invFun := fun ai =>
         @Quiver.Total.mk (IsFreeGroupoid.Generators (CategoryTheory.ActionCategory G A))
           (FreeGroupBasis.actionGroupoidIsFree b).quiverGenerators
-          ⟨(), ai.1⟩ ⟨(), b ai.2 • ai.1⟩ ⟨ai.2, rfl⟩
+          (ai.1 : CategoryTheory.ActionCategory G A)
+          ((b ai.2 • ai.1 : A) : CategoryTheory.ActionCategory G A) ⟨ai.2, rfl⟩
       left_inv := ?_
       right_inv := ?_ }
   · intro e
     cases e with
     | mk left right hom =>
-        cases left with
-        | mk _ a =>
-            cases right with
-            | mk _ a' =>
+        induction left with
+        | mk a =>
+            induction right with
+            | mk a' =>
                 cases hom with
                 | mk i hi =>
                     dsimp

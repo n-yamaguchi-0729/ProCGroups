@@ -121,7 +121,7 @@ theorem relativeFreeFoxCoordinatesLinearMap_derivative (w : FreeGroup X) :
         (relativeFreeGroupFoxDerivative (H := H) X ψ w) =
       universalDifferential ψ w := by
   induction w using FreeGroup.induction_on with
-  | C1 =>
+  | one =>
       simp only [relativeFreeGroupFoxDerivative_one, map_zero, universalDifferential_one]
   | of x =>
       simp only [relativeFreeGroupFoxDerivative_of,

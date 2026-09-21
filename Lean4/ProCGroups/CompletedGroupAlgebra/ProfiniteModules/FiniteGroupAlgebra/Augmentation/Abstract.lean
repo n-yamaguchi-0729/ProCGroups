@@ -372,13 +372,13 @@ theorem finiteGroupAlgebra_algebraMap_continuous
   change Continuous fun r : R => (MonoidAlgebra.single (1 : G) r).coeff g
   by_cases hg : g = 1
   · subst g
-    simpa only [MonoidAlgebra.coeff_single, Finsupp.single_apply, if_pos] using
+    simpa only [MonoidAlgebra.coeff_single, Finsupp.single_apply, ite_eq_left] using
       (continuous_id' : Continuous fun r : R => r)
   · rw [show (fun r : R => (MonoidAlgebra.single (1 : G) r).coeff g) =
         (fun _ : R => 0) from by
           funext r
           simp only [MonoidAlgebra.coeff_single, Finsupp.single_apply,
-            if_neg (Ne.symm hg)]]
+            ite_eq_right (Ne.symm hg)]]
     exact continuous_const
 
 /-- The augmentation map is continuous on each finite-stage group algebra. -/

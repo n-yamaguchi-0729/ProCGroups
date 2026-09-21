@@ -181,7 +181,7 @@ theorem exists_eq_nsmul_of_foxAlgebraicStageGroupRingReduction_eq_zero
     intro hxq
     have hzero : coeff q = 0 := by
       dsimp [coeff]
-      rw [if_pos hxq]
+      rw [ite_eq_left hxq]
     exact hq hzero
   let y : GroupRing Q :=
     MonoidAlgebra.ofCoeff
