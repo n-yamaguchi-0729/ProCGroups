@@ -40,6 +40,11 @@ import ProCGroups.ProP.All
 The [GitHub Actions workflow](.github/workflows/lean.yml) builds the library with
 warnings as errors and runs the source audit, NanoDa verification, and Lean kernel replay.
 
+## Authorship and AI assistance
+
+Astra GPT-6 Codex assisted with Lean development, statement review, and preparation of this submission interface. 
+Naganori Yamaguchi is the human author and responsible maintainer.
+
 ## License
 
 [Apache License 2.0](LICENSE).
