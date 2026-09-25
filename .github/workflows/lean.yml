@@ -60,6 +60,14 @@ jobs:
             --exporter-checkout "$RUNNER_TEMP/verification-tools/lean4export" \
             --nanoda-checkout "$RUNNER_TEMP/verification-tools/nanoda_lib" \
             --nanoda-binary "$RUNNER_TEMP/verification-tools/nanoda_lib/target/release/nanoda_bin"
+      - name: Check designated main declarations in the audited inventory
+        shell: bash
+        run: |
+          set -euo pipefail
+          python3 -B .github/verification/check_main_declarations.py \
+            --contract .github/verification/main-declarations.json \
+            --verification "$RUNNER_TEMP/verification/checks" \
+            --output "$RUNNER_TEMP/verification/main-declarations.json"
       - name: Check whitespace
         run: git diff-tree --check --root -r HEAD
       - name: Preserve logs and receipts even when a check fails

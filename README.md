@@ -54,9 +54,13 @@ lake --wfail build
 
 ## Verification
 
-The [GitHub Actions workflow](.github/workflows/lean.yml) treats compiler
-warnings as errors, checks the maintained source inventory, audits declarations,
-verifies them with NanoDa, and replays the result with the Lean kernel.
+The [GitHub Actions workflow](.github/workflows/lean.yml) checks that every
+maintained source is reachable from `ProCGroups.All`, builds with warnings
+as errors, audits all declarations for proof placeholders and unexpected axioms,
+checks proofs with NanoDa, and replays them with the Lean kernel. It also checks
+that the designated declarations in the [public API contract](.github/verification/main-declarations.json)
+retain their names, kinds, and specified source modules. This API check does not compare
+theorem statements. Logs and receipts are uploaded as workflow artifacts.
 
 ## Authorship and AI assistance
 

@@ -1,0 +1,27 @@
+{
+  "schemaVersion": 1,
+  "scope": "Compiled presence and kind only; does not compare theorem statements.",
+  "primaryOwner": "ProCGroups",
+  "declarations": [
+    {
+      "name": "ProCGroups.FreeProC.IsFreeProCGroup",
+      "kind": "inductive",
+      "module": "ProCGroups.FreeProC.Basic"
+    },
+    {
+      "name": "ClassFieldTower.ProP.FiniteProPPresentation.infinite_of_gsPolynomial_nonpos",
+      "kind": "theorem",
+      "module": "ProCGroups.GolodShafarevich.WeightedFiniteCriterion"
+    },
+    {
+      "name": "CrowellExactSequence.discreteCrowellLinearSequence_isExact",
+      "kind": "theorem",
+      "module": "ProCGroups.CrowellExactSequence.Discrete.MainTheorem"
+    },
+    {
+      "name": "CrowellExactSequence.profiniteSeparatedCrowellLinearSequence_isExact",
+      "kind": "theorem",
+      "module": "ProCGroups.CrowellExactSequence.Profinite.MainTheorem"
+    }
+  ]
+}

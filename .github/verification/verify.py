@@ -400,7 +400,7 @@ class Pipeline:
         try:
             self.inputs()
             roots = self.manifest["roots"]
-            self.stage("build", ["lake", "--no-ansi", "--wfail", "build", *roots])
+            self.stage("build", ["lake", "--no-ansi", "--rehash", "--wfail", "build", *roots])
             self.stage("inventory", ["lake", "env", str(self.lean), "-j1", "--run",
                        str(HERE / "Inventory.lean"), str(self.manifest_path), str(self.out)],
                        validate=self.check_inventory,
