@@ -3,25 +3,13 @@
 [![Lean](https://github.com/n-yamaguchi-0729/ProCGroups/actions/workflows/lean.yml/badge.svg)](https://github.com/n-yamaguchi-0729/ProCGroups/actions/workflows/lean.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
-A Lean 4 library for profinite groups and pro-\(\mathcal C\) groups, built on
-[Mathlib](https://github.com/leanprover-community/mathlib4).
+A Lean 4 library for profinite groups and pro-\(\mathcal C\) groups. It covers
+finite quotients, completions, free pro-\(\mathcal C\) groups, pro-\(p\) groups,
+and Golod--Shafarevich criteria. It also develops completed group algebras,
+Fox differentials, Reidemeister--Schreier theory, and Crowell exact sequences.
+Its only Lake dependency is [Mathlib](https://github.com/leanprover-community/mathlib4).
 
-## Scope
-
-- Profinite and pro-\(\mathcal C\) groups, finite quotients, inverse systems, and completions
-- Free pro-\(\mathcal C\) groups, free products, generation, and presentations
-- Pro-\(p\) groups and Golod–Shafarevich criteria
-- Completed group algebras, Fox differentials, Reidemeister–Schreier theory, and the Crowell exact sequence
-
-## Usage
-
-The exact Lean and Mathlib revisions are pinned by [`lean-toolchain`](lean-toolchain)
-and [`lake-manifest.json`](lake-manifest.json). From the repository root:
-
-```console
-lake exe cache get
-lake --wfail build
-```
+## Public API
 
 Import the complete library with:
 
@@ -29,22 +17,52 @@ Import the complete library with:
 import ProCGroups.All
 ```
 
-Focused aggregates are also available, for example:
+Focused aggregates let you import the part you need, for example:
 
 ```lean
+import ProCGroups.FreeProC.All
 import ProCGroups.ProP.All
+import ProCGroups.GolodShafarevich.All
+import ProCGroups.CrowellExactSequence.All
+```
+
+Other focused aggregates cover finite groups, inverse systems, completions,
+pro-\(\mathcal C\) groups, free products, completed group algebras, and Fox
+differentials. Individual result files can also be imported directly; the
+linked files below are examples.
+
+## Main results
+
+| Declaration | Mathematical content |
+| --- | --- |
+| [`ProCGroups.FreeProC.IsFreeProCGroup`](Lean4/ProCGroups/FreeProC/Basic.lean) | The universal property for a free pro-\(\mathcal C\) group on a topological generating space. |
+| [`ClassFieldTower.ProP.FiniteProPPresentation.infinite_of_gsPolynomial_nonpos`](Lean4/ProCGroups/GolodShafarevich/WeightedFiniteCriterion.lean) | A nonpositive weighted Golod--Shafarevich polynomial forces the target of a finite pro-\(p\) presentation to be infinite. |
+| [`CrowellExactSequence.discreteCrowellLinearSequence_isExact`](Lean4/ProCGroups/CrowellExactSequence/Discrete/MainTheorem.lean) | Exactness of the discrete four-term Crowell sequence for a surjective group homomorphism. |
+| [`CrowellExactSequence.profiniteSeparatedCrowellLinearSequence_isExact`](Lean4/ProCGroups/CrowellExactSequence/Profinite/MainTheorem.lean) | Exactness of the separated completed Crowell sequence over pro-\(\mathcal C\) integer coefficients under the stated formation and source hypotheses. |
+
+## Build
+
+The repository pins Lean 4.34.0 and an exact Mathlib revision in
+[`lean-toolchain`](lean-toolchain) and [`lakefile.toml`](lakefile.toml).
+The dependency lock is in [`lake-manifest.json`](lake-manifest.json).
+From the repository root:
+
+```console
+lake exe cache get
+lake --wfail build
 ```
 
 ## Verification
 
-The [GitHub Actions workflow](.github/workflows/lean.yml) builds the library with
-warnings as errors and runs the source audit, NanoDa verification, and Lean kernel replay.
+The [GitHub Actions workflow](.github/workflows/lean.yml) treats compiler
+warnings as errors, checks the maintained source inventory, audits declarations,
+verifies them with NanoDa, and replays the result with the Lean kernel.
 
 ## Authorship and AI assistance
 
 Astra GPT-6 Codex assisted with Lean development, statement review, and preparation of this repository.
-Naganori Yamaguchi is the human author and responsible maintainer.
+[Naganori Yamaguchi](https://github.com/n-yamaguchi-0729) is the human author and responsible maintainer.
 
 ## License
 
-[Apache License 2.0](LICENSE).
+Apache License 2.0. See [LICENSE](LICENSE).
