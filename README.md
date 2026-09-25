@@ -1,9 +1,9 @@
-# ProCGroups
+# ProCGroups (Lean 4.34.0)
 
 [![Lean](https://github.com/n-yamaguchi-0729/ProCGroups/actions/workflows/lean.yml/badge.svg)](https://github.com/n-yamaguchi-0729/ProCGroups/actions/workflows/lean.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
-A Lean 4 library for profinite groups and pro-\(\mathcal C\) groups. It covers
+A Lean 4.34.0 library for profinite groups and pro-\(\mathcal C\) groups. It covers
 finite quotients, completions, free pro-\(\mathcal C\) groups, pro-\(p\) groups,
 and Golod--Shafarevich criteria. It also develops completed group algebras,
 Fox differentials, Reidemeister--Schreier theory, and Crowell exact sequences.
