@@ -247,7 +247,7 @@ theorem map_normalClosure_freeGroupPullbackRelatorSet
   · rintro ⟨y, ⟨s, hs, hy⟩, rfl⟩
     simpa [← hy] using hs
   · intro hz
-    exact ⟨e.symm z, ⟨z, hz, rfl⟩, by simp only [MulEquiv.toMonoidHom_eq_coe, MonoidHom.coe_coe,
+    exact ⟨e.symm z, ⟨z, hz, rfl⟩, by simp only [MulEquiv.toMonoidHom_eq_coe, MonoidHom.coe_ofClass,
         MulEquiv.apply_symm_apply]⟩
 
 /--

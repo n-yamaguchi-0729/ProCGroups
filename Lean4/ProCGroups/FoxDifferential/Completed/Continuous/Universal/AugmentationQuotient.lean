@@ -1195,8 +1195,8 @@ theorem kernelAugmentationIdealClosedQuotient_topology_eq_induced_stageProjProdu
         exact hi
       have hsingle_open :
           IsOpen
-            ({kernelAugmentationIdealClosedQuotientStageProjection
-              C hC hForm psi hpsi hfopen i (q x)} :
+            (Set.singleton (kernelAugmentationIdealClosedQuotientStageProjection
+              C hC hForm psi hpsi hfopen i (q x)) :
               Set (KernelAugmentationIdealClosedStageQuotient C hC hForm psi hpsi hfopen i)) := by
         let T :=
           zcCompletedGroupAlgebraOpenImageKernelAugmentationIdealMulStageStandard
@@ -1207,8 +1207,8 @@ theorem kernelAugmentationIdealClosedQuotient_topology_eq_induced_stageProjProdu
           @IsOpen
             (KernelAugmentationIdealClosedStageQuotient C hC hForm psi hpsi hfopen i)
             (TopologicalSpace.coinduced T.mkQ inferInstance)
-            ({kernelAugmentationIdealClosedQuotientStageProjection
-              C hC hForm psi hpsi hfopen i (q x)} :
+            (Set.singleton (kernelAugmentationIdealClosedQuotientStageProjection
+              C hC hForm psi hpsi hfopen i (q x)) :
               Set (KernelAugmentationIdealClosedStageQuotient C hC hForm psi hpsi hfopen i))
         rw [isOpen_coinduced]
         exact isOpen_discrete _
@@ -3143,6 +3143,11 @@ theorem kerAugIdealClosedQuotStageProj_liftLinear_eq_boundaryLift_preStageMap
         (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
       kerAugClosedQuotTargetCompletedModuleOfSurj
         C hC hForm psi hpsi hfopen
+    let j := zcCompletedDifferentialModuleOpenImageIndex C hForm psi hpsi hfopen i
+    letI : Module (zcCompletedDifferentialModuleStageRing C psi.toMonoidHom j)
+        (KernelAugmentationIdealClosedStageQuotient C hC hForm psi hpsi hfopen i) :=
+      kernelAugmentationIdealClosedStageQuotientTargetStageModule
+        C hC hForm psi hpsi hfopen i
     kernelAugmentationIdealClosedQuotientStageProjection
         C hC hForm psi hpsi hfopen i
         (crossedDifferentialModuleLiftLinear
@@ -3152,7 +3157,7 @@ theorem kerAugIdealClosedQuotStageProj_liftLinear_eq_boundaryLift_preStageMap
       kernelAugmentationIdealClosedStageQuotientBoundaryLift
         C hC hForm psi hpsi hfopen i
         (zcCompletedDifferentialModulePreStageMap C psi.toMonoidHom
-          (zcCompletedDifferentialModuleOpenImageIndex C hForm psi hpsi hfopen i) x) := by
+          j x) := by
   let : Module (ZCCompletedGroupAlgebra C H)
       (KernelAugmentationIdealClosedQuotient C hC hForm psi hpsi hfopen) :=
     kerAugClosedQuotTargetCompletedModuleOfSurj
@@ -3175,6 +3180,7 @@ theorem kerAugIdealClosedQuotStageProj_liftLinear_eq_boundaryLift_preStageMap
   · intro x y hx hy
     simp only [map_add, hx, ContinuousMonoidHom.coe_toMonoidHom, Lean.Elab.WF.paramLet, hy]
   · intro g a
+    dsimp only
     rw [crossedDifferentialModuleLiftLinear_single,
       zcCompletedDifferentialModulePreStageMap_single,
       kernelAugmentationIdealClosedStageQuotientBoundaryLift_single]

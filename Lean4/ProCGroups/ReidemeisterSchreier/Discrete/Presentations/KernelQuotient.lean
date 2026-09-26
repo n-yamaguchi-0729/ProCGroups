@@ -212,7 +212,7 @@ theorem freeKernelConjugateRelatorSet_normalClosure_eq_comap_normalClosure
       refine ⟨g * a, r, hr, ?_⟩
       calc
         ↑((MulEquiv.toMonoidHom θ) z) = g * (z : FreeGroup X) * g⁻¹ := by
-          simp only [MulEquiv.toMonoidHom_eq_coe, MonoidHom.coe_coe, MulAut.conjNormal_apply, θ]
+          simp only [MulEquiv.toMonoidHom_eq_coe, MonoidHom.coe_ofClass, MulAut.conjNormal_apply, θ]
         _ = g * a * r * (g * a)⁻¹ := by
           rw [hzval]
           group

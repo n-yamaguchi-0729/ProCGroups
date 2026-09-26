@@ -214,7 +214,7 @@ theorem deleteDegenerateSchreierGeneratorHom_of_not_degenerate
     {z : FiniteSchreierSymbol X Q} (hz : ¬ D.IsDegenerateSchreierSymbol z) :
     D.deleteDegenerateSchreierGeneratorHom (FreeGroup.of z) =
       FreeGroup.of (⟨z, hz⟩ : D.NondegenerateSchreierSymbol) := by
-  simp only [deleteDegenerateSchreierGeneratorHom, MonoidHom.coe_comp, MonoidHom.coe_coe,
+  simp only [deleteDegenerateSchreierGeneratorHom, MonoidHom.coe_comp, MonoidHom.coe_ofClass,
       Function.comp_apply,
   FreeGroup.freeGroupCongr_apply, FreeGroup.map.of,
   Presented.GeneratorPartition.equiv_apply_of_not_delete D.IsDegenerateSchreierSymbol hz]
@@ -233,7 +233,7 @@ theorem deleteDegenerateSchreierGeneratorHom_of_degenerate
     [DecidablePred D.IsDegenerateSchreierSymbol]
     {z : FiniteSchreierSymbol X Q} (hz : D.IsDegenerateSchreierSymbol z) :
     D.deleteDegenerateSchreierGeneratorHom (FreeGroup.of z) = 1 := by
-  simp only [deleteDegenerateSchreierGeneratorHom, MonoidHom.coe_comp, MonoidHom.coe_coe,
+  simp only [deleteDegenerateSchreierGeneratorHom, MonoidHom.coe_comp, MonoidHom.coe_ofClass,
       Function.comp_apply,
   FreeGroup.freeGroupCongr_apply, FreeGroup.map.of,
   Presented.GeneratorPartition.equiv_apply_of_delete D.IsDegenerateSchreierSymbol hz]

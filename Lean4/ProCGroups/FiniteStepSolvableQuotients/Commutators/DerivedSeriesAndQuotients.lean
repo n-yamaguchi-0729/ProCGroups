@@ -479,7 +479,7 @@ theorem topDerived_map_eq_of_surj
       ext y
       constructor
       · rintro ⟨x, -, rfl⟩
-        simp only [topDerivedTop, closedDerivedSeries_zero, MonoidHom.coe_coe, Subgroup.mem_top]
+        simp only [topDerivedTop, closedDerivedSeries_zero, MonoidHom.coe_ofClass, Subgroup.mem_top]
       · intro hy
         rcases hf y with ⟨x, rfl⟩
         exact ⟨x, by simp only [topDerivedTop, closedDerivedSeries_zero, Subgroup.coe_top,

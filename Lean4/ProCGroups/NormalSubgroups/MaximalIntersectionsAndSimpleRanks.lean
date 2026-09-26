@@ -32,7 +32,7 @@ theorem maximal_normal_intersection_simple_quotient
   have hnotTopLe : ¬ (⊤ : Subgroup G) ≤ M := by
     intro hle
     exact hproper (le_antisymm le_top hle)
-  rcases SetLike.not_le_iff_exists.mp hnotTopLe with ⟨g, _hgTop, hgM⟩
+  rcases IsConcreteLE.not_le_iff_exists.mp hnotTopLe with ⟨g, _hgTop, hgM⟩
   refine
     { exists_pair_ne := ⟨QuotientGroup.mk' M g, 1, ?_⟩
       eq_bot_or_eq_top_of_normal := ?_ }

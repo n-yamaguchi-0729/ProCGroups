@@ -70,7 +70,7 @@ theorem denseAbstractSchreierFiniteQuotientLiftProperty_of_equiv
   have hχLFac : χL.comp eY.toMonoidHom = ψQ := by
     apply MonoidHom.ext
     intro w
-    simp only [MulEquiv.toMonoidHom_eq_coe, MonoidHom.coe_comp, MonoidHom.coe_coe,
+    simp only [MulEquiv.toMonoidHom_eq_coe, MonoidHom.coe_comp, MonoidHom.coe_ofClass,
         Function.comp_apply,
   MulEquiv.symm_apply_apply, χL]
   rcases hψfinite hQ χL with ⟨φbar, hφbar, hφbarUnique⟩
@@ -97,7 +97,7 @@ theorem denseAbstractSchreierFiniteQuotientLiftProperty_of_equiv
       (φbar'.comp ψ) (eY w) = (φbar'.comp (ψ.comp eY.toMonoidHom)) w := rfl
       _ = ψQ w := hw'
       _ = χL (eY w) := by simp only [MulEquiv.toMonoidHom_eq_coe, MonoidHom.coe_comp,
-          MonoidHom.coe_coe, Function.comp_apply,
+          MonoidHom.coe_ofClass, Function.comp_apply,
   MulEquiv.symm_apply_apply, χL]
 
 /--

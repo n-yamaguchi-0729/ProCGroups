@@ -58,7 +58,7 @@ theorem freeGroupAutomorphismFoxJacobian_left_inverse_apply
   have hid :
       e.toMonoidHom.comp e.symm.toMonoidHom = MonoidHom.id (FreeGroup X) := by
     ext w
-    simp only [MulEquiv.toMonoidHom_eq_coe, MulEquiv.coe_monoidHom_comp_coe_monoidHom_symm,
+    simp only [MulEquiv.toMonoidHom_eq_coe, MulEquiv.toMonoidHom_comp_toMonoidHom_symm,
         MonoidHom.id_apply]
   rw [hid, freeGroupHomFoxJacobian_id] at h
   simpa using h.symm
@@ -82,7 +82,7 @@ theorem freeGroupAutomorphismFoxJacobian_right_inverse_apply
   have hid :
       e.symm.toMonoidHom.comp e.toMonoidHom = MonoidHom.id (FreeGroup X) := by
     ext w
-    simp only [MulEquiv.toMonoidHom_eq_coe, MulEquiv.coe_monoidHom_symm_comp_coe_monoidHom,
+    simp only [MulEquiv.toMonoidHom_eq_coe, MulEquiv.toMonoidHom_symm_comp_toMonoidHom,
         MonoidHom.id_apply]
   rw [hid, freeGroupHomFoxJacobian_id] at h
   simpa using h.symm
@@ -179,7 +179,7 @@ theorem freeGroupAutomorphismFoxJacobianMatrix_mul_inverse
   have hcomp :
       (ψ.comp e.toMonoidHom).comp e.symm.toMonoidHom = ψ := by
     ext w
-    simp only [MulEquiv.toMonoidHom_eq_coe, MonoidHom.coe_comp, MonoidHom.coe_coe,
+    simp only [MulEquiv.toMonoidHom_eq_coe, MonoidHom.coe_comp, MonoidHom.coe_ofClass,
         Function.comp_apply,
   MulEquiv.apply_symm_apply]
   rw [hcomp] at h

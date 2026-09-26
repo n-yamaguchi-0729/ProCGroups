@@ -253,11 +253,11 @@ def relatorQuotientMutualMapDataOfNormalClosureMapEq
     simpa [← hrs] using hr
   inv_toHom := by
     intro x
-    simp only [MulEquiv.toMonoidHom_eq_coe, MonoidHom.coe_coe, MulEquiv.symm_apply_apply,
+    simp only [MulEquiv.toMonoidHom_eq_coe, MonoidHom.coe_ofClass, MulEquiv.symm_apply_apply,
         mul_inv_cancel, one_mem]
   to_invHom := by
     intro y
-    simp only [MulEquiv.toMonoidHom_eq_coe, MonoidHom.coe_coe, MulEquiv.apply_symm_apply,
+    simp only [MulEquiv.toMonoidHom_eq_coe, MonoidHom.coe_ofClass, MulEquiv.apply_symm_apply,
         mul_inv_cancel, one_mem]
 
 /--
@@ -279,7 +279,7 @@ theorem map_normalClosure_eq_of_mulEquiv_relator_images_mem_normalClosure
     refine Subgroup.normalClosure_le_normal ?_
     intro s hs
     have hsmap : s ∈ Subgroup.map e.toMonoidHom (Subgroup.normalClosure R) :=
-      ⟨e.symm s, hS_to_R s hs, by simp only [MulEquiv.toMonoidHom_eq_coe, MonoidHom.coe_coe,
+      ⟨e.symm s, hS_to_R s hs, by simp only [MulEquiv.toMonoidHom_eq_coe, MonoidHom.coe_ofClass,
           MulEquiv.apply_symm_apply]⟩
     rwa [Subgroup.map_normalClosure _ e.toMonoidHom e.surjective] at hsmap
 

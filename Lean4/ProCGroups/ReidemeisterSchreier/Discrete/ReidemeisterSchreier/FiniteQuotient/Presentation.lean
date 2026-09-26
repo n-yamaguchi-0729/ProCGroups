@@ -966,7 +966,7 @@ noncomputable def augmentedPresentationRelatorFinsetPresentedGroupEquiv [Fintype
     (MulEquiv.refl (FreeGroup (FiniteSchreierSymbol X Q)))
     (by
       rw [D.coe_augmentedPresentationRelatorFinset R]
-      simp only [MulEquiv.coe_monoidHom_refl, SetLike.setOfPred_mem_eq, Subgroup.map_id])).trans
+      simp only [MulEquiv.toMonoidHom_refl, SetLike.setOfPred_mem_eq, Subgroup.map_id])).trans
     (D.augmentedPresentedGroupEquiv hR)
 
 /--
@@ -991,7 +991,7 @@ noncomputable def presentationRelatorFinsetPresentedGroupEquivOfIsPrefixClosedQu
     (MulEquiv.refl (FreeGroup (FiniteSchreierSymbol X Q)))
     (by
       rw [D.coe_presentationRelatorFinset R]
-      simp only [MulEquiv.coe_monoidHom_refl, SetLike.setOfPred_mem_eq, Subgroup.map_id])).trans
+      simp only [MulEquiv.toMonoidHom_refl, SetLike.setOfPred_mem_eq, Subgroup.map_id])).trans
     (D.presentationPresentedGroupEquivOfIsPrefixClosedQuotientSection hR hprefix)
 
 /-- The raw presentation evaluation quotient map is surjective. -/

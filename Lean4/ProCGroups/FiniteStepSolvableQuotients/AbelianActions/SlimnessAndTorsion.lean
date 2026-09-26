@@ -289,7 +289,7 @@ theorem exists_openSubgroup_nontrivial_topologicalAbelianizationImage
       simp only [map_mul, map_inv, Exists.choose_spec (Function.Surjective.hasRightInverse
           hψSurj) (ψ y),
   inv_mul_cancel]
-    simp only [MulEquiv.toMonoidHom_eq_coe, MonoidHom.coe_comp, MonoidHom.coe_coe,
+    simp only [MulEquiv.toMonoidHom_eq_coe, MonoidHom.coe_comp, MonoidHom.coe_ofClass,
         Function.comp_apply, hmk,
   QuotientGroup.mk'_apply, QuotientGroup.lift_mk, qL, qTquot]
   let ιcont : ↥(T : Subgroup G) →ₜ* ↥(H : Subgroup G) :=
@@ -1133,7 +1133,7 @@ theorem openNormalTransferTopologicalAbelianization_eq_pow_of_fixed
     _ =
       (TopologicalAbelianization.mk ↥(N : Subgroup G) x) ^
         Fintype.card (G ⧸ (N : Subgroup G)) := by
-          simp only [ContinuousMonoidHom.coe_toMonoidHom, MonoidHom.coe_coe, Finset.prod_const,
+          simp only [ContinuousMonoidHom.coe_toMonoidHom, MonoidHom.coe_ofClass, Finset.prod_const,
               Finset.card_univ]
     _ =
       (TopologicalAbelianization.mk ↥(N : Subgroup G) x) ^
@@ -1444,7 +1444,7 @@ theorem noFixedPoints_of_torsionFree_on_openNormalSupergroups
           TopologicalAbelianization.mk ↥(H : Subgroup G)
             ((MulAut.conjNormal g) ((Subgroup.inclusion hKH) x))
       simp only [topologicalAbelianizationInclusion, ContinuousMonoidHom.coe_toMonoidHom,
-          MonoidHom.coe_coe]
+          MonoidHom.coe_ofClass]
       rfl
     exact hconj.trans
       (congrArg (topologicalAbelianizationInclusion hKH) (hfix (QuotientGroup.mk' K g)))

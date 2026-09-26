@@ -178,7 +178,7 @@ theorem allFinite_freeProCZCCompletedFoxAutomorphism_pullback_symm
           exact happ
     _ = freeProCZCCompletedFoxRightHom
         (C := ProCGroups.FiniteGroupClass.allFinite) hι htarget φ hφ (ι x) := by
-          simp only [MulEquiv.toMonoidHom_eq_coe, MonoidHom.coe_comp, MonoidHom.coe_coe,
+          simp only [MulEquiv.toMonoidHom_eq_coe, MonoidHom.coe_comp, MonoidHom.coe_ofClass,
               Function.comp_apply,
   MulEquiv.apply_symm_apply, freeProCZCCompletedFoxRightHom_apply,
       freeProCZCCompletedFoxSemidirectLift_generator,
@@ -257,9 +257,9 @@ theorem allFinite_freeProCZCCompletedFoxAutomorphismJacobianLinearMap_inverse_co
       allFinite_freeProCZCCompletedFoxJacobianLinearMap,
       MulEquiv.toMonoidHom_eq_coe, LinearMap.comp_apply,
       foxJacobianLinearMap_single, allFinite_freeProCZCCompletedFoxJacobian,
-      MonoidHom.coe_coe, φe]
+      MonoidHom.coe_ofClass, φe]
   · simpa only [LinearMap.id_coe, id_eq, MulEquiv.toMonoidHom_eq_coe,
-      MonoidHom.coe_coe, MulEquiv.symm_apply_apply] using
+      MonoidHom.coe_ofClass, MulEquiv.symm_apply_apply] using
       (freeProCZCCompletedFoxDerivativeVector_generator
       (C := ProCGroups.FiniteGroupClass.allFinite) hι
       (ProCGrp.allFinite_property (ProfiniteGrp.of _)) φe

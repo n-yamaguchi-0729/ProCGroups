@@ -64,7 +64,7 @@ def foxAlgebraicStageSemidirectReindexHom
         · funext y
           simp only [MulEquiv.toMonoidHom_eq_coe, FoxAlgebraicStageSemidirect.one_left,
               Pi.zero_apply,
-  MonoidAlgebra.mapDomainRingHom_apply, MonoidHom.coe_coe, MonoidAlgebra.mapDomain_zero]
+  MonoidAlgebra.mapDomainRingHom_apply, MonoidHom.coe_ofClass, MonoidAlgebra.mapDomain_zero]
         · simp only [FoxAlgebraicStageSemidirect.one_right, map_one]
       map_mul' := by
         intro a b
@@ -83,7 +83,7 @@ def foxAlgebraicStageSemidirectReindexHom
           simp only [MulEquiv.toMonoidHom_eq_coe, FoxAlgebraicStageSemidirect.mul_left,
               MonoidAlgebra.of_apply,
   Pi.add_apply, Pi.smul_apply, smul_eq_mul, map_add, MonoidAlgebra.mapDomainRingHom_apply,
-      MonoidHom.coe_coe,
+      MonoidHom.coe_ofClass,
   add_right_inj]
           change
             MonoidAlgebra.mapDomainRingHom (ModNCompletedCoeff n) qXY.toMonoidHom
@@ -96,7 +96,7 @@ def foxAlgebraicStageSemidirectReindexHom
                   (b.left (e.symm y))
           rw [map_mul, hright]
         · simp only [FoxAlgebraicStageSemidirect.mul_right, map_mul, MulEquiv.toMonoidHom_eq_coe,
-  MonoidAlgebra.mapDomainRingHom_apply, MonoidHom.coe_coe]}
+  MonoidAlgebra.mapDomainRingHom_apply, MonoidHom.coe_ofClass]}
 
 /-- The reindexing hom carries the finite-stage lift to the finite-stage lift. -/
 theorem foxAlgebraicStageSemidirectReindexHom_lift
@@ -126,7 +126,7 @@ theorem foxAlgebraicStageSemidirectReindexHom_lift
       by_cases hy : y = e x
       · subst hy
         simp only [foxAlgebraicStageSemidirectReindexHom, MulEquiv.toMonoidHom_eq_coe,
-  MonoidAlgebra.mapDomainRingHom_apply, MonoidHom.coe_coe, foxAlgebraicStageLift,
+  MonoidAlgebra.mapDomainRingHom_apply, MonoidHom.coe_ofClass, foxAlgebraicStageLift,
       QuotientGroup.mk'_apply,
   MonoidHom.coe_comp, MonoidHom.coe_mk, OneHom.coe_mk, Function.comp_apply, FreeGroup.lift_apply_of,
   FreeGroup.freeGroupCongr_apply, FreeGroup.map.of, Pi.single_eq_same,
@@ -137,7 +137,7 @@ theorem foxAlgebraicStageSemidirectReindexHom_lift
           intro h
           exact hy ((e.apply_symm_apply y).symm.trans (by simp only [h]))
         simp only [foxAlgebraicStageSemidirectReindexHom, MulEquiv.toMonoidHom_eq_coe,
-  MonoidAlgebra.mapDomainRingHom_apply, MonoidHom.coe_coe, foxAlgebraicStageLift,
+  MonoidAlgebra.mapDomainRingHom_apply, MonoidHom.coe_ofClass, foxAlgebraicStageLift,
       QuotientGroup.mk'_apply,
   MonoidHom.coe_comp, MonoidHom.coe_mk, OneHom.coe_mk, Function.comp_apply, FreeGroup.lift_apply_of,
   FreeGroup.freeGroupCongr_apply, FreeGroup.map.of, Pi.single_eq_of_ne hne,
@@ -182,7 +182,7 @@ theorem foxAlgebraicStageDerivativeVector_eq_zero_reindex
   rw [foxAlgebraicStageDerivativeVector_reindex (X := X) (Y := Y) e N M hM n w]
   funext y
   simp only [MulEquiv.toMonoidHom_eq_coe, hw, Pi.zero_apply, MonoidAlgebra.mapDomainRingHom_apply,
-  MonoidHom.coe_coe, MonoidAlgebra.mapDomain_zero]
+  MonoidHom.coe_ofClass, MonoidAlgebra.mapDomain_zero]
 
 end Reindex
 

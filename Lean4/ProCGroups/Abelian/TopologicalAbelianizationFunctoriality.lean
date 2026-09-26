@@ -302,7 +302,7 @@ displayed coordinate condition.
     y ∈ subgroupImageInTopologicalAbelianization (Q := Q) S U ↔
       ∃ x : ↥(U : Subgroup Q), (x : Q) ∈ S ∧ TopologicalAbelianization.mk _ x = y := by
   simp only [subgroupImageInTopologicalAbelianization, ContinuousMonoidHom.coe_toMonoidHom,
-  Subgroup.inf_subgroupOf_right, Subgroup.mem_map, Subgroup.mem_subgroupOf, MonoidHom.coe_coe,
+  Subgroup.inf_subgroupOf_right, Subgroup.mem_map, Subgroup.mem_subgroupOf, MonoidHom.coe_ofClass,
       Subtype.exists,
   OpenSubgroup.mem_toSubgroup, exists_and_left]
 

@@ -1,9 +1,9 @@
-# ProCGroups (Lean 4.34.0)
+# ProCGroups (Lean 4.35.0-rc2)
 
 [![Lean](https://github.com/n-yamaguchi-0729/ProCGroups/actions/workflows/lean.yml/badge.svg)](https://github.com/n-yamaguchi-0729/ProCGroups/actions/workflows/lean.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
-A Lean 4.34.0 library for profinite groups and pro-\(\mathcal C\) groups. It covers
+A Lean 4.35.0-rc2 library for profinite groups and pro-\(\mathcal C\) groups. It covers
 finite quotients, completions, free pro-\(\mathcal C\) groups, pro-\(p\) groups,
 and Golod--Shafarevich criteria. It also develops completed group algebras,
 Fox differentials, Reidemeister--Schreier theory, and Crowell exact sequences.
@@ -42,7 +42,7 @@ linked files below are examples.
 
 ## Build
 
-The repository pins Lean 4.34.0 and an exact Mathlib revision in
+The repository pins Lean 4.35.0-rc2 and an exact Mathlib revision in
 [`lean-toolchain`](lean-toolchain) and [`lakefile.toml`](lakefile.toml).
 The dependency lock is in [`lake-manifest.json`](lake-manifest.json).
 From the repository root:

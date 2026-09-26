@@ -360,7 +360,7 @@ theorem mem_commutator_ker_of_finiteFoxStageDerivativeVector_eq_zero_finite
           simpa [MonoidHom.mem_ker, MonoidHom.comp_apply] using hwker⟩ : β.ker) := by
     apply Subtype.ext
     have hphi : phi.symm (phi w) = w := phi.symm_apply_apply w
-    simp only [MulEquiv.toMonoidHom_eq_coe, MonoidHom.coe_comp, MonoidHom.coe_coe,
+    simp only [MulEquiv.toMonoidHom_eq_coe, MonoidHom.coe_comp, MonoidHom.coe_ofClass,
       Function.comp_apply, hphi, MonoidHom.coe_mk, OneHom.coe_mk,
       MulEquiv.symm_apply_apply, κ, q0, α0, w0]
   have hκcomm : κ q0 ∈ commutator β.ker :=

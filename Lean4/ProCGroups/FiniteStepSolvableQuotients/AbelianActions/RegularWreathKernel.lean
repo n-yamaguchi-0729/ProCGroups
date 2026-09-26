@@ -146,7 +146,7 @@ theorem regularWreathKernel_cyclicZMod_mem_abelianExponent [Finite B]
   apply (MulEquiv.ulift : ULift.{u} (Multiplicative (ZMod q)) ≃*
     Multiplicative (ZMod q)).injective
   change q • Multiplicative.toAdd a.down = (0 : ZMod q)
-  exact ZModModule.char_nsmul_eq_zero q (Multiplicative.toAdd a.down)
+  simp only [nsmul_eq_mul, ZMod.natCast_self, zero_mul]
 
 end FiniteStepSolvableQuotients
 
