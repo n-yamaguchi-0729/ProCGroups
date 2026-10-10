@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.CrowellExactSequence.Profinite.FreeExactness
 import ProCGroups.FreeProC.FiniteBasis
 
-set_option autoImplicit false
-
 /-!
 # Crowell Exact Sequence / Profinite / Blanchfield Lyndon
 

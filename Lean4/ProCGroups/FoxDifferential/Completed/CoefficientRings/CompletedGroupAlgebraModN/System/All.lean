@@ -8,8 +8,6 @@ import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgeb
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraModN.System.Basic
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraModN.System.CompletionMap
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — coefficient rings — mod-\(n\) completed group algebra — system
 

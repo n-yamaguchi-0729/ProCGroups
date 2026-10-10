@@ -11,8 +11,6 @@ import ProCGroups.FoxDifferential.Completed.CoefficientRings.AugmentationIdealPr
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.AugmentationIdealPrimePower.Stage
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.AugmentationIdealPrimePower.SubtypeLinear
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — coefficient rings — prime-power augmentation ideal
 

@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.FreeProC.FiniteBasis
 
-set_option autoImplicit false
-
 /-!
 # Finite-rank free pro-C source data
 

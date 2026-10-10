@@ -21,8 +21,7 @@ import ProCGroups.ProC.MaximalQuotients.ResidualUniversalProperty
 import ProCGroups.ProC.MaximalQuotients.ResidualQuotientAction
 import ProCGroups.ProC.MaximalQuotients.ResidualPrimeExclusion
 import ProCGroups.ProC.MaximalQuotients.ResidualSigmaPower
-
-set_option autoImplicit false
+import ProCGroups.ProC.MaximalQuotients.ResidualAbelianizationPrimePowers
 
 /-!
 # Maximal pro-\(C\) quotients

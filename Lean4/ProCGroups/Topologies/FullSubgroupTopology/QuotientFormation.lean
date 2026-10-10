@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import Mathlib.Topology.Algebra.Group.Basic
 
-set_option autoImplicit false
-
 /-!
 # Quotient formations and their subgroup topology
 

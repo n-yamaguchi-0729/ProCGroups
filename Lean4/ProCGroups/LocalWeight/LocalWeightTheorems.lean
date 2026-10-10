@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.LocalWeight.ClosedNormalDataAndTransfiniteSeries
 
-set_option autoImplicit false
-
 /-!
 # Local weight from convergent generating sets
 

@@ -9,8 +9,6 @@ import ProCGroups.Topologies.Conjugation
 import ProCGroups.TopologicalGroups
 import ProCGroups.Abelian.TopologicalAbelianization
 
-set_option autoImplicit false
-
 /-!
 # Functorial topological abelianization
 

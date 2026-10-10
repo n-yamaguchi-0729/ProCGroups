@@ -11,8 +11,6 @@ import ProCGroups.ReidemeisterSchreier.Discrete.OpenSubgroups.PrefixTree
 import ProCGroups.ReidemeisterSchreier.Discrete.OpenSubgroups.Transversals
 import ProCGroups.ReidemeisterSchreier.Discrete.OpenSubgroups.Words.All
 
-set_option autoImplicit false
-
 /-!
 # Reidemeister Schreier / Discrete / Open Subgroups
 

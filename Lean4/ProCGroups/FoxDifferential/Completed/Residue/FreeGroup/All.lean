@@ -10,8 +10,6 @@ import ProCGroups.FoxDifferential.Completed.Residue.FreeGroup.Coordinates
 import ProCGroups.FoxDifferential.Completed.Residue.FreeGroup.Fundamental
 import ProCGroups.FoxDifferential.Completed.Residue.FreeGroup.Universal
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — residue — free group
 

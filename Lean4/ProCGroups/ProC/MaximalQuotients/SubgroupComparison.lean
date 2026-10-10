@@ -8,8 +8,6 @@ import ProCGroups.ProC.MaximalQuotients.Definitions
 import ProCGroups.ProC.MaximalQuotients.ResidualIdempotence
 import ProCGroups.Topologies.ContinuousMulEquiv
 
-set_option autoImplicit false
-
 /-!
 # Subgroups of maximal pro-C quotients
 

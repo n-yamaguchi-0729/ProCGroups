@@ -5,8 +5,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
 import ProCGroups.FoxDifferential.Completed.Continuous.ChainRule.Iterated
-
-set_option autoImplicit false
+import ProCGroups.FoxDifferential.Common.Jacobian
 
 /-!
 # Fox differential: completed — continuous — automorphism
@@ -209,10 +208,12 @@ theorem allFinite_freeProCZCCompletedFoxAutomorphismJacobianLinearMap_comp_inver
     hι hι e.toMonoidHom he_continuous φ (e.symm (ι x))
   convert hchain.symm using 1
   all_goals
-    simp [LinearMap.comp_apply,
+    simp only [LinearMap.comp_apply,
       allFinite_freeProCZCCompletedFoxAutomorphismJacobianLinearMapInverse,
       allFinite_freeProCZCCompletedFoxJacobianLinearMap,
-      allFinite_freeProCZCCompletedFoxJacobian]
+      foxJacobianLinearMap_single, allFinite_freeProCZCCompletedFoxJacobian,
+      LinearMap.id_coe, id_eq, MulEquiv.toMonoidHom_eq_coe, MonoidHom.coe_ofClass,
+      MulEquiv.apply_symm_apply]
   all_goals try rfl
   exact (freeProCZCCompletedFoxDerivativeVector_generator
     (C := ProCGroups.FiniteGroupClass.allFinite) hι

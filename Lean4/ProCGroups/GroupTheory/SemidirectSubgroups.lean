@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import Mathlib.GroupTheory.SemidirectProduct
 
-set_option autoImplicit false
-
 /-!
 # Kernels and subgroup preimages in a semidirect product
 

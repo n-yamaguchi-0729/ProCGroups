@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.ProC.GroupPredicates.Abelian
 
-set_option autoImplicit false
-
 /-!
 # Group predicates for pro-\(C\) groups
 

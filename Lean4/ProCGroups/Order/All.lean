@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.Order.Basic
 
-set_option autoImplicit false
-
 /-!
 # Order-theoretic constructions
 

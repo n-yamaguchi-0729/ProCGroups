@@ -10,8 +10,6 @@ import ProCGroups.CompletedGroupAlgebra.ProfiniteModules.Basic.Generators
 import ProCGroups.CompletedGroupAlgebra.ProfiniteModules.Basic.OpenIdeals
 import ProCGroups.CompletedGroupAlgebra.ProfiniteModules.Basic.OpenSubmodule
 
-set_option autoImplicit false
-
 /-!
 # Basic theory of profinite modules
 

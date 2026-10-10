@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.FreeConstructions.FiniteSubgroupBounds
 import ProCGroups.FreeConstructions.Framework
 
-set_option autoImplicit false
-
 /-!
 # Finite-subgroup generation bounds
 

@@ -10,8 +10,6 @@ import ProCGroups.FoxDifferential.Completed.DifferentialModule.TargetQuotient.Mu
 import ProCGroups.FoxDifferential.Completed.DifferentialModule.TargetQuotient.StageMap
 import ProCGroups.FoxDifferential.Completed.DifferentialModule.TargetQuotient.Surjective
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — differential module — target quotient
 

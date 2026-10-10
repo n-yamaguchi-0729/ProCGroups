@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Mathlib.SetTheory.Cardinal.NatCard
 import ProCGroups.FreeConstructions.Framework
 
-set_option autoImplicit false
-
 /-!
 # Generator bounds from finite subgroup families
 

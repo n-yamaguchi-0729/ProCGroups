@@ -13,8 +13,6 @@ import ProCGroups.GroupTheory.SemidirectSubgroups
 import Mathlib.Algebra.GroupWithZero.Action.End
 import Mathlib.Topology.Algebra.Group.Basic
 
-set_option autoImplicit false
-
 /-!
 # Split abelian-kernel solvability passes to open subgroups
 

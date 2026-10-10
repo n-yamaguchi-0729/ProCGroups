@@ -9,8 +9,6 @@ import ProCGroups.CompletedGroupAlgebra.UniversalProperty.FiniteQuotient
 import ProCGroups.CompletedGroupAlgebra.UniversalProperty.OpenSubmoduleQuotient
 import ProCGroups.CompletedGroupAlgebra.UniversalProperty.ProfiniteModule
 
-set_option autoImplicit false
-
 /-!
 # Universal properties of completed group algebras
 

@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.GeneratorDeletion
 
-set_option autoImplicit false
-
 /-!
 # Verified Tietze move scripts
 

@@ -8,8 +8,6 @@ import Mathlib.GroupTheory.SemidirectProduct
 import ProCGroups.ProC.Subgroups.Products
 import ProCGroups.ReidemeisterSchreier.RightQuotient
 
-set_option autoImplicit false
-
 /-!
 # Pro C Groups / Wreath Products
 

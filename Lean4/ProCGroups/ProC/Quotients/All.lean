@@ -11,8 +11,6 @@ import ProCGroups.ProC.Quotients.LeftQuotientMaps
 import ProCGroups.ProC.Quotients.LeftQuotientProjectionSections
 import ProCGroups.ProC.Quotients.OpenSubgroupSections
 
-set_option autoImplicit false
-
 /-!
 # Quotients and sections of pro-\(C\) groups
 

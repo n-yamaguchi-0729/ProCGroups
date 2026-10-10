@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.FoxDifferential.Common.FiniteFamilyLinearMap
 import Mathlib.Topology.Basic
 
-set_option autoImplicit false
-
 /-!
 # `ProCGroups.CrowellExactSequence.Basic`
 

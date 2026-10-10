@@ -7,9 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.KernelQuotient
 import ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.Tau
 
-set_option autoImplicit false
-
-
 /-!
 # Reidemeister Schreier / Discrete / Reidemeister Schreier / Finite Quotient / Cleaned Symbols
 
@@ -17,6 +14,7 @@ This module separates degenerate Schreier symbols from genuine generators and
 sets up the relator families needed to delete the trivial generators from the
 finite-quotient presentation.
 -/
+
 
 namespace ReidemeisterSchreier.Discrete
 

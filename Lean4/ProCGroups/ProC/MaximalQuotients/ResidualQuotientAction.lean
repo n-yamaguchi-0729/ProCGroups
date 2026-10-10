@@ -9,8 +9,6 @@ import ProCGroups.Abelian.TopologicalAbelianization
 import Mathlib.Algebra.Group.End
 import Mathlib.GroupTheory.QuotientGroup.Basic
 
-set_option autoImplicit false
-
 /-!
 # Quotient conjugation on abelianized residual quotients
 

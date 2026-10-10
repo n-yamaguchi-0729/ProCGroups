@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.FoxDifferential.Completed.Continuous.Magnus.KernelClosedCommutator
 import ProCGroups.CrowellExactSequence.Profinite.KernelInjectivity
 
-set_option autoImplicit false
-
 /-!
 # Crowell Exact Sequence / Profinite / Continuous Magnus / Injectivity
 

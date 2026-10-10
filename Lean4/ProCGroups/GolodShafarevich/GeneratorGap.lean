@@ -6,7 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import Mathlib.Data.Nat.Basic
 
-set_option autoImplicit false
 /-!
 # The numerical Golod--Shafarevich gap used by the Martinet seed
 

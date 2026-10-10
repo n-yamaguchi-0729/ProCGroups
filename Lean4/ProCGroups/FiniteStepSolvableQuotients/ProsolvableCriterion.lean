@@ -13,8 +13,6 @@ import ProCGroups.ProC.MaximalQuotients.UniversalProperty
 import ProCGroups.ProC.OpenNormalSubgroups.ClosedCommutator
 import ProCGroups.ProC.Quotients.ClosedNormal
 
-set_option autoImplicit false
-
 /-!
 # A local-abelianization criterion for prosolvable quotients
 

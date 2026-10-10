@@ -10,8 +10,6 @@ import ProCGroups.CompletedGroupAlgebra.OpenFiniteQuotientTopology.OpenFiniteCom
 import ProCGroups.CompletedGroupAlgebra.OpenFiniteQuotientTopology.OpenFiniteLimit.All
 import ProCGroups.CompletedGroupAlgebra.OpenFiniteQuotientTopology.OpenFiniteQuotients
 
-set_option autoImplicit false
-
 /-!
 # Completed Group Algebra / Open Finite Quotient Topology
 

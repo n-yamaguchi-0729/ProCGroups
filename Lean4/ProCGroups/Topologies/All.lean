@@ -12,8 +12,6 @@ import ProCGroups.Topologies.OpenSubgroup
 import ProCGroups.Topologies.QuotientMaps
 import ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
 
-set_option autoImplicit false
-
 /-!
 # Topological-group infrastructure
 

@@ -6,10 +6,9 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraModN.InClass.Basic
 
-set_option autoImplicit false
-
 /-!
-# Fox differential: coefficient rings — mod-\(n\) completed group algebra — in class — add comm group
+# Fox differential: coefficient rings — mod-\(n\) completed group algebra — in class — add
+comm group
 
 The principal declarations in this module are:
 

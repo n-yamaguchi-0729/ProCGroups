@@ -17,8 +17,6 @@ import ProCGroups.FoxDifferential.Completed.Continuous.TopologicalGeneration
 import ProCGroups.FoxDifferential.Completed.Continuous.Topology
 import ProCGroups.FoxDifferential.Completed.Continuous.Universal.All
 
-set_option autoImplicit false
-
 /-!
 # Continuous completed Fox calculus
 

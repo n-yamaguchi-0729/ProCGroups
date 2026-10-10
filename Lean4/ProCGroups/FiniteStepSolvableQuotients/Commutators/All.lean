@@ -9,8 +9,6 @@ import ProCGroups.FiniteStepSolvableQuotients.Commutators.ClosureFromFiniteQuoti
 import ProCGroups.FiniteStepSolvableQuotients.Commutators.DerivedSeriesAndQuotients
 import ProCGroups.FiniteStepSolvableQuotients.Commutators.Width
 
-set_option autoImplicit false
-
 /-!
 # Closed commutators and their width
 

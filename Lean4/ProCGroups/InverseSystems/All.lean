@@ -17,8 +17,9 @@ import ProCGroups.InverseSystems.ProjectionImageSystems
 import ProCGroups.InverseSystems.Quotients
 import ProCGroups.InverseSystems.StagewiseIso
 import ProCGroups.InverseSystems.Utilities
+import ProCGroups.InverseSystems.GroupSystemRestriction
+import ProCGroups.InverseSystems.CofinalGroups
 
-set_option autoImplicit false
 
 /-!
 # Inverse systems

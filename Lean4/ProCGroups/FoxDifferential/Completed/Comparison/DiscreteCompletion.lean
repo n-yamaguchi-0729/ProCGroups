@@ -8,8 +8,6 @@ import ProCGroups.FoxDifferential.Discrete.Naturality
 import ProCGroups.FoxDifferential.Completed.Comparison.FiniteStage
 import ProCGroups.Completion.ProCIntegerPrimePower
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — comparison — discrete completion
 

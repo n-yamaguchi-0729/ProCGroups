@@ -9,8 +9,6 @@ import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.KernelQuotient
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.All
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.All
 
-set_option autoImplicit false
-
 /-!
 # Presentation tools for Reidemeister--Schreier rewriting
 

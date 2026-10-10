@@ -10,8 +10,6 @@ import ProCGroups.FoxDifferential.Completed.DifferentialModule.Map.Limit
 import ProCGroups.FoxDifferential.Completed.DifferentialModule.Map.Stage
 import ProCGroups.FoxDifferential.Completed.DifferentialModule.Map.Surjective
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — differential module — map
 

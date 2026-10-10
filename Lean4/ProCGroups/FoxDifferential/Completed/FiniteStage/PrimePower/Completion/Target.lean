@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Limit.AddCommGroup
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Limit.CoeffMap
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: finite stage — prime power — completion — target
 

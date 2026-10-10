@@ -8,8 +8,6 @@ import ProCGroups.FiniteGroups.StandardClasses
 import Mathlib.GroupTheory.PGroup
 import Mathlib.Data.Nat.PrimeFin
 
-set_option autoImplicit false
-
 /-!
 # Singleton Sigma classes are finite p-groups
 

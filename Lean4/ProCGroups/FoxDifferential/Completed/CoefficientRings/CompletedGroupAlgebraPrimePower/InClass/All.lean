@@ -8,8 +8,6 @@ import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgeb
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.InClass.Map
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.InClass.System.All
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — coefficient rings — prime-power completed group algebra — in class
 

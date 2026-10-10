@@ -8,8 +8,6 @@ import ProCGroups.WreathProducts
 import ProCGroups.ReidemeisterSchreier.Discrete.OpenSubgroups.FreeBasis
 import ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.FinitePermutationTargets
 
-set_option autoImplicit false
-
 /-!
 # Dense abstract free models of open subgroups
 
@@ -63,7 +61,8 @@ noncomputable def mapRightQuotientOfComap :
   | π, βF, β, K, hβ =>
       Quotient.map' βF (fun _a _b hab => rightRel_map_of_comap π βF β K hβ hab)
 
-/-- Surjectivity of the free-group map makes the induced map on right-quotient classes surjective. -/
+/-- Surjectivity of the free-group map makes the induced map on right-quotient classes
+surjective. -/
 theorem surjective_mapRightQuotientOfComap
     (π : F →* P) (βF : FreeGroup Y →* F) (β : FreeGroup Y →* P)
     (K : Subgroup P) (hβ : π.comp βF = β)
@@ -87,7 +86,8 @@ theorem surjective_mapRightQuotientOfComap
   rw [map_mul, map_inv, hw', mul_inv_cancel]
   exact K.one_mem
 
-/-- The induced map on right-quotient classes is injective under the comap compatibility equation. -/
+/-- The induced map on right-quotient classes is injective under the comap compatibility
+equation. -/
 theorem injective_mapRightQuotientOfComap
     (π : F →* P) (βF : FreeGroup Y →* F) (β : FreeGroup Y →* P)
     (K : Subgroup P) (hβ : π.comp βF = β) :

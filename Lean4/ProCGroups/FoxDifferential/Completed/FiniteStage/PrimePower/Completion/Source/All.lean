@@ -8,8 +8,6 @@ import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Completion.So
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Completion.Source.LimitMap
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Completion.Source.Representatives
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: finite stage — prime power — completion — source
 

@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.ProC.OpenNormalSubgroups.Basic
 import Mathlib.Algebra.Group.Subgroup.Basic
 
-set_option autoImplicit false
-
 /-!
 # Extending a finite quotient layer beyond an open subgroup
 

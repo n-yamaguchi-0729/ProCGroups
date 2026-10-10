@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.FoxDifferential.Completed.DifferentialModule.Map.Surjective
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Completion.Source.Index
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — differential module — target quotient — basic
 

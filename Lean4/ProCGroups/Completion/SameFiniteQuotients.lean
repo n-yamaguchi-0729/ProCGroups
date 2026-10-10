@@ -8,8 +8,6 @@ import Mathlib.GroupTheory.Finiteness
 import ProCGroups.FiniteGeneration.CharacteristicChainsAndIndices
 import ProCGroups.ProC.OpenNormalSubgroups.LimitPresentation
 
-set_option autoImplicit false
-
 /-!
 # Pro C Groups / Completion / Same Finite Quotients
 

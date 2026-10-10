@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.TargetPresentation.Core
 import ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.TargetPresentation.NormalWords
 
-set_option autoImplicit false
-
 /-!
 # Reidemeister Schreier / Discrete / Reidemeister Schreier / Finite Quotient / Target Presentation
 

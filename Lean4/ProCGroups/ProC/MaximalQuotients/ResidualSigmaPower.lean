@@ -8,8 +8,6 @@ import ProCGroups.FiniteGroups.StandardClasses
 import ProCGroups.ProC.MaximalQuotients.ResidualQuotient
 import ProCGroups.Abelian.TopologicalAbelianization
 
-set_option autoImplicit false
-
 /-!
 # Prime-to-Sigma powers on actual residual abelianizations
 

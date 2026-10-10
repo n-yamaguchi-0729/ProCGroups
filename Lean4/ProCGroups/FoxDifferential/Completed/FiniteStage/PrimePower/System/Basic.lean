@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.FoxDifferential.Completed.FiniteStage.CoeffMap.BoundaryCycles
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: finite stage — prime power — system — basic
 

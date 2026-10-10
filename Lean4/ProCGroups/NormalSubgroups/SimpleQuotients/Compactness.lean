@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.NormalSubgroups.SimpleQuotients.FiniteIntersections
 
-set_option autoImplicit false
-
 /-!
 # Compactness for intersections above a simple-quotient kernel
 

@@ -10,8 +10,6 @@ import ProCGroups.Categorical.PullbackComparison
 import ProCGroups.Categorical.PushoutSquares
 import ProCGroups.Categorical.QuotientPullbackEquivalences
 
-set_option autoImplicit false
-
 /-!
 # Pro C Groups / Categorical
 

@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.FiniteGroups.StandardClasses
 
-set_option autoImplicit false
-
 /-!
 # Inclusion of finite Sigma-group classes
 

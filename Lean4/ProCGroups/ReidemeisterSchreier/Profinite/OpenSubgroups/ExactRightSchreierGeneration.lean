@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.DenseFreeModel
 import ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.SchreierTransversals
 
-set_option autoImplicit false
-
 /-!
 # Exact right-Schreier generation
 

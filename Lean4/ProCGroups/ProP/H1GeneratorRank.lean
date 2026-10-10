@@ -8,7 +8,6 @@ import ProCGroups.ProP.GeneratorRank
 import ProCGroups.ProP.H1PowerCommutator
 import Mathlib.LinearAlgebra.Dual.Lemmas
 
-set_option autoImplicit false
 /-!
 # Generator rank as continuous `H¹` dimension
 

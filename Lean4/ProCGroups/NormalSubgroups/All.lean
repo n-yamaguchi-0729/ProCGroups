@@ -8,8 +8,6 @@ import ProCGroups.NormalSubgroups.Framework
 import ProCGroups.NormalSubgroups.MaximalIntersectionsAndSimpleRanks
 import ProCGroups.NormalSubgroups.SimpleQuotients.All
 
-set_option autoImplicit false
-
 /-!
 # Normal subgroups and simple quotients
 

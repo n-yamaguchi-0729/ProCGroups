@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.ProC.Subgroups.Products
 import ProCGroups.ReidemeisterSchreier.RightQuotient
 
-set_option autoImplicit false
-
 /-!
 # Right cosets of open subgroups
 

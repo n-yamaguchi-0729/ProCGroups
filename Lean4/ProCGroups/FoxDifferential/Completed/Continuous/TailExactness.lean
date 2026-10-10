@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.AugmentationIdeal.Closure
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — continuous — tail exactness
 

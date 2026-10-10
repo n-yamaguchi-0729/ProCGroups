@@ -9,8 +9,6 @@ import ProCGroups.CompletedGroupAlgebra.Augmentation.CanonicalAugmentation
 import ProCGroups.CompletedGroupAlgebra.Augmentation.Functoriality
 import ProCGroups.CompletedGroupAlgebra.Augmentation.StageAugmentation
 
-set_option autoImplicit false
-
 /-!
 # Completed Group Algebra / Augmentation
 

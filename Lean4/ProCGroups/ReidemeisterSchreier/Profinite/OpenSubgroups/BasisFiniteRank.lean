@@ -8,8 +8,6 @@ import ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.BasisTheorems
 import ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.RankBound
 import Mathlib.SetTheory.Cardinal.Finite
 
-set_option autoImplicit false
-
 /-!
 # Finite-rank bases of open subgroups
 

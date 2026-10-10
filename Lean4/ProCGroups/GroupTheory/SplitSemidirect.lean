@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Mathlib.GroupTheory.SemidirectProduct
 import Mathlib.Algebra.Group.Hom.Basic
 
-set_option autoImplicit false
-
 /-!
 # A split homomorphism as its kernel semidirect product
 

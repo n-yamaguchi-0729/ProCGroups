@@ -6,9 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.Kernel
 
-set_option autoImplicit false
-
-
 /-!
 # Reidemeister Schreier / Discrete / Reidemeister Schreier / Finite Quotient / Word Certificates
 
@@ -16,6 +13,7 @@ This module records checkable prefix-closure conditions for quotient-section
 words and proves the reduced-word and state-transition facts required by the
 finite tau presentation.
 -/
+
 
 namespace ReidemeisterSchreier.Discrete
 

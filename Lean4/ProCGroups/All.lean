@@ -38,8 +38,6 @@ import ProCGroups.TopologicalGroups
 import ProCGroups.Topologies.All
 import ProCGroups.WreathProducts
 
-set_option autoImplicit false
-
 /-!
 # Pro-C groups
 

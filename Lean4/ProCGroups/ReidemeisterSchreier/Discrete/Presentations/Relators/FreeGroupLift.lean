@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Basic
 
-set_option autoImplicit false
-
 /-!
 # Free-group lifts modulo relators
 
@@ -53,7 +51,8 @@ theorem freeGroup_relatorEquivalent_mk_of_reduce_eq
   (freeGroup_relatorEquivalent_of_toWord_eq_reduce
     (R := R) (u := u) (w := w) h.symm).symm
 
-/-- Expand each signed source letter to the reduced word of its image, reversing and inverting negative letters. -/
+/-- Expand each signed source letter to the reduced word of its image, reversing and inverting
+negative letters. -/
 def freeGroupSubstitutionWord {Y : Type*} [DecidableEq Y]
     (f : X → FreeGroup Y) :
     List (X × Bool) → List (Y × Bool)

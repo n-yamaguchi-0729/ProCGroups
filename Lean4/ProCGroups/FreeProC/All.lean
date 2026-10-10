@@ -16,8 +16,6 @@ import ProCGroups.FreeProC.SolvableQuotients
 import ProCGroups.FreeProC.Universe
 import ProCGroups.FreeProC.Construction
 
-set_option autoImplicit false
-
 /-!
 # Free pro-`C` groups
 

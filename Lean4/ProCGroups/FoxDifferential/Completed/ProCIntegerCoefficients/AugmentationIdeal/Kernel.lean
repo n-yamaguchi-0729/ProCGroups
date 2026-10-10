@@ -8,8 +8,6 @@ import ProCGroups.FoxDifferential.Completed.Continuous.Naturality
 import ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.AugmentationIdeal.Closure
 import ProCGroups.ProC.Kernels
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — \(\mathbb{Z}_C\) coefficients — augmentation ideal — kernel
 

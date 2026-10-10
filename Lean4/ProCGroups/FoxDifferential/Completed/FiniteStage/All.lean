@@ -29,8 +29,6 @@ import ProCGroups.FoxDifferential.Completed.FiniteStage.SourceDerivativeVector
 import ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.All
 import ProCGroups.FoxDifferential.Completed.FiniteStage.TargetMap
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — finite stage
 

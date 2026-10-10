@@ -8,8 +8,6 @@ import Mathlib.Topology.Algebra.ProperAction.Basic
 import ProCGroups.InverseSystems.CompatibilityAndSurjectivity
 import ProCGroups.Topologies.QuotientMaps
 
-set_option autoImplicit false
-
 /-!
 # Quotients of group-valued inverse systems
 
@@ -126,7 +124,8 @@ instance quotientInverseSystem_stageGroup (i : I) :
   change Group (S.X i ⧸ Q.N i)
   infer_instance
 
-/-- Each stage quotient carries the quotient topology and its induced topological-group structure. -/
+/-- Each stage quotient carries the quotient topology and its induced topological-group
+structure. -/
 instance quotientInverseSystem_stageTopologicalGroup (i : I) :
     IsTopologicalGroup (Q.quotientInverseSystem.X i) := by
   change IsTopologicalGroup (S.X i ⧸ Q.N i)

@@ -10,8 +10,7 @@ import ProCGroups.Generation.GeneratorConvergingPairs
 import ProCGroups.Generation.QuotientCriteria
 import ProCGroups.Generation.QuotientGeneratorConvergingPairs
 import ProCGroups.Generation.WordProductsAndClosure
-
-set_option autoImplicit false
+import ProCGroups.Generation.Procyclic
 
 /-!
 # Topological generation

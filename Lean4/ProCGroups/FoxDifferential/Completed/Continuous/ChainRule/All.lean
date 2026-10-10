@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.FoxDifferential.Completed.Continuous.ChainRule.Basic
 import ProCGroups.FoxDifferential.Completed.Continuous.ChainRule.Iterated
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — continuous — chain rule
 

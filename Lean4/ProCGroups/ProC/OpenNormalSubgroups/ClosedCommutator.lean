@@ -8,8 +8,6 @@ import ProCGroups.Abelian.TopologicalAbelianizationLimits
 import ProCGroups.ProC.InverseLimits.FiniteQuotients
 import ProCGroups.ProC.OpenNormalSubgroups.LimitPresentation
 
-set_option autoImplicit false
-
 /-!
 # Detecting the closed commutator subgroup in finite quotients
 

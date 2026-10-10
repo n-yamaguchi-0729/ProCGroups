@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.FiniteGroups.StandardClasses
 import ProCGroups.ProC.MaximalQuotients.ResidualCore
 
-set_option autoImplicit false
-
 /-!
 # Pro-p subgroups in the Sigma residual core
 

@@ -6,9 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.Data
 
-set_option autoImplicit false
-
-
 /-!
 # Reidemeister Schreier / Discrete / Reidemeister Schreier / Finite Quotient / Tau
 
@@ -16,6 +13,7 @@ This module defines the finite-state tau rewriting of signed words into
 Schreier symbols and proves compatibility with concatenation, cancellation,
 reduction, and free-group multiplication.
 -/
+
 
 namespace ReidemeisterSchreier.Discrete
 

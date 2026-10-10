@@ -11,8 +11,6 @@ import ProCGroups.FoxDifferential.Common.FoxBoundary
 import ProCGroups.FoxDifferential.Common.FreeCrossedDifferential
 import ProCGroups.FoxDifferential.Common.Jacobian
 
-set_option autoImplicit false
-
 /-!
 # Common Fox-differential interface
 

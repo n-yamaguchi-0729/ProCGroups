@@ -27,8 +27,6 @@ import ProCGroups.FoxDifferential.Completed.FreeProC.StageApproximation
 import ProCGroups.FoxDifferential.Completed.FreeProC.StageProjection
 import ProCGroups.FoxDifferential.Completed.FreeProC.Uniqueness.All
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — free pro-\(C\)
 

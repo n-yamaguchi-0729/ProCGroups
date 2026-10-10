@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Derivative.Rules
 import ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Derivative.Relators
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — finite stage — magnus quotient
 

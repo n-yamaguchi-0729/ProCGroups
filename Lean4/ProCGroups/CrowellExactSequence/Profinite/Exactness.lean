@@ -9,8 +9,6 @@ import ProCGroups.CrowellExactSequence.Profinite.SequenceMaps.Basic
 import ProCGroups.CrowellExactSequence.Profinite.SequenceMaps.Exactness
 import ProCGroups.FoxDifferential.Completed.Continuous.ClosedGeneratedCoordinates.Comparison
 
-set_option autoImplicit false
-
 /-!
 # Profinite Crowell middle exactness
 
@@ -144,10 +142,9 @@ theorem exact_boundaryAddZC_sep_of_coord_cycle_lift
     (C : ProCGroups.FiniteGroupClass.{u})
     (hC : ProCGroups.FiniteGroupClass.Hereditary C)
     (psi : ContinuousMonoidHom G H)
-    {X : Type u} [Fintype X] [DecidableEq X] (family : X → G)
+    {X : Type u} [Fintype X] (family : X → G)
     (coords :
-      ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom ≃ₗ[
-        ZCCompletedGroupAlgebra C H]
+      ZCSeparatedCompletedDifferentialModule C psi.toMonoidHom ≃ₗ[ZCCompletedGroupAlgebra C H]
         ZCFreeFoxCoordinates C (X := X) (H := H))
     (hcoords_symm :
       coords.symm.toLinearMap =

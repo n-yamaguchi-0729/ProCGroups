@@ -10,8 +10,6 @@ import ProCGroups.FoxDifferential.Completed.Comparison.MagnusKernel
 import ProCGroups.FoxDifferential.Completed.Comparison.QuotientFamily
 import ProCGroups.FoxDifferential.Completed.Comparison.SourceProjection
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — comparison
 

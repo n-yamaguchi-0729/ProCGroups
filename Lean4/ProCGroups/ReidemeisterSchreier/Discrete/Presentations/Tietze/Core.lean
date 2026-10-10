@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Mathlib.GroupTheory.PresentedGroup
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.GeneratorMap
 
-set_option autoImplicit false
-
 /-!
 # Semantic equivalence of presentations
 

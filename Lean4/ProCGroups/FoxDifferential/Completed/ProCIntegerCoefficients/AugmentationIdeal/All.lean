@@ -9,8 +9,6 @@ import ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.Augmentation
 import ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.AugmentationIdeal.FiniteStage
 import ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.AugmentationIdeal.Kernel
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — \(\mathbb{Z}_C\) coefficients — augmentation ideal
 

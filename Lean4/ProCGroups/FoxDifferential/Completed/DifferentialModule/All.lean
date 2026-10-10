@@ -8,8 +8,6 @@ import ProCGroups.FoxDifferential.Completed.DifferentialModule.Identity
 import ProCGroups.FoxDifferential.Completed.DifferentialModule.Map.All
 import ProCGroups.FoxDifferential.Completed.DifferentialModule.TargetQuotient.All
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — differential module
 

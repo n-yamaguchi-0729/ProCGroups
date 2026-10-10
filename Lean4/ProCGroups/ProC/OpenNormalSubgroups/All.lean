@@ -14,8 +14,6 @@ import ProCGroups.ProC.OpenNormalSubgroups.LimitPresentation
 import ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
 import ProCGroups.ProC.OpenNormalSubgroups.Separation
 
-set_option autoImplicit false
-
 /-!
 # Open normal subgroups of pro-\(C\) groups
 

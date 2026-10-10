@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.FreeProC.Characterization.EmbeddingProblems
 import ProCGroups.FiniteGroups.Classes
 
-set_option autoImplicit false
-
 /-!
 # Split embedding problems with a condition on the abelian kernel
 

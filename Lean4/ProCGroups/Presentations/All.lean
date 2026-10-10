@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.Presentations.Profinite
 
-set_option autoImplicit false
-
 /-!
 # Pro C Groups / Presentations
 

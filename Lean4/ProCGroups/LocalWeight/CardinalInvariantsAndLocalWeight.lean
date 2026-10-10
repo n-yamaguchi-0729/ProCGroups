@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Mathlib.SetTheory.Cardinal.Arithmetic
 import ProCGroups.FiniteGeneration.CharacteristicChainsAndIndices
 
-set_option autoImplicit false
-
 /-!
 # Cardinal invariants and local weight
 

@@ -9,8 +9,6 @@ import ProCGroups.FoxDifferential.Discrete.KernelBoundary.Quotient
 import ProCGroups.FoxDifferential.Discrete.KernelBoundary.MagnusKernel
 import ProCGroups.FoxDifferential.Discrete.FoxCalculus.Coordinates
 
-set_option autoImplicit false
-
 /-!
 # Discrete Crowell sequence maps
 

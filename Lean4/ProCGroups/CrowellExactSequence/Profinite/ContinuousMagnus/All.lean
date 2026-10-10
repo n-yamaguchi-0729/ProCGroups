@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.CrowellExactSequence.Profinite.ContinuousMagnus.Injectivity
 
-set_option autoImplicit false
-
 /-!
 # Continuous Magnus criterion for the profinite Crowell sequence
 

@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.FoxDifferential.Completed.FreeProC.Coordinates
 import ProCGroups.FoxDifferential.Completed.FiniteStage.ClosedGeneratedCycles
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — free pro-\(C\) — fundamental formula
 

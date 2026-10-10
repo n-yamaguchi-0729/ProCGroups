@@ -8,8 +8,6 @@ import ProCGroups.Generation.Basic
 import ProCGroups.ProC.OpenNormalSubgroups.BasisAtOne
 import ProCGroups.Profinite.Basic
 
-set_option autoImplicit false
-
 /-!
 # Finite word products and subgroup closure
 

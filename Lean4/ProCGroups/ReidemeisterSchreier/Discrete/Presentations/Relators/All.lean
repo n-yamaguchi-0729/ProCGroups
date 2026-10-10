@@ -10,8 +10,6 @@ import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.FreeGroup
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Operations
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Presentation
 
-set_option autoImplicit false
-
 /-!
 # Relator toolkit
 

@@ -8,8 +8,6 @@ import ProCGroups.FoxDifferential.Completed.Continuous.Magnus.ClosedGeneratedVec
 import ProCGroups.FoxDifferential.Completed.Continuous.Magnus.FiniteStageKernel
 import ProCGroups.FoxDifferential.Completed.Continuous.Magnus.KernelClosedCommutator
 
-set_option autoImplicit false
-
 /-!
 # Continuous completed Magnus theory
 

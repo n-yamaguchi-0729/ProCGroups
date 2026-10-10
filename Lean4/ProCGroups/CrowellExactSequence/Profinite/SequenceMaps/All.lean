@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.CrowellExactSequence.Profinite.SequenceMaps.Basic
 import ProCGroups.CrowellExactSequence.Profinite.SequenceMaps.Exactness
 
-set_option autoImplicit false
-
 /-!
 # Crowell Exact Sequence / Profinite / Sequence Maps
 

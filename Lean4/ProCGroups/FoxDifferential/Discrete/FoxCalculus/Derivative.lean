@@ -8,8 +8,6 @@ import ProCGroups.FoxDifferential.Discrete.FoxCalculus.Semidirect
 import ProCGroups.FoxDifferential.Discrete.DifferentialModule.Universal
 import ProCGroups.FoxDifferential.Common.FreeCrossedDifferential
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: discrete — fox calculus — derivative
 

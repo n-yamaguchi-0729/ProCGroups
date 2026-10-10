@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.FoxDifferential.Completed.Residue.Core
 import ProCGroups.FoxDifferential.Completed.Residue.FreeGroup.All
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — residue
 

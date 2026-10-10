@@ -9,8 +9,6 @@ import ProCGroups.FoxDifferential.Completed.Continuous.ClosedGeneratedCoordinate
 import ProCGroups.FoxDifferential.Completed.Continuous.ClosedGeneratedCoordinates.Equiv
 import ProCGroups.FoxDifferential.Completed.Continuous.ClosedGeneratedCoordinates.Topology
 
-set_option autoImplicit false
-
 /-!
 # Closed-generated completed Fox coordinates
 

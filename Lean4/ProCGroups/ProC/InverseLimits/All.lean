@@ -8,8 +8,6 @@ import ProCGroups.ProC.InverseLimits.FiniteQuotients
 import ProCGroups.ProC.InverseLimits.Limits
 import ProCGroups.ProC.InverseLimits.Predicates
 
-set_option autoImplicit false
-
 /-!
 # Inverse-limit constructions for pro-\(C\) groups
 

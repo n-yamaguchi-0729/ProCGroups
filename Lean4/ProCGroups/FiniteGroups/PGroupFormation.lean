@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.FiniteGroups.StandardClasses
 
-set_option autoImplicit false
-
 /-!
 # The full formation of finite p-groups
 

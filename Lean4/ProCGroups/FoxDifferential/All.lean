@@ -9,8 +9,6 @@ import ProCGroups.FoxDifferential.Completed.All
 import ProCGroups.FoxDifferential.Discrete.All
 import ProCGroups.FoxDifferential.RightDerivative.All
 
-set_option autoImplicit false
-
 /-!
 # Fox differential calculus
 

@@ -4,14 +4,29 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
+import ProCGroups.Abelian.PrimeQuotients
+import ProCGroups.Abelian.AbelianModPower
+import ProCGroups.Abelian.SubgroupCommutator
+import ProCGroups.Abelian.Transfer
+import ProCGroups.Abelian.PrimaryDetection
 import ProCGroups.Abelian.CharacterDetection
 import ProCGroups.Abelian.FiniteInvariantQuotients
 import ProCGroups.Abelian.TopologicalAbelianization
+import ProCGroups.Abelian.TopologicalAbelianizationKernel
 import ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
 import ProCGroups.Abelian.TopologicalAbelianizationLimits
+import ProCGroups.Abelian.PrimeExponentCharacters
+import ProCGroups.Abelian.PrimePowerCharacters
 
-set_option autoImplicit false
+import ProCGroups.Abelian.TopologicalAbelianizationQuotientFaithfulness
 
+import ProCGroups.Abelian.PrimaryTorsion
+
+import ProCGroups.Abelian.PowerQuotientAction
+import ProCGroups.Abelian.FiniteBidual
+import ProCGroups.Abelian.ProfiniteBidual
+
+import ProCGroups.Abelian.FullTateModule
 /-!
 # Abelian constructions
 

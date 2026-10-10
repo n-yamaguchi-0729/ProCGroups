@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.ProC.OpenNormalSubgroups.Separation
 
-set_option autoImplicit false
-
 /-!
 # Detecting conjugacy in finite quotients
 

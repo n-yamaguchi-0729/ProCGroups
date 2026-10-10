@@ -11,8 +11,6 @@ import ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.Map
 import ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.StageMap
 import ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.Surjectivity
 
-set_option autoImplicit false
-
 /-!
 # Completed Group Algebra / All Finite Functoriality
 

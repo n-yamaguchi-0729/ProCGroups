@@ -8,8 +8,6 @@ import ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Derivative.Quotien
 import ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Derivative.Quotient.Fundamental
 import ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Derivative.Quotient.Universal
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: finite stage — stage — derivative — quotient
 

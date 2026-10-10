@@ -8,8 +8,6 @@ import ProCGroups.FreeProC.Basic
 import ProCGroups.WreathProducts
 import ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.RightQuotient
 
-set_option autoImplicit false
-
 /-!
 # Schreier sections and oriented cocycles
 

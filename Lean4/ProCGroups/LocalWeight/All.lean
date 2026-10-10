@@ -11,8 +11,6 @@ import ProCGroups.LocalWeight.LocalWeightTheorems
 import ProCGroups.LocalWeight.MetrizabilityAndQuotients
 import ProCGroups.LocalWeight.SubgroupChains
 
-set_option autoImplicit false
-
 /-!
 # Local weight
 

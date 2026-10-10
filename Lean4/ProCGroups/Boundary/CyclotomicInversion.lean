@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Mathlib.Data.Nat.Prime.Basic
 import Mathlib.GroupTheory.OrderOfElement
 
-set_option autoImplicit false
-
 /-!
 # The abelian consequence of cyclotomic inversion
 

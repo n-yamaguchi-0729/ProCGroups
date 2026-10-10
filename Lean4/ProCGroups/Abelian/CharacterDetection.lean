@@ -8,8 +8,6 @@ import ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
 import ProCGroups.ProC.Quotients.ClosedNormal
 import ProCGroups.ProC.OpenNormalSubgroups.Basic
 
-set_option autoImplicit false
-
 /-!
 # Finite characters detect conjugation on topological abelianization
 

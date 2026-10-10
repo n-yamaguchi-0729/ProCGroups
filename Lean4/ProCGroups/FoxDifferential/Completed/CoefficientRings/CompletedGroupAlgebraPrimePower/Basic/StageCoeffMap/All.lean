@@ -7,10 +7,9 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.Basic.StageCoeffMap.AllFinite
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.Basic.StageCoeffMap.Coeff
 
-set_option autoImplicit false
-
 /-!
-# Fox differential: coefficient rings — prime-power completed group algebra — basic — stage coeff map
+# Fox differential: coefficient rings — prime-power completed group algebra — basic — stage
+coeff map
 
 This aggregate re-exports the following parts of the Fox differential API:
 

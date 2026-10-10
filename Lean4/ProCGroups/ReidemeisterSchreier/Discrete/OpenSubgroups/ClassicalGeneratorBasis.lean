@@ -6,10 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.ReidemeisterSchreier.Discrete.OpenSubgroups.FreeBasis
 
-set_option autoImplicit false
-
-universe u
-
 /-!
 # Reidemeister Schreier / Discrete / Open Subgroups / Classical Generator Basis
 
@@ -17,6 +13,8 @@ This module identifies the classical Schreier generators with the free basis
 obtained from complement edges, including the inverse-basis convention needed
 for the standard generator formula.
 -/
+
+universe u
 
 namespace ReidemeisterSchreier.Discrete.OpenSubgroups
 

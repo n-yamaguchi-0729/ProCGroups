@@ -7,9 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.CleanedSymbols
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.FreeGroupLift
 
-set_option autoImplicit false
-
-
 /-!
 # Reidemeister Schreier / Discrete / Reidemeister Schreier / Finite Quotient / Cleaned Tau
 
@@ -17,6 +14,7 @@ This module rewrites tau words on the nondegenerate Schreier-symbol alphabet
 and proves that the cleaned rewriting respects reduction, multiplication, and
 the original tau evaluation.
 -/
+
 
 namespace ReidemeisterSchreier.Discrete
 

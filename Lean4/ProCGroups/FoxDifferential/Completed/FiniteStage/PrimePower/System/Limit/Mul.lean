@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Limit.Basic
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: prime power — system — limit — mul
 

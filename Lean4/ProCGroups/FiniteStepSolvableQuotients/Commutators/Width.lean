@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Mathlib.GroupTheory.Rank
 import ProCGroups.FiniteGeneration.CharacteristicChainsAndIndices
 
-set_option autoImplicit false
-
 /-!
 # Uniform commutator-width estimates
 

@@ -11,8 +11,6 @@ import ProCGroups.FoxDifferential.Completed.FiniteStage.CoeffMap.Semidirect
 import ProCGroups.FoxDifferential.Completed.FiniteStage.CoeffMap.Source
 import ProCGroups.FoxDifferential.Completed.FiniteStage.CoeffMap.Target
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — finite stage — coeff map
 

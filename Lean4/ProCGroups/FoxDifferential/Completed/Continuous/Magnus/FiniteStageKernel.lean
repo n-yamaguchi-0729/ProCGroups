@@ -9,8 +9,6 @@ import ProCGroups.FoxDifferential.Completed.Comparison.FiniteStage
 import ProCGroups.FoxDifferential.Completed.Continuous.Naturality
 import ProCGroups.FreeProC.FiniteBasis
 
-set_option autoImplicit false
-
 /-!
 # Fox Differential / Completed / Continuous Magnus / Finite Stage Kernel
 

@@ -8,8 +8,6 @@ import ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
 import ProCGroups.FiniteStepSolvableQuotients.Commutators.Basic
 import ProCGroups.ProC.Kernels
 
-set_option autoImplicit false
-
 /-!
 # Abelianizations inside finite-step solvable quotients
 
@@ -24,11 +22,6 @@ namespace ProCGroups.FiniteStepSolvableQuotients
 open ProCGroups.Abelian
 
 universe u
-
-/-- Every open subgroup has torsion-free topological abelianization. -/
-def IsAbTorsionFree
-    (G : Type u) [TopologicalSpace G] [Group G] [IsTopologicalGroup G] : Prop :=
-  ∀ H : OpenSubgroup G, IsMulTorsionFree (TopologicalAbelianization ↥(H : Subgroup G))
 
 /-- The last nontrivial closed derived term inside the maximal \(m\)-step solvable quotient. -/
 def lastDerivedSubgroup
@@ -101,31 +94,6 @@ theorem containsLastDerived_of_lastDerivedSubgroup_le_map_subtype
   (containsLastDerived_iff_lastDerivedSubgroup_le_map_subtype
     (G := G) (m := m) (H := H) (N := N)).2 hN
 
-
-/--
-If every open subgroup has torsion-free topological abelianization, then so does the ambient
-group.
--/
-theorem isMulTorsionFree_topologicalAbelianization_of_isAbTorsionFree
-    {G : Type u} [TopologicalSpace G] [Group G] [IsTopologicalGroup G]
-    (hG : IsAbTorsionFree G) :
-    IsMulTorsionFree (TopologicalAbelianization G) := by
-  let e := topologicalAbelianizationTopMulEquiv (G := G)
-  let :
-      IsMulTorsionFree (TopologicalAbelianization ↥((⊤ : OpenSubgroup G) : Subgroup G)) := hG ⊤
-  exact e.isMulTorsionFree
-
-/--
-For a commutative \(T_1\) topological group, torsion-freeness of open-subgroup abelianizations
-implies torsion-freeness of the group itself.
--/
-theorem isMulTorsionFree_of_isAbTorsionFree_commGroup
-    {G : Type u} [TopologicalSpace G] [CommGroup G] [IsTopologicalGroup G] [T1Space G]
-    (hG : IsAbTorsionFree G) :
-    IsMulTorsionFree G := by
-  let : IsMulTorsionFree (TopologicalAbelianization G) :=
-    isMulTorsionFree_topologicalAbelianization_of_isAbTorsionFree (G := G) hG
-  exact (TopologicalAbelianization.continuousMulEquivOfCommGroup G).isMulTorsionFree
 
 /--
 Trivial closed commutator subgroup makes the natural map to topological abelianization

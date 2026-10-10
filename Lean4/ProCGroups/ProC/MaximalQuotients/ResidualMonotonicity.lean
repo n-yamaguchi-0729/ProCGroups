@@ -10,8 +10,6 @@ import ProCGroups.Topologies.QuotientMaps
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.Topology.Algebra.ContinuousMonoidHom
 
-set_option autoImplicit false
-
 /-!
 # Residual quotients under inclusion of finite-group classes
 

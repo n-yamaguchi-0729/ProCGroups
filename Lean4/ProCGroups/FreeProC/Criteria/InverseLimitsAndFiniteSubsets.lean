@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.FreeProC.Basic
 import ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
 
-set_option autoImplicit false
-
 /-!
 # Pro C Groups / Free pro-C / Criteria / Inverse Limits And Finite Subsets
 

@@ -8,8 +8,6 @@ import ProCGroups.FoxDifferential.Completed.FiniteStage.Bifiltered.InverseSystem
 import ProCGroups.FoxDifferential.Completed.FiniteStage.Bifiltered.System
 import ProCGroups.FoxDifferential.Completed.FiniteStage.Bifiltered.Transition
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — finite stage — bifiltered
 

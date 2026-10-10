@@ -11,8 +11,6 @@ import ProCGroups.CompletedGroupAlgebra.InClassFunctoriality.Maps
 import ProCGroups.CompletedGroupAlgebra.InClassFunctoriality.StageMaps
 import ProCGroups.CompletedGroupAlgebra.InClassFunctoriality.UnitRepresentation
 
-set_option autoImplicit false
-
 /-!
 # Completed Group Algebra / Functoriality Within a Class
 

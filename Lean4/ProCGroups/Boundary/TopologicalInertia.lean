@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.Boundary.CyclotomicInversion
 import ProCGroups.Generation.Basic
 
-set_option autoImplicit false
-
 /-!
 # Topologically cyclic inertia and cyclotomic inversion
 

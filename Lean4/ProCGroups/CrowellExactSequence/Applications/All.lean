@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.CrowellExactSequence.Applications.FiniteRank
 
-set_option autoImplicit false
-
 /-!
 # Applications of Crowell exact sequences
 

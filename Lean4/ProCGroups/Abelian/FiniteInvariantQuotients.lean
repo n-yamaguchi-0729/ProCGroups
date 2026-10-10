@@ -8,8 +8,6 @@ import ProCGroups.ProC.OpenNormalSubgroups.Basic
 import ProCGroups.ProC.OpenNormalSubgroups.BasisAtOne
 import Mathlib.Topology.Constructions
 
-set_option autoImplicit false
-
 /-!
 # Finite invariant quotients
 

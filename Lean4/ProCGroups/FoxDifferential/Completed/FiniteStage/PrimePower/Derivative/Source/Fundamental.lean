@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.Source.GroupLike
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: prime power — derivative — source — fundamental
 

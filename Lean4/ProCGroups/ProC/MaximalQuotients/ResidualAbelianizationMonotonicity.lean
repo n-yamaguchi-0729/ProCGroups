@@ -12,8 +12,6 @@ import ProCGroups.Abelian.TopologicalAbelianization
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import Mathlib.Topology.Algebra.ContinuousMonoidHom
 
-set_option autoImplicit false
-
 /-!
 # Class inclusion and faithful residual abelianization actions
 

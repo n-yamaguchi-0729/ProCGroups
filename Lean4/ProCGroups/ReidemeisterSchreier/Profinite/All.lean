@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.All
 
-set_option autoImplicit false
-
 /-!
 # Profinite Reidemeister--Schreier theory
 

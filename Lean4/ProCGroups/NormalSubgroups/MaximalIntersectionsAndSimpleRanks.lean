@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.NormalSubgroups.Framework
 
-set_option autoImplicit false
-
 /-!
 # Maximal normal subgroups and simple quotients
 

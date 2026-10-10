@@ -6,7 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.ProP.Presentation.RelatorDepth
 
-set_option autoImplicit false
 /-!
 # Initial forms in the augmentation filtration
 

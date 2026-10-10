@@ -13,7 +13,9 @@ import ProCGroups.ProC.OpenNormalSubgroups.All
 import ProCGroups.ProC.Quotients.All
 import ProCGroups.ProC.Subgroups.All
 
-set_option autoImplicit false
+import ProCGroups.ProC.PrimeSeparation
+import ProCGroups.ProC.ProPOfFiniteEmbedding
+
 
 /-!
 # Pro C Groups / Pro C

@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.Topologies.FullSubgroupTopology.QuotientFormation
 
-set_option autoImplicit false
-
 /-!
 # Quotient varieties
 

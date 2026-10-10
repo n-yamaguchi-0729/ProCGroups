@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.FoxDifferential.Discrete.FoxCalculus.Derivative
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: discrete — fox calculus — universal
 

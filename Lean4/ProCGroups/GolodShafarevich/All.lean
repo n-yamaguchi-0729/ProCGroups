@@ -16,8 +16,6 @@ import ProCGroups.GolodShafarevich.TruncatedFoxMaps
 import ProCGroups.GolodShafarevich.TruncatedFoxSequence
 import ProCGroups.GolodShafarevich.TruncatedInequality
 
-set_option autoImplicit false
-
 /-!
 # Golod--Shafarevich theory for pro-p groups
 

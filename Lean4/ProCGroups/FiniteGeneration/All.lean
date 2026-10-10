@@ -8,8 +8,6 @@ import ProCGroups.FiniteGeneration.OpenSubgroups
 import ProCGroups.FiniteGeneration.Basic
 import ProCGroups.FiniteGeneration.CharacteristicChainsAndIndices
 
-set_option autoImplicit false
-
 /-!
 # Topological finite generation
 

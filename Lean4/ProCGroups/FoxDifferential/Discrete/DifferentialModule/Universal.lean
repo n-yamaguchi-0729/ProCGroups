@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.FoxDifferential.Discrete.DifferentialModule.Basic
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: discrete — differential module — universal
 

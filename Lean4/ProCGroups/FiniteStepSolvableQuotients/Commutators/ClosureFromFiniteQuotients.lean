@@ -8,8 +8,6 @@ import ProCGroups.FiniteStepSolvableQuotients.Commutators.Basic
 import ProCGroups.Generation.WordProductsAndClosure
 import ProCGroups.ProC.OpenNormalSubgroups.Separation
 
-set_option autoImplicit false
-
 /-!
 # Detecting closed commutator subgroups in finite quotients
 

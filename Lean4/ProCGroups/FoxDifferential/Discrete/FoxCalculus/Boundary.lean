@@ -8,8 +8,6 @@ import ProCGroups.FoxDifferential.Common.FoxBoundary
 import ProCGroups.FoxDifferential.Discrete.DifferentialModule.Boundary
 import ProCGroups.FoxDifferential.Discrete.FoxCalculus.Universal
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: discrete — fox calculus — boundary
 

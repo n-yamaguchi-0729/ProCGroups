@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Mathlib.Tactic.Group
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Basic
 
-set_option autoImplicit false
-
 /-!
 # Operations on relator normal closures
 
@@ -207,7 +205,8 @@ theorem list_prod_map_relatorEquivalent_one
     list_prod_map_relatorEquivalent (R := R) l
       (f := f) (g := fun _ => (1 : G)) h
 
-/-- Mapping inversion over a list and then reversing it gives a product equal to the inverse product. -/
+/-- Mapping inversion over a list and then reversing it gives a product equal to the inverse
+product. -/
 theorem list_prod_map_inv_reverse (l : List G) :
     (l.map Inv.inv).reverse.prod = l.prod⁻¹ := by
   induction l with
@@ -369,7 +368,8 @@ theorem orderedFinsetProduct_relatorEquivalent_one
         exact h i (by
           exact (Finset.mem_sort (s := s) (r := fun a b : ι => a ≤ b)).1 hi))
 
-/-- Pointwise equality on a finite index set gives equality of the corresponding ordered products. -/
+/-- Pointwise equality on a finite index set gives equality of the corresponding ordered
+products. -/
 theorem orderedFinsetProduct_congr
     (s : Finset ι) {f g : ι → G}
     (h : ∀ i ∈ s, f i = g i) :

@@ -8,8 +8,7 @@ import ProCGroups.FoxDifferential.Discrete.KernelBoundary.MagnusComparison
 import ProCGroups.FoxDifferential.Discrete.KernelBoundary.Quotient
 import ProCGroups.FoxDifferential.Discrete.FoxCalculus.Boundary
 import ProCGroups.FoxDifferential.Completed.Comparison.DiscreteCompletion
-
-set_option autoImplicit false
+import Mathlib.Basic.Finite.Defs
 
 /-!
 # Fox Differential / Completed / Comparison / Magnus Kernel
@@ -248,7 +247,7 @@ an equivalent small model, and the finite-stage Fox derivative is reindexed alon
 free-basis equivalence.
 -/
 theorem mem_commutator_ker_of_finiteFoxStageDerivativeVector_eq_zero_finite
-    {X : Type u} [Fintype X] [DecidableEq X]
+    {X : Type u} [Finite X] [DecidableEq X]
     {Q H : Type u} [Group Q] [Group H] [Finite Q] [Finite H]
     (α : FreeGroup X →* Q) (β : Q →* H) (n : ℕ) (hn : 0 < n)
     (hpow : ∀ k : β.ker, k ^ n = 1)
@@ -262,7 +261,6 @@ theorem mem_commutator_ker_of_finiteFoxStageDerivativeVector_eq_zero_finite
       simpa [MonoidHom.mem_ker, MonoidHom.comp_apply] using hwker⟩ : β.ker) ∈
       commutator β.ker := by
   classical
-  let : Finite X := inferInstance
   rcases Finite.exists_equiv_fin X with ⟨m, ⟨eX⟩⟩
   let : DecidableEq (Fin m) := Classical.decEq (Fin m)
   rcases Finite.exists_type_univ_nonempty_mulEquiv.{u, 0} Q with

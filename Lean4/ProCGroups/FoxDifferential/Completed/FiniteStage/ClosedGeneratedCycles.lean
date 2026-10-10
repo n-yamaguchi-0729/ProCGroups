@@ -8,8 +8,6 @@ import ProCGroups.FoxDifferential.Completed.Continuous.ClosedGeneratedCoordinate
 import ProCGroups.FoxDifferential.Completed.FreeProC.FiniteQuotientStages
 import ProCGroups.FoxDifferential.Completed.Continuous.SemidirectKernelBasis
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — finite stage — closed generated cycles
 
@@ -151,7 +149,6 @@ theorem freeProCZCFoxBoundaryCycles_subset_closedGenTarget_of_zcBiAllStages_coef
     {C : ProCGroups.FiniteGroupClass.{u}} (hForm : ProCGroups.FiniteGroupClass.Formation C)
     {X H : Type u} [Fintype X] [DecidableEq X]
     [Group H] [TopologicalSpace H] [IsTopologicalGroup H]
-
     (φ : X → H)
     (hHbasis : HasOpenNormalBasisInClass C H)
     (hφgen :

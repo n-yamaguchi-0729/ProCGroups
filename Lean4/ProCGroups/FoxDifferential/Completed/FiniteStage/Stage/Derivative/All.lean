@@ -10,8 +10,6 @@ import ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Derivative.Quotien
 import ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Derivative.Relators
 import ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Derivative.Rules
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — finite stage — stage — derivative
 

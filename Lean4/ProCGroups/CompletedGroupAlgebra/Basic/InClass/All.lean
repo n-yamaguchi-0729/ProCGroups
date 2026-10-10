@@ -11,8 +11,6 @@ import ProCGroups.CompletedGroupAlgebra.Basic.InClass.Stage
 import ProCGroups.CompletedGroupAlgebra.Basic.InClass.System
 import ProCGroups.CompletedGroupAlgebra.Basic.InClass.Topology
 
-set_option autoImplicit false
-
 /-!
 # Completed Group Algebra / Basic / Within a Class
 

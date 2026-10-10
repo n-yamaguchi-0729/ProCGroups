@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.CompletedGroupAlgebra.ProfiniteModules.Basic.All
 import ProCGroups.CompletedGroupAlgebra.ProfiniteModules.FiniteGroupAlgebra.All
 
-set_option autoImplicit false
-
 /-!
 # Profinite modules over completed group algebras
 

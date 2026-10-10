@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.FoxDifferential.Completed.Continuous.Naturality
 import ProCGroups.FoxDifferential.Completed.Comparison.QuotientFamily
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — comparison — source projection
 

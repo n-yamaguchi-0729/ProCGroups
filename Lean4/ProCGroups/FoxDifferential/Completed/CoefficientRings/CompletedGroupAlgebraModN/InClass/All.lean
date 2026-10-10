@@ -9,8 +9,6 @@ import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgeb
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraModN.InClass.Basic
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraModN.InClass.StageCoeffMap
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — coefficient rings — mod-\(n\) completed group algebra — in class
 

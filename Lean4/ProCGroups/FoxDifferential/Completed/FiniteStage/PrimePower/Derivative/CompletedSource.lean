@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Completion.Source.LimitMap
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.Limit
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: finite stage — prime power — derivative — completed source
 

@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.FoxDifferential.Discrete.Jacobian.Basic
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: discrete — jacobian — chain rule
 

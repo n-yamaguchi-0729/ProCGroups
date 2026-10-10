@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.All
 import ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.Rewriting
 
-set_option autoImplicit false
-
 /-!
 # Reidemeister Schreier / Discrete / Reidemeister Schreier
 

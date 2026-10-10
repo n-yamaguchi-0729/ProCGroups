@@ -9,8 +9,6 @@ import ProCGroups.CrowellExactSequence.Discrete.Exactness
 import ProCGroups.CrowellExactSequence.Discrete.MainTheorem
 import ProCGroups.CrowellExactSequence.Discrete.SequenceMaps
 
-set_option autoImplicit false
-
 /-!
 # Discrete Crowell exact sequence
 

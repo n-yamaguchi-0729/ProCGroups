@@ -6,11 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.TargetPresentation.Core
 
-set_option autoImplicit false
-
-
 /-!
-# `ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.TargetPresentation.NormalWords`
+# Reidemeister--Schreier target-presentation normal words
 
 Reidemeister Schreier / Discrete / Reidemeister Schreier / Finite Quotient / Target Presentation
 / Normal Words.
@@ -19,6 +16,7 @@ This module packages normal-word witnesses for the cleaned symbols and uses
 them to construct the cleaned target-presentation data, Tietze equivalence,
 and kernel equivalence.
 -/
+
 
 namespace ReidemeisterSchreier.Discrete
 

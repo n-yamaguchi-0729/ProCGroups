@@ -12,8 +12,6 @@ import ProCGroups.ReidemeisterSchreier.Quiver
 import ProCGroups.ReidemeisterSchreier.RightQuotient
 import ProCGroups.ReidemeisterSchreier.Schreier
 
-set_option autoImplicit false
-
 /-!
 # Reidemeister--Schreier theory
 

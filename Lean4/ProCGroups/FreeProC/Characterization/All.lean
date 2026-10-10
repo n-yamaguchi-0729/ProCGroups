@@ -10,8 +10,6 @@ import ProCGroups.FreeProC.Characterization.OpenSubgroupFiniteQuotient
 import ProCGroups.FreeProC.Characterization.EmbeddingProblems
 import ProCGroups.FreeProC.Characterization.Quasifree
 
-set_option autoImplicit false
-
 /-!
 # Pro C Groups / Free pro-C / Characterization
 

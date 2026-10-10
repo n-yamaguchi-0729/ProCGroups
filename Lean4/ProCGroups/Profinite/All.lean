@@ -7,7 +7,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.Profinite.Basic
 import ProCGroups.Profinite.OpenSubgroups
 
-set_option autoImplicit false
+import ProCGroups.Profinite.CentralLifts
 
 /-!
 # Profinite groups

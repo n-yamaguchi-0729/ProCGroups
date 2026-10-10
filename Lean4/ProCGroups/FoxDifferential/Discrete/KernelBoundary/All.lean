@@ -11,8 +11,6 @@ import ProCGroups.FoxDifferential.Discrete.KernelBoundary.MagnusComparison
 import ProCGroups.FoxDifferential.Discrete.KernelBoundary.MagnusKernel
 import ProCGroups.FoxDifferential.Discrete.KernelBoundary.Quotient
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: discrete — kernel boundary
 

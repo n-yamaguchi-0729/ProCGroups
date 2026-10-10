@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.InducedFunctions
 import ProCGroups.FiniteGroups.StandardClasses
 
-set_option autoImplicit false
-
 /-!
 # Finite-class preservation for induced groups
 

@@ -8,8 +8,6 @@ import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Basic
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Limit.All
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Semidirect
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — finite stage — prime power — system
 

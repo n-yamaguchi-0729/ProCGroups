@@ -8,8 +8,6 @@ import ProCGroups.ProC.MaximalQuotients.ResidualQuotient
 import ProCGroups.ProC.MaximalQuotients.UniversalProperty
 import ProCGroups.Topologies.Conjugation
 
-set_option autoImplicit false
-
 /-!
 # The residual core has no further pro-C quotient
 

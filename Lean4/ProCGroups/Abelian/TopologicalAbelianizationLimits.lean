@@ -9,8 +9,6 @@ import ProCGroups.InverseSystems.Quotients
 import ProCGroups.InverseSystems.StagewiseIso
 import ProCGroups.ProC.Quotients.ClosedNormal
 
-set_option autoImplicit false
-
 /-!
 # Topological abelianization and inverse limits
 

@@ -11,8 +11,6 @@ import ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Naturality
 import ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Semidirect
 import ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Source
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — finite stage — stage
 

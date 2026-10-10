@@ -11,7 +11,9 @@ import ProCGroups.Cohomology.InvariantCharacterFiniteFamily
 import ProCGroups.Cohomology.InvariantCharacterFiniteStage
 import ProCGroups.Cohomology.RelativeNakayama
 
-set_option autoImplicit false
+import ProCGroups.Cohomology.FiniteCharacterExtension
+
+import ProCGroups.Cohomology.DivisibleCharacterExtension
 
 /-!
 # Pro-C group cohomology foundations

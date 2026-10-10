@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.FoxDifferential.RightDerivative.GeometricSeries
 import ProCGroups.FoxDifferential.RightDerivative.Semidirect
 
-set_option autoImplicit false
-
 /-!
 # Fox Differential / Right Derivative
 

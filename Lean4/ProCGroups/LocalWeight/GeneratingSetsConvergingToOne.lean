@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.LocalWeight.LocalWeightTheorems
 
-set_option autoImplicit false
-
 /-!
 # Generating sets converging to one
 

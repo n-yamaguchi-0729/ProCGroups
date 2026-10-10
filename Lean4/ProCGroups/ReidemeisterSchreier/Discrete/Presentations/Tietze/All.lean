@@ -12,8 +12,6 @@ import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.RelatorQuot
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.RelatorReplacement
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.Script
 
-set_option autoImplicit false
-
 /-!
 # Tietze equivalences and verified scripts
 

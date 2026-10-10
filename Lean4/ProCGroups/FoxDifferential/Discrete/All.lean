@@ -13,8 +13,6 @@ import ProCGroups.FoxDifferential.Discrete.Jacobian.All
 import ProCGroups.FoxDifferential.Discrete.KernelBoundary.All
 import ProCGroups.FoxDifferential.Discrete.Naturality
 
-set_option autoImplicit false
-
 /-!
 # Fox Differential / Discrete
 

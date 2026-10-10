@@ -12,8 +12,6 @@ import Mathlib.Topology.Algebra.Group.Quotient
 import Mathlib.Topology.Algebra.ContinuousMonoidHom
 import Mathlib.Algebra.Group.Hom.Basic
 
-set_option autoImplicit false
-
 /-!
 # Ordinary faithfulness detected on a residual abelianization
 

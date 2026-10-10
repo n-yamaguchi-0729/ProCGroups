@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.Map
 import ProCGroups.CompletedGroupAlgebra.OpenFiniteQuotientTopology.OpenFiniteComparison
 
-set_option autoImplicit false
-
 /-!
 # Surjectivity of completed group-algebra maps
 

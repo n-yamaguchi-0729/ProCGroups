@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.ProC.Subgroups.Closed
 import ProCGroups.ProC.Subgroups.Products
 
-set_option autoImplicit false
-
 /-!
 # Subgroups and products of pro-\(C\) groups
 

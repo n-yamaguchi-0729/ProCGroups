@@ -4,8 +4,6 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-set_option autoImplicit false
-
 /-!
 # Reidemeister Schreier / Discrete / Presentations / Automation
 

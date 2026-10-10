@@ -6,10 +6,9 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.InClass.System.Ring.Projection
 
-set_option autoImplicit false
-
 /-!
-# Fox differential: coefficient rings — prime-power completed group algebra — in class — augmentation
+# Fox differential: coefficient rings — prime-power completed group algebra — in class —
+augmentation
 
 The principal declarations in this module are:
 

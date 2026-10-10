@@ -9,8 +9,6 @@ import Mathlib.Topology.Instances.ZMod
 import ProCGroups.Abelian.TopologicalAbelianization
 import ProCGroups.FreeProC.Basic
 
-set_option autoImplicit false
-
 /-!
 # Pro C Groups / Free pro-C / Abelianization
 

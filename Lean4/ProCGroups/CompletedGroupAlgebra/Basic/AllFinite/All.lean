@@ -11,8 +11,6 @@ import ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.Ring
 import ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.Stage
 import ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.Topology
 
-set_option autoImplicit false
-
 /-!
 # Completed Group Algebra / Basic / All Finite
 

@@ -14,8 +14,6 @@ import Mathlib.Algebra.Group.Subgroup.Basic
 import Mathlib.Topology.Algebra.ContinuousMonoidHom
 import Mathlib.Topology.Homeomorph.Defs
 
-set_option autoImplicit false
-
 /-!
 # Transport of residual quotient conjugation
 

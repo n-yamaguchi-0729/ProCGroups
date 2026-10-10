@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.FoxDifferential.Completed.Continuous.Universal.NaturalTopology
 import ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.AugmentationIdeal.Kernel
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — continuous — universal — augmentation quotient
 

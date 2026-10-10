@@ -10,8 +10,6 @@ import ProCGroups.ProC.MaximalQuotients.ResidualQuotient
 import ProCGroups.ProC.MaximalQuotients.UniversalProperty
 import ProCGroups.ProC.Quotients.ClosedNormal
 
-set_option autoImplicit false
-
 /-!
 # The canonical residual quotient is maximal pro-C
 

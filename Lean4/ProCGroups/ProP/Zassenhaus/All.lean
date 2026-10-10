@@ -16,8 +16,6 @@ import ProCGroups.ProP.Zassenhaus.Functoriality
 import ProCGroups.ProP.Zassenhaus.GroupLike
 import ProCGroups.ProP.Zassenhaus.Laws
 
-set_option autoImplicit false
-
 /-!
 # Zassenhaus filtration
 

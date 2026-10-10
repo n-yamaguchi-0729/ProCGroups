@@ -8,8 +8,6 @@ import ProCGroups.InducedFunctions
 import Mathlib.Algebra.Group.Action.End
 import Mathlib.GroupTheory.SemidirectProduct
 
-set_option autoImplicit false
-
 /-!
 # Evaluation on induced semidirect products
 

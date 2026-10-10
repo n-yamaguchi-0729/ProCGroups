@@ -8,8 +8,6 @@ import ProCGroups.Boundary.CyclotomicInversion
 import ProCGroups.Boundary.FiniteQuotientConjugacy
 import ProCGroups.Boundary.TopologicalInertia
 
-set_option autoImplicit false
-
 /-!
 # Pro-C groups / boundary
 

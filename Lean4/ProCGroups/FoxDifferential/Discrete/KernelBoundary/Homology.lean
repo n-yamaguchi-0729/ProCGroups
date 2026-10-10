@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Mathlib.RepresentationTheory.Homological.GroupHomology.LongExactSequence
 import ProCGroups.FoxDifferential.Discrete.KernelBoundary.Basic
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: discrete — kernel boundary — homology
 

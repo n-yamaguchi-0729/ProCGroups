@@ -9,8 +9,6 @@ import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.So
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.Source.Mul
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.Source.SpecialValues
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: finite stage — prime power — derivative — source
 

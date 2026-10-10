@@ -5,16 +5,16 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
 import ProCGroups.FiniteGroups.PrimeSigma
+import ProCGroups.FiniteGroups.PrimeOrderHom
 import ProCGroups.FiniteGroups.InducedFunctions
 import ProCGroups.FiniteGroups.SigmaMonotonicity
 import ProCGroups.FiniteGroups.AllFinite
 import ProCGroups.FiniteGroups.Classes
 import ProCGroups.FiniteGroups.Solvable
 import ProCGroups.FiniteGroups.StandardClasses
+import ProCGroups.FiniteGroups.SigmaPowerDetection
 
 import ProCGroups.FiniteGroups.PGroupFormation
-
-set_option autoImplicit false
 
 /-!
 # Classes of finite groups

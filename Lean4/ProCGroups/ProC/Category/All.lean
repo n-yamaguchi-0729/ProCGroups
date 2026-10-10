@@ -8,8 +8,6 @@ import ProCGroups.ProC.Category.Basic
 import ProCGroups.ProC.Category.Pullbacks
 import ProCGroups.ProC.Category.Pushouts
 
-set_option autoImplicit false
-
 /-!
 # Pro C Groups / pro-C / Category
 

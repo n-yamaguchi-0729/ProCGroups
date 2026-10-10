@@ -15,8 +15,6 @@ import ProCGroups.CompletedGroupAlgebra.ProfiniteModules.All
 import ProCGroups.CompletedGroupAlgebra.Separation
 import ProCGroups.CompletedGroupAlgebra.UniversalProperty.All
 
-set_option autoImplicit false
-
 /-!
 # Completed group algebras
 

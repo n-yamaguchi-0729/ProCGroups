@@ -8,8 +8,6 @@ import ProCGroups.FoxDifferential.Discrete.GroupRing
 import Mathlib.RepresentationTheory.Homological.GroupHomology.Functoriality
 import Mathlib.RepresentationTheory.Homological.GroupHomology.Shapiro
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: discrete — kernel boundary — identity augmentation
 

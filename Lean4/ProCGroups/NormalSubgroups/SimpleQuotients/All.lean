@@ -8,8 +8,6 @@ import ProCGroups.NormalSubgroups.SimpleQuotients.Algebraic
 import ProCGroups.NormalSubgroups.SimpleQuotients.Compactness
 import ProCGroups.NormalSubgroups.SimpleQuotients.FiniteIntersections
 
-set_option autoImplicit false
-
 /-!
 # Simple quotients
 

@@ -9,8 +9,6 @@ import ProCGroups.ProC.OpenNormalSubgroups.Basic
 import ProCGroups.ProC.OpenNormalSubgroups.FilteredFamilies
 import ProCGroups.Profinite.Basic
 
-set_option autoImplicit false
-
 /-!
 # The order structure on closed subgroups
 

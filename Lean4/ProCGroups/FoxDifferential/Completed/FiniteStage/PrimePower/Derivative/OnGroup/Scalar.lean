@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.OnGroup.Coefficient
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: prime power — derivative — on group — scalar
 

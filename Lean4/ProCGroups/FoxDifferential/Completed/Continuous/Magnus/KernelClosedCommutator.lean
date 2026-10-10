@@ -10,8 +10,6 @@ import ProCGroups.ProC.OpenNormalSubgroups.ClosedCommutator
 import ProCGroups.FreeProC.FiniteBasis
 import ProCGroups.FoxDifferential.Completed.Continuous.Magnus.ClosedGeneratedVector
 
-set_option autoImplicit false
-
 /-!
 # Fox Differential / Completed / Continuous Magnus / Kernel Closed Commutator
 

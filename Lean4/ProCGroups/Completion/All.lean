@@ -10,8 +10,7 @@ import ProCGroups.Completion.ProCIntegerPrimePower
 import ProCGroups.Completion.SameFiniteQuotients
 import ProCGroups.Completion.UniversalProperty
 import ProCGroups.Completion.Construction
-
-set_option autoImplicit false
+import ProCGroups.Completion.ProfiniteIntegerRecognition
 
 /-!
 # Pro C Groups / Completion

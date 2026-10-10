@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.GroupTheory.Conjugation
 import ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
 
-set_option autoImplicit false
-
 /-!
 # Continuous conjugation actions
 

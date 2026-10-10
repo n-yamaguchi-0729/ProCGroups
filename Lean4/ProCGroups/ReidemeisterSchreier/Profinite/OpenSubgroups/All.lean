@@ -14,8 +14,6 @@ import ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.RankBound
 import ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.RightQuotient
 import ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.SchreierTransversals
 
-set_option autoImplicit false
-
 /-!
 # Profinite open-subgroup Reidemeister--Schreier theory
 

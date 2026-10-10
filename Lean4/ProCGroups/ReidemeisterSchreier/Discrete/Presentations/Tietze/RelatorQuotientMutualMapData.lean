@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Congruence
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Operations
 
-set_option autoImplicit false
-
 /-!
 # Reidemeister Schreier / Discrete / Presentations / Tietze / Relator Quotient Mutual Map Data
 

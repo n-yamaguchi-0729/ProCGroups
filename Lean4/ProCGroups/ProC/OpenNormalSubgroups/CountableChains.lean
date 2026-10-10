@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.Profinite.Basic
 
-set_option autoImplicit false
-
 /-!
 # Countable descending open-normal chains
 

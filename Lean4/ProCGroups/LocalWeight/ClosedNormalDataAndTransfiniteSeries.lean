@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.Generation.WordProductsAndClosure
 import ProCGroups.LocalWeight.MetrizabilityAndQuotients
 
-set_option autoImplicit false
-
 /-!
 # Closed normal chains and local weight
 

@@ -6,11 +6,13 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.GroupTheory.SplitSemidirect
 import ProCGroups.GroupTheory.SemidirectSubgroups
+import ProCGroups.GroupTheory.RegularWreathQuotient
+import ProCGroups.GroupTheory.RelativeQuotientCentralizers
 import ProCGroups.GroupTheory.CentralizerNormalizerCommensurator
 import ProCGroups.GroupTheory.Conjugation
 import ProCGroups.GroupTheory.Subgroups
 
-set_option autoImplicit false
+import ProCGroups.GroupTheory.FinitePGroupLifts
 
 /-!
 # Group-theoretic tools

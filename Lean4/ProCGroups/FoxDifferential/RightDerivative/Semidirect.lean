@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.FoxDifferential.Discrete.GroupRing
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: right derivative — semidirect
 

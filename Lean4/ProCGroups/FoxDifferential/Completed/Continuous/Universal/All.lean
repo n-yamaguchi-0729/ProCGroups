@@ -10,8 +10,6 @@ import ProCGroups.FoxDifferential.Completed.Continuous.Universal.FiniteStage
 import ProCGroups.FoxDifferential.Completed.Continuous.Universal.NaturalTopology
 import ProCGroups.FoxDifferential.Completed.Continuous.Universal.System
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — continuous — universal
 

@@ -24,8 +24,6 @@ import ProCGroups.ProP.Fox.ModPStageProjection
 import ProCGroups.ProP.Fox.ModPTailExactness
 import ProCGroups.ProP.Fox.Rows
 
-set_option autoImplicit false
-
 /-!
 # Filtered Fox calculus for pro-p presentations
 

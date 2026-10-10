@@ -10,8 +10,6 @@ import Mathlib.Data.Finset.Sort
 import Mathlib.GroupTheory.FreeGroup.Reduce
 import Mathlib.GroupTheory.QuotientGroup.Defs
 
-set_option autoImplicit false
-
 /-!
 # Relator equivalence
 
@@ -161,7 +159,8 @@ theorem conjugate_pow_eq (a u : G) (n : ℕ) :
         _ = a * u ^ (n + 1) * a⁻¹ := by
               rw [pow_succ]
 
-/-- A product is trivial modulo the relators exactly when its first factor equals the inverse of the second. -/
+/-- A product is trivial modulo the relators exactly when its first factor equals the inverse
+of the second. -/
 theorem mul_eq_one_iff_eq_inv :
     RelatorEquivalent R (u * v) 1 ↔ RelatorEquivalent R u v⁻¹ := by
   constructor

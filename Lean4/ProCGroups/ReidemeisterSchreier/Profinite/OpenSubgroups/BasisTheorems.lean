@@ -8,8 +8,6 @@ import ProCGroups.Completion.FiniteQuotientLifts
 import ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
 import ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.ExactRightSchreierGeneration
 
-set_option autoImplicit false
-
 /-!
 # From exact Schreier generators to free pro-\(C\) bases
 
@@ -183,7 +181,8 @@ theorem subgroup_le_topologicalClosure_of_topologicallyGenerates_local
   rw [← hmap]
   exact hg''
 
-/-- If an open subgroup is topologically finitely generated, then so is the ambient compact group. -/
+/-- If an open subgroup is topologically finitely generated,
+then so is the ambient compact group. -/
 theorem topologicallyFinitelyGenerated_of_openSubgroup_local
     {G : Type u} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
     [CompactSpace G]

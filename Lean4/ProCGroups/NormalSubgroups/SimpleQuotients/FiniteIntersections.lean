@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.NormalSubgroups.SimpleQuotients.Algebraic
 
-set_option autoImplicit false
-
 /-!
 # Finite intersections above a simple-quotient kernel
 

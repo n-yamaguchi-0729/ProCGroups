@@ -8,8 +8,6 @@ import ProCGroups.FoxDifferential.Discrete.DifferentialModule.Boundary
 import Mathlib.Algebra.MonoidAlgebra.Basic
 import Mathlib.RingTheory.Ideal.Maps
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: discrete — group ring
 

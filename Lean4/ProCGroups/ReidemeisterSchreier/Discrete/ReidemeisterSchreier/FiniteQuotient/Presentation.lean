@@ -6,9 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.WordCertificates
 
-set_option autoImplicit false
-
-
 /-!
 # Reidemeister Schreier / Discrete / Reidemeister Schreier / Finite Quotient / Presentation
 
@@ -16,6 +13,7 @@ This module proves the normal-closure identities behind the finite-quotient
 Reidemeister--Schreier presentation, including tau images of section words,
 symbols, and conjugated original relators.
 -/
+
 
 namespace ReidemeisterSchreier.Discrete
 

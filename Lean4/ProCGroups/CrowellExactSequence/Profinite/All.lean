@@ -13,8 +13,6 @@ import ProCGroups.CrowellExactSequence.Profinite.KernelInjectivity
 import ProCGroups.CrowellExactSequence.Profinite.MainTheorem
 import ProCGroups.CrowellExactSequence.Profinite.SequenceMaps.All
 
-set_option autoImplicit false
-
 /-!
 # Profinite Crowell exact sequence
 

@@ -13,8 +13,6 @@ import ProCGroups.ProP.Presentation.RelationCardinal
 import ProCGroups.ProP.Presentation.RelationNakayama
 import ProCGroups.ProP.Presentation.RelatorDepth
 
-set_option autoImplicit false
-
 /-!
 # Finite pro-p presentations
 

@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.CrowellExactSequence.Discrete.SequenceMaps
 
-set_option autoImplicit false
-
 /-!
 # Discrete Crowell exactness
 

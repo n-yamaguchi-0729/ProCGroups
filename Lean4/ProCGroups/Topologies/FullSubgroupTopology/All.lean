@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.Topologies.FullSubgroupTopology.QuotientFormation
 import ProCGroups.Topologies.FullSubgroupTopology.QuotientVariety
 
-set_option autoImplicit false
-
 /-!
 # Full subgroup topologies
 

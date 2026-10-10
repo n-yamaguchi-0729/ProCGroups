@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.FiniteStepSolvableQuotients.Commutators.DerivedSeriesAndQuotients
 import ProCGroups.ProC.GroupPredicates.Abelian
 
-set_option autoImplicit false
-
 /-!
 # The topological commutator subgroup
 

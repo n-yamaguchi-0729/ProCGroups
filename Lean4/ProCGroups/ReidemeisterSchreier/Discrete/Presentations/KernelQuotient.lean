@@ -9,8 +9,6 @@ import Mathlib.GroupTheory.GroupAction.ConjAct
 import Mathlib.GroupTheory.QuotientGroup.Basic
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.Script
 
-set_option autoImplicit false
-
 /-!
 # Reidemeister Schreier / Discrete / Presentations / Kernel Quotient
 
@@ -66,7 +64,8 @@ theorem presentedFreeKernelToPresentedKernelHom_surjective
   ext
   exact hxy
 
-/-- The kernel of the restricted map to the presented kernel is the pullback of the relator normal closure. -/
+/-- The kernel of the restricted map to the presented kernel is the pullback of the relator
+normal closure. -/
 theorem presentedFreeKernelToPresentedKernelHom_ker_eq_comap_normalClosure
     {X A : Type*} [Group A] {rels : Set (FreeGroup X)} {f : X → A}
     (hrels : ∀ r ∈ rels, FreeGroup.lift f r = 1) :
@@ -85,7 +84,8 @@ theorem presentedFreeKernelToPresentedKernelHom_ker_eq_comap_normalClosure
     change PresentedGroup.mk rels (k : FreeGroup X) = 1
     exact PresentedGroup.mk_eq_one_iff.mpr hk
 
-/-- Quotienting the free lift kernel by the pulled-back relator closure gives the presented kernel. -/
+/-- Quotienting the free lift kernel by the pulled-back relator closure gives the presented
+kernel. -/
 noncomputable def presentedFreeKernelRelatorQuotientEquivPresentedKernel
     {X A : Type*} [Group A] {rels : Set (FreeGroup X)} {f : X → A}
     (hrels : ∀ r ∈ rels, FreeGroup.lift f r = 1) :
@@ -98,7 +98,8 @@ noncomputable def presentedFreeKernelRelatorQuotientEquivPresentedKernel
         (φ := presentedFreeKernelToPresentedKernelHom hrels)
         (presentedFreeKernelToPresentedKernelHom_surjective hrels))
 
-/-- The relators in the free lift kernel obtained by conjugating defining relators by arbitrary words. -/
+/-- The relators in the free lift kernel obtained by conjugating defining relators by
+arbitrary words. -/
 def freeKernelConjugateRelatorSet
     {X A : Type*} [Group A] {rels : Set (FreeGroup X)} {f : X → A} :
     Set (FreeGroup.lift f).ker :=
@@ -167,7 +168,8 @@ theorem freeKernelTransversalRelatorSet_normalClosure_eq_conjugateRelatorSet
       group
     simpa [Sₜ, N, hzconj] using hconj
 
-/-- Every conjugate relator in the free lift kernel lies over the original relator normal closure. -/
+/-- Every conjugate relator in the free lift kernel lies over the original relator normal
+closure. -/
 theorem freeKernelConjugateRelatorSet_subset_comap_normalClosure
     {X A : Type*} [Group A] {rels : Set (FreeGroup X)} {f : X → A} :
     freeKernelConjugateRelatorSet (f := f) (rels := rels) ⊆
@@ -245,7 +247,8 @@ theorem freeKernelConjugateRelatorSet_normalClosure_eq_comap_normalClosure
   have hkn : k = n := Subtype.ext hnval.symm
   simpa [hkn] using hn
 
-/-- Transversal conjugate relators normally generate the pullback of the original relator closure. -/
+/-- Transversal conjugate relators normally generate the pullback of the original relator
+closure. -/
 theorem freeKernelTransversalRelatorSet_normalClosure_eq_comap_normalClosure
     {X A : Type*} [Group A] {rels : Set (FreeGroup X)} {f : X → A}
     (hrels : ∀ r ∈ rels, FreeGroup.lift f r = 1) {T : Set (FreeGroup X)}
@@ -255,7 +258,8 @@ theorem freeKernelTransversalRelatorSet_normalClosure_eq_comap_normalClosure
   (freeKernelTransversalRelatorSet_normalClosure_eq_conjugateRelatorSet hrels hT).trans
     (freeKernelConjugateRelatorSet_normalClosure_eq_comap_normalClosure hrels)
 
-/-- The quotient of the free lift kernel by transversal relators is equivalent to the presented kernel. -/
+/-- The quotient of the free lift kernel by transversal relators is equivalent to the
+presented kernel. -/
 noncomputable def presentedFreeKernelTransversalRelatorQuotientEquivPresentedKernel
     {X A : Type*} [Group A] {rels : Set (FreeGroup X)} {f : X → A}
     (hrels : ∀ r ∈ rels, FreeGroup.lift f r = 1) {T : Set (FreeGroup X)}
@@ -267,7 +271,8 @@ noncomputable def presentedFreeKernelTransversalRelatorQuotientEquivPresentedKer
     (freeKernelTransversalRelatorSet_normalClosure_eq_comap_normalClosure hrels hT)).trans
       (presentedFreeKernelRelatorQuotientEquivPresentedKernel hrels)
 
-/-- Pulling transversal relators back to a free basis gives a relator quotient equivalent to the presented kernel. -/
+/-- Pulling transversal relators back to a free basis gives a relator quotient equivalent to
+the presented kernel. -/
 noncomputable def presentedFreeKernelSchreierRelatorQuotientEquivPresentedKernel
     {X A : Type*} [Group A] {rels : Set (FreeGroup X)} {f : X → A}
     (hrels : ∀ r ∈ rels, FreeGroup.lift f r = 1) {T : Set (FreeGroup X)}
@@ -299,7 +304,8 @@ condition.
   · intro hy
     exact ⟨e y, hy, by simp only [MulEquiv.symm_apply_apply]⟩
 
-/-- A conjugate of a defining relator by a transversal word belongs to the transversal relator set. -/
+/-- A conjugate of a defining relator by a transversal word belongs to the transversal relator
+set. -/
 theorem freeKernelTransversalRelatorSet_mem
     {X A : Type*} [Group A] {rels : Set (FreeGroup X)} {f : X → A}
     (hrels : ∀ r ∈ rels, FreeGroup.lift f r = 1)

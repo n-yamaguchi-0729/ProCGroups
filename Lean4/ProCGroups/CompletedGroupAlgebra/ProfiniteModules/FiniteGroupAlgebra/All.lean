@@ -9,8 +9,6 @@ import ProCGroups.CompletedGroupAlgebra.ProfiniteModules.FiniteGroupAlgebra.Func
 import ProCGroups.CompletedGroupAlgebra.ProfiniteModules.FiniteGroupAlgebra.Topology
 import ProCGroups.CompletedGroupAlgebra.ProfiniteModules.FiniteGroupAlgebra.UnitRepresentation
 
-set_option autoImplicit false
-
 /-!
 # Finite group algebras as profinite modules
 

@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.ProC.OpenNormalSubgroups.CountableChains
 
-set_option autoImplicit false
-
 /-!
 # Intersections of subgroup chains
 

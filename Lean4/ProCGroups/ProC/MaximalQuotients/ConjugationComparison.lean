@@ -8,8 +8,6 @@ import ProCGroups.ProC.MaximalQuotients.SubgroupComparison
 import ProCGroups.Topologies.Conjugation
 import ProCGroups.Abelian.TopologicalAbelianization
 
-set_option autoImplicit false
-
 /-!
 # Conjugation through maximal pro-`C` subgroup comparisons
 

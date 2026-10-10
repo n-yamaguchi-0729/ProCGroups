@@ -11,8 +11,6 @@ import ProCGroups.Order.Basic
 import ProCGroups.ProC.OpenNormalSubgroups.Separation
 import ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
 
-set_option autoImplicit false
-
 /-!
 # Closed derived series and solvable quotients
 

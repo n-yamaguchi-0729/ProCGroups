@@ -9,8 +9,6 @@ import ProCGroups.CrowellExactSequence.Profinite.SequenceMaps.Basic
 import ProCGroups.FoxDifferential.Completed.Continuous.ClosedGeneratedCoordinates.Topology
 import ProCGroups.FoxDifferential.Completed.Continuous.TailExactness
 
-set_option autoImplicit false
-
 /-!
 # Exactness criteria for profinite Crowell sequence maps
 

@@ -6,9 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.CleanedTau
 
-set_option autoImplicit false
-
-
 /-!
 # Reidemeister Schreier / Discrete / Reidemeister Schreier / Finite Quotient / Cleaned Relators
 
@@ -16,6 +13,7 @@ This module removes relators attached to degenerate Schreier symbols, builds
 the finite cleaned relator set, and records the remaining quotient-section
 and augmented relator families.
 -/
+
 
 namespace ReidemeisterSchreier.Discrete
 

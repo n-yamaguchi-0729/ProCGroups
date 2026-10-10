@@ -14,8 +14,6 @@ import ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuoti
 import ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.Tau
 import ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.WordCertificates
 
-set_option autoImplicit false
-
 /-!
 # Reidemeister Schreier / Discrete / Reidemeister Schreier / Finite Quotient
 

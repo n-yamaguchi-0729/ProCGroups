@@ -25,8 +25,6 @@ import ProCGroups.ProP.ProfiniteFrattini
 import ProCGroups.ProP.Zassenhaus.All
 import ProCGroups.ProP.MinimalEpimorphism
 
-set_option autoImplicit false
-
 /-!
 # Pro-p aggregate
 

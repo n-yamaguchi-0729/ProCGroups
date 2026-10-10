@@ -6,9 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.Rewriting
 
-set_option autoImplicit false
-
-
 /-!
 # Reidemeister Schreier / Discrete / Reidemeister Schreier / Finite Quotient / Data
 
@@ -16,6 +13,7 @@ This module packages a finite quotient map with chosen section words.  It
 defines the kernel, representatives, finite Schreier symbols, their
 evaluation, and the basic identities used by tau rewriting.
 -/
+
 
 namespace ReidemeisterSchreier.Discrete
 

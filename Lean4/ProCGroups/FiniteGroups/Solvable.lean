@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.FiniteGroups.StandardClasses
 
-set_option autoImplicit false
-
 /-!
 # Closure properties of finite solvable groups
 
@@ -23,11 +21,12 @@ namespace FiniteGroupClass
 
 /-- A finite product of solvable groups is solvable. -/
 private theorem isSolvable_pi_of_fintype
-    {ι : Type u} [Fintype ι]
+    {ι : Type u} [Finite ι]
     {G : ι → Type u} [∀ i, Group (G i)]
     (hG : ∀ i, Group.IsSolvable (G i)) :
     Group.IsSolvable (∀ i, G i) := by
   classical
+  let : Fintype ι := Fintype.ofFinite ι
   choose n hn using fun i => (hG i).solvable
   let N : ℕ := ∑ i, n i
   refine ⟨⟨N, le_antisymm ?_ bot_le⟩⟩

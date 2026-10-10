@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.FoxDifferential.Discrete.Absolute
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: discrete — jacobian — basic
 

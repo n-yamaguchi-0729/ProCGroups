@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.FiniteGeneration.CharacteristicChainsAndIndices
 
-set_option autoImplicit false
-
 /-!
 # Reidemeister Schreier / Profinite / Open Subgroups / Finite Permutation Targets
 

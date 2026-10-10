@@ -6,11 +6,8 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.Presentation
 
-set_option autoImplicit false
-
-
 /-!
-# `ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.TargetPresentation.Core`
+# Reidemeister--Schreier target-presentation core
 
 Reidemeister Schreier / Discrete / Reidemeister Schreier / Finite Quotient / Target Presentation
 / Core.
@@ -19,6 +16,7 @@ This module defines the structured certificates for prefix-closed
 quotient-section words and the core data specifying a cleaned
 Reidemeister--Schreier target presentation.
 -/
+
 
 namespace ReidemeisterSchreier.Discrete
 

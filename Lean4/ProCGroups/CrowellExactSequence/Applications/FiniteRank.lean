@@ -9,8 +9,6 @@ import ProCGroups.FreeProC.FiniteRankSourceData
 import ProCGroups.FiniteStepSolvableQuotients.Abelianization
 import ProCGroups.ProC.InverseLimits.Predicates
 
-set_option autoImplicit false
-
 /-!
 # `ProCGroups.CrowellExactSequence.Applications.FiniteRank`
 

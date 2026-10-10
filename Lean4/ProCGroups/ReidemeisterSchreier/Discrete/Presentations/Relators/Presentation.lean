@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Operations
 
-set_option autoImplicit false
-
 /-!
 # Conjugated products and presentation endomorphisms
 
@@ -36,7 +34,8 @@ theorem conjugate_list_prod {G : Type*} [Group G] (x : G) :
         _ = x * t * x⁻¹ * (List.map (fun t => x * t * x⁻¹) ts).prod := by
           rw [conjugate_list_prod x ts]
 
-/-- A rectangular product of conjugated entries is the conjugate of the corresponding rectangular product. -/
+/-- A rectangular product of conjugated entries is the conjugate of the corresponding
+rectangular product. -/
 theorem nested_conjugate_list_prod {G : Type*} [Group G]
     (x : G) {p n : ℕ} (f : Fin p → Fin n → G) :
     (List.ofFn (fun b : Fin p =>

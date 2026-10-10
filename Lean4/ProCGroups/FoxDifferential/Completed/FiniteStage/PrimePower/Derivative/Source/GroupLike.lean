@@ -10,8 +10,6 @@ import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.Co
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.Limit
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.Vector
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: prime power — derivative — source — group like
 

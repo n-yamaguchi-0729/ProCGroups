@@ -14,8 +14,6 @@ import ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.All
 import ProCGroups.FoxDifferential.Completed.Residue.All
 import ProCGroups.FoxDifferential.Completed.Semidirect
 
-set_option autoImplicit false
-
 /-!
 # Fox Differential / Completed
 

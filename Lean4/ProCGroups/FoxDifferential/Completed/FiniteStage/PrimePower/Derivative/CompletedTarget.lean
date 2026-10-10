@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.CompletedSource
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: finite stage — prime power — derivative — completed target
 

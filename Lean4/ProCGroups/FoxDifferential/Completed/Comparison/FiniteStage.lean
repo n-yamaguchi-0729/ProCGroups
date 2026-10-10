@@ -8,8 +8,6 @@ import ProCGroups.FoxDifferential.Completed.DifferentialModule.Identity
 import ProCGroups.FoxDifferential.Completed.FiniteStage.MagnusQuotient
 import ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.Naturality
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — comparison — finite stage
 

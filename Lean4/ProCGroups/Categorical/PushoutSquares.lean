@@ -10,8 +10,6 @@ import Mathlib.GroupTheory.Coprod.Basic
 import ProCGroups.Profinite.Basic
 import ProCGroups.Topologies.ContinuousMulEquiv
 
-set_option autoImplicit false
-
 /-!
 # Pro C Groups / Categorical / Pushout Squares
 

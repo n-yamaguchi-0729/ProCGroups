@@ -11,8 +11,6 @@ import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.On
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.Source.All
 import ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.Vector
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — finite stage — prime power — derivative
 

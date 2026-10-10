@@ -12,8 +12,6 @@ import Mathlib.Topology.Algebra.PontryaginDual
 import Mathlib.Topology.Instances.AddCircle.DenseSubgroup
 import ProCGroups.Topologies.ContinuousMulEquiv
 
-set_option autoImplicit false
-
 /-!
 # Pro C Groups / Duality
 

@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.FoxDifferential.Discrete.KernelBoundary.Homology
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: discrete — kernel boundary — magnus kernel
 

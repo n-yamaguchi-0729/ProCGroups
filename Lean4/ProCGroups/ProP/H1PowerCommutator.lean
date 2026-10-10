@@ -8,7 +8,6 @@ import ProCGroups.ProP.ContinuousH1
 import ProCGroups.ProP.FrattiniQuotient
 import ProCGroups.Topologies.QuotientMaps
 
-set_option autoImplicit false
 /-!
 # Factoring continuous degree-one classes through the elementary quotient
 

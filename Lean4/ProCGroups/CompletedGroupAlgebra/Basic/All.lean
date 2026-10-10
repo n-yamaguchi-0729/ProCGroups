@@ -8,8 +8,6 @@ import ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.All
 import ProCGroups.CompletedGroupAlgebra.Basic.ClassComparison
 import ProCGroups.CompletedGroupAlgebra.Basic.InClass.All
 
-set_option autoImplicit false
-
 /-!
 # Completed Group Algebra / Basic
 

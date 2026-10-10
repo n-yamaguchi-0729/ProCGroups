@@ -8,9 +8,6 @@ import Mathlib.GroupTheory.PresentedGroup
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Congruence
 import ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Operations
 
-set_option autoImplicit false
-
-
 /-!
 # Reidemeister Schreier / Discrete / Reidemeister Schreier / Rewriting
 
@@ -18,6 +15,7 @@ This module defines abstract right Schreier representatives, their associated
 symbols and generators, and the rewriting maps that turn kernel words into
 words on Schreier symbols.
 -/
+
 
 namespace ReidemeisterSchreier.Discrete
 

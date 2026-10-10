@@ -10,8 +10,6 @@ import ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.Core
 import ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.FreeGroup.All
 import ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.Naturality
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — \(\mathbb{Z}_C\) coefficients
 

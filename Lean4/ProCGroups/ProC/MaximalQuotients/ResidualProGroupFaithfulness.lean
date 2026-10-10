@@ -16,8 +16,6 @@ import Mathlib.Algebra.Group.Hom.Basic
 import Mathlib.Topology.Algebra.Group.Quotient
 import Mathlib.Topology.Algebra.ContinuousMonoidHom
 
-set_option autoImplicit false
-
 /-!
 # Ordinary faithfulness for pro-C subgroups
 

@@ -9,8 +9,6 @@ import Mathlib.Topology.ClopenBox
 import Mathlib.Topology.DiscreteQuotient
 import ProCGroups.InverseSystems.ProfiniteSpace
 
-set_option autoImplicit false
-
 /-!
 # Countable inverse-system models of profinite spaces
 

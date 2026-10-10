@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.ReidemeisterSchreier.Discrete.OpenSubgroups.Words.Basic
 import ProCGroups.ReidemeisterSchreier.Discrete.OpenSubgroups.Words.NielsenSchreierCompat
 
-set_option autoImplicit false
-
 /-!
 # Reidemeister Schreier / Discrete / Open Subgroups / Words
 

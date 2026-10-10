@@ -6,9 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.CleanedRelators
 
-set_option autoImplicit false
-
-
 /-!
 # Reidemeister Schreier / Discrete / Reidemeister Schreier / Finite Quotient / Kernel
 
@@ -16,6 +13,7 @@ This module constructs the quotient homomorphisms induced by tau and proves
 that the Schreier, quotient-section, and augmented relator families give the
 required kernel-level maps.
 -/
+
 
 namespace ReidemeisterSchreier.Discrete
 

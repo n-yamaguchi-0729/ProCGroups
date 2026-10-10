@@ -7,8 +7,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import ProCGroups.ReidemeisterSchreier.FreeGroup.Automorphisms
 import ProCGroups.ReidemeisterSchreier.FreeGroup.PrefixParent
 
-set_option autoImplicit false
-
 /-!
 # Reidemeister Schreier / Free Group
 

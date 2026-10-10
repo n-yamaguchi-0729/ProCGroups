@@ -12,8 +12,6 @@ import Mathlib.GroupTheory.GroupAction.SubMulAction
 import Mathlib.GroupTheory.PGroup
 import Mathlib.SetTheory.Cardinal.Finite
 
-set_option autoImplicit false
-
 /-!
 # Fixed lifts under coprime group actions
 

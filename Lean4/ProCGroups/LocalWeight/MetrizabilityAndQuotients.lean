@@ -12,8 +12,6 @@ import ProCGroups.LocalWeight.CardinalInvariantsAndLocalWeight
 import ProCGroups.LocalWeight.SubgroupChains
 import ProCGroups.ProC.OpenNormalSubgroups.BasisAtOne
 
-set_option autoImplicit false
-
 /-!
 # Local weight, quotients, and metrizability
 

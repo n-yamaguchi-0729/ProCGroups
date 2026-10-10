@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.CrowellExactSequence.Discrete.Exactness
 
-set_option autoImplicit false
-
 /-!
 # Crowell Exact Sequence / Discrete / Main Theorem
 

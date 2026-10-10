@@ -8,8 +8,6 @@ import ProCGroups.FoxDifferential.Completed.Continuous.Topology
 import ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.AugmentationIdeal.FiniteStage
 import ProCGroups.InverseSystems.ProjectionImageSystems
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — \(\mathbb{Z}_C\) coefficients — augmentation ideal — closure
 

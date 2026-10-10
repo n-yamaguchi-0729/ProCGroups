@@ -9,8 +9,6 @@ import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgeb
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.Coeff.Ring
 import ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.Coeff.System
 
-set_option autoImplicit false
-
 /-!
 # Fox differential: completed — coefficient rings — prime-power completed group algebra — coeff
 

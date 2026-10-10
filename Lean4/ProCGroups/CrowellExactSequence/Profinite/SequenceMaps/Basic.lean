@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.FoxDifferential.Completed.Continuous.Universal.NaturalTopology
 
-set_option autoImplicit false
-
 /-!
 # Basic maps in the profinite Crowell sequence
 

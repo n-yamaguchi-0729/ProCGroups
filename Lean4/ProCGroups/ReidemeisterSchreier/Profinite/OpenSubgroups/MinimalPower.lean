@@ -6,8 +6,6 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 import ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.BasisFiniteRank
 
-set_option autoImplicit false
-
 /-!
 # Pointed bases controlled by a minimal generator power
 

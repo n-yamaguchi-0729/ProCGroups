@@ -8,8 +8,6 @@ import ProCGroups.CrowellExactSequence.Profinite.SequenceMaps.Basic
 import ProCGroups.CrowellExactSequence.Profinite.SequenceMaps.Exactness
 import ProCGroups.ProC.Kernels
 
-set_option autoImplicit false
-
 /-!
 # Boundary maps from the profinite kernel
 
@@ -351,7 +349,7 @@ formula for \(D|_N\) to the well-defined map \(N^{\mathrm{ab}}(C) \to A_{\psi}(C
 -/
 theorem completedBoundaryKillsTopCommZC_of_continuous_kernel_familyCoords_fintype
     (C : ProCGroups.FiniteGroupClass.{u}) (psi : ContinuousMonoidHom G H)
-    {X : Type u} [Fintype X] [DecidableEq X] (family : X → G)
+    {X : Type u} [Fintype X] (family : X → G)
     (hbasis_A :
       IsPresentedCompletedDifferentialFamilyBasisProCInteger
         (G := G) (H := H) C psi family)
@@ -511,7 +509,7 @@ whole source and then restricted to \(\ker \psi\).
 -/
 theorem completedBoundaryKillsTopCommZC_of_continuous_ambient_familyCoords_fintype
     (C : ProCGroups.FiniteGroupClass.{u}) (psi : ContinuousMonoidHom G H)
-    {X : Type u} [Fintype X] [DecidableEq X] (family : X → G)
+    {X : Type u} [Fintype X] (family : X → G)
     (hbasis_A :
       IsPresentedCompletedDifferentialFamilyBasisProCInteger
         (G := G) (H := H) C psi family)

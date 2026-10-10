@@ -10,8 +10,6 @@ import ProCGroups.CompletedGroupAlgebra.AllFiniteAugmentation.InClassComparison
 import ProCGroups.CompletedGroupAlgebra.AllFiniteAugmentation.StageAugmentation
 import ProCGroups.CompletedGroupAlgebra.AllFiniteAugmentation.TerminalIndex
 
-set_option autoImplicit false
-
 /-!
 # Completed Group Algebra / All Finite Augmentation
 

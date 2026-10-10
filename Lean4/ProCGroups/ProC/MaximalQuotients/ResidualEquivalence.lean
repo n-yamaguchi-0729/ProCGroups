@@ -9,8 +9,6 @@ import ProCGroups.ProC.MaximalQuotients.UniversalProperty
 import ProCGroups.Topologies.QuotientMaps
 import Mathlib.Topology.Algebra.ContinuousMonoidHom
 
-set_option autoImplicit false
-
 /-!
 # Continuous equivalences of actual residual quotients
 

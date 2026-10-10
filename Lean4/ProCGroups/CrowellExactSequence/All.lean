@@ -9,8 +9,6 @@ import ProCGroups.CrowellExactSequence.Basic
 import ProCGroups.CrowellExactSequence.Discrete.All
 import ProCGroups.CrowellExactSequence.Profinite.All
 
-set_option autoImplicit false
-
 /-!
 # Crowell exact sequences for pro-\(C\) groups
 
