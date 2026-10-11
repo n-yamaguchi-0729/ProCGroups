@@ -3,10 +3,29 @@
 [![Lean](https://github.com/n-yamaguchi-0729/ProCGroups/actions/workflows/lean.yml/badge.svg)](https://github.com/n-yamaguchi-0729/ProCGroups/actions/workflows/lean.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
 
-A Lean 4.35.0-rc2 library for profinite groups and pro-\(\mathcal C\) groups. It covers
-finite quotients, completions, free pro-\(\mathcal C\) groups, pro-\(p\) groups,
+A Lean 4.35.0-rc2 library for profinite groups and pro-\(\mathcal C\) groups.
+
+## Scope
+
+The library covers finite quotients, completions, free pro-\(\mathcal C\) groups, pro-\(p\) groups,
 and Golod--Shafarevich criteria. It also develops completed group algebras,
 Fox differentials, Reidemeister--Schreier theory, and Crowell exact sequences.
+
+## Main results
+
+| Result | Mathematical content |
+| --- | --- |
+| [Free pro-\(\mathcal C\) groups](Lean4/ProCGroups/FreeProC/Basic.lean) | The universal property for a free pro-\(\mathcal C\) group on a topological generating space. |
+| [Weighted Golod--Shafarevich criterion](Lean4/ProCGroups/GolodShafarevich/WeightedFiniteCriterion.lean) | A nonpositive weighted Golod--Shafarevich polynomial forces the target of a finite pro-\(p\) presentation to be infinite. |
+| [Discrete Crowell sequence](Lean4/ProCGroups/CrowellExactSequence/Discrete/MainTheorem.lean) | Exactness of the discrete four-term Crowell sequence for a surjective group homomorphism. |
+| [Completed Crowell sequence](Lean4/ProCGroups/CrowellExactSequence/Profinite/MainTheorem.lean) | Exactness of the separated completed Crowell sequence over pro-\(\mathcal C\) integer coefficients under the stated formation and source hypotheses. |
+
+The current library also includes finite and profinite abelian
+[Pontryagin biduality](Lean4/ProCGroups/Abelian/ProfiniteBidual.lean), the
+[full Tate module](Lean4/ProCGroups/Abelian/FullTateModule.lean) as an inverse
+limit of actual torsion subgroups, and
+[recognition of the profinite integers](Lean4/ProCGroups/Completion/ProfiniteIntegerRecognition.lean)
+from a topological generator and finite quotients of every positive order.
 
 ## Public API
 
@@ -24,22 +43,6 @@ import ProCGroups.ProP.All
 import ProCGroups.GolodShafarevich.All
 import ProCGroups.CrowellExactSequence.All
 ```
-
-## Main results
-
-| Result | Mathematical content |
-| --- | --- |
-| [Free pro-\(\mathcal C\) groups](Lean4/ProCGroups/FreeProC/Basic.lean) | The universal property for a free pro-\(\mathcal C\) group on a topological generating space. |
-| [Weighted Golod--Shafarevich criterion](Lean4/ProCGroups/GolodShafarevich/WeightedFiniteCriterion.lean) | A nonpositive weighted Golod--Shafarevich polynomial forces the target of a finite pro-\(p\) presentation to be infinite. |
-| [Discrete Crowell sequence](Lean4/ProCGroups/CrowellExactSequence/Discrete/MainTheorem.lean) | Exactness of the discrete four-term Crowell sequence for a surjective group homomorphism. |
-| [Completed Crowell sequence](Lean4/ProCGroups/CrowellExactSequence/Profinite/MainTheorem.lean) | Exactness of the separated completed Crowell sequence over pro-\(\mathcal C\) integer coefficients under the stated formation and source hypotheses. |
-
-The current library also includes finite and profinite abelian
-[Pontryagin biduality](Lean4/ProCGroups/Abelian/ProfiniteBidual.lean), the
-[full Tate module](Lean4/ProCGroups/Abelian/FullTateModule.lean) as an inverse
-limit of actual torsion subgroups, and
-[recognition of the profinite integers](Lean4/ProCGroups/Completion/ProfiniteIntegerRecognition.lean)
-from a topological generator and finite quotients of every positive order.
 
 ## Build
 
