@@ -45,25 +45,6 @@ The current library also includes finite and profinite abelian
 limit of actual torsion subgroups, and
 [recognition of the profinite integers](Lean4/ProCGroups/Completion/ProfiniteIntegerRecognition.lean)
 from a topological generator and finite quotients of every positive order.
-### Scope of the Tate-module construction
-
-`FullTateModule M` is defined for an arbitrary additive commutative group
-`M`: it is the inverse limit of the subgroups `M[n]`, with multiplication
-as transition maps. This is a group-theoretic construction, not a definition
-of an étale fundamental group. It does not take a scheme, curve, or geometric
-point as input, and it does not depend on SchemeTheory or
-EtaleFundamentalGroups.
-
-The actual finite étale covers, geometric fibre functors, and étale
-fundamental groups belong to
-[EtaleFundamentalGroups](https://github.com/n-yamaguchi-0729/lean4-math-library/tree/main/Lean4/EtaleFundamentalGroups)
-in the development workspace. The geometric comparison for an abelian
-variety is implemented there in
-[AbelianTateComparison.lean](https://github.com/n-yamaguchi-0729/lean4-math-library/blob/main/Lean4/EtaleFundamentalGroups/GeometricFiber/AbelianTateComparison.lean);
-it applies the abstract Tate-module construction to actual algebraic points.
-That comparison is not a theorem of this standalone ProCGroups package.
-The general curve's actual Abel–Jacobi-induced Tate comparison remains
-separate work and is not claimed here.
 
 ## Build
 
