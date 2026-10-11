@@ -5,6 +5,9 @@
 
 A Lean 4.35.0-rc2 library for profinite groups and pro-\(\mathcal C\) groups.
 
+This library is extracted from [NYLL](https://github.com/n-yamaguchi-0729/NYLL).
+Bundled dependencies use the same `Nyll` imports as the complete library.
+
 ## Scope
 
 The library covers finite quotients, completions, free pro-\(\mathcal C\) groups, pro-\(p\) groups,
@@ -15,16 +18,16 @@ Fox differentials, Reidemeister--Schreier theory, and Crowell exact sequences.
 
 | Result | Mathematical content |
 | --- | --- |
-| [Free pro-\(\mathcal C\) groups](Lean4/ProCGroups/FreeProC/Basic.lean) | The universal property for a free pro-\(\mathcal C\) group on a topological generating space. |
-| [Weighted Golod--Shafarevich criterion](Lean4/ProCGroups/GolodShafarevich/WeightedFiniteCriterion.lean) | A nonpositive weighted Golod--Shafarevich polynomial forces the target of a finite pro-\(p\) presentation to be infinite. |
-| [Discrete Crowell sequence](Lean4/ProCGroups/CrowellExactSequence/Discrete/MainTheorem.lean) | Exactness of the discrete four-term Crowell sequence for a surjective group homomorphism. |
-| [Completed Crowell sequence](Lean4/ProCGroups/CrowellExactSequence/Profinite/MainTheorem.lean) | Exactness of the separated completed Crowell sequence over pro-\(\mathcal C\) integer coefficients under the stated formation and source hypotheses. |
+| [Free pro-\(\mathcal C\) groups](Nyll/ProCGroups/FreeProC/Basic.lean) | The universal property for a free pro-\(\mathcal C\) group on a topological generating space. |
+| [Weighted Golod--Shafarevich criterion](Nyll/ProCGroups/GolodShafarevich/WeightedFiniteCriterion.lean) | A nonpositive weighted Golod--Shafarevich polynomial forces the target of a finite pro-\(p\) presentation to be infinite. |
+| [Discrete Crowell sequence](Nyll/ProCGroups/CrowellExactSequence/Discrete/MainTheorem.lean) | Exactness of the discrete four-term Crowell sequence for a surjective group homomorphism. |
+| [Completed Crowell sequence](Nyll/ProCGroups/CrowellExactSequence/Profinite/MainTheorem.lean) | Exactness of the separated completed Crowell sequence over pro-\(\mathcal C\) integer coefficients under the stated formation and source hypotheses. |
 
 The current library also includes finite and profinite abelian
-[Pontryagin biduality](Lean4/ProCGroups/Abelian/ProfiniteBidual.lean), the
-[full Tate module](Lean4/ProCGroups/Abelian/FullTateModule.lean) as an inverse
+[Pontryagin biduality](Nyll/ProCGroups/Abelian/ProfiniteBidual.lean), the
+[full Tate module](Nyll/ProCGroups/Abelian/FullTateModule.lean) as an inverse
 limit of actual torsion subgroups, and
-[recognition of the profinite integers](Lean4/ProCGroups/Completion/ProfiniteIntegerRecognition.lean)
+[recognition of the profinite integers](Nyll/ProCGroups/Completion/ProfiniteIntegerRecognition.lean)
 from a topological generator and finite quotients of every positive order.
 
 ## Public API
@@ -32,16 +35,16 @@ from a topological generator and finite quotients of every positive order.
 Complete library:
 
 ```lean
-import ProCGroups.All
+import Nyll.ProCGroups.All
 ```
 
 Focused imports:
 
 ```lean
-import ProCGroups.FreeProC.All
-import ProCGroups.ProP.All
-import ProCGroups.GolodShafarevich.All
-import ProCGroups.CrowellExactSequence.All
+import Nyll.ProCGroups.FreeProC.All
+import Nyll.ProCGroups.ProP.All
+import Nyll.ProCGroups.GolodShafarevich.All
+import Nyll.ProCGroups.CrowellExactSequence.All
 ```
 
 ## Build
@@ -63,7 +66,7 @@ and the standard linter set. Maintained sources do not override these options.
 ## Verification
 
 The [GitHub Actions workflow](.github/workflows/lean.yml) checks that every
-maintained source is reachable from `ProCGroups.All`, builds with warnings
+maintained source is reachable from `Nyll`, builds with warnings
 as errors, audits all declarations for proof placeholders and unexpected axioms,
 checks proofs with NanoDa, and replays them with the Lean kernel. It also checks
 that the designated declarations in the [public API contract](.github/verification/main-declarations.json)

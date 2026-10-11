@@ -1,11 +1,14 @@
 {
   "owners": {
     "ProCGroups": [
-      "ProCGroups"
+      "Nyll.ProCGroups"
+    ],
+    "EntryPoint": [
+      "Nyll"
     ]
   },
   "roots": [
-    "ProCGroups.All"
+    "Nyll"
   ],
   "leanToolchain": "leanprover/lean4:v4.35.0-rc2",
   "mathlibRevision": "065356127b1dc0016f66b7283ce0ce2c4055aa55",
@@ -27,5 +30,11 @@
   "excludedPaths": [
     ".github/verification"
   ],
-  "enforceSourcePolicy": true
+  "enforceSourcePolicy": true,
+  "orderedLibraries": [
+    "ProCGroups"
+  ],
+  "depths": {
+    "ProCGroups": 1
+  }
 }

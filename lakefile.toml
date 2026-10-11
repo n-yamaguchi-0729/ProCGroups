@@ -1,11 +1,13 @@
-name = "ProCGroups"
-version = "3.0.0"
-defaultTargets = ["ProCGroups.All"]
 enableArtifactCache = false
-restoreAllArtifacts = false
+
+name = "Nyll"
+version = "0.1.0-dev"
+buildDir = ".lake/build"
+keywords = ["math"]
+defaultTargets = ["Nyll"]
 
 [leanOptions]
-pp.unicode.fun = true
+pp.unicode.fun = true # pretty-prints `fun a ↦ b`
 autoImplicit = false
 linter.unusedVariables = true
 linter.missingDocs = true
@@ -16,7 +18,11 @@ name = "mathlib"
 scope = "leanprover-community"
 rev = "065356127b1dc0016f66b7283ce0ce2c4055aa55"
 
+# All sources share one library configuration and the package-wide checks.
 [[lean_lib]]
-name = "ProCGroups.All"
-srcDir = "Lean4"
-globs = ["ProCGroups.+"]
+name = "Nyll"
+globs = [
+  "Nyll.All",
+  "Nyll",
+  "Nyll.ProCGroups.+",
+]

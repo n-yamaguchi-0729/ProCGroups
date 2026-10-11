@@ -401,7 +401,7 @@ class Pipeline:
             self.inputs()
             roots = self.manifest["roots"]
             self.stage("build", ["lake", "--no-ansi", "--rehash", "--wfail", "build", *roots])
-            self.stage("inventory", ["lake", "env", str(self.lean), "-j1", "--run",
+            self.stage("inventory", ["lake", "env", str(self.lean), "-j1", "-DautoImplicit=false", "--run",
                        str(HERE / "Inventory.lean"), str(self.manifest_path), str(self.out)],
                        validate=self.check_inventory,
                        artifacts=[self.out / n for n in INVENTORY_FILES])
@@ -410,7 +410,7 @@ class Pipeline:
             search = self.capture(["lake", "env", "printenv", "LEAN_PATH"])
             self.exported = self.out / "selected.ndjson"
             export_env = {"LEAN_PATH": search + os.pathsep + str(self.export_core_dir)}
-            self.stage("export", [str(self.lean), "-j1", "--run", str(HERE / "ExportSelected.lean"),
+            self.stage("export", [str(self.lean), "-j1", "-DautoImplicit=false", "--run", str(HERE / "ExportSelected.lean"),
                        str(self.selector_path), *roots], output=self.exported, environment=export_env)
             self.stage("coverage", validate=self.check_export, artifacts=[self.out / "coverage-report.json"])
             config = {"export_file_path": str(self.exported), "use_stdin": False,
@@ -423,7 +423,7 @@ class Pipeline:
             write_json(config_path, config)
             self.sealed[str(config_path)] = digest(config_path)
             self.stage("nanoda", [str(self.nanoda), str(config_path)], validate=self.check_nanoda)
-            self.stage("replay", ["lake", "env", str(self.lean), "-j1", "--run",
+            self.stage("replay", ["lake", "env", str(self.lean), "-j1", "-DautoImplicit=false", "--run",
                        str(HERE / "ReplayKernel.lean"), *roots], validate=self.check_replay)
             self.guard()
             self.check_physical_snapshot()

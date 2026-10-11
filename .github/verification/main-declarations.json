@@ -6,22 +6,22 @@
     {
       "name": "ProCGroups.FreeProC.IsFreeProCGroup",
       "kind": "inductive",
-      "module": "ProCGroups.FreeProC.Basic"
+      "module": "Nyll.ProCGroups.FreeProC.Basic"
     },
     {
       "name": "ClassFieldTower.ProP.FiniteProPPresentation.infinite_of_gsPolynomial_nonpos",
       "kind": "theorem",
-      "module": "ProCGroups.GolodShafarevich.WeightedFiniteCriterion"
+      "module": "Nyll.ProCGroups.GolodShafarevich.WeightedFiniteCriterion"
     },
     {
       "name": "CrowellExactSequence.discreteCrowellLinearSequence_isExact",
       "kind": "theorem",
-      "module": "ProCGroups.CrowellExactSequence.Discrete.MainTheorem"
+      "module": "Nyll.ProCGroups.CrowellExactSequence.Discrete.MainTheorem"
     },
     {
       "name": "CrowellExactSequence.profiniteSeparatedCrowellLinearSequence_isExact",
       "kind": "theorem",
-      "module": "ProCGroups.CrowellExactSequence.Profinite.MainTheorem"
+      "module": "Nyll.ProCGroups.CrowellExactSequence.Profinite.MainTheorem"
     }
   ]
 }
