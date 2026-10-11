@@ -5,8 +5,6 @@
 
 A Lean 4.35.0-rc2 library for profinite groups and pro-\(\mathcal C\) groups.
 
-All original code in this library is written by OpenAI Codex.
-
 This library is extracted from [NYLL](https://github.com/n-yamaguchi-0729/NYLL).
 Bundled dependencies use the same `Nyll` imports as the complete library.
 
@@ -85,6 +83,8 @@ run, including cache hits. Build stages stop after five hours to leave time for
 saving completed outputs and diagnostic receipts before the runner deadline.
 
 ## Authorship
+
+All original code in this library is written by OpenAI Codex.
 
 [Naganori Yamaguchi](https://github.com/n-yamaguchi-0729) sets the mathematical
 goals and scope, directs development, and maintains the library.
