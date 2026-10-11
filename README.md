@@ -7,7 +7,6 @@ A Lean 4.35.0-rc2 library for profinite groups and pro-\(\mathcal C\) groups. It
 finite quotients, completions, free pro-\(\mathcal C\) groups, pro-\(p\) groups,
 and Golod--Shafarevich criteria. It also develops completed group algebras,
 Fox differentials, Reidemeister--Schreier theory, and Crowell exact sequences.
-Its only Lake dependency is [Mathlib](https://github.com/leanprover-community/mathlib4).
 
 ## Public API
 
@@ -33,12 +32,21 @@ linked files below are examples.
 
 ## Main results
 
-| Declaration | Mathematical content |
-| --- | --- |
-| [`ProCGroups.FreeProC.IsFreeProCGroup`](Lean4/ProCGroups/FreeProC/Basic.lean) | The universal property for a free pro-\(\mathcal C\) group on a topological generating space. |
-| [`ClassFieldTower.ProP.FiniteProPPresentation.infinite_of_gsPolynomial_nonpos`](Lean4/ProCGroups/GolodShafarevich/WeightedFiniteCriterion.lean) | A nonpositive weighted Golod--Shafarevich polynomial forces the target of a finite pro-\(p\) presentation to be infinite. |
-| [`CrowellExactSequence.discreteCrowellLinearSequence_isExact`](Lean4/ProCGroups/CrowellExactSequence/Discrete/MainTheorem.lean) | Exactness of the discrete four-term Crowell sequence for a surjective group homomorphism. |
-| [`CrowellExactSequence.profiniteSeparatedCrowellLinearSequence_isExact`](Lean4/ProCGroups/CrowellExactSequence/Profinite/MainTheorem.lean) | Exactness of the separated completed Crowell sequence over pro-\(\mathcal C\) integer coefficients under the stated formation and source hypotheses. |
+**[Free pro-\(\mathcal C\) groups](Lean4/ProCGroups/FreeProC/Basic.lean)**
+
+The universal property for a free pro-\(\mathcal C\) group on a topological generating space.
+
+**[Weighted Golod--Shafarevich criterion](Lean4/ProCGroups/GolodShafarevich/WeightedFiniteCriterion.lean)**
+
+A nonpositive weighted Golod--Shafarevich polynomial forces the target of a finite pro-\(p\) presentation to be infinite.
+
+**[Discrete Crowell sequence](Lean4/ProCGroups/CrowellExactSequence/Discrete/MainTheorem.lean)**
+
+Exactness of the discrete four-term Crowell sequence for a surjective group homomorphism.
+
+**[Completed Crowell sequence](Lean4/ProCGroups/CrowellExactSequence/Profinite/MainTheorem.lean)**
+
+Exactness of the separated completed Crowell sequence over pro-\(\mathcal C\) integer coefficients under the stated formation and source hypotheses.
 
 The current library also includes finite and profinite abelian
 [Pontryagin biduality](Lean4/ProCGroups/Abelian/ProfiniteBidual.lean), the
@@ -68,7 +76,7 @@ separate work and is not claimed here.
 
 ## Build
 
-The repository pins Lean 4.35.0-rc2 and an exact Mathlib revision in
+The repository pins the Lean toolchain and dependencies in
 [`lean-toolchain`](lean-toolchain) and [`lakefile.toml`](lakefile.toml).
 The dependency lock is in [`lake-manifest.json`](lake-manifest.json).
 From the repository root:
@@ -80,7 +88,7 @@ lake --wfail build
 
 Elaboration and linter options are shared in `lakefile.toml`:
 `autoImplicit = false`, unused-variable and missing-documentation checks,
-and the Mathlib standard linter set. Maintained sources do not override these options.
+and the standard linter set. Maintained sources do not override these options.
 
 ## Verification
 
