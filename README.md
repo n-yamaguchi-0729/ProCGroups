@@ -32,21 +32,12 @@ linked files below are examples.
 
 ## Main results
 
-**[Free pro-\(\mathcal C\) groups](Lean4/ProCGroups/FreeProC/Basic.lean)**
-
-The universal property for a free pro-\(\mathcal C\) group on a topological generating space.
-
-**[Weighted Golod--Shafarevich criterion](Lean4/ProCGroups/GolodShafarevich/WeightedFiniteCriterion.lean)**
-
-A nonpositive weighted Golod--Shafarevich polynomial forces the target of a finite pro-\(p\) presentation to be infinite.
-
-**[Discrete Crowell sequence](Lean4/ProCGroups/CrowellExactSequence/Discrete/MainTheorem.lean)**
-
-Exactness of the discrete four-term Crowell sequence for a surjective group homomorphism.
-
-**[Completed Crowell sequence](Lean4/ProCGroups/CrowellExactSequence/Profinite/MainTheorem.lean)**
-
-Exactness of the separated completed Crowell sequence over pro-\(\mathcal C\) integer coefficients under the stated formation and source hypotheses.
+| Result | Mathematical content |
+| --- | --- |
+| [Free pro-\(\mathcal C\) groups](Lean4/ProCGroups/FreeProC/Basic.lean) | The universal property for a free pro-\(\mathcal C\) group on a topological generating space. |
+| [Weighted Golod--Shafarevich criterion](Lean4/ProCGroups/GolodShafarevich/WeightedFiniteCriterion.lean) | A nonpositive weighted Golod--Shafarevich polynomial forces the target of a finite pro-\(p\) presentation to be infinite. |
+| [Discrete Crowell sequence](Lean4/ProCGroups/CrowellExactSequence/Discrete/MainTheorem.lean) | Exactness of the discrete four-term Crowell sequence for a surjective group homomorphism. |
+| [Completed Crowell sequence](Lean4/ProCGroups/CrowellExactSequence/Profinite/MainTheorem.lean) | Exactness of the separated completed Crowell sequence over pro-\(\mathcal C\) integer coefficients under the stated formation and source hypotheses. |
 
 The current library also includes finite and profinite abelian
 [Pontryagin biduality](Lean4/ProCGroups/Abelian/ProfiniteBidual.lean), the
