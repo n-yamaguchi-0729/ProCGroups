@@ -10,13 +10,13 @@ Fox differentials, Reidemeister--Schreier theory, and Crowell exact sequences.
 
 ## Public API
 
-Import the complete library with:
+Complete library:
 
 ```lean
 import ProCGroups.All
 ```
 
-Focused aggregates let you import the part you need, for example:
+Focused imports:
 
 ```lean
 import ProCGroups.FreeProC.All
@@ -24,11 +24,6 @@ import ProCGroups.ProP.All
 import ProCGroups.GolodShafarevich.All
 import ProCGroups.CrowellExactSequence.All
 ```
-
-Other focused aggregates cover finite groups, inverse systems, completions,
-pro-\(\mathcal C\) groups, free products, completed group algebras, and Fox
-differentials. Individual result files can also be imported directly; the
-linked files below are examples.
 
 ## Main results
 
