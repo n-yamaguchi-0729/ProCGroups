@@ -7,5 +7,5 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 import Nyll.ProCGroups.All
 
 /-!
-Aggregate of the maintained libraries included in this public extract.
+Public entry point for the primary libraries of this extract.
 -/

@@ -6,7 +6,9 @@
 A Lean 4.35.0-rc2 library for profinite groups and pro-\(\mathcal C\) groups.
 
 This library is extracted from [NYLL](https://github.com/n-yamaguchi-0729/NYLL).
-Bundled dependencies use the same `Nyll` imports as the complete library.
+<!-- nyll-publication:distribution:begin -->
+Only the module-level import closure of `Nyll.ProCGroups.All` is bundled. Dependencies retain their canonical `Nyll` imports.
+<!-- nyll-publication:distribution:end -->
 
 ## Scope
 
@@ -91,4 +93,6 @@ goals and scope, directs development, and maintains the library.
 
 ## License
 
+<!-- nyll-publication:credits:begin -->
 Apache License 2.0. See [LICENSE](LICENSE).
+<!-- nyll-publication:credits:end -->

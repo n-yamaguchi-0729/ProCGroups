@@ -36,5 +36,8 @@
   ],
   "depths": {
     "ProCGroups": 1
-  }
+  },
+  "primaryRoots": [
+    "Nyll.ProCGroups.All"
+  ]
 }
