@@ -1484,7 +1484,7 @@
     "Nyll/ProCGroups/Topologies/QuotientMaps.lean": "70dfaf1c4aeb3f6447c43cacce14c9b0d921592e633e8f82dab2597a47ce7472",
     "Nyll/ProCGroups/Topologies/TopologicallyCharacteristicSubgroups.lean": "4eb20fd00f1a5d0bf73df8a5b352a938b91de5128860a8fea9171bb21332db2e",
     "Nyll/ProCGroups/WreathProducts.lean": "f3baee2c932676b548431ee2a52b9c7252bfe83ba7df861773190a3387022ba4",
-    "README.md": "1e98f2c27bf66cbd7195c5393df366b44a0e957b366ee3e87a483bdc779e0c95",
+    "README.md": "b1a3ac3b0f4bda74eb1ae68216b500bcec66160d92c5dbbfdf6fd56ab0cb5cf7",
     "lake-manifest.json": "ad850380b47b59868a88c7b76f8775a3fa5a55e432e1d111a007ff2ebf056ded",
     "lakefile.toml": "7e04aa7d84381de844da528e88ac0fb44f40c177c9a94a0fec148592324ffeb9",
     "lean-toolchain": "8dc8d6f560141069d9073e370611716ef77ada0da8ffa37e2149f44b2e63ac7a"
