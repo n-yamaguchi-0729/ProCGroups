@@ -10,6 +10,8 @@ A Lean 4.35.0-rc2 library for profinite groups and pro-\(\mathcal C\) groups.
 This library is extracted from [NYLL](https://github.com/n-yamaguchi-0729/NYLL).
 <!-- nyll-publication:distribution:begin -->
 Only the module-level import closure of `Nyll.ProCGroups.All` is bundled. Dependencies retain their canonical `Nyll` imports.
+
+The NYLL sources in this extract use Mathlib without other bundled NYLL libraries.
 <!-- nyll-publication:distribution:end -->
 
 ## Scope
@@ -97,4 +99,7 @@ goals and scope, directs development, and maintains the library.
 
 <!-- nyll-publication:credits:begin -->
 Apache License 2.0. See [LICENSE](LICENSE).
+
+Included adaptations from [Anthropic’s Fermat’s Last Theorem project](https://github.com/anthropics/fermats-last-theorem) retain their source-specific copyrights and authors.
+The included-file inventories and preserved upstream notices are in [NOTICE](NOTICE).
 <!-- nyll-publication:credits:end -->

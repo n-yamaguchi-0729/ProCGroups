@@ -85,7 +85,7 @@ theorem subgroup_eq_bot_of_generator_isConj_inv_of_card_coprime_two
     simpa using
       map_eq_one_of_isConj_inv_of_coprime_two (MonoidHom.id A) hConj hOrderCoprime
   rw [← hGenerates, hGammaOne]
-  simp
+  exact Subgroup.zpowers_one_eq_bot
 
 /-- A finite subgroup is trivial if its cardinality is coprime to every
 prime.  This is the arithmetic boundary step obtained by testing the same

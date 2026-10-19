@@ -23,6 +23,8 @@ import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualPrimeExclusion
 import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualSigmaPower
 import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualAbelianizationPrimePowers
 import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualPowerDetection
+import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualFiniteDescent
+import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualPrimeToDescent
 
 /-!
 # Maximal pro-\(C\) quotients

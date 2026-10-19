@@ -4,17 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FiniteGroups.PrimeSigma
-import Nyll.ProCGroups.FiniteGroups.PrimeOrderHom
-import Nyll.ProCGroups.FiniteGroups.InducedFunctions
-import Nyll.ProCGroups.FiniteGroups.SigmaMonotonicity
 import Nyll.ProCGroups.FiniteGroups.AllFinite
 import Nyll.ProCGroups.FiniteGroups.Classes
+import Nyll.ProCGroups.FiniteGroups.EquivPermCompSuccAboveEqSuccAboveCompSignEq
+import Nyll.ProCGroups.FiniteGroups.InducedFunctions
+import Nyll.ProCGroups.FiniteGroups.PGroupFormation
+import Nyll.ProCGroups.FiniteGroups.PrimeOrderHom
+import Nyll.ProCGroups.FiniteGroups.PrimeSigma
+import Nyll.ProCGroups.FiniteGroups.SigmaMonotonicity
+import Nyll.ProCGroups.FiniteGroups.SigmaPowerDetection
 import Nyll.ProCGroups.FiniteGroups.Solvable
 import Nyll.ProCGroups.FiniteGroups.StandardClasses
-import Nyll.ProCGroups.FiniteGroups.SigmaPowerDetection
-
-import Nyll.ProCGroups.FiniteGroups.PGroupFormation
+import Nyll.ProCGroups.FiniteGroups.TupleSuccAboveSortCompSuccAboveEq
 
 /-!
 # Classes of finite groups

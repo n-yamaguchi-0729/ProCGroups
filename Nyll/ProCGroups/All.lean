@@ -4,7 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.InducedFunctions
+import Nyll.ProCGroups.InducedFunctions.All
 import Nyll.ProCGroups.InducedSemidirect
 import Nyll.ProCGroups.Abelian.All
 import Nyll.ProCGroups.Boundary.All

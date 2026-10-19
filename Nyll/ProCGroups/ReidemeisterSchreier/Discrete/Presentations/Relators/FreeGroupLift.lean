@@ -89,7 +89,7 @@ theorem freeGroupSubstitutionWord_append {Y : Type*} [DecidableEq Y]
     freeGroupSubstitutionWord f (xs ++ ys) =
       freeGroupSubstitutionWord f xs ++ freeGroupSubstitutionWord f ys := by
   induction xs with
-  | nil => simp
+  | nil => rw [List.nil_append, freeGroupSubstitutionWord_nil, List.nil_append]
   | cons xb xs ih =>
       rcases xb with ⟨x, b⟩
       cases b

@@ -173,6 +173,53 @@ theorem continuous_openSubgroupRightCosetSection
     Continuous (openSubgroupRightCosetSection (F := F) H) :=
   continuous_of_discreteTopology
 
+/-- The chosen right-coset section gives a continuous retraction onto
+the open subgroup. It is a retraction of spaces, not a group homomorphism. -/
+noncomputable def openSubgroupRetraction (H : OpenSubgroup F) :
+    C(F, ↥(H : Subgroup F)) := by
+  let s := openSubgroupRightCosetSection H
+  let q : F → OpenSubgroupRightQuotient H := openSubgroupRightCoset H
+  have hr (g : F) : g * (s (q g))⁻¹ ∈ (H : Subgroup F) := by
+    have heq : (Quotient.mk'' (s (q g)) : OpenSubgroupRightQuotient H) =
+        Quotient.mk'' g := openSubgroupRightCosetSection_spec H (q g)
+    exact QuotientGroup.rightRel_apply.mp (Quotient.eq''.mp heq)
+  have hq : Continuous q :=
+    isQuotientMap_quotient_mk'.continuous
+  have hs : Continuous s := continuous_openSubgroupRightCosetSection H
+  refine ⟨fun g => ⟨g * (s (q g))⁻¹, hr g⟩, ?_⟩
+  exact Continuous.subtype_mk (continuous_id.mul (hs.comp hq).inv) _
+
+omit [IsTopologicalGroup F] in
+/-- Left multiplication by an element of the subgroup leaves its right coset unchanged. -/
+theorem openSubgroupRightCoset_subgroup_mul (H : OpenSubgroup F)
+    (h : ↥(H : Subgroup F)) (g : F) :
+    openSubgroupRightCoset H ((h : F) * g) = openSubgroupRightCoset H g := by
+  apply Quotient.eq''.mpr
+  apply QuotientGroup.rightRel_apply.mpr
+  rw [mul_inv_rev, ← mul_assoc, mul_inv_cancel, one_mul]
+  exact (H : Subgroup F).inv_mem h.property
+
+/-- The continuous retraction is equivariant for left multiplication by the subgroup. -/
+theorem openSubgroupRetraction_subgroup_mul (H : OpenSubgroup F)
+    (h : ↥(H : Subgroup F)) (g : F) :
+    openSubgroupRetraction H ((h : F) * g) = h * openSubgroupRetraction H g := by
+  apply Subtype.ext
+  change (h : F) * g *
+      (openSubgroupRightCosetSection H (openSubgroupRightCoset H ((h : F) * g)))⁻¹ =
+    (h : F) * (g *
+      (openSubgroupRightCosetSection H (openSubgroupRightCoset H g))⁻¹)
+  rw [openSubgroupRightCoset_subgroup_mul, mul_assoc]
+
+/-- The retraction fixes every element of the open subgroup. -/
+theorem openSubgroupRetraction_subtype (H : OpenSubgroup F)
+    (h : ↥(H : Subgroup F)) :
+    openSubgroupRetraction H (h : F) = h := by
+  apply Subtype.ext
+  change (h : F) *
+    (openSubgroupRightCosetSection H (openSubgroupRightCoset H (h : F)))⁻¹ = h
+  rw [openSubgroupRightCoset_eq_basepoint_iff_mem.mpr h.property,
+    openSubgroupRightCosetSection_one, inv_one, mul_one]
+
 end RightQuotientSections
 
 end Profinite

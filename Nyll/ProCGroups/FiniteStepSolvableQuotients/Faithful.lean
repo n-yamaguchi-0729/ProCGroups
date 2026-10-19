@@ -72,16 +72,16 @@ theorem quotientConjAbelianization_injective_of_continuousMulEquiv_image
             exact hxN⟩
           left_inv := by
             intro x
-            ext
-            simp
+            apply Subtype.ext
+            exact e.symm_apply_apply x.1
           right_inv := by
             intro y
-            ext
-            simp
+            apply Subtype.ext
+            exact e.apply_symm_apply y.1
           map_mul' := by
             intro x y
-            ext
-            simp }
+            apply Subtype.ext
+            exact e.map_mul x.1 y.1 }
       continuous_toFun := by
         exact Continuous.subtype_mk
           (e.continuous_toFun.comp continuous_subtype_val)
@@ -272,16 +272,16 @@ theorem isAbFaithful_of_continuousMulEquiv
             exact hxK⟩
           left_inv := by
             intro x
-            ext
-            simp
+            apply Subtype.ext
+            exact e.symm_apply_apply x.1
           right_inv := by
             intro y
-            ext
-            simp
+            apply Subtype.ext
+            exact e.apply_symm_apply y.1
           map_mul' := by
             intro x y
-            ext
-            simp }
+            apply Subtype.ext
+            exact e.map_mul x.1 y.1 }
       continuous_toFun := by
         exact Continuous.subtype_mk
           (e.continuous_toFun.comp continuous_subtype_val)

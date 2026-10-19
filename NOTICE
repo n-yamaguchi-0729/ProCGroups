@@ -1,0 +1,39 @@
+COPYRIGHT AND THIRD-PARTY NOTICES
+
+Apache License, Version 2.0. See LICENSE.
+The following notices apply only to the Lean files included in this extract.
+Source-specific copyright and author notices remain in those files.
+
+Anthropic FLT: ProCGroups
+-------------------------
+
+Copyright 2026 Anthropic, PBC.
+License: Apache License, Version 2.0.
+Included-file source mapping: Nyll/ProCGroups/ANTHROPIC_FLT_SOURCE.md
+Preserved upstream NOTICE: Nyll/ProCGroups/ANTHROPIC_FLT_NOTICE
+Preserved earlier-source attribution: Nyll/ProCGroups/ANTHROPIC_FLT_ATTRIBUTION.md
+Earlier copyright holders and authors are not replaced by Anthropic.
+
+Nyll/ProCGroups/Abelian/AddCommGroupApplyZsmulAddEq.lean
+Nyll/ProCGroups/Abelian/AddCommGroupBasisSmulEq.lean
+Nyll/ProCGroups/Abelian/AddCommGroupBasisZmodPow.lean
+Nyll/ProCGroups/Abelian/AddCommGroupFiniteNatCardTorsionByLe.lean
+Nyll/ProCGroups/Abelian/AddCommGroupMemTorsionBySmulEq.lean
+Nyll/ProCGroups/Abelian/AddCommGroupNatCardPrimaryComponentKerAeval.lean
+Nyll/ProCGroups/Abelian/AddCommGroupNatCardTorsionByPowEqPow.lean
+Nyll/ProCGroups/Abelian/AddMonoidHomMemRangeSmulEqZero.lean
+Nyll/ProCGroups/Abelian/AddMonoidHomNatCardKerCompEqMul.lean
+Nyll/ProCGroups/Abelian/AddMonoidHomNsmulEqZeroApplyEq.lean
+Nyll/ProCGroups/Abelian/CardTorsionMulDivisible.lean
+Nyll/ProCGroups/Abelian/FinsuppListEqSumSingleSubSingle.lean
+Nyll/ProCGroups/Abelian/SubmoduleFiniteTorsionByPow.lean
+Nyll/ProCGroups/Abelian/SubmoduleNatCardTorsionByQuotientEqPowFinrank.lean
+Nyll/ProCGroups/Abelian/SubtractionMonoidZsmulEqPrime.lean
+Nyll/ProCGroups/FiniteGroups/EquivPermCompSuccAboveEqSuccAboveCompSignEq.lean
+Nyll/ProCGroups/FiniteGroups/TupleSuccAboveSortCompSuccAboveEq.lean
+Nyll/ProCGroups/GroupTheory/FinSubSubModEqFlowSumMulModEqZero.lean
+Nyll/ProCGroups/GroupTheory/FinVertexLawEdgeLawPow.lean
+Nyll/ProCGroups/GroupTheory/MonoidHomMapTransferEqTransferComp.lean
+Nyll/ProCGroups/GroupTheory/MonoidHomSubfieldUnitsCoeEq.lean
+Nyll/ProCGroups/GroupTheory/MulActionNcardOrbitInterOrbitMulCard.lean
+Nyll/ProCGroups/GroupTheory/SubgroupEqMulIndexInfEq.lean

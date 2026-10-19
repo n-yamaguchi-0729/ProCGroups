@@ -66,6 +66,35 @@ theorem evaluation_compatible (x : RestrictedTateModule M S) (n m : S) :
     (m.1 : ℕ) • evaluation M S (n * m) x = evaluation M S n x :=
   congrArg (fun z : torsionLevel M n.1 => z.1) (x.2 n m)
 
+/-- A restricted compatible torsion family with finite coordinate range is zero.
+A finite product of indices in `S` kills its entire coordinate range. -/
+theorem eq_zero_of_finite_range (x : RestrictedTateModule M S)
+    (hfinite : (Set.range (fun n : S => evaluation M S n x)).Finite) : x = 0 := by
+  let R : Set M := Set.range (fun n : S => evaluation M S n x)
+  have hkill : ∃ m : S, ∀ y ∈ R, (m.1 : ℕ) • y = 0 := by
+    refine Set.Finite.induction_on_subset
+      (motive := fun t _ => ∃ m : S, ∀ y ∈ t, (m.1 : ℕ) • y = 0)
+      R hfinite ?_ ?_
+    · exact ⟨1, fun _ h => False.elim h⟩
+    · intro a t ha _ _ ih
+      obtain ⟨n, rfl⟩ := ha
+      obtain ⟨m, hm⟩ := ih
+      refine ⟨n * m, ?_⟩
+      intro y hy
+      rcases Set.mem_insert_iff.mp hy with h | hy
+      · subst y
+        have hn : (n.1 : ℕ) • evaluation M S n x = 0 :=
+          (projection M S n x).property
+        change ((n.1 : ℕ) * (m.1 : ℕ)) • evaluation M S n x = 0
+        rw [Nat.mul_comm, mul_smul, hn, nsmul_zero]
+      · change ((n.1 : ℕ) * (m.1 : ℕ)) • y = 0
+        rw [mul_smul, hm y hy, nsmul_zero]
+  obtain ⟨m, hm⟩ := hkill
+  apply ext
+  intro n
+  rw [map_zero]
+  exact (evaluation_compatible x n m).symm.trans (hm _ ⟨n * m, rfl⟩)
+
 variable (M S)
 
 local instance (n : ℕ+) : TopologicalSpace (torsionLevel M n) :=
