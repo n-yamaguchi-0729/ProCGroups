@@ -8,51 +8,41 @@ from finite quotients and completions to free groups, Golod–Shafarevich criter
 and completed Crowell sequences. The [mathematical guide](https://n-yamaguchi-0729.github.io/NYLL/libraries/pro-c-groups/) explains the main constructions
 and selected theorems, with links to their proofs.
 
-## Scope
-
-The library covers finite quotients, completions, free pro-\(\mathcal C\) groups, pro-\(p\) groups,
-and Golod--Shafarevich criteria. It also develops completed group algebras,
-Fox differentials, Reidemeister--Schreier theory, and Crowell exact sequences.
-
-The [full Tate module](Nyll/ProCGroups/Abelian/FullTateModule.lean) is also
-constructed as an inverse limit of torsion subgroups.
-
 ## Main results
 
 | Result | Mathematical content |
 | --- | --- |
 | [Free pro-\(\mathcal C\) groups](Nyll/ProCGroups/FreeProC/Basic.lean) | The universal property for a free pro-\(\mathcal C\) group on a topological generating space. |
 | [Weighted Golod--Shafarevich criterion](Nyll/ProCGroups/GolodShafarevich/WeightedFiniteCriterion.lean) | A nonpositive weighted Golod--Shafarevich polynomial forces the target of a finite pro-\(p\) presentation to be infinite. |
-| [Discrete Crowell sequence](Nyll/ProCGroups/CrowellExactSequence/Discrete/MainTheorem.lean) | Exactness of the discrete four-term Crowell sequence for a surjective group homomorphism. |
 | [Completed Crowell sequence](Nyll/ProCGroups/CrowellExactSequence/Profinite/MainTheorem.lean) | Exactness of the separated completed Crowell sequence over pro-\(\mathcal C\) integer coefficients under the stated formation and source hypotheses. |
 | [Pontryagin biduality](Nyll/ProCGroups/Abelian/ProfiniteBidual.lean) | Biduality for finite and profinite abelian groups. |
-| [Recognition of the profinite integers](Nyll/ProCGroups/Completion/ProfiniteIntegerRecognition.lean) | A topological generator and finite quotients of every positive order characterize the profinite integers. |
 
 ## Public API
 
-Complete library:
+Use [leanprover/lean4:v4.35.0-rc2](lean-toolchain) and the Mathlib revision pinned in
+[lake-manifest.json](lake-manifest.json). Add this dependency to your project’s
+lakefile.toml:
+
+```toml
+[[require]]
+name = "Nyll"
+git = "https://github.com/n-yamaguchi-0729/ProCGroups.git"
+rev = "main"
+```
+
+Run `lake update Nyll`, then commit your generated lake-manifest.json to retain
+the resolved revisions. Import the library in a Lean file:
 
 ```lean
 import Nyll.ProCGroups.All
 ```
 
-Focused imports:
+The standalone distributions share the package name Nyll. Choose one distribution;
+for several libraries together, use [NYLL](https://github.com/n-yamaguchi-0729/NYLL).
 
-```lean
-import Nyll.ProCGroups.FreeProC.All
-import Nyll.ProCGroups.ProP.All
-import Nyll.ProCGroups.GolodShafarevich.All
-import Nyll.ProCGroups.CrowellExactSequence.All
-```
+To build a checkout of this repository, run from its root:
 
-## Build
-
-The repository pins the Lean toolchain and dependencies in
-[`lean-toolchain`](lean-toolchain) and [`lakefile.toml`](lakefile.toml).
-The dependency lock is in [`lake-manifest.json`](lake-manifest.json).
-From the repository root:
-
-```console
+```sh
 lake exe cache get
 lake --wfail build
 ```
