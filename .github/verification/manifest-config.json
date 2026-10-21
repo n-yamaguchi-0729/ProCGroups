@@ -28,7 +28,8 @@
     ".lake"
   ],
   "excludedPaths": [
-    ".github/verification"
+    ".github/verification",
+    ".github/scripts/publication"
   ],
   "enforceSourcePolicy": true,
   "orderedLibraries": [
