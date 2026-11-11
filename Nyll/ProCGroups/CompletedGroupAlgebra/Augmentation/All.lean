@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.CompletedGroupAlgebra.Augmentation.AugmentationIdeal
-import Nyll.ProCGroups.CompletedGroupAlgebra.Augmentation.CanonicalAugmentation
-import Nyll.ProCGroups.CompletedGroupAlgebra.Augmentation.Functoriality
-import Nyll.ProCGroups.CompletedGroupAlgebra.Augmentation.StageAugmentation
+module
+
+public import Nyll.ProCGroups.CompletedGroupAlgebra.Augmentation.AugmentationIdeal
+public import Nyll.ProCGroups.CompletedGroupAlgebra.Augmentation.CanonicalAugmentation
+public import Nyll.ProCGroups.CompletedGroupAlgebra.Augmentation.Functoriality
+public import Nyll.ProCGroups.CompletedGroupAlgebra.Augmentation.StageAugmentation
 
 /-!
 # Completed Group Algebra / Augmentation

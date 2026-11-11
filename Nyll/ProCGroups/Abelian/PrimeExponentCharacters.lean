@@ -4,12 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.GroupTheory.FiniteAbelian.Basic
-import Mathlib.Topology.Instances.ZMod
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Basic
-import Nyll.ProCGroups.ProC.Quotients.ClosedNormal
-import Nyll.ProCGroups.Topologies.ContinuousMonoidHom
-import Nyll.ProCGroups.Abelian.AbelianModPower
+module
+
+public import Mathlib.GroupTheory.FiniteAbelian.Basic
+public import Mathlib.Topology.Instances.ZMod
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Basic
+public import Nyll.ProCGroups.ProC.Quotients.ClosedNormal
+public import Nyll.ProCGroups.Topologies.ContinuousMonoidHom
+public import Nyll.ProCGroups.Abelian.AbelianModPower
+public import Nyll.ProCGroups.ProC.Quotients.LeftQuotientProjectionSections
+public import Nyll.ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
 
 /-!
 # Prime-exponent characters detect abelian classes
@@ -18,6 +22,8 @@ Continuous characters with values in `ZMod q` separate profinite commutative
 groups of exponent `q`. In particular, simultaneous extension of characters
 forces the product map on abelianizations modulo `q` to be injective.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.Abelian
 

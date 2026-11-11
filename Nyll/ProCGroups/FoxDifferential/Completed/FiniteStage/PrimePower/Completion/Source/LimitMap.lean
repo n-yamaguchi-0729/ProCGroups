@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Completion.Source.Index
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Completion.Source.Index
 
 /-!
 # Fox differential: prime power — completion — source — limit map
@@ -22,6 +24,8 @@ The principal declarations in this module are:
   Projecting the completed-source-to-finite-stage-limit map gives the corresponding finite-stage
   limit coordinate.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

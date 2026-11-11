@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Universal
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Universal
 
 /-!
 # Fox differential: discrete — free expansion
@@ -20,6 +22,8 @@ The principal declarations in this module are:
 - `freeCrossedDifferentialExpansion_of`
   The Fox-coordinate expansion of a free generator returns its prescribed basis value.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

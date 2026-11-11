@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Abelian.FullTateModule
-import Nyll.ProCGroups.Topologies.ContinuousMulEquiv
+module
+
+public import Nyll.ProCGroups.Abelian.FullTateModule
+public import Nyll.ProCGroups.Topologies.ContinuousMulEquiv
 
 /-!
 # Functorial maps of the existing full Tate module
@@ -13,6 +15,8 @@ import Nyll.ProCGroups.Topologies.ContinuousMulEquiv
 An additive homomorphism acts on the actual torsion coordinates. No new
 inverse-limit object or topology is introduced.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.FullTateModule
 

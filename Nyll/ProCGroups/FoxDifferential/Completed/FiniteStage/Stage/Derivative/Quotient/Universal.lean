@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Derivative.Quotient.Basic
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Derivative.Quotient.Basic
 
 /-!
 # Fox differential: stage — derivative — quotient — universal
@@ -21,6 +23,8 @@ The principal declarations in this module are:
   Existence and uniqueness of the linear map representing the descended finite-stage Fox derivative
   vector on the finite source quotient.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

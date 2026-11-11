@@ -10,12 +10,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Data.Fin.Tuple.Sort
-import Mathlib.Logic.Equiv.Fin.Basic
+module
+
+public import Mathlib.Data.Fin.Tuple.Sort
+public import Mathlib.Logic.Equiv.Fin.Basic
 
 /-!
 # Tuple succ Above sort comp succ Above eq
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FiniteGeneration.CharacteristicChainsAndIndices
+module
+
+public import Nyll.ProCGroups.FiniteGeneration.CharacteristicChainsAndIndices
 
 /-!
 # Reidemeister Schreier / Profinite / Open Subgroups / Finite Permutation Targets
@@ -13,6 +15,8 @@ This module packages the finite permutation image of the coset action of an
 open subgroup, proves continuity of the action homomorphism, and transfers
 finite-group-class membership to the image.
 -/
+
+@[expose] public section
 
 open Set
 open scoped Topology

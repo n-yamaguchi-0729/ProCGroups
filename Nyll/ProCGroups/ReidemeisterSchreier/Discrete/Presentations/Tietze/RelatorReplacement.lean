@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.Core
+module
+
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.Core
 
 /-!
 # Reidemeister Schreier / Discrete / Presentations / Tietze / Relator Replacement
@@ -13,6 +15,8 @@ This module supplies semantic presented-group equivalences for replacing
 relators: equal normal closures, mutual relator maps, generator maps, and
 compositions of these transformations.
 -/
+
+@[expose] public section
 
 universe u v w
 

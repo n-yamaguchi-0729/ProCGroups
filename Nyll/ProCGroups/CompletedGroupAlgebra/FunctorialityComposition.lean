@@ -4,13 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.CompletedGroupAlgebra.Separation
+module
+
+public import Nyll.ProCGroups.CompletedGroupAlgebra.Separation
 
 /-!
 # Completed Group Algebra / Functoriality Composition
 
 This module records compatibility of completed group algebra functoriality with composition.
 -/
+
+@[expose] public section
 
 open scoped Topology
 

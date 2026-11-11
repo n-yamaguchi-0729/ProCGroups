@@ -4,9 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
-import Nyll.ProCGroups.ProC.Quotients.ClosedNormal
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Basic
+module
+
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
+public import Nyll.ProCGroups.ProC.Quotients.ClosedNormal
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Basic
+public import Nyll.ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
+public import Nyll.ProCGroups.ProC.Quotients.LeftQuotientProjectionSections
 
 /-!
 # Finite characters detect conjugation on topological abelianization
@@ -16,6 +20,8 @@ separated by a continuous homomorphism to an actual finite discrete abelian
 quotient.  Applied to a normal subgroup, this identifies trivial conjugation
 on its abelianization with invariance of all its finite continuous characters.
 -/
+
+@[expose] public section
 
 open scoped Topology
 

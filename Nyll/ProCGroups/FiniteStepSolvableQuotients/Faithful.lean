@@ -4,10 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Topology.Algebra.IsUniformGroup.DiscreteSubgroup
-import Nyll.ProCGroups.FiniteStepSolvableQuotients.AbFaithfulness
-import Nyll.ProCGroups.FiniteStepSolvableQuotients.Abelianization
-import Nyll.ProCGroups.ProC.Quotients.ClosedNormal
+module
+
+public import Mathlib.Topology.Algebra.IsUniformGroup.DiscreteSubgroup
+public import Nyll.ProCGroups.FiniteStepSolvableQuotients.AbFaithfulness
+public import Nyll.ProCGroups.FiniteStepSolvableQuotients.Abelianization
+public import Nyll.ProCGroups.ProC.Quotients.ClosedNormal
+public import Nyll.ProCGroups.FiniteStepSolvableQuotients.Commutators.DerivedSeriesAndQuotients
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Basic
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.BasisAtOne
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.FilteredFamilies
+public import Nyll.ProCGroups.Topologies.QuotientMaps
+public import Nyll.ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
 
 /-!
 # Faithful actions on topological abelianizations
@@ -15,6 +23,8 @@ import Nyll.ProCGroups.ProC.Quotients.ClosedNormal
 This module defines abelianization-faithfulness for open subgroups and proves that it is preserved
 under continuous multiplicative equivalences and passage between suitable quotients.
 -/
+
+@[expose] public section
 
 open scoped Topology
 
@@ -1077,8 +1087,9 @@ theorem
         TopologicalAbelianization.mk ↥(N : Subgroup ↥(H : Subgroup Q))
           (ProCGroups.ContinuousMonoidHom.restrictPreimage φH (N : Subgroup ↥(H : Subgroup Q))
               x) := by
-    dsimp [eA, TopologicalGroup.restrictPreimage_topMaxSolvQuot_mulEquiv]
-    rfl
+    exact TopologicalGroup.restrictPreimage_topMaxSolvQuot_mulEquiv_mk
+      (π := φH) (Q₁ := (N : Subgroup ↥(H : Subgroup Q))) (m := 1)
+      hφHsurj hclosedN hkerN x
   let ρpre :
       (↥(Hpre : Subgroup G) ⧸ (Npre : Subgroup ↥(Hpre : Subgroup G))) →*
         MulAut (TopologicalAbelianization ↥(Npre : Subgroup ↥(Hpre : Subgroup G))) :=

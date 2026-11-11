@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.CrowellExactSequence.Profinite.KernelInjectivity
-import Nyll.ProCGroups.CrowellExactSequence.Profinite.SequenceMaps.Basic
-import Nyll.ProCGroups.CrowellExactSequence.Profinite.SequenceMaps.Exactness
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.ClosedGeneratedCoordinates.Comparison
+module
+
+public import Nyll.ProCGroups.CrowellExactSequence.Profinite.KernelInjectivity
+public import Nyll.ProCGroups.CrowellExactSequence.Profinite.SequenceMaps.Basic
+public import Nyll.ProCGroups.CrowellExactSequence.Profinite.SequenceMaps.Exactness
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.ClosedGeneratedCoordinates.Comparison
 
 /-!
 # Profinite Crowell middle exactness
@@ -16,6 +18,8 @@ This file reduces exactness at the separated completed differential module to in
 coordinate cycles. It derives the middle image/kernel equality from finite-stage lifts and proves
 the required boundary vanishing under the closed-generator graph hypothesis.
 -/
+
+@[expose] public section
 
 namespace CrowellExactSequence
 

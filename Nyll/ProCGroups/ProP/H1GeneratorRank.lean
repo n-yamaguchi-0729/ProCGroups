@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProP.GeneratorRank
-import Nyll.ProCGroups.ProP.H1PowerCommutator
-import Mathlib.LinearAlgebra.Dual.Lemmas
+module
+
+public import Nyll.ProCGroups.ProP.GeneratorRank
+public import Nyll.ProCGroups.ProP.H1PowerCommutator
+public import Mathlib.LinearAlgebra.Dual.Lemmas
 
 /-!
 # Generator rank as continuous `H¹` dimension
@@ -16,6 +18,8 @@ the linear dual of the power--commutator quotient.  For a finitely generated
 pro-`p` group the quotient is finite, so continuity is automatic and P06 gives
 the generator-rank formula.
 -/
+
+@[expose] public section
 
 open scoped Topology IsMulCommutative
 

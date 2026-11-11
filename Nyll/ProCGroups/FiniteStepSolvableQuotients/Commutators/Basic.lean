@@ -4,8 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FiniteStepSolvableQuotients.Commutators.DerivedSeriesAndQuotients
-import Nyll.ProCGroups.ProC.GroupPredicates.Abelian
+module
+
+public import Nyll.ProCGroups.FiniteStepSolvableQuotients.Commutators.DerivedSeriesAndQuotients
+public import Nyll.ProCGroups.ProC.GroupPredicates.Abelian
+public import Nyll.ProCGroups.Generation.Basic
+public import Nyll.ProCGroups.ProC.InverseLimits.Predicates
+public import Nyll.ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
 
 /-!
 # The topological commutator subgroup
@@ -13,6 +18,8 @@ import Nyll.ProCGroups.ProC.GroupPredicates.Abelian
 This module identifies the first closed-derived term with the closure of the abstract commutator
 subgroup and records closedness and finite-width consequences.
 -/
+
+@[expose] public section
 
 open scoped Topology commutatorElement
 

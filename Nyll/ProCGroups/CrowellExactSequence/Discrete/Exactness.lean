@@ -4,7 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.CrowellExactSequence.Discrete.SequenceMaps
+module
+
+public import Nyll.ProCGroups.CrowellExactSequence.Discrete.SequenceMaps
+public import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Boundary
+public import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Universal
 
 /-!
 # Discrete Crowell exactness
@@ -13,6 +17,8 @@ Surjectivity and the kernel/image identities for the relative Fox derivative ass
 four-term discrete Crowell sequence. The free-group presentation theorem specializes this
 criterion to the Blanchfield--Lyndon exact sequence.
 -/
+
+@[expose] public section
 
 namespace CrowellExactSequence
 

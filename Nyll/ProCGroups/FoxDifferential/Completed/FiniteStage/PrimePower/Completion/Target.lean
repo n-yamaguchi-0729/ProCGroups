@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Limit.AddCommGroup
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Limit.CoeffMap
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Limit.AddCommGroup
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Limit.CoeffMap
 
 /-!
 # Fox differential: finite stage — prime power — completion — target
@@ -23,6 +25,8 @@ The principal declarations in this module are:
 - `foxAlgebraicStagePrimePowerTargetLimitToCompletedGroupAlgebra_mul`
   The target-limit-to-completed-group-algebra map preserves multiplication.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Magnus.ClosedGeneratedVector
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Magnus.FiniteStageKernel
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Magnus.KernelClosedCommutator
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Magnus.ClosedGeneratedVector
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Magnus.FiniteStageKernel
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Magnus.KernelClosedCommutator
 
 /-!
 # Continuous completed Magnus theory

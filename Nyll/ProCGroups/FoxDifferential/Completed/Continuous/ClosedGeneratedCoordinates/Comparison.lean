@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.ClosedGeneratedCoordinates.Equiv
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.SemidirectKernelBasis
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.ClosedGeneratedCoordinates.Equiv
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.SemidirectKernelBasis
 
 /-!
 # Fox differential: completed — continuous — closed generated coordinates — comparison
@@ -19,6 +21,8 @@ The principal declarations in this module are:
   The left coordinate of the closed-generated completed Fox graph agrees with the paper coordinate
   universal differential.
 -/
+
+@[expose] public section
 
 namespace CrowellExactSequence
 

@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Generation.QuotientCriteria
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Basic
-import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
-import Mathlib.Topology.Compactness.Compact
+module
+
+public import Nyll.ProCGroups.Generation.QuotientCriteria
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Basic
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic.Subgroup
+public import Mathlib.Topology.Compactness.Compact
 
 /-!
 # A topological generator from cyclic finite quotients
@@ -17,6 +19,8 @@ compact group. A generator of a common finite quotient solves any finite family 
 conditions. Compactness supplies one element satisfying all of them, and the finite-quotient
 criterion proves that this element topologically generates the original group.
 -/
+
+@[expose] public section
 
 open Set
 open scoped Topology

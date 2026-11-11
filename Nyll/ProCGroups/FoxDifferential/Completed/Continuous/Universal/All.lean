@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Universal.AugmentationQuotient
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Universal.Basic
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Universal.FiniteStage
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Universal.NaturalTopology
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Universal.System
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Universal.AugmentationQuotient
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Universal.Basic
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Universal.FiniteStage
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Universal.NaturalTopology
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Universal.System
 
 /-!
 # Fox differential: completed — continuous — universal

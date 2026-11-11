@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FreeProducts.UniversalProperty
+module
+
+public import Nyll.ProCGroups.FreeProducts.UniversalProperty
 
 /-!
 # Finite generating data
@@ -13,6 +15,8 @@ This file records concrete finite generating maps and finite families of
 subgroups.  The companion bounds concatenate those maps to obtain explicit
 generating families for the ambient group.
 -/
+
+@[expose] public section
 
 noncomputable section
 

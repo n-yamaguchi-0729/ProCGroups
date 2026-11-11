@@ -10,12 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.Tactic.Positivity
+module
+
+public import Nyll.ProCGroups.Abelian.TorsionPresentation
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.Tactic.Positivity
 
 /-!
 # Add Comm Group exists mem torsion By smul eq of card torsion By
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -27,53 +32,41 @@ namespace P2mLwS
 open Module Submodule Function
 
 /-- A presentation of the subgroup killed by `n` as the image of an injective additive map. -/
-structure Pres (M : Type*) [AddCommGroup M] (n : ℕ) (V : Type*) [AddCommGroup V] where
-  /-- The additive map presenting the torsion subgroup. -/
-  ι : V →+ M
-  /-- Injectivity of the presentation map. -/
-  hι : Injective ι
-  /-- The image consists precisely of the elements killed by `n`. -/
-  hιr : ∀ x : M, x ∈ ι.range ↔ ((n : ℕ) : ℤ) • x = 0
+abbrev Pres (M : Type*) [AddCommGroup M] (n : ℕ) (V : Type*) [AddCommGroup V] :=
+  ProCGroups.Abelian.TorsionPresentation M n V
 
 namespace Pres
 
+export ProCGroups.Abelian.TorsionPresentation (mk ι hι hιr)
+
 variable {M : Type*} [AddCommGroup M] {n : ℕ} {V : Type*} [AddCommGroup V]
 
-theorem nsmul_ι (P : Pres M n V) (v : V) : n • P.ι v = 0 := by
-  have := (P.hιr (P.ι v)).1 ⟨v, rfl⟩
-  rwa [natCast_zsmul] at this
+theorem nsmul_ι (P : Pres M n V) (v : V) :
+    n • ProCGroups.Abelian.TorsionPresentation.ι P v = 0 :=
+  ProCGroups.Abelian.TorsionPresentation.nsmul_ι P v
 
 theorem nsmul_self (P : Pres M n V) (v : V) : n • v = 0 :=
-  P.hι (by rw [map_nsmul, P.nsmul_ι, map_zero])
+  ProCGroups.Abelian.TorsionPresentation.nsmul_self P v
 
-theorem exists_eq (P : Pres M n V) {x : M} (hx : n • x = 0) : ∃ v, P.ι v = x := by
-  obtain ⟨v, hv⟩ := (P.hιr x).2 (by rwa [natCast_zsmul])
-  exact ⟨v, hv⟩
+theorem exists_eq (P : Pres M n V) {x : M} (hx : n • x = 0) :
+    ∃ v, ProCGroups.Abelian.TorsionPresentation.ι P v = x :=
+  ProCGroups.Abelian.TorsionPresentation.exists_eq P hx
 
-theorem mem_torsionBy (P : Pres M n V) (v : V) : P.ι v ∈ torsionBy ℤ M ((n : ℕ) : ℤ) :=
-  (mem_torsionBy_iff _ _).2 ((P.hιr _).1 ⟨v, rfl⟩)
+theorem mem_torsionBy (P : Pres M n V) (v : V) :
+    ProCGroups.Abelian.TorsionPresentation.ι P v ∈ torsionBy ℤ M ((n : ℕ) : ℤ) :=
+  ProCGroups.Abelian.TorsionPresentation.mem_torsionBy P v
 
 /-- The equivalence between the presented group and the subgroup killed by `n`. -/
 noncomputable def equiv (P : Pres M n V) : V ≃ torsionBy ℤ M ((n : ℕ) : ℤ) :=
-  Equiv.ofBijective (fun v => ⟨P.ι v, P.mem_torsionBy v⟩)
-    ⟨fun v w h => P.hι (Subtype.ext_iff.1 h), fun x => by
-      obtain ⟨v, hv⟩ := (P.hιr x.1).2 ((mem_torsionBy_iff _ _).1 x.2)
-      exact ⟨v, Subtype.ext hv⟩⟩
+  ProCGroups.Abelian.TorsionPresentation.equiv P
 
 theorem natCard_eq (P : Pres M n V) : Nat.card V = Nat.card (torsionBy ℤ M ((n : ℕ) : ℤ)) :=
-  Nat.card_congr P.equiv
+  ProCGroups.Abelian.TorsionPresentation.natCard_eq P
 
 variable (M) in
 /-- The presentation of the torsion subgroup by its inclusion in the ambient group. -/
-def self (n : ℕ) : Pres M n (torsionBy ℤ M ((n : ℕ) : ℤ)) where
-  ι := (torsionBy ℤ M ((n : ℕ) : ℤ)).subtype.toAddMonoidHom
-  hι := Subtype.val_injective
-  hιr x := by
-    constructor
-    · rintro ⟨v, rfl⟩
-      exact (mem_torsionBy_iff _ _).1 v.2
-    · intro hx
-      exact ⟨⟨x, (mem_torsionBy_iff _ _).2 hx⟩, rfl⟩
+def self (n : ℕ) : Pres M n (torsionBy ℤ M ((n : ℕ) : ℤ)) :=
+  ProCGroups.Abelian.TorsionPresentation.self M n
 
 end Pres
 

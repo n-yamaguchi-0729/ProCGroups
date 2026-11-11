@@ -4,12 +4,20 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Topology.Algebra.Group.TopologicalAbelianization
-import Mathlib.Topology.Algebra.OpenSubgroup
-import Nyll.ProCGroups.GroupTheory.CentralizerNormalizerCommensurator
-import Nyll.ProCGroups.Order.Basic
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Separation
-import Nyll.ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
+module
+
+public import Mathlib.Topology.Algebra.Group.TopologicalAbelianization
+public import Mathlib.Topology.Algebra.OpenSubgroup
+public import Nyll.ProCGroups.GroupTheory.CentralizerNormalizerCommensurator
+public import Nyll.ProCGroups.Order.Basic
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Separation
+public import Nyll.ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
+public import Nyll.ProCGroups.Generation.Basic
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Basic
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.FilteredFamilies
+public import Nyll.ProCGroups.Profinite.OpenSubgroups
+public import Nyll.ProCGroups.Topologies.ContinuousMonoidHom
+public import Nyll.ProCGroups.Topologies.QuotientMaps
 
 /-!
 # Closed derived series and solvable quotients
@@ -18,6 +26,8 @@ This module defines the closed derived series of a topological group and its max
 solvable quotients. It also records functoriality, closedness, and normality properties used to
 compare these quotients under continuous homomorphisms.
 -/
+
+@[expose] public section
 
 universe u v
 
@@ -507,7 +517,7 @@ Images of closed commutators of derived terms are closed when the source is comp
 target is Hausdorff.
 -/
 theorem closedCommutator_topDerived_map_isClosed_of_compact
-    {G H : Type u} [TopologicalSpace G] [Group G] [IsTopologicalGroup G]
+    {G : Type u} {H : Type v} [TopologicalSpace G] [Group G] [IsTopologicalGroup G]
     [CompactSpace G] [TopologicalSpace H] [Group H] [T2Space H]
     (f : G →ₜ* H) (n : ℕ) :
     IsClosed
@@ -923,6 +933,22 @@ noncomputable def TopologicalGroup.restrictPreimage_topMaxSolvQuot_mulEquiv
   exact MulEquiv.ofBijective (((ProCGroups.ContinuousMonoidHom.restrictPreimage π
       Q₁)⟪m⟫).toMonoidHom)
     ⟨hinj, hsurj⟩
+
+/-- The preimage equivalence sends a quotient representative through the restricted map. -/
+theorem TopologicalGroup.restrictPreimage_topMaxSolvQuot_mulEquiv_mk
+    {G : Type u} [TopologicalSpace G] [Group G] [IsTopologicalGroup G]
+    {Q : Type v} [TopologicalSpace Q] [Group Q] [IsTopologicalGroup Q]
+    {π : G →ₜ* Q} {Q₁ : Subgroup Q} {m : ℕ}
+    (hπ : Function.Surjective π)
+    (hclosed : IsClosedMap (ProCGroups.ContinuousMonoidHom.restrictPreimage π Q₁))
+    (hker :
+      (ProCGroups.ContinuousMonoidHom.restrictPreimage π Q₁).ker ≤
+        topDerivedTop ↥(Q₁.comap (π : G →* Q)) m)
+    (x : Q₁.comap (π : G →* Q)) :
+    TopologicalGroup.restrictPreimage_topMaxSolvQuot_mulEquiv hπ hclosed hker
+        (QuotientGroup.mk' (topDerivedTop ↥(Q₁.comap (π : G →* Q)) m) x) =
+      QuotientGroup.mk' (topDerivedTop ↥Q₁ m)
+        (ProCGroups.ContinuousMonoidHom.restrictPreimage π Q₁ x) := rfl
 
 /-- The quotient map to the maximal \(m\)-step solvable quotient is surjective. -/
 lemma continuousToMaxSolvQuot_surjective

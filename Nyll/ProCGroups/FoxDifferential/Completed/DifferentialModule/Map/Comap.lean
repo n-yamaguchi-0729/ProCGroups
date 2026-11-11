@@ -4,7 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.Identity
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.Identity
+public import Nyll.ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.Index
+public import Nyll.ProCGroups.FiniteGroups.AllFinite
 
 /-!
 # Fox differential: completed — differential module — map — comap
@@ -22,6 +26,8 @@ The principal declarations in this module are:
   The pullback quotient map sends the class of a source element to the class of its image in the
   target quotient in the Fox differential construction.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

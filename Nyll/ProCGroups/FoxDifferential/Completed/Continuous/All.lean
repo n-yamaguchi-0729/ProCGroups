@@ -4,18 +4,20 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Automorphism
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.ChainRule.All
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.ClosedGeneratedCoordinates.All
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Free.All
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Magnus.All
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Naturality
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.PresentedCoordinates
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.SemidirectKernelBasis
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.TailExactness
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.TopologicalGeneration
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Topology
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Universal.All
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Automorphism
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.ChainRule.All
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.ClosedGeneratedCoordinates.All
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Free.All
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Magnus.All
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Naturality
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.PresentedCoordinates
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.SemidirectKernelBasis
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.TailExactness
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.TopologicalGeneration
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Topology
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Universal.All
 
 /-!
 # Continuous completed Fox calculus

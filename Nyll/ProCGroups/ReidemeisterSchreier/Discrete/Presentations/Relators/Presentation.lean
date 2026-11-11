@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Operations
+module
+
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Operations
 
 /-!
 # Conjugated products and presentation endomorphisms
@@ -12,6 +14,8 @@ import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Oper
 This module expands conjugated list products and promotes generatorwise
 normal-closure relations to all words under a free-group endomorphism.
 -/
+
+@[expose] public section
 
 namespace ReidemeisterSchreier.Discrete.Presentations
 

@@ -11,12 +11,16 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.GroupTheory.Transfer
-import Mathlib.GroupTheory.Abelianization.Defs
+module
+
+public import Mathlib.GroupTheory.Transfer
+public import Mathlib.GroupTheory.Abelianization.Defs
 
 /-!
 # Monoid Hom map transfer eq transfer comp
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

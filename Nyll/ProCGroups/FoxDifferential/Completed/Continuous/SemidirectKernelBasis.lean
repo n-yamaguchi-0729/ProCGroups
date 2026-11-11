@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Topology
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Topology
 
 /-!
 # Fox differential: completed — continuous — semidirect kernel basis
@@ -25,6 +27,8 @@ The principal declarations in this module are:
   Standard-topology form of the componentwise kernel-basis theorem for actual
   \(\mathbb{Z}_C\llbracket H\rrbracket\) bifiltered finite stages.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

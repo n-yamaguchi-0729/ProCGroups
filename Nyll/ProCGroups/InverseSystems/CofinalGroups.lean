@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.InverseSystems.CofinalityAndDensity
-import Nyll.ProCGroups.InverseSystems.GroupSystemRestriction
-import Nyll.ProCGroups.Topologies.ContinuousMulEquiv
+module
+
+public import Nyll.ProCGroups.InverseSystems.CofinalityAndDensity
+public import Nyll.ProCGroups.InverseSystems.GroupSystemRestriction
+public import Nyll.ProCGroups.Topologies.ContinuousMulEquiv
 
 /-!
 # Multiplicativity of the existing cofinal restriction
@@ -15,6 +17,8 @@ The native homeomorphism already constructs the inverse and proves its
 continuity. Its forward map is the original coordinate restriction. The
 existing restricted-system owner supplies both group structures.
 -/
+
+@[expose] public section
 
 noncomputable section
 

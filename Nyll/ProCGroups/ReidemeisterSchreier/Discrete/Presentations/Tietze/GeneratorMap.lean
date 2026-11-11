@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.RelatorQuotientMutualMapData
+module
+
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.RelatorQuotientMutualMapData
 
 /-!
 # Reidemeister Schreier / Discrete / Presentations / Tietze / Generator Map
@@ -13,6 +15,8 @@ This module builds relator-quotient equivalences from maps on generators,
 including indexed relator families, and proves the normal-closure properties
 of the associated free-group pullback relators.
 -/
+
+@[expose] public section
 
 universe u v w
 

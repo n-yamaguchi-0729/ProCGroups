@@ -4,10 +4,24 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Magnus.ClosedGeneratedVector
-import Nyll.ProCGroups.FoxDifferential.Completed.Comparison.FiniteStage
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Naturality
-import Nyll.ProCGroups.FreeProC.FiniteBasis
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Magnus.ClosedGeneratedVector
+public import Nyll.ProCGroups.FoxDifferential.Completed.Comparison.FiniteStage
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Naturality
+public import Nyll.ProCGroups.FreeProC.FiniteBasis
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Free.Continuity
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Free.Rules
+public import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.Identity
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Derivative.Lift
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.SemidirectLift
+public import Nyll.ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.Core
+public import Nyll.ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.FreeGroup.Derivative
+public import Nyll.ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.Naturality
+public import Nyll.ProCGroups.FoxDifferential.Completed.Semidirect
+public import Nyll.ProCGroups.FreeProC.Basic
+public import Nyll.ProCGroups.Generation.Basic
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
 
 /-!
 # Fox Differential / Completed / Continuous Magnus / Finite Stage Kernel
@@ -16,6 +30,8 @@ This module compares the completed Magnus map with its finite quotient stages
 and characterizes the kernel through the corresponding discrete Fox
 calculation.
 -/
+
+@[expose] public section
 
 namespace CrowellExactSequence
 

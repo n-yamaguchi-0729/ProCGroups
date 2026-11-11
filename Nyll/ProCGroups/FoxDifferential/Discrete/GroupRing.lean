@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Discrete.DifferentialModule.Boundary
-import Mathlib.Algebra.MonoidAlgebra.Basic
-import Mathlib.RingTheory.Ideal.Maps
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Discrete.DifferentialModule.Boundary
+public import Mathlib.Algebra.MonoidAlgebra.Basic
+public import Mathlib.RingTheory.Ideal.Maps
 
 /-!
 # Fox differential: discrete — group ring
@@ -22,6 +24,8 @@ The principal declarations in this module are:
 - `augmentation_one`
   The augmentation sends the group identity to \(1\).
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

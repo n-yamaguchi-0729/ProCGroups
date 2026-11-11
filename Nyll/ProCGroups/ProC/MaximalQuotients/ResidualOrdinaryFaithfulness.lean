@@ -4,13 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotientAction
-import Nyll.ProCGroups.ProC.MaximalQuotients.ConjugationComparison
-import Nyll.ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
-import Nyll.ProCGroups.Abelian.TopologicalAbelianization
-import Mathlib.Topology.Algebra.Group.Quotient
-import Mathlib.Topology.Algebra.ContinuousMonoidHom
-import Mathlib.Algebra.Group.Hom.Basic
+module
+
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotientAction
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ConjugationComparison
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianization
+public import Mathlib.Topology.Algebra.Group.Quotient
+public import Mathlib.Topology.Algebra.ContinuousMonoidHom
+public import Mathlib.Algebra.Group.Hom.Basic
 
 /-!
 # Ordinary faithfulness detected on a residual abelianization
@@ -19,6 +21,8 @@ The canonical projection from a group to its residual quotient induces a
 map on topological abelianizations. Equality under ordinary conjugation
 therefore implies equality under the actual residual conjugation action.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.ProC
 

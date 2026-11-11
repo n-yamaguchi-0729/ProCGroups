@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProC.MaximalQuotients.Definitions
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualIdempotence
-import Nyll.ProCGroups.Topologies.ContinuousMulEquiv
+module
+
+public import Nyll.ProCGroups.ProC.MaximalQuotients.Definitions
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualIdempotence
+public import Nyll.ProCGroups.Topologies.ContinuousMulEquiv
+public import Nyll.ProCGroups.ProC.Quotients.ClosedNormal
 
 /-!
 # Subgroups of maximal pro-C quotients
@@ -17,6 +20,8 @@ Consequently its residual quotient is continuously isomorphic to the chosen
 subgroup. In particular, this applies to open subgroups of maximal pro-p
 quotients without making any claim about arbitrary open subgroups of the source.
 -/
+
+@[expose] public section
 
 open scoped Topology
 

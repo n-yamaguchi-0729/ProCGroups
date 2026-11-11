@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Basic
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Basic
 
 /-!
 # Fox differential: prime power — system — limit — basic
@@ -20,6 +22,8 @@ The principal declarations in this module are:
 - `foxAlgebraicStagePrimePowerTargetLimitToFamily_injective`
   The family map out of the target inverse limit is injective.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

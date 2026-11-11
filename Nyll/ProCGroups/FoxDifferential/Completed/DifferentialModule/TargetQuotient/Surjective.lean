@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.TargetQuotient.StageMap
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.TargetQuotient.StageMap
 
 /-!
 # Fox differential: completed — differential module — target quotient — surjective
@@ -25,6 +27,8 @@ The principal declarations in this module are:
 - `primePowerCompletedGroupAlgebraMap_targetQuotient_lift_spec`
   The chosen coefficient lift maps back to the prescribed completed target coefficient.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

@@ -4,7 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.ChainRule.Basic
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.ChainRule.Basic
+public import Nyll.ProCGroups.FiniteGroups.AllFinite
+public import Nyll.ProCGroups.ProC.Category.Basic
 
 /-!
 # Fox differential: completed — continuous — chain rule — iterated
@@ -22,6 +26,8 @@ The principal declarations in this module are:
   Completed Fox-Jacobian functoriality for two composable continuous free pro-\(C\) source maps, as
   a matrix product.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

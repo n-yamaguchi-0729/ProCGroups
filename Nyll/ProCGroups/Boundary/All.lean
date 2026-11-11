@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Boundary.CyclotomicInversion
-import Nyll.ProCGroups.Boundary.FiniteQuotientConjugacy
-import Nyll.ProCGroups.Boundary.TopologicalInertia
+module
+
+public import Nyll.ProCGroups.Boundary.CyclotomicInversion
+public import Nyll.ProCGroups.Boundary.FiniteQuotientConjugacy
+public import Nyll.ProCGroups.Boundary.TopologicalInertia
 
 /-!
 # Pro-C groups / boundary

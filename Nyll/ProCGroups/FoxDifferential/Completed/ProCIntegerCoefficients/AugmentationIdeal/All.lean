@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.AugmentationIdeal.Basic
-import Nyll.ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.AugmentationIdeal.Closure
-import Nyll.ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.AugmentationIdeal.FiniteStage
-import Nyll.ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.AugmentationIdeal.Kernel
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.AugmentationIdeal.Basic
+public import Nyll.ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.AugmentationIdeal.Closure
+public import Nyll.ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.AugmentationIdeal.FiniteStage
+public import Nyll.ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.AugmentationIdeal.Kernel
 
 /-!
 # Fox differential: completed — \(\mathbb{Z}_C\) coefficients — augmentation ideal

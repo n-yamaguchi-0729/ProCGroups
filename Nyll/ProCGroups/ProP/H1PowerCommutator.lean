@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProP.ContinuousH1
-import Nyll.ProCGroups.ProP.FrattiniQuotient
-import Nyll.ProCGroups.Topologies.QuotientMaps
+module
+
+public import Nyll.ProCGroups.ProP.ContinuousH1
+public import Nyll.ProCGroups.ProP.FrattiniQuotient
+public import Nyll.ProCGroups.Topologies.QuotientMaps
 
 /-!
 # Factoring continuous degree-one classes through the elementary quotient
@@ -15,6 +17,8 @@ Every continuous `ZMod p` character factors uniquely through the closed
 power--commutator quotient.  The resulting equivalence is linear and is kept
 separate from the later finite-dimensional duality argument.
 -/
+
+@[expose] public section
 
 open scoped Topology
 

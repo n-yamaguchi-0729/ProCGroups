@@ -11,11 +11,15 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Module.NatInt
+module
+
+public import Mathlib.Algebra.Module.NatInt
 
 /-!
 # Add Monoid Hom exists nsmul eq zero and apply eq of surjective of forall ker
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

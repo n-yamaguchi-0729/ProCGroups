@@ -4,28 +4,30 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.BifilteredCoefficientStageProjection
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.BifilteredStageProjection
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.BifilteredSystemStageProjection
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.CofinalQuotientKernelBasis
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.CoordinateStageProjection
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.Coordinates
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.Density
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.FiniteQuotientStages
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.FundamentalFormula
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.NaturalTopology
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.PrimePowerStageProjection
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.ProCIntegerBifilteredStageProjection
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.ProCIntegerBifilteredStageRightProjection
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.ProCIntegerStageCoeffProjection
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.QuotientKernelBasis
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.RelationReflection
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.RelationSubmoduleApproximation
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.SemidirectKernelBasis
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.SemidirectLift
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.StageApproximation
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.StageProjection
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.Uniqueness.All
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.BifilteredCoefficientStageProjection
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.BifilteredStageProjection
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.BifilteredSystemStageProjection
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.CofinalQuotientKernelBasis
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.CoordinateStageProjection
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.Coordinates
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.Density
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.FiniteQuotientStages
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.FundamentalFormula
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.NaturalTopology
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.PrimePowerStageProjection
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.ProCIntegerBifilteredStageProjection
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.ProCIntegerBifilteredStageRightProjection
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.ProCIntegerStageCoeffProjection
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.QuotientKernelBasis
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.RelationReflection
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.RelationSubmoduleApproximation
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.SemidirectKernelBasis
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.SemidirectLift
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.StageApproximation
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.StageProjection
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.Uniqueness.All
 
 /-!
 # Fox differential: completed — free pro-\(C\)

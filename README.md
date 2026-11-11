@@ -19,7 +19,7 @@ and selected theorems, with links to their proofs.
 
 ## Public API
 
-Use [leanprover/lean4:v4.35.0-rc2](lean-toolchain) and the Mathlib revision pinned in
+Use [leanprover/lean4:v4.35.0](lean-toolchain) and the Mathlib revision pinned in
 [lake-manifest.json](lake-manifest.json). Add this dependency to your project’s
 lakefile.toml:
 

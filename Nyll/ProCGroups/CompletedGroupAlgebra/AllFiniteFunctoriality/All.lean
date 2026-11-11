@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.Comap
-import Nyll.ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.GroupLike
-import Nyll.ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.InClassNaturality
-import Nyll.ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.Map
-import Nyll.ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.StageMap
-import Nyll.ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.Surjectivity
+module
+
+public import Nyll.ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.Comap
+public import Nyll.ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.GroupLike
+public import Nyll.ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.InClassNaturality
+public import Nyll.ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.Map
+public import Nyll.ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.StageMap
+public import Nyll.ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.Surjectivity
 
 /-!
 # Completed Group Algebra / All Finite Functoriality

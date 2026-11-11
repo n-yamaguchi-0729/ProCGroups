@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualFiniteDescent
-import Nyll.ProCGroups.FiniteGroups.StandardClasses
-import Mathlib.Data.Nat.Prime.Defs
+module
+
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualFiniteDescent
+public import Nyll.ProCGroups.FiniteGroups.StandardClasses
+public import Mathlib.Data.Nat.Prime.Defs
 
 /-!
 # Finite-quotient descent for maximal prime-to-p quotients
@@ -20,6 +22,8 @@ This identifies the precise group-theoretic conclusion obtained once the
 geometric extension step for finite Galois covers in Stacks Project,
 Theorem 58.30.3 (tag `0C0R`) has been proved.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.ProC
 

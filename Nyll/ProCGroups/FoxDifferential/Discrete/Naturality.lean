@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Discrete.FreeExpansion
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Discrete.FreeExpansion
 
 /-!
 # Fox differential: discrete — naturality
@@ -21,6 +23,8 @@ The principal declarations in this module are:
 - `relativeFreeGroupFoxDerivative_mapDomain_apply`
   Component form of coefficient-push-forward naturality for relative free-group Fox derivatives.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

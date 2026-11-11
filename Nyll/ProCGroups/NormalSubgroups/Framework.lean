@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FreeProC.Basic
+module
+
+public import Nyll.ProCGroups.FreeProC.Basic
 
 /-!
 # Closed normal closures and perfect subgroups
@@ -12,6 +14,8 @@ import Nyll.ProCGroups.FreeProC.Basic
 This module defines noncommutative groups, the universal property of a closed normal closure, and
 perfect subgroups.
 -/
+
+@[expose] public section
 
 noncomputable section
 

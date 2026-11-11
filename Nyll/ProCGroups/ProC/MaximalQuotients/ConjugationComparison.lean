@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProC.MaximalQuotients.SubgroupComparison
-import Nyll.ProCGroups.Topologies.Conjugation
-import Nyll.ProCGroups.Abelian.TopologicalAbelianization
+module
+
+public import Nyll.ProCGroups.ProC.MaximalQuotients.SubgroupComparison
+public import Nyll.ProCGroups.Topologies.Conjugation
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianization
 
 /-!
 # Conjugation through maximal pro-`C` subgroup comparisons
@@ -15,6 +17,8 @@ Ambient conjugation descends intrinsically to the residual quotient of a closed 
 subgroup. The comparison with a subgroup of a maximal pro-`C` quotient intertwines this
 action, including after topological abelianization.
 -/
+
+@[expose] public section
 
 open scoped Topology
 

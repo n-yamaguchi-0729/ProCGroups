@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.GroupTheory.Conjugation
-import Nyll.ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
+module
+
+public import Nyll.ProCGroups.GroupTheory.Conjugation
+public import Nyll.ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
 
 /-!
 # Continuous conjugation actions
@@ -14,6 +16,8 @@ This file bundles conjugation by a normalizing element as a continuous multiplic
 equivalence. It also descends conjugation to quotients by topologically characteristic
 subgroups and records the formula on quotient representatives.
 -/
+
+@[expose] public section
 
 open scoped Topology
 

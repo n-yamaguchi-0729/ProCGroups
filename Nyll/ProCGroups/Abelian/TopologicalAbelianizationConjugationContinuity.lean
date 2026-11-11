@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
-import Mathlib.Topology.Constructions.SumProd
+module
+
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
+public import Mathlib.Topology.Constructions.SumProd
+public import Nyll.ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
 
 /-!
 # Joint continuity of quotient conjugation on topological abelianization
@@ -13,6 +16,8 @@ import Mathlib.Topology.Constructions.SumProd
 The existing action descends from continuous conjugation through the product
 of the two open quotient maps. No new action is constructed.
 -/
+
+@[expose] public section
 
 open ProCGroups.Abelian
 

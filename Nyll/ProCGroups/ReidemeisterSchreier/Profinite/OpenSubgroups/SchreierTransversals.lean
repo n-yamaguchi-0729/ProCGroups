@@ -4,9 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FreeProC.Basic
-import Nyll.ProCGroups.WreathProducts
-import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.RightQuotient
+module
+
+public import Nyll.ProCGroups.FreeProC.Basic
+public import Nyll.ProCGroups.WreathProducts
+public import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.RightQuotient
+public import Nyll.ProCGroups.Generation.Basic
+public import Nyll.ProCGroups.ProC.Quotients.OpenSubgroupSections
 
 /-!
 # Schreier sections and oriented cocycles
@@ -23,6 +27,8 @@ Continuity, closure, generation, and cardinality are proved once for the
 oriented data rather than repeated as chosen-left/chosen-right wrapper
 families.
 -/
+
+@[expose] public section
 
 open Set
 open scoped Topology Pointwise

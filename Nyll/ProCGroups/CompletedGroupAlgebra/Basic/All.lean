@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.All
-import Nyll.ProCGroups.CompletedGroupAlgebra.Basic.ClassComparison
-import Nyll.ProCGroups.CompletedGroupAlgebra.Basic.InClass.All
+module
+
+public import Nyll.ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.All
+public import Nyll.ProCGroups.CompletedGroupAlgebra.Basic.ClassComparison
+public import Nyll.ProCGroups.CompletedGroupAlgebra.Basic.InClass.All
 
 /-!
 # Completed Group Algebra / Basic

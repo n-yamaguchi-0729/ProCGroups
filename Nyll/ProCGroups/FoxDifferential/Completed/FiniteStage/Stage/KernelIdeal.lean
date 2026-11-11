@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Source
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Source
 
 /-!
 # Fox differential: completed — finite stage — stage — kernel ideal
@@ -17,6 +19,8 @@ The principal declarations in this module are:
   Finite-stage Fox kernel input: the target derivative equations place the source coefficients in
   K_j, while the source generator boundaries lie in I_j.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

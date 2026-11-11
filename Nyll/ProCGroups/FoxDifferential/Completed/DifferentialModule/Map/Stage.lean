@@ -4,7 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.Map.Comap
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.Map.Comap
+public import Nyll.ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.Index
+public import Nyll.ProCGroups.FiniteGroups.AllFinite
 
 /-!
 # Fox differential: completed — differential module — map — stage
@@ -24,6 +28,8 @@ The principal declarations in this module are:
   If \(\psi : G \to H\) is surjective, then every finite-stage group-algebra component of the
   completed map is surjective.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

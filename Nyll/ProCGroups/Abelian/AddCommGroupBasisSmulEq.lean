@@ -10,17 +10,22 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Field.ZMod
-import Mathlib.FieldTheory.Finiteness
-import Mathlib.LinearAlgebra.Dimension.Free
-import Mathlib.LinearAlgebra.Basis.VectorSpace
-import Mathlib.LinearAlgebra.Basis.Basic
+module
 
-import Nyll.ProCGroups.Abelian.AddCommGroupMemTorsionBySmulEq
+public import Nyll.ProCGroups.Abelian.TorsionPresentation
+public import Mathlib.Algebra.Field.ZMod
+public import Mathlib.FieldTheory.Finiteness
+public import Mathlib.LinearAlgebra.Dimension.Free
+public import Mathlib.LinearAlgebra.Basis.VectorSpace
+public import Mathlib.LinearAlgebra.Basis.Basic
+
+public import Nyll.ProCGroups.Abelian.AddCommGroupMemTorsionBySmulEq
 
 /-!
 # Add Comm Group exists basis smul eq of card torsion By
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -32,41 +37,36 @@ namespace P2mLwLift
 open Module Submodule Function
 
 /-- A presentation of the subgroup killed by `n` as the image of an injective additive map. -/
-structure Pres (M : Type*) [AddCommGroup M] (n : ℕ) (V : Type*) [AddCommGroup V] where
-  /-- The additive map presenting the torsion subgroup. -/
-  ι : V →+ M
-  /-- Injectivity of the presentation map. -/
-  hι : Injective ι
-  /-- The image consists precisely of the elements killed by `n`. -/
-  hιr : ∀ x : M, x ∈ ι.range ↔ ((n : ℕ) : ℤ) • x = 0
+abbrev Pres (M : Type*) [AddCommGroup M] (n : ℕ) (V : Type*) [AddCommGroup V] :=
+  ProCGroups.Abelian.TorsionPresentation M n V
 
 namespace Pres
 
+export ProCGroups.Abelian.TorsionPresentation (mk ι hι hιr)
+
 variable {M : Type*} [AddCommGroup M] {n : ℕ} {V : Type*} [AddCommGroup V]
 
-theorem nsmul_ι (P : Pres M n V) (v : V) : n • P.ι v = 0 := by
-  have := (P.hιr (P.ι v)).1 ⟨v, rfl⟩
-  rwa [natCast_zsmul] at this
+theorem nsmul_ι (P : Pres M n V) (v : V) :
+    n • ProCGroups.Abelian.TorsionPresentation.ι P v = 0 :=
+  ProCGroups.Abelian.TorsionPresentation.nsmul_ι P v
 
 theorem nsmul_self (P : Pres M n V) (v : V) : n • v = 0 :=
-  P.hι (by rw [map_nsmul, P.nsmul_ι, map_zero])
+  ProCGroups.Abelian.TorsionPresentation.nsmul_self P v
 
-theorem exists_eq (P : Pres M n V) {x : M} (hx : n • x = 0) : ∃ v, P.ι v = x := by
-  obtain ⟨v, hv⟩ := (P.hιr x).2 (by rwa [natCast_zsmul])
-  exact ⟨v, hv⟩
+theorem exists_eq (P : Pres M n V) {x : M} (hx : n • x = 0) :
+    ∃ v, ProCGroups.Abelian.TorsionPresentation.ι P v = x :=
+  ProCGroups.Abelian.TorsionPresentation.exists_eq P hx
 
-theorem mem_torsionBy (P : Pres M n V) (v : V) : P.ι v ∈ torsionBy ℤ M ((n : ℕ) : ℤ) :=
-  (mem_torsionBy_iff _ _).2 ((P.hιr _).1 ⟨v, rfl⟩)
+theorem mem_torsionBy (P : Pres M n V) (v : V) :
+    ProCGroups.Abelian.TorsionPresentation.ι P v ∈ torsionBy ℤ M ((n : ℕ) : ℤ) :=
+  ProCGroups.Abelian.TorsionPresentation.mem_torsionBy P v
 
 /-- The equivalence between the presented group and the subgroup killed by `n`. -/
 noncomputable def equiv (P : Pres M n V) : V ≃ torsionBy ℤ M ((n : ℕ) : ℤ) :=
-  Equiv.ofBijective (fun v => ⟨P.ι v, P.mem_torsionBy v⟩)
-    ⟨fun v w h => P.hι (Subtype.ext_iff.1 h), fun x => by
-      obtain ⟨v, hv⟩ := (P.hιr x.1).2 ((mem_torsionBy_iff _ _).1 x.2)
-      exact ⟨v, Subtype.ext hv⟩⟩
+  ProCGroups.Abelian.TorsionPresentation.equiv P
 
 theorem natCard_eq (P : Pres M n V) : Nat.card V = Nat.card (torsionBy ℤ M ((n : ℕ) : ℤ)) :=
-  Nat.card_congr P.equiv
+  ProCGroups.Abelian.TorsionPresentation.natCard_eq P
 
 theorem zmod_smul_eq_cast_zsmul {W : Type*} [AddCommGroup W] [Module (ZMod n) W] (a : ZMod n)
     (w : W) : a • w = (ZMod.cast a : ℤ) • w := by
@@ -124,8 +124,11 @@ theorem natCard_V' (D : LiftData M ℓ r m V V') : Nat.card V' = (ℓ ^ (m + 1))
 theorem finite_V' (D : LiftData M ℓ r m V V') : Finite V' :=
   Nat.finite_of_card_ne_zero (by rw [D.natCard_V']; exact pow_ne_zero _ (pow_ne_zero _ D.hℓ.ne'))
 
-theorem exists_lift (D : LiftData M ℓ r m V V') (v : V) : ∃ v' : V', D.P.ι v = ℓ • D.P'.ι v' := by
-  obtain ⟨y, hy, hyv⟩ := D.hS (D.P.ι v) (D.P.mem_torsionBy v)
+theorem exists_lift (D : LiftData M ℓ r m V V') (v : V) :
+    ∃ v' : V', ProCGroups.Abelian.TorsionPresentation.ι D.P v =
+      ℓ • ProCGroups.Abelian.TorsionPresentation.ι D.P' v' := by
+  obtain ⟨y, hy, hyv⟩ :=
+    D.hS (ProCGroups.Abelian.TorsionPresentation.ι D.P v) (D.P.mem_torsionBy v)
   obtain ⟨v', hv'⟩ := D.P'.exists_eq (x := y) (by
     have := (mem_torsionBy_iff _ _).1 hy; rwa [natCast_zsmul] at this)
   exact ⟨v', by rw [hv', hyv]⟩
@@ -133,7 +136,9 @@ theorem exists_lift (D : LiftData M ℓ r m V V') (v : V) : ∃ v' : V', D.P.ι 
 /-- A chosen lift of a basis vector to the next torsion level. -/
 noncomputable def v' (D : LiftData M ℓ r m V V') (i : Fin r) : V' := (D.exists_lift (D.c i)).choose
 
-theorem ι_v' (D : LiftData M ℓ r m V V') (i : Fin r) : ℓ • D.P'.ι (D.v' i) = D.P.ι (D.c i) :=
+theorem ι_v' (D : LiftData M ℓ r m V V') (i : Fin r) :
+    ℓ • ProCGroups.Abelian.TorsionPresentation.ι D.P' (D.v' i) =
+      ProCGroups.Abelian.TorsionPresentation.ι D.P (D.c i) :=
   (D.exists_lift (D.c i)).choose_spec.symm
 
 /-- The integer-linear map given by multiplication by the natural number `k`. -/
@@ -144,12 +149,15 @@ def mulBy (k : ℕ) : V' →ₗ[ℤ] V' := DistribSMul.toLinearMap ℤ V' k
 theorem natCard_ker_mulBy (D : LiftData M ℓ r m V V') {j : ℕ} (hj : j ≤ m + 1) :
     Nat.card (LinearMap.ker (mulBy (V' := V') (ℓ ^ j))) =
       Nat.card (torsionBy ℤ M ((ℓ ^ j : ℕ) : ℤ)) := by
-  refine Nat.card_congr (Equiv.ofBijective (fun w => ⟨D.P'.ι w.1, ?_⟩) ⟨?_, ?_⟩)
+  refine Nat.card_congr
+    (Equiv.ofBijective
+      (fun w => ⟨ProCGroups.Abelian.TorsionPresentation.ι D.P' w.1, ?_⟩) ⟨?_, ?_⟩)
   · have hw := w.2
     rw [LinearMap.mem_ker, mulBy_apply] at hw
     rw [mem_torsionBy_iff, natCast_zsmul, ← map_nsmul, hw, map_zero]
   · intro x y h
-    exact Subtype.ext (D.P'.hι (by simpa using congrArg Subtype.val h))
+    exact Subtype.ext
+      (ProCGroups.Abelian.TorsionPresentation.hι D.P' (congrArg Subtype.val h))
   · rintro ⟨y, hy⟩
     rw [mem_torsionBy_iff, natCast_zsmul] at hy
     have hy' : ℓ ^ (m + 1) • y = 0 := by
@@ -158,7 +166,7 @@ theorem natCard_ker_mulBy (D : LiftData M ℓ r m V V') {j : ℕ} (hj : j ≤ m 
     obtain ⟨w, hw⟩ := D.P'.exists_eq hy'
     refine ⟨⟨w, ?_⟩, Subtype.ext (by simpa using hw)⟩
     rw [LinearMap.mem_ker, mulBy_apply]
-    apply D.P'.hι
+    apply ProCGroups.Abelian.TorsionPresentation.hι D.P'
     rw [map_nsmul, hw, hy, map_zero]
 
 theorem exists_eq_pow_smul_of_smul_eq_zero (D : LiftData M ℓ r m V V') (w : V') (hw : ℓ • w = 0) :
@@ -193,20 +201,22 @@ theorem v'_mem_N (D : LiftData M ℓ r m V V') (i : Fin r) : D.v' i ∈ D.N := s
 
 theorem exists_mem_N_add_smul (D : LiftData M ℓ r m V V') (hm0 : 0 < m) (z : V') : ∃ u ∈ D.N, ∃ z'
   : V', z = u + ℓ • z' := by
-  have hz : ℓ ^ m • (ℓ • D.P'.ι z) = 0 := by
+  have hz : ℓ ^ m • (ℓ • ProCGroups.Abelian.TorsionPresentation.ι D.P' z) = 0 := by
     rw [← mul_smul, ← pow_succ, D.P'.nsmul_ι]
   obtain ⟨v, hv⟩ := D.P.exists_eq hz
   set k : Fin r → ℤ := fun i => (ZMod.cast (D.c.repr v i) : ℤ) with hk
   set u : V' := ∑ i, k i • D.v' i with hu
   have huN : u ∈ D.N := Submodule.sum_mem _ fun i _ => zsmul_mem (D.v'_mem_N i) _
-  have hιu : D.P'.ι (ℓ • u) = D.P.ι v := by
+  have hιu : ProCGroups.Abelian.TorsionPresentation.ι D.P' (ℓ • u) =
+      ProCGroups.Abelian.TorsionPresentation.ι D.P v := by
     rw [map_nsmul, hu, map_sum, Finset.smul_sum]
-    have : ∀ i, ℓ • D.P'.ι (k i • D.v' i) = D.P.ι (D.c.repr v i • D.c i) := by
+    have : ∀ i, ℓ • ProCGroups.Abelian.TorsionPresentation.ι D.P' (k i • D.v' i) =
+        ProCGroups.Abelian.TorsionPresentation.ι D.P (D.c.repr v i • D.c i) := by
       intro i
       rw [map_zsmul, smul_comm, D.ι_v', Pres.zmod_smul_eq_cast_zsmul, map_zsmul]
     rw [Finset.sum_congr rfl fun i _ => this i, ← map_sum, D.c.sum_repr]
   have hzu : ℓ • (z - u) = 0 := by
-    apply D.P'.hι
+    apply ProCGroups.Abelian.TorsionPresentation.hι D.P'
     rw [smul_sub, map_sub, hιu, hv, map_nsmul, sub_self, map_zero]
   obtain ⟨z'', hz''⟩ := D.exists_eq_pow_smul_of_smul_eq_zero (z - u) hzu
   obtain ⟨m', rfl⟩ : ∃ m', m = m' + 1 := ⟨m - 1, (Nat.succ_pred_eq_of_pos hm0).symm⟩
@@ -253,15 +263,17 @@ theorem liftedBasis_apply (D : LiftData M ℓ r m V V') (hm0 : 0 < m) (i : Fin r
   rw [liftedBasis, Basis.coe_mk]
 
 theorem exists_basis_smul_eq (D : LiftData M ℓ r m V V') (hprime : ℓ.Prime) :
-    ∃ c' : Basis (Fin r) (ZMod (ℓ ^ (m + 1))) V', ∀ i, D.P.ι (D.c i) = ℓ • D.P'.ι (c' i) := by
+    ∃ c' : Basis (Fin r) (ZMod (ℓ ^ (m + 1))) V', ∀ i,
+      ProCGroups.Abelian.TorsionPresentation.ι D.P (D.c i) =
+        ℓ • ProCGroups.Abelian.TorsionPresentation.ι D.P' (c' i) := by
   rcases Nat.eq_zero_or_pos m with hm0 | hm0
   · subst hm0
     have hN : (ℓ ^ (0 + 1)).Prime := by rwa [zero_add, pow_one]
     obtain ⟨c'⟩ := nonempty_basis_of_prime hN D.P' D.hm1
     refine ⟨c', fun i => ?_⟩
-    have h1 : D.P.ι (D.c i) = 0 := by
+    have h1 : ProCGroups.Abelian.TorsionPresentation.ι D.P (D.c i) = 0 := by
       simpa only [pow_zero, one_smul] using D.P.nsmul_ι (D.c i)
-    have h2 : ℓ • D.P'.ι (c' i) = 0 := by
+    have h2 : ℓ • ProCGroups.Abelian.TorsionPresentation.ι D.P' (c' i) = 0 := by
       simpa only [zero_add, pow_one] using D.P'.nsmul_ι (c' i)
     rw [h1, h2]
   · exact ⟨D.liftedBasis hm0, fun i => by rw [D.liftedBasis_apply, D.ι_v']⟩

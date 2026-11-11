@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Semidirect
-import Nyll.ProCGroups.FoxDifferential.Discrete.DifferentialModule.Universal
-import Nyll.ProCGroups.FoxDifferential.Common.FreeCrossedDifferential
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Semidirect
+public import Nyll.ProCGroups.FoxDifferential.Discrete.DifferentialModule.Universal
+public import Nyll.ProCGroups.FoxDifferential.Common.FreeCrossedDifferential
 
 /-!
 # Fox differential: discrete — fox calculus — derivative
@@ -24,6 +26,8 @@ The principal declarations in this module are:
 - `relativeFreeGroupFoxDerivative_one`
   The relative Fox derivative of the identity word is zero.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

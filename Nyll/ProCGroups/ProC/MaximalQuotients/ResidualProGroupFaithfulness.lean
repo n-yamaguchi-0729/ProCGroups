@@ -4,17 +4,19 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Topologies.QuotientMaps
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualCore
-import Nyll.ProCGroups.ProC.MaximalQuotients.UniversalProperty
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotientAction
-import Nyll.ProCGroups.ProC.MaximalQuotients.ConjugationComparison
-import Nyll.ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
-import Nyll.ProCGroups.Abelian.TopologicalAbelianization
-import Mathlib.Algebra.Group.Hom.Basic
-import Mathlib.Topology.Algebra.Group.Quotient
-import Mathlib.Topology.Algebra.ContinuousMonoidHom
+module
+
+public import Nyll.ProCGroups.Topologies.QuotientMaps
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualCore
+public import Nyll.ProCGroups.ProC.MaximalQuotients.UniversalProperty
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotientAction
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ConjugationComparison
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianization
+public import Mathlib.Algebra.Group.Hom.Basic
+public import Mathlib.Topology.Algebra.Group.Quotient
+public import Mathlib.Topology.Algebra.ContinuousMonoidHom
 
 /-!
 # Ordinary faithfulness for pro-C subgroups
@@ -23,6 +25,8 @@ The identity map of a pro-C group kills its residual core, so that core is
 trivial. The resulting actual quotient retraction carries residual
 conjugation back to ordinary conjugation on topological abelianizations.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.ProC
 

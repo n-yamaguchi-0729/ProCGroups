@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProP.Presentation.RelatorDepth
+module
+
+public import Nyll.ProCGroups.ProP.Presentation.RelatorDepth
 
 /-!
 # Initial forms in the augmentation filtration
@@ -13,6 +15,8 @@ The degree-`n` initial form is constructed in the concrete quotient
 `Iⁿ/Iⁿ⁺¹`.  A supplied depth witness produces the numerator element, and the
 quotient criterion identifies vanishing with membership one layer deeper.
 -/
+
+@[expose] public section
 
 open scoped Topology
 

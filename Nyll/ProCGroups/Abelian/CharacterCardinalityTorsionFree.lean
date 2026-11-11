@@ -4,14 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Abelian.FullTateModule
-import Nyll.ProCGroups.Abelian.CharacterDetection
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Basic
-import Mathlib.GroupTheory.Index
-import Mathlib.GroupTheory.FiniteAbelian.Basic
-import Mathlib.RingTheory.RootsOfUnity.AlgebraicallyClosed
-import Mathlib.Topology.Algebra.ContinuousMonoidHom
-import Mathlib.Topology.Instances.ZMod
+module
+
+public import Nyll.ProCGroups.Abelian.FullTateModule
+public import Nyll.ProCGroups.Abelian.CharacterDetection
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Basic
+public import Mathlib.GroupTheory.Index
+public import Mathlib.GroupTheory.FiniteAbelian.Basic
+public import Mathlib.RingTheory.RootsOfUnity.AlgebraicallyClosed
+public import Mathlib.Topology.Algebra.ContinuousMonoidHom
+public import Mathlib.Topology.Instances.ZMod
 
 /-!
 # Torsion-freeness from finite character cardinalities
@@ -22,6 +24,8 @@ to the actual finite-order characters of a profinite abelian group, this
 implies torsion-freeness. This criterion is designed to use geometric finite
 H1 cardinality formulas directly, without assuming a free presentation.
 -/
+
+@[expose] public section
 
 noncomputable section
 namespace ProCGroups

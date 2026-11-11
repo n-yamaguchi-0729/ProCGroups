@@ -4,11 +4,21 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.Comparison.MagnusKernel
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Magnus.FiniteStageKernel
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.ClosedCommutator
-import Nyll.ProCGroups.FreeProC.FiniteBasis
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Magnus.ClosedGeneratedVector
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.Comparison.MagnusKernel
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Magnus.FiniteStageKernel
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.ClosedCommutator
+public import Nyll.ProCGroups.FreeProC.FiniteBasis
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Magnus.ClosedGeneratedVector
+public import Nyll.ProCGroups.Completion.ProCInteger
+public import Nyll.ProCGroups.FoxDifferential.Completed.Comparison.FiniteStage
+public import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.Identity
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Derivative.Lift
+public import Nyll.ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.Core
+public import Nyll.ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.Naturality
+public import Nyll.ProCGroups.Topologies.ContinuousMonoidHom
+public import Nyll.ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
 
 /-!
 # Fox Differential / Completed / Continuous Magnus / Kernel Closed Commutator
@@ -17,6 +27,8 @@ This module identifies the kernel of the completed Magnus map with the closed
 commutator subgroup of the presentation kernel, using the finite-stage kernel
 comparison and the pro-\(C\) closed-commutator criterion.
 -/
+
+@[expose] public section
 
 namespace CrowellExactSequence
 

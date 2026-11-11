@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Discrete.DifferentialModule.Universal
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Discrete.DifferentialModule.Universal
 
 /-!
 # Fox differential: discrete — differential module — boundary
@@ -20,6 +22,8 @@ The principal declarations in this module are:
 - `groupRingBoundary_eq_zero_of_mem_ker`
   The Fox boundary is zero on elements in the kernel of \(\psi\).
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

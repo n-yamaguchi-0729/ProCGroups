@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.CompletedGroupAlgebra.AllFiniteAugmentation.InClassComparison
-import Nyll.ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.Surjectivity
-import Nyll.ProCGroups.CompletedGroupAlgebra.Augmentation.AugmentationIdeal
+module
+
+public import Nyll.ProCGroups.CompletedGroupAlgebra.AllFiniteAugmentation.InClassComparison
+public import Nyll.ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.Surjectivity
+public import Nyll.ProCGroups.CompletedGroupAlgebra.Augmentation.AugmentationIdeal
 
 /-!
 # The canonical augmentation ideal
@@ -15,6 +17,8 @@ This file defines the kernel of the canonical augmentation on the all-finite com
 algebra, packages its short exact sequence, and proves comparison and functoriality formulas for
 the ideal.
 -/
+
+@[expose] public section
 
 open scoped Topology
 

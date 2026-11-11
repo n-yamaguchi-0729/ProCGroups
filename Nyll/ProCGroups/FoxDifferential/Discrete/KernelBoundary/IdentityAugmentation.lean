@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Discrete.GroupRing
-import Mathlib.RepresentationTheory.Homological.GroupHomology.Functoriality
-import Mathlib.RepresentationTheory.Homological.GroupHomology.Shapiro
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Discrete.GroupRing
+public import Mathlib.RepresentationTheory.Homological.GroupHomology.Functoriality
+public import Mathlib.RepresentationTheory.Homological.GroupHomology.Shapiro
 
 /-!
 # Fox differential: discrete — kernel boundary — identity augmentation
@@ -25,6 +27,8 @@ The principal declarations in this module are:
 - `rightRegularRepresentation_apply_of`
   The right-regular representation has the displayed value on a representative.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

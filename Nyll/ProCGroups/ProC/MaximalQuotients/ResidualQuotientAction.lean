@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProC.MaximalQuotients.ConjugationComparison
-import Nyll.ProCGroups.Abelian.TopologicalAbelianization
-import Mathlib.Algebra.Group.End
-import Mathlib.GroupTheory.QuotientGroup.Basic
+module
+
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ConjugationComparison
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianization
+public import Mathlib.Algebra.Group.End
+public import Mathlib.GroupTheory.QuotientGroup.Basic
 
 /-!
 # Quotient conjugation on abelianized residual quotients
@@ -17,6 +19,8 @@ subgroup. Its topological abelianization kills internal conjugation, giving
 an action of the original quotient group, with a representative-wise
 criterion for faithfulness.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.ProC
 
@@ -28,7 +32,8 @@ variable {C : FiniteGroupClass.{u}}
 variable {G : Type u} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
   [CompactSpace G] [T2Space G] [TotallyDisconnectedSpace G]
 
-private noncomputable def residualAbelianizationConjugationHom
+/-- Conjugation acts on the abelianization of the residual quotient. -/
+noncomputable def residualAbelianizationConjugationHom
     (hC : FiniteGroupClass.FullFormation C)
     (N : Subgroup G) [N.Normal] (hN : IsClosed (N : Set G)) :
     G →* MulAut (TopologicalAbelianization (N ⧸ proCResidualCore C N)) where

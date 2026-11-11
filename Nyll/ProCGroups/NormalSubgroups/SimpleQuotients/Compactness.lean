@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.NormalSubgroups.SimpleQuotients.FiniteIntersections
+module
+
+public import Nyll.ProCGroups.NormalSubgroups.SimpleQuotients.FiniteIntersections
 
 /-!
 # Compactness for intersections above a simple-quotient kernel
@@ -12,6 +14,8 @@ import Nyll.ProCGroups.NormalSubgroups.SimpleQuotients.FiniteIntersections
 This module upgrades a finite-intersection property for closed normal subgroups of a compact
 group to the corresponding arbitrary-intersection property.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.NormalSubgroups
 

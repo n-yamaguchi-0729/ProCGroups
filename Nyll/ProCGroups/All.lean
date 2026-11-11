@@ -4,39 +4,44 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.InducedFunctions.All
-import Nyll.ProCGroups.InducedSemidirect
-import Nyll.ProCGroups.Abelian.All
-import Nyll.ProCGroups.Boundary.All
-import Nyll.ProCGroups.Categorical.All
-import Nyll.ProCGroups.Cohomology.All
-import Nyll.ProCGroups.CompletedGroupAlgebra.All
-import Nyll.ProCGroups.Completion.All
-import Nyll.ProCGroups.CrowellExactSequence.All
-import Nyll.ProCGroups.Duality
-import Nyll.ProCGroups.FiniteGeneration.All
-import Nyll.ProCGroups.FiniteGroups.All
-import Nyll.ProCGroups.FiniteStepSolvableQuotients.All
-import Nyll.ProCGroups.FoxDifferential.All
-import Nyll.ProCGroups.Frattini
-import Nyll.ProCGroups.FreeConstructions.All
-import Nyll.ProCGroups.FreeProC.All
-import Nyll.ProCGroups.FreeProducts.All
-import Nyll.ProCGroups.Generation.All
-import Nyll.ProCGroups.GolodShafarevich.All
-import Nyll.ProCGroups.GroupTheory.All
-import Nyll.ProCGroups.InverseSystems.All
-import Nyll.ProCGroups.LocalWeight.All
-import Nyll.ProCGroups.NormalSubgroups.All
-import Nyll.ProCGroups.Order.All
-import Nyll.ProCGroups.Presentations.All
-import Nyll.ProCGroups.ProC.All
-import Nyll.ProCGroups.ProP.All
-import Nyll.ProCGroups.Profinite.All
-import Nyll.ProCGroups.ReidemeisterSchreier.All
-import Nyll.ProCGroups.TopologicalGroups
-import Nyll.ProCGroups.Topologies.All
-import Nyll.ProCGroups.WreathProducts
+module
+
+public import Nyll.ProCGroups.InducedFunctions.All
+public import Nyll.ProCGroups.InducedSemidirect
+public import Nyll.ProCGroups.Abelian.All
+public import Nyll.ProCGroups.Boundary.All
+public import Nyll.ProCGroups.Categorical.All
+public import Nyll.ProCGroups.Cohomology.All
+public import Nyll.ProCGroups.CompletedGroupAlgebra.All
+public import Nyll.ProCGroups.Completion.All
+public import Nyll.ProCGroups.CrowellExactSequence.All
+public import Nyll.ProCGroups.Duality
+public import Nyll.ProCGroups.FiniteGeneration.All
+public import Nyll.ProCGroups.FiniteGroups.All
+public import Nyll.ProCGroups.FiniteStepSolvableQuotients.All
+public import Nyll.ProCGroups.FoxDifferential.All
+public import Nyll.ProCGroups.Frattini
+public import Nyll.ProCGroups.FreeConstructions.All
+public import Nyll.ProCGroups.FreeProC.All
+public import Nyll.ProCGroups.FreeProducts.All
+public import Nyll.ProCGroups.Generation.All
+public import Nyll.ProCGroups.GolodShafarevich.All
+public import Nyll.ProCGroups.GroupTheory.All
+public import Nyll.ProCGroups.InverseSystems.All
+public import Nyll.ProCGroups.LocalWeight.All
+public import Nyll.ProCGroups.NormalSubgroups.All
+public import Nyll.ProCGroups.Order.All
+public import Nyll.ProCGroups.Presentations.All
+public import Nyll.ProCGroups.ProC.All
+public import Nyll.ProCGroups.ProP.All
+public import Nyll.ProCGroups.Profinite.All
+public import Nyll.ProCGroups.ReidemeisterSchreier.All
+public import Nyll.ProCGroups.TopologicalGroups
+public import Nyll.ProCGroups.Topologies.All
+public import Nyll.ProCGroups.WreathProducts
+
+
+public import Nyll.ProCGroups.InducedFunctions
 
 /-!
 # Profinite and pro-C groups

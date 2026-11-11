@@ -4,25 +4,27 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProP.Fox.ClosedSpan
-import Nyll.ProCGroups.ProP.Fox.CoefficientReduction
-import Nyll.ProCGroups.ProP.Fox.CoefficientReductionCompatibility
-import Nyll.ProCGroups.ProP.Fox.CompletedFiltration
-import Nyll.ProCGroups.ProP.Fox.CompletedLeibniz
-import Nyll.ProCGroups.ProP.Fox.CompletedOperator
-import Nyll.ProCGroups.ProP.Fox.CompletedOperatorCompatibility
-import Nyll.ProCGroups.ProP.Fox.Derivative
-import Nyll.ProCGroups.ProP.Fox.FiltrationDrop
-import Nyll.ProCGroups.ProP.Fox.ModPBoundary
-import Nyll.ProCGroups.ProP.Fox.ModPDensityExactness
-import Nyll.ProCGroups.ProP.Fox.ModPDisplayedSpan
-import Nyll.ProCGroups.ProP.Fox.ModPFilteredExactness
-import Nyll.ProCGroups.ProP.Fox.ModPFilteredLifting
-import Nyll.ProCGroups.ProP.Fox.ModPFiniteStage
-import Nyll.ProCGroups.ProP.Fox.ModPGroupDerivative
-import Nyll.ProCGroups.ProP.Fox.ModPStageProjection
-import Nyll.ProCGroups.ProP.Fox.ModPTailExactness
-import Nyll.ProCGroups.ProP.Fox.Rows
+module
+
+public import Nyll.ProCGroups.ProP.Fox.ClosedSpan
+public import Nyll.ProCGroups.ProP.Fox.CoefficientReduction
+public import Nyll.ProCGroups.ProP.Fox.CoefficientReductionCompatibility
+public import Nyll.ProCGroups.ProP.Fox.CompletedFiltration
+public import Nyll.ProCGroups.ProP.Fox.CompletedLeibniz
+public import Nyll.ProCGroups.ProP.Fox.CompletedOperator
+public import Nyll.ProCGroups.ProP.Fox.CompletedOperatorCompatibility
+public import Nyll.ProCGroups.ProP.Fox.Derivative
+public import Nyll.ProCGroups.ProP.Fox.FiltrationDrop
+public import Nyll.ProCGroups.ProP.Fox.ModPBoundary
+public import Nyll.ProCGroups.ProP.Fox.ModPDensityExactness
+public import Nyll.ProCGroups.ProP.Fox.ModPDisplayedSpan
+public import Nyll.ProCGroups.ProP.Fox.ModPFilteredExactness
+public import Nyll.ProCGroups.ProP.Fox.ModPFilteredLifting
+public import Nyll.ProCGroups.ProP.Fox.ModPFiniteStage
+public import Nyll.ProCGroups.ProP.Fox.ModPGroupDerivative
+public import Nyll.ProCGroups.ProP.Fox.ModPStageProjection
+public import Nyll.ProCGroups.ProP.Fox.ModPTailExactness
+public import Nyll.ProCGroups.ProP.Fox.Rows
 
 /-!
 # Filtered Fox calculus for pro-p presentations

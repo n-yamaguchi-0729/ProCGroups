@@ -4,10 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Profinite.Basic
-import Nyll.ProCGroups.Profinite.OpenSubgroups
+module
 
-import Nyll.ProCGroups.Profinite.CentralLifts
+public import Nyll.ProCGroups.Profinite.Basic
+public import Nyll.ProCGroups.Profinite.OpenSubgroups
+
+public import Nyll.ProCGroups.Profinite.CentralLifts
+
+
+public import Nyll.ProCGroups.Profinite.CompatibleSubgroupImages
 
 /-!
 # Profinite groups

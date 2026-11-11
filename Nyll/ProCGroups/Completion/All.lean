@@ -4,13 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Completion.FiniteQuotientLifts
-import Nyll.ProCGroups.Completion.ProCInteger
-import Nyll.ProCGroups.Completion.ProCIntegerPrimePower
-import Nyll.ProCGroups.Completion.SameFiniteQuotients
-import Nyll.ProCGroups.Completion.UniversalProperty
-import Nyll.ProCGroups.Completion.Construction
-import Nyll.ProCGroups.Completion.ProfiniteIntegerRecognition
+module
+
+public import Nyll.ProCGroups.Completion.FiniteQuotientLifts
+public import Nyll.ProCGroups.Completion.ProCInteger
+public import Nyll.ProCGroups.Completion.ProCIntegerPrimePower
+public import Nyll.ProCGroups.Completion.SameFiniteQuotients
+public import Nyll.ProCGroups.Completion.UniversalProperty
+public import Nyll.ProCGroups.Completion.Construction
+public import Nyll.ProCGroups.Completion.ProfiniteIntegerRecognition
 
 /-!
 # Pro C Groups / Completion

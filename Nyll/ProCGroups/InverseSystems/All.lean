@@ -4,21 +4,23 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.InverseSystems.Basic
-import Nyll.ProCGroups.InverseSystems.CategoricalLimits
-import Nyll.ProCGroups.InverseSystems.CofinalityAndDensity
-import Nyll.ProCGroups.InverseSystems.CompatibilityAndSurjectivity
-import Nyll.ProCGroups.InverseSystems.CountableModels
-import Nyll.ProCGroups.InverseSystems.Exactness
-import Nyll.ProCGroups.InverseSystems.FiniteStageFactorization
-import Nyll.ProCGroups.InverseSystems.ProfiniteLimits
-import Nyll.ProCGroups.InverseSystems.ProfiniteSpace
-import Nyll.ProCGroups.InverseSystems.ProjectionImageSystems
-import Nyll.ProCGroups.InverseSystems.Quotients
-import Nyll.ProCGroups.InverseSystems.StagewiseIso
-import Nyll.ProCGroups.InverseSystems.Utilities
-import Nyll.ProCGroups.InverseSystems.GroupSystemRestriction
-import Nyll.ProCGroups.InverseSystems.CofinalGroups
+module
+
+public import Nyll.ProCGroups.InverseSystems.Basic
+public import Nyll.ProCGroups.InverseSystems.CategoricalLimits
+public import Nyll.ProCGroups.InverseSystems.CofinalityAndDensity
+public import Nyll.ProCGroups.InverseSystems.CompatibilityAndSurjectivity
+public import Nyll.ProCGroups.InverseSystems.CountableModels
+public import Nyll.ProCGroups.InverseSystems.Exactness
+public import Nyll.ProCGroups.InverseSystems.FiniteStageFactorization
+public import Nyll.ProCGroups.InverseSystems.ProfiniteLimits
+public import Nyll.ProCGroups.InverseSystems.ProfiniteSpace
+public import Nyll.ProCGroups.InverseSystems.ProjectionImageSystems
+public import Nyll.ProCGroups.InverseSystems.Quotients
+public import Nyll.ProCGroups.InverseSystems.StagewiseIso
+public import Nyll.ProCGroups.InverseSystems.Utilities
+public import Nyll.ProCGroups.InverseSystems.GroupSystemRestriction
+public import Nyll.ProCGroups.InverseSystems.CofinalGroups
 
 
 /-!

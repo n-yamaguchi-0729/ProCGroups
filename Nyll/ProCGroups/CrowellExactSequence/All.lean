@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.CrowellExactSequence.Applications.All
-import Nyll.ProCGroups.CrowellExactSequence.Basic
-import Nyll.ProCGroups.CrowellExactSequence.Discrete.All
-import Nyll.ProCGroups.CrowellExactSequence.Profinite.All
+module
+
+public import Nyll.ProCGroups.CrowellExactSequence.Applications.All
+public import Nyll.ProCGroups.CrowellExactSequence.Basic
+public import Nyll.ProCGroups.CrowellExactSequence.Discrete.All
+public import Nyll.ProCGroups.CrowellExactSequence.Profinite.All
 
 /-!
 # Crowell exact sequences for pro-\(C\) groups

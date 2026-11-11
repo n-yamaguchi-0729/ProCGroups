@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Profinite.Basic
+module
+
+public import Nyll.ProCGroups.Profinite.Basic
 
 /-!
 # Countable descending open-normal chains
@@ -13,6 +15,8 @@ This file defines countable open-normal bases at the identity and characterizes 
 chains with trivial intersection. It also supplies the refinement property needed to use such
 chains as neighborhood bases.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.ProC
 

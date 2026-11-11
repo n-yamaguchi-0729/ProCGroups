@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProC.InverseLimits.FiniteQuotients
-import Nyll.ProCGroups.ProC.InverseLimits.Limits
-import Nyll.ProCGroups.ProC.InverseLimits.Predicates
+module
+
+public import Nyll.ProCGroups.ProC.InverseLimits.FiniteQuotients
+public import Nyll.ProCGroups.ProC.InverseLimits.ContinuousExtensions
+public import Nyll.ProCGroups.ProC.InverseLimits.Limits
+public import Nyll.ProCGroups.ProC.InverseLimits.Predicates
 
 /-!
 # Inverse-limit constructions for pro-\(C\) groups

@@ -29,6 +29,7 @@ Nyll/ProCGroups/Abelian/FinsuppListEqSumSingleSubSingle.lean
 Nyll/ProCGroups/Abelian/SubmoduleFiniteTorsionByPow.lean
 Nyll/ProCGroups/Abelian/SubmoduleNatCardTorsionByQuotientEqPowFinrank.lean
 Nyll/ProCGroups/Abelian/SubtractionMonoidZsmulEqPrime.lean
+Nyll/ProCGroups/Abelian/TorsionPresentation.lean
 Nyll/ProCGroups/FiniteGroups/EquivPermCompSuccAboveEqSuccAboveCompSignEq.lean
 Nyll/ProCGroups/FiniteGroups/TupleSuccAboveSortCompSuccAboveEq.lean
 Nyll/ProCGroups/GroupTheory/FinSubSubModEqFlowSumMulModEqZero.lean

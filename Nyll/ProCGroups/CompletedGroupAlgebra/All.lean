@@ -4,16 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.CompletedGroupAlgebra.AllFiniteAugmentation.All
-import Nyll.ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.All
-import Nyll.ProCGroups.CompletedGroupAlgebra.Augmentation.All
-import Nyll.ProCGroups.CompletedGroupAlgebra.Basic.All
-import Nyll.ProCGroups.CompletedGroupAlgebra.FunctorialityComposition
-import Nyll.ProCGroups.CompletedGroupAlgebra.InClassFunctoriality.All
-import Nyll.ProCGroups.CompletedGroupAlgebra.OpenFiniteQuotientTopology.All
-import Nyll.ProCGroups.CompletedGroupAlgebra.ProfiniteModules.All
-import Nyll.ProCGroups.CompletedGroupAlgebra.Separation
-import Nyll.ProCGroups.CompletedGroupAlgebra.UniversalProperty.All
+module
+
+public import Nyll.ProCGroups.CompletedGroupAlgebra.AllFiniteAugmentation.All
+public import Nyll.ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.All
+public import Nyll.ProCGroups.CompletedGroupAlgebra.Augmentation.All
+public import Nyll.ProCGroups.CompletedGroupAlgebra.Basic.All
+public import Nyll.ProCGroups.CompletedGroupAlgebra.FunctorialityComposition
+public import Nyll.ProCGroups.CompletedGroupAlgebra.InClassFunctoriality.All
+public import Nyll.ProCGroups.CompletedGroupAlgebra.OpenFiniteQuotientTopology.All
+public import Nyll.ProCGroups.CompletedGroupAlgebra.ProfiniteModules.All
+public import Nyll.ProCGroups.CompletedGroupAlgebra.Separation
+public import Nyll.ProCGroups.CompletedGroupAlgebra.UniversalProperty.All
 
 /-!
 # Completed group algebras

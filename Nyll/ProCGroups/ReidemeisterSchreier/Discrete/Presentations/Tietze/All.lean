@@ -4,13 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.Core
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.GeneratorAddition
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.GeneratorDeletion
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.GeneratorMap
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.RelatorQuotientMutualMapData
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.RelatorReplacement
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.Script
+module
+
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.Core
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.GeneratorAddition
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.GeneratorDeletion
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.GeneratorMap
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.RelatorQuotientMutualMapData
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.RelatorReplacement
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.Script
 
 /-!
 # Tietze equivalences and verified scripts

@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProC.Subgroups.Products
-import Nyll.ProCGroups.ProC.InverseLimits.Predicates
-import Nyll.ProCGroups.FiniteGroups.PGroupFormation
-import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Basic
-import Mathlib.Topology.Algebra.Group.Quotient
-import Mathlib.Topology.LocallyConstant.Basic
+module
+
+public import Nyll.ProCGroups.ProC.Subgroups.Products
+public import Nyll.ProCGroups.ProC.InverseLimits.Predicates
+public import Nyll.ProCGroups.FiniteGroups.PGroupFormation
+public import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Basic
+public import Mathlib.Topology.Algebra.Group.Quotient
+public import Mathlib.Topology.LocallyConstant.Basic
 
 /-!
 # A compact group separated by continuous finite p-group coordinates
@@ -18,6 +20,8 @@ This is the existing product/closed-subgroup permanence argument applied to
 an actual continuous injective homomorphism. It requires no surjectivity of
 individual coordinates and no inverse-limit identification.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.ProC
 

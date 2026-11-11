@@ -4,10 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Topologies.OpenSubgroup
-import Nyll.ProCGroups.Topologies.Conjugation
-import Nyll.ProCGroups.TopologicalGroups
-import Nyll.ProCGroups.Abelian.TopologicalAbelianization
+module
+
+public import Nyll.ProCGroups.Topologies.OpenSubgroup
+public import Nyll.ProCGroups.Topologies.Conjugation
+public import Nyll.ProCGroups.TopologicalGroups
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianization
+public import Nyll.ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
 
 /-!
 # Functorial topological abelianization
@@ -16,6 +19,8 @@ Topological abelianization defines a functor from topological groups to
 commutative topological groups.  Its universal property is expressed directly
 as an equivalence of morphism types for \(T_1\) targets.
 -/
+
+@[expose] public section
 
 open CategoryTheory
 open scoped Topology commutatorElement

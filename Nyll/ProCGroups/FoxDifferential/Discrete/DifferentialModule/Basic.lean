@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Common.CrossedDifferentialModule
-import Mathlib.Algebra.MonoidAlgebra.MapDomain
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Common.CrossedDifferentialModule
+public import Mathlib.Algebra.MonoidAlgebra.MapDomain
 
 /-!
 # Fox differential: discrete — differential module — basic
@@ -21,6 +23,8 @@ The principal declarations in this module are:
 - `groupRingMap_single`
   The induced group-ring map sends Finsupp.single basis terms along the group map.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

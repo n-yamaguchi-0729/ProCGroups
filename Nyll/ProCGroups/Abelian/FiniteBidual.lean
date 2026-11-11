@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Duality
-import Mathlib.Topology.Algebra.PontryaginDual
-import Mathlib.Analysis.Fourier.FiniteAbelian.PontryaginDuality
+module
+
+public import Nyll.ProCGroups.Duality
+public import Mathlib.Topology.Algebra.PontryaginDual
+public import Mathlib.Analysis.Fourier.FiniteAbelian.PontryaginDuality
 
 /-!
 # The actual evaluation map into the Pontryagin double dual
@@ -15,6 +17,8 @@ Evaluation is continuous for compact groups. For finite discrete abelian
 groups it is an isomorphism: finite character separation gives injectivity,
 and the finite dual cardinality theorem gives surjectivity.
 -/
+
+@[expose] public section
 
 noncomputable section
 

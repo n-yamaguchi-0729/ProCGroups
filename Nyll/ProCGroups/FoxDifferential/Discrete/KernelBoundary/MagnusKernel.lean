@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.Homology
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.Homology
 
 /-!
 # Fox differential: discrete — kernel boundary — magnus kernel
@@ -18,6 +20,8 @@ The principal declarations in this module are:
   Crowell/Fox differential of a kernel element vanishes, then that element already lies in the
   ordinary commutator subgroup of \(\ker \psi\).
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 
@@ -33,9 +37,10 @@ omit [DecidableEq H] [DecidableEq G] in
 /-- The surjective-case linear kernel-boundary map is injective in the Magnus-kernel comparison. -/
 theorem kernelAbelianizationBoundaryLinearOfSurjective_injective
     (hψ : Function.Surjective ψ) :
-    letI := kernelAbelianizationModuleOfSurjective ψ hψ
+    let : Module (GroupRing H) (KernelAbelianizationAdd ψ) :=
+      kernelAbelianizationModuleOfSurjective ψ hψ
     Function.Injective (kernelAbelianizationBoundaryLinearOfSurjective ψ hψ) := by
-  let := kernelAbelianizationModuleOfSurjective ψ hψ
+  intro sharedModule
   let := kernelAugmentationIdealCoinvariantsModuleOfSurjective (ψ := ψ) hψ
   intro x y hxy
   have hcoinv :

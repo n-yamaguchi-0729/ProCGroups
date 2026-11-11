@@ -10,36 +10,40 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Field.ZMod
-import Mathlib.Algebra.CharP.Algebra
-import Mathlib.Algebra.CharP.Lemmas
-import Mathlib.Algebra.Group.Subgroup.Map
-import Mathlib.Algebra.Module.LinearMap.End
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.Algebra.Module.ZMod
-import Mathlib.Data.Set.Finite.Lattice
-import Mathlib.Data.Set.Finite.Basic
-import Mathlib.Data.ZMod.Basic
-import Mathlib.FieldTheory.Finiteness
-import Mathlib.GroupTheory.Coset.Basic
-import Mathlib.GroupTheory.Coset.Card
-import Mathlib.GroupTheory.QuotientGroup.Basic
-import Mathlib.GroupTheory.Torsion
-import Mathlib.LinearAlgebra.Dimension.Finite
-import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
-import Mathlib.RingTheory.Finiteness.Basic
-import Mathlib.SetTheory.Cardinal.Finite
-import Mathlib.SetTheory.Cardinal.NatCard
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.Choose
-import Mathlib.Tactic.Linarith.Frontend
-import Mathlib.Tactic.Push
-import Mathlib.Tactic.Ring.RingNF
+module
+
+public import Mathlib.Algebra.Field.ZMod
+public import Mathlib.Algebra.CharP.Algebra
+public import Mathlib.Algebra.CharP.Lemmas
+public import Mathlib.Algebra.Group.Subgroup.Map
+public import Mathlib.Algebra.Module.LinearMap.End
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.Algebra.Module.ZMod
+public import Mathlib.Data.Set.Finite.Lattice
+public import Mathlib.Data.Set.Finite.Basic
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.FieldTheory.Finiteness
+public import Mathlib.GroupTheory.Coset.Basic
+public import Mathlib.GroupTheory.Coset.Card
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+public import Mathlib.GroupTheory.Torsion
+public import Mathlib.LinearAlgebra.Dimension.Finite
+public import Mathlib.LinearAlgebra.FiniteDimensional.Lemmas
+public import Mathlib.RingTheory.Finiteness.Basic
+public import Mathlib.SetTheory.Cardinal.Finite
+public import Mathlib.SetTheory.Cardinal.NatCard
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.Choose
+public import Mathlib.Tactic.Linarith.Frontend
+public import Mathlib.Tactic.Push
+public import Mathlib.Tactic.Ring.RingNF
 
 /-!
 # Add Comm Group finite and nat Card torsion By le of nat Card fixed primary Component le of
 divisible
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

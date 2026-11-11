@@ -4,11 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FiniteGroups.SigmaPowerDetection
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotient
-import Nyll.ProCGroups.ProC.MaximalQuotients.UniversalProperty
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotientAction
-import Nyll.ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
+module
+
+public import Nyll.ProCGroups.FiniteGroups.SigmaPowerDetection
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotient
+public import Nyll.ProCGroups.ProC.MaximalQuotients.UniversalProperty
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotientAction
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
+public import Nyll.ProCGroups.ProC.Quotients.ClosedNormal
+public import Nyll.ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
 
 /-!
 # Detecting residual abelianization by prime powers
@@ -18,6 +22,8 @@ when they agree modulo every allowed prime power. The proof constructs the
 factorizations through the actual power quotients and uses finite quotient
 separation. It applies in particular to the conjugation action.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.ProC
 

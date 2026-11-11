@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.TargetPresentation.Core
+module
+
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.TargetPresentation.Core
 
 /-!
 # Reidemeister--Schreier target-presentation normal words
@@ -17,6 +19,8 @@ them to construct the cleaned target-presentation data, Tietze equivalence,
 and kernel equivalence.
 -/
 
+
+@[expose] public section
 
 namespace ReidemeisterSchreier.Discrete
 

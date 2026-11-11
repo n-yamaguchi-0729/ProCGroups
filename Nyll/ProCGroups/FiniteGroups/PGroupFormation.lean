@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FiniteGroups.StandardClasses
+module
+
+public import Nyll.ProCGroups.FiniteGroups.StandardClasses
 
 /-!
 # The full formation of finite p-groups
@@ -12,6 +14,8 @@ import Nyll.ProCGroups.FiniteGroups.StandardClasses
 The existing formation, subgroup closure and extension closure proofs supply
 the full-formation property used by maximal pro-p residual quotients.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.FiniteGroupClass
 

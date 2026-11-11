@@ -4,19 +4,24 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Polynomial.Roots
-import Mathlib.Analysis.Fourier.FiniteAbelian.PontryaginDuality
-import Mathlib.FieldTheory.Finite.Basic
-import Mathlib.GroupTheory.Torsion
-import Mathlib.Topology.Algebra.PontryaginDual
-import Mathlib.Topology.Instances.AddCircle.DenseSubgroup
-import Nyll.ProCGroups.Topologies.ContinuousMulEquiv
+module
+
+public import Mathlib.Algebra.Polynomial.Roots
+public import Mathlib.Analysis.Fourier.FiniteAbelian.PontryaginDuality
+public import Mathlib.FieldTheory.Finite.Basic
+public import Mathlib.GroupTheory.Torsion
+public import Mathlib.Topology.Algebra.PontryaginDual
+public import Mathlib.Topology.Connected.TotallyDisconnected
+public import Mathlib.Topology.Instances.AddCircle.DenseSubgroup
+public import Nyll.ProCGroups.Topologies.ContinuousMulEquiv
 
 /-!
 # Pro C Groups / Duality
 
 This module formalizes elementary duality constructions for profinite groups.
 -/
+
+@[expose] public section
 
 open scoped Topology
 
@@ -275,10 +280,10 @@ private noncomputable def torsionPowerWitnessOfElement
   let h := (isOfFinOrder_iff_pow_eq_one).mp (htors g)
   exact ⟨Classical.choose h, Classical.choose_spec h⟩
 
-/-- The Pontryagin dual of a discrete torsion abelian group is totally disconnected. -/
-theorem dualGroup_totallyDisconnected_of_discrete_torsion
+/-- The Pontryagin dual of a torsion abelian group is totally disconnected. -/
+theorem dualGroup_totallyDisconnected_of_torsion
     (G : Type u) [CommGroup G] [TopologicalSpace G]
-    [DiscreteTopology G] (htors : IsMulTorsion G) :
+    (htors : IsMulTorsion G) :
     TotallyDisconnectedSpace (PontryaginDual G) := by
   let n : G → ℕ := fun g => (torsionPowerWitnessOfElement htors g).1
   let Ω : G → Type := fun g => { z : Circle // (z : ℂ) ^ n g = 1 }
@@ -322,18 +327,16 @@ theorem dualGroup_totallyDisconnected_of_discrete_torsion
     apply ContinuousMonoidHom.ext
     intro g
     exact congrArg (fun z : Ω g => (z : Circle)) (congrFun hχψ g)
-  let FRange : PontryaginDual G → Set.range F := fun χ => ⟨F χ, ⟨χ, rfl⟩⟩
-  have hFRange_continuous : Continuous FRange := hFcont.subtype_mk fun _ => ⟨_, rfl⟩
-  have hFRange_bij : Function.Bijective FRange := by
-    refine ⟨?_, ?_⟩
-    · intro χ ψ hχψ
-      exact hFinj <| congrArg Subtype.val hχψ
-    · rintro ⟨y, χ, rfl⟩
-      exact ⟨χ, rfl⟩
-  let eTop : PontryaginDual G ≃ₜ Set.range F :=
-    Continuous.homeoOfEquivCompactToT2
-      (f := Equiv.ofBijective FRange hFRange_bij) hFRange_continuous
-  exact Homeomorph.totallyDisconnectedSpace eTop.symm
+  let (g : G) : Finite (Ω g) := hΩfinite g
+  refine ⟨isTotallyDisconnected_of_image hFcont.continuousOn hFinj ?_⟩
+  exact isTotallyDisconnected_of_totallyDisconnectedSpace _
+
+/-- The Pontryagin dual of a discrete torsion abelian group is totally disconnected. -/
+theorem dualGroup_totallyDisconnected_of_discrete_torsion
+    (G : Type u) [CommGroup G] [TopologicalSpace G]
+    [DiscreteTopology G] (htors : IsMulTorsion G) :
+    TotallyDisconnectedSpace (PontryaginDual G) :=
+  dualGroup_totallyDisconnected_of_torsion G htors
 
 /-- For a discrete abelian group, multiplicative characters to the circle are the same as
 additive characters on the additive type synonym. -/
@@ -363,13 +366,27 @@ noncomputable def dualGroupEquivAddCharCircle
     ext a
     rfl
 
+/-- The Pontryagin dual of a finite abelian group is finite for any topology on the group. -/
+theorem dualGroup_finite_of_finite
+    (A : Type u) [CommGroup A] [TopologicalSpace A] [Finite A] :
+    Finite (PontryaginDual A) := by
+  let F : PontryaginDual A → AddChar (Additive A) Circle := fun χ =>
+    { toFun := fun a => χ a.toMul
+      map_zero_eq_one' := by simp only [toMul_zero, map_one]
+      map_add_eq_mul' := fun a b => map_mul χ a.toMul b.toMul }
+  refine Finite.of_injective
+    (fun χ => AddChar.circleEquivComplex (α := Additive A) (F χ)) ?_
+  intro χ ψ h
+  have hF : F χ = F ψ := (AddChar.circleEquivComplex (α := Additive A)).injective h
+  apply ContinuousMonoidHom.ext
+  intro a
+  exact DFunLike.congr_fun hF (Additive.ofMul a)
+
 /-- The Pontryagin dual of a finite discrete abelian group is finite. -/
 theorem dualGroup_finite_of_finite_discrete
     (A : Type u) [CommGroup A] [TopologicalSpace A] [Finite A] [DiscreteTopology A] :
-    Finite (PontryaginDual A) := by
-  exact Finite.of_equiv (AddChar (Additive A) ℂ)
-    ((AddChar.circleEquivComplex (α := Additive A)).toEquiv.symm.trans
-      (dualGroupEquivAddCharCircle A).symm)
+    Finite (PontryaginDual A) :=
+  dualGroup_finite_of_finite A
 
 /-- A finite discrete abelian group and its Pontryagin dual have the same cardinality. -/
 theorem card_dualGroup_eq_card_of_finite_discrete

@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.CleanedRelators
+module
+
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.CleanedRelators
 
 /-!
 # Reidemeister Schreier / Discrete / Reidemeister Schreier / Finite Quotient / Kernel
@@ -14,6 +16,8 @@ that the Schreier, quotient-section, and augmented relator families give the
 required kernel-level maps.
 -/
 
+
+@[expose] public section
 
 namespace ReidemeisterSchreier.Discrete
 

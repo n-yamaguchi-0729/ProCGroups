@@ -4,13 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualMonotonicity
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualCore
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotientAction
-import Nyll.ProCGroups.ProC.MaximalQuotients.ConjugationComparison
-import Nyll.ProCGroups.Abelian.TopologicalAbelianization
-import Mathlib.GroupTheory.QuotientGroup.Basic
-import Mathlib.Topology.Algebra.ContinuousMonoidHom
+module
+
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualMonotonicity
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualCore
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotientAction
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ConjugationComparison
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianization
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+public import Mathlib.Topology.Algebra.ContinuousMonoidHom
 
 /-!
 # Class inclusion and faithful residual abelianization actions
@@ -20,6 +22,8 @@ remains surjective after topological abelianization. It intertwines the
 same ambient conjugation on both residual quotients. Consequently an
 action detected by the smaller class is also detected by the larger class.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.ProC
 

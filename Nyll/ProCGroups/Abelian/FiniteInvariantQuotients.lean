@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Basic
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.BasisAtOne
-import Mathlib.Topology.Constructions
+module
+
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Basic
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.BasisAtOne
+public import Mathlib.Topology.Constructions
 
 /-!
 # Finite invariant quotients
@@ -16,6 +18,8 @@ open normal subgroups. The construction is the kernel of the product of the
 translated finite quotient maps; in particular, invariance is proved from the
 given action rather than supplied as additional data.
 -/
+
+@[expose] public section
 
 open scoped Topology
 

@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotient
-import Nyll.ProCGroups.ProC.MaximalQuotients.UniversalProperty
-import Nyll.ProCGroups.Topologies.Conjugation
+module
+
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotient
+public import Nyll.ProCGroups.ProC.MaximalQuotients.UniversalProperty
+public import Nyll.ProCGroups.Topologies.Conjugation
+public import Nyll.ProCGroups.ProC.Quotients.ClosedNormal
 
 /-!
 # The residual core has no further pro-C quotient
@@ -15,6 +18,8 @@ For a full formation, taking the residual core inside the residual core gives th
 subgroup. The proof uses closure under extensions and continuous conjugation; no finite
 generation or abstract characteristic-subgroup hypothesis is required.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.ProC
 

@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Module.Torsion.Basic
-import Mathlib.Algebra.Ring.GeomSum
-import Mathlib.Tactic.Ext
-import Mathlib.Tactic.Positivity
-import Mathlib.Tactic.Ring.RingNF
+module
+
+public import Mathlib.Algebra.Module.Torsion.Basic
+public import Mathlib.Algebra.Ring.GeomSum
+public import Mathlib.Tactic.Ext
+public import Mathlib.Tactic.Positivity
+public import Mathlib.Tactic.Ring.RingNF
 
 /-!
 # Add Comm Group nat Card torsion By pow eq pow of nat Card fixed primary Component
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

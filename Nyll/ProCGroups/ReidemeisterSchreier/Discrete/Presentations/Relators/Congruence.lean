@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Basic
+module
+
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Basic
 
 /-!
 # Relator maps and normal-closure congruence
@@ -12,6 +14,8 @@ import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Basi
 This module transports normal-closure membership and relator equivalence
 through inclusions, homomorphisms, and indexed unions of relator families.
 -/
+
+@[expose] public section
 
 namespace ReidemeisterSchreier.Discrete.Presentations
 

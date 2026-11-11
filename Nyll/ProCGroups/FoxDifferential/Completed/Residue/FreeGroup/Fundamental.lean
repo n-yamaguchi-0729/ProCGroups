@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.Residue.FreeGroup.Boundary
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.Residue.FreeGroup.Boundary
 
 /-!
 # Fox differential: completed — residue — free group — fundamental
@@ -22,6 +24,8 @@ The principal declarations in this module are:
 - `residueFreeGroupFoxDerivative_euler_formula_of_crossedHom`
   The explicit \([\psi(w)]-1\) form of the residue Fox-Euler formula for a crossed homomorphism.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

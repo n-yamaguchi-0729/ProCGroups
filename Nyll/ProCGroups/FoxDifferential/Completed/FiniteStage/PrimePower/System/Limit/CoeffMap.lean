@@ -4,7 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Limit.Mul
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Limit.Mul
+public import Nyll.ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.Index
+public import Nyll.ProCGroups.FiniteGroups.AllFinite
 
 /-!
 # Fox differential: prime power — system — limit — coeff map
@@ -15,6 +19,8 @@ The principal declarations in this module are:
   Compatibility of target stage maps with coefficient reduction in the completed target group
   algebra.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

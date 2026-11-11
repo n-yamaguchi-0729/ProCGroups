@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.Map.Surjective
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Completion.Source.Index
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.Map.Surjective
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Completion.Source.Index
 
 /-!
 # Fox differential: completed — differential module — target quotient — basic
@@ -24,6 +26,8 @@ The principal declarations in this module are:
   \mathbb{Z}_{\ell}\llbracket F/N\rrbracket\) be computed from the completed free derivative source
   projection.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Naturality
-import Nyll.ProCGroups.FoxDifferential.Completed.Comparison.QuotientFamily
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Naturality
+public import Nyll.ProCGroups.FoxDifferential.Completed.Comparison.QuotientFamily
 
 /-!
 # Fox differential: completed — comparison — source projection
@@ -22,6 +24,8 @@ The principal declarations in this module are:
 - `freeProCZCCompletedFoxBoundary_mapTarget_finiteStageProjection_stage`
   Finite-stage projection of target naturality for source-shaped completed Fox boundary maps.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

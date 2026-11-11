@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Basic
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Limit.All
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Semidirect
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Basic
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Limit.All
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Semidirect
 
 /-!
 # Fox differential: completed — finite stage — prime power — system

@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Universal.NaturalTopology
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Universal.NaturalTopology
 
 /-!
 # Basic maps in the profinite Crowell sequence
@@ -13,6 +15,8 @@ This file defines the completed differential boundary and the maps from complete
 differential modules to the completed \(\mathbb Z_C\)-group algebra. It proves their values on
 universal differentials and compatibility with separation.
 -/
+
+@[expose] public section
 
 namespace CrowellExactSequence
 

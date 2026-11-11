@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Group.AddChar
-import Mathlib.GroupTheory.Index
-import Mathlib.GroupTheory.OrderOfElement
+module
+
+public import Mathlib.Algebra.Group.AddChar
+public import Mathlib.GroupTheory.Index
+public import Mathlib.GroupTheory.OrderOfElement
 
 /-!
 # A uniform annihilator for invariant finite characters
@@ -16,6 +18,8 @@ coinvariant quotient have the same cardinality. Consequently an invariant
 character is killed by the cardinality of the fixed subgroup. An embedding of
 that subgroup into one common finite group gives a level-independent bound.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.FiniteFixedCharacters
 

@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.GroupTheory.SemidirectProduct
+module
+
+public import Mathlib.GroupTheory.SemidirectProduct
 
 /-!
 # Kernels and subgroup preimages in a semidirect product
@@ -13,6 +15,8 @@ The actual right-projection kernel is its left factor. The preimage of a
 subgroup of the right factor is the semidirect product with the restricted
 action. Both identifications preserve the displayed coordinates.
 -/
+
+@[expose] public section
 
 namespace ProCGroups
 

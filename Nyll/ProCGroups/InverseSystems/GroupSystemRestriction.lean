@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.InverseSystems.CofinalityAndDensity
+module
+
+public import Nyll.ProCGroups.InverseSystems.CofinalityAndDensity
 
 /-!
 # Group structures on restricted inverse systems
@@ -13,6 +15,8 @@ The existing restriction keeps the stage groups and transition homomorphisms.
 This canonical instance permits both homomorphisms to the restricted limit and
 its coordinatewise group laws to use the original inverse-system owner.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.InverseSystems
 

@@ -4,18 +4,23 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FiniteGroups.Classes
-import Nyll.ProCGroups.Profinite.OpenSubgroups
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualCore
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotient
-import Nyll.ProCGroups.ProC.MaximalQuotients.UniversalProperty
-import Nyll.ProCGroups.ProC.InverseLimits.FiniteQuotients
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
-import Nyll.ProCGroups.Topologies.ContinuousMulEquiv
-import Nyll.ProCGroups.Topologies.QuotientMaps
-import Mathlib.Algebra.Group.Subgroup.Basic
-import Mathlib.Topology.Algebra.ContinuousMonoidHom
-import Mathlib.Topology.Separation.Hausdorff
+module
+
+public import Nyll.ProCGroups.FiniteGroups.Classes
+public import Nyll.ProCGroups.FiniteGroups.StandardClasses
+public import Nyll.ProCGroups.Profinite.OpenSubgroups
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualCore
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotient
+public import Nyll.ProCGroups.ProC.MaximalQuotients.UniversalProperty
+public import Nyll.ProCGroups.ProC.InverseLimits.FiniteQuotients
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
+public import Nyll.ProCGroups.Topologies.ContinuousMulEquiv
+public import Nyll.ProCGroups.Topologies.ContinuousMonoidHom
+public import Nyll.ProCGroups.Topologies.QuotientMaps
+public import Mathlib.Algebra.Group.Subgroup.Basic
+public import Mathlib.GroupTheory.Solvable
+public import Mathlib.Topology.Algebra.ContinuousMonoidHom
+public import Mathlib.Topology.Separation.Hausdorff
 
 /-!
 # Finite-quotient descent and maximal pro-C quotients
@@ -33,9 +38,11 @@ about arbitrary continuous group maps; no geometric extension or
 specialization assertion is assumed or concluded.
 -/
 
+@[expose] public section
+
 namespace ProCGroups.ProC
 
-universe u
+universe u v
 
 section Detection
 
@@ -256,5 +263,50 @@ noncomputable def residualQuotientEquivOfFiniteQuotientDescent
   residualQuotientMap_apply_mk hC.hereditary f g
 
 end Map
+
+/-- The prosolvable residual core is killed by continuous maps to finite solvable
+groups, including targets in an independent universe. -/
+theorem prosolvableResidualCore_le_ker_of_finite
+    {G : Type u} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
+    {H : Type v} [Group H] [TopologicalSpace H] [DiscreteTopology H]
+    [Finite H] [Group.IsSolvable H] (phi : G →ₜ* H) :
+    proCResidualCore FiniteGroupClass.solvable G ≤ phi.toMonoidHom.ker := by
+  let N : Subgroup G := phi.toMonoidHom.ker
+  have hN : IsClosed (N : Set G) := ContinuousMonoidHom.isClosed_ker phi
+  have hNopen : IsOpen (N : Set G) := by
+    change IsOpen (phi ⁻¹' ({1} : Set H))
+    exact (isOpen_discrete _).preimage phi.continuous_toFun
+  let e : (G ⧸ N) ≃* phi.toMonoidHom.range :=
+    QuotientGroup.quotientKerEquivRange phi.toMonoidHom
+  have : Finite (G ⧸ N) := Finite.of_equiv phi.toMonoidHom.range e.symm.toEquiv
+  have : Group.IsSolvable (G ⧸ N) :=
+    Group.isSolvable_of_isSolvable_injective (f := e.toMonoidHom) e.injective
+  have : DiscreteTopology (G ⧸ N) := QuotientGroup.discreteTopology hNopen
+  have hclass : FiniteGroupClass.solvable (G ⧸ N) := ⟨inferInstance, inferInstance⟩
+  have hbasis : HasOpenNormalBasisInClass FiniteGroupClass.solvable (G ⧸ N) :=
+    HasOpenNormalBasisInClass.of_finite_discrete
+      FiniteGroupClass.solvable_quotientClosed hclass
+  exact proCResidualCore_le_of_proCQuotient N hN hbasis
+
+/-- A continuous map to a Hausdorff prosolvable group kills the prosolvable
+residual core, independently of the source and target universes. -/
+theorem prosolvableResidualCore_le_ker_of_continuousMonoidHom_to_prosolvable
+    {G : Type u} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
+    {H : Type v} [Group H] [TopologicalSpace H] [IsTopologicalGroup H] [T2Space H]
+    (phi : G →ₜ* H) (hH : HasOpenNormalBasisInClass FiniteGroupClass.solvable H) :
+    proCResidualCore FiniteGroupClass.solvable G ≤ phi.toMonoidHom.ker := by
+  intro x hx
+  change phi x = 1
+  apply hH.eq_one_of_mem_all_openNormalSubgroupInClass
+  intro U
+  let Q : Type v := H ⧸ (U.1 : Subgroup H)
+  have : Finite Q := U.2.1
+  have : Group.IsSolvable Q := U.2.2
+  have : DiscreteTopology Q :=
+    QuotientGroup.discreteTopology
+      (ProCGroups.openNormalSubgroup_isOpen (G := H) U.1)
+  let q : H →ₜ* Q := OpenNormalSubgroupInClass.quotientProj U
+  exact OpenNormalSubgroupInClass.quotientProj_eq_one_iff.mp
+    (prosolvableResidualCore_le_ker_of_finite (q.comp phi) hx)
 
 end ProCGroups.ProC

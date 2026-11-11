@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.InClass.System.Ring.AddCommGroup
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.InClass.System.Ring.AddCommGroup
 
 /-!
 # Fox differential: in class — system — ring — multiplicative
@@ -24,6 +26,8 @@ The principal declarations in this module are:
   Integer casts in the class-indexed prime-power completed group algebra are computed
   coordinatewise.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

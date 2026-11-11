@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Completion.Source.LimitMap
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.Limit
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Completion.Source.LimitMap
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.Limit
 
 /-!
 # Fox differential: finite stage — prime power — derivative — completed source
@@ -23,6 +25,8 @@ The principal declarations in this module are:
   The finite-stage fundamental formula for the completed source Fox derivative after projection to a
   prime-power stage.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

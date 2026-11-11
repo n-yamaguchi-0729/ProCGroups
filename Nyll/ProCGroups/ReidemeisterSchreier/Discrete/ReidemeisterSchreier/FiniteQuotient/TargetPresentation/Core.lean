@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.Presentation
+module
+
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.Presentation
 
 /-!
 # Reidemeister--Schreier target-presentation core
@@ -17,6 +19,8 @@ quotient-section words and the core data specifying a cleaned
 Reidemeister--Schreier target presentation.
 -/
 
+
+@[expose] public section
 
 namespace ReidemeisterSchreier.Discrete
 

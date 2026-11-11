@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.Augmentation
-import Nyll.ProCGroups.CompletedGroupAlgebra.ProfiniteModules.FiniteGroupAlgebra.Augmentation.Abstract
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.Augmentation
+public import Nyll.ProCGroups.CompletedGroupAlgebra.ProfiniteModules.FiniteGroupAlgebra.Augmentation.Abstract
 
 /-!
 # Fox differential: completed — \(\mathbb{Z}_C\) coefficients — augmentation ideal — finite stage
@@ -22,6 +24,8 @@ The principal declarations in this module are:
 - `zcCompletedGroupAlgebraStageAugmentationGenerator_mem`
   A finite-stage standard generator lies in the finite-stage augmentation ideal.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 
@@ -134,23 +138,22 @@ def zcCompletedGroupAlgebraStageAugmentationIdealTransition
   change modNCompletedGroupAlgebraStageAugmentationInClass i.1.modulus H C i.2
       (zcCompletedGroupAlgebraTransition C H hij x.1) = 0
   rw [zcCompletedGroupAlgebraTransition, RingHom.comp_apply]
+  let transitionImage : ModNCompletedGroupAlgebraStageInClass j.1.modulus H C i.2 :=
+    (modNCompletedGroupAlgebraTransitionInClass (n := j.1.modulus) (G := H) C hij.2 x.1)
   calc
     modNCompletedGroupAlgebraStageAugmentationInClass i.1.modulus H C i.2
         ((modNCompletedGroupAlgebraStageCoeffMapInClass
           (n := i.1.modulus) (m := j.1.modulus) (G := H) C i.2 hij.1)
-          (modNCompletedGroupAlgebraTransitionInClass
-            (n := j.1.modulus) (G := H) C hij.2 x.1))
+          transitionImage)
         =
       modNCompletedCoeffMap (n := i.1.modulus) (m := j.1.modulus) hij.1
         (modNCompletedGroupAlgebraStageAugmentationInClass j.1.modulus H C i.2
-          (modNCompletedGroupAlgebraTransitionInClass
-            (n := j.1.modulus) (G := H) C hij.2 x.1)) := by
+          transitionImage) := by
         exact congrFun
           (congrArg DFunLike.coe
             (modNCompletedGroupAlgebraStageAugmentationInClass_comp_stageCoeffMap
               (n := i.1.modulus) (m := j.1.modulus) (G := H) C i.2 hij.1))
-          (modNCompletedGroupAlgebraTransitionInClass
-            (n := j.1.modulus) (G := H) C hij.2 x.1)
+          transitionImage
     _ =
       modNCompletedCoeffMap (n := i.1.modulus) (m := j.1.modulus) hij.1
         (modNCompletedGroupAlgebraStageAugmentationInClass j.1.modulus H C j.2 x.1) := by

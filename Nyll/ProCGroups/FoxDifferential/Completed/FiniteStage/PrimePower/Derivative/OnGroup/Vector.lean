@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.OnGroup.Scalar
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.OnGroup.Scalar
 
 /-!
 # Fox differential: prime power — derivative — on group — vector
@@ -24,6 +26,8 @@ The principal declarations in this module are:
   The completed-target Fox derivative vector is the unique crossed homomorphism with standard basis
   values.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

@@ -4,12 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FiniteGroups.StandardClasses
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
-import Mathlib.GroupTheory.FiniteAbelian.Basic
-import Mathlib.Topology.Instances.ZMod
+module
+
+public import Nyll.ProCGroups.FiniteGroups.StandardClasses
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
+public import Mathlib.GroupTheory.FiniteAbelian.Basic
+public import Mathlib.Topology.Instances.ZMod
 
 /-! # Prime-power characters separate abelian pro-p groups -/
+
+@[expose] public section
 
 namespace ProCGroups.Abelian
 

@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.GeneratorAddition
+module
+
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.GeneratorAddition
 
 /-!
 # Reidemeister Schreier / Discrete / Presentations / Tietze / Generator Deletion
@@ -13,6 +15,8 @@ This module formalizes deletion of generators forced to be trivial.  It
 defines the elimination homomorphism and relator transformations and packages
 the induced equivalence of presented quotients.
 -/
+
+@[expose] public section
 
 universe u v w
 

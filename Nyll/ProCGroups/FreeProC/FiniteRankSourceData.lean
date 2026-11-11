@@ -4,7 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FreeProC.FiniteBasis
+module
+
+public import Nyll.ProCGroups.FreeProC.FiniteBasis
+public import Nyll.ProCGroups.FiniteGroups.StandardClasses
+public import Nyll.ProCGroups.FreeProC.Basic
+public import Nyll.ProCGroups.Generation.Basic
+public import Nyll.ProCGroups.ProC.Category.Basic
 
 /-!
 # Finite-rank free pro-C source data
@@ -12,6 +18,8 @@ import Nyll.ProCGroups.FreeProC.FiniteBasis
 This module packages a finite-rank epimorphically free pro-\(C\) group as the canonical
 source-data structure and records the cardinality of its lifted finite basis.
 -/
+
+@[expose] public section
 
 namespace CrowellExactSequence
 

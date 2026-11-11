@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
-import Nyll.ProCGroups.FiniteStepSolvableQuotients.Abelianization
+module
+
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
+public import Nyll.ProCGroups.FiniteStepSolvableQuotients.Abelianization
 
 /-!
 # Ab-torsion-freeness
@@ -13,6 +15,8 @@ import Nyll.ProCGroups.FiniteStepSolvableQuotients.Abelianization
 The topological abelianization of every open subgroup is torsion-free.
 These are general topological-group definitions and consequences.
 -/
+
+@[expose] public section
 
 open scoped Topology
 

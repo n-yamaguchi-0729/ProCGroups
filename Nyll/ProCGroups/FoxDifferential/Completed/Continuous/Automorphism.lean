@@ -4,8 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.ChainRule.Iterated
-import Nyll.ProCGroups.FoxDifferential.Common.Jacobian
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.ChainRule.Iterated
+public import Nyll.ProCGroups.FoxDifferential.Common.Jacobian
+public import Nyll.ProCGroups.FiniteGroups.AllFinite
+public import Nyll.ProCGroups.ProC.Category.Basic
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
 
 /-!
 # Fox differential: completed — continuous — automorphism
@@ -22,6 +27,8 @@ The principal declarations in this module are:
 - `allFinite_freeProCZCCompletedFoxAutomorphismJacobianLinearMapInverse_eq_vecMul`
   The named inverse linear map is row-vector multiplication by the named inverse matrix.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

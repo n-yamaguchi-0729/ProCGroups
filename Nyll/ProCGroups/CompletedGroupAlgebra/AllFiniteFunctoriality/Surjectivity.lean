@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.Map
-import Nyll.ProCGroups.CompletedGroupAlgebra.OpenFiniteQuotientTopology.OpenFiniteComparison
+module
+
+public import Nyll.ProCGroups.CompletedGroupAlgebra.AllFiniteFunctoriality.Map
+public import Nyll.ProCGroups.CompletedGroupAlgebra.OpenFiniteQuotientTopology.OpenFiniteComparison
 
 /-!
 # Surjectivity of completed group-algebra maps
@@ -13,6 +15,8 @@ import Nyll.ProCGroups.CompletedGroupAlgebra.OpenFiniteQuotientTopology.OpenFini
 A surjective continuous group homomorphism induces a surjective map of all-finite completed group
 algebras. The proof combines finite-stage surjectivity with the inverse-limit lifting argument.
 -/
+
+@[expose] public section
 
 open scoped Topology
 

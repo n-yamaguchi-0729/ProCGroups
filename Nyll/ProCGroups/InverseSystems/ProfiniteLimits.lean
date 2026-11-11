@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.InverseSystems.CofinalityAndDensity
-import Nyll.ProCGroups.Profinite.Basic
+module
+
+public import Nyll.ProCGroups.InverseSystems.CofinalityAndDensity
+public import Nyll.ProCGroups.Profinite.Basic
 
 /-!
 # Projection kernels in profinite inverse limits
@@ -15,6 +17,8 @@ homomorphisms.  Their kernels are open normal subgroups, and under the usual dir
 surjectivity assumptions these kernels form a fundamental system of neighborhoods of one in
 the inverse limit.
 -/
+
+@[expose] public section
 
 open scoped Topology Pointwise
 

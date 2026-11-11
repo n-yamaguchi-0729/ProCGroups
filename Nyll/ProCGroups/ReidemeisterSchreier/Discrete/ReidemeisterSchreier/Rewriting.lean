@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.GroupTheory.PresentedGroup
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Congruence
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Operations
+module
+
+public import Mathlib.GroupTheory.PresentedGroup
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Congruence
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Operations
 
 /-!
 # Reidemeister Schreier / Discrete / Reidemeister Schreier / Rewriting
@@ -16,6 +18,8 @@ symbols and generators, and the rewriting maps that turn kernel words into
 words on Schreier symbols.
 -/
 
+
+@[expose] public section
 
 namespace ReidemeisterSchreier.Discrete
 

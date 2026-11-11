@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.OpenSubgroups.Words.Basic
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.OpenSubgroups.Words.NielsenSchreierCompat
+module
+
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.OpenSubgroups.Words.Basic
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.OpenSubgroups.Words.NielsenSchreierCompat
 
 /-!
 # Reidemeister Schreier / Discrete / Open Subgroups / Words

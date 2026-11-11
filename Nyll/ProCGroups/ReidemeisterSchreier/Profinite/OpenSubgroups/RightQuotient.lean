@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProC.Subgroups.Products
-import Nyll.ProCGroups.ReidemeisterSchreier.RightQuotient
+module
+
+public import Nyll.ProCGroups.ProC.Subgroups.Products
+public import Nyll.ProCGroups.ReidemeisterSchreier.RightQuotient
 
 /-!
 # Right cosets of open subgroups
@@ -15,6 +17,8 @@ Schreier rewriting.  It supplies the coset action, finiteness under compactness,
 the discrete quotient topology, and a normalized continuous section of the
 right-coset projection.
 -/
+
+@[expose] public section
 
 open Set
 open scoped Topology Pointwise

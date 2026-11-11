@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.Map.Limit
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.Map.Limit
 
 /-!
 # Fox differential: completed — differential module — map — group like
@@ -15,6 +17,8 @@ The principal declarations in this module are:
   The completed prime-power group-algebra map sends the group-like element of `g` to the group-like
   element of `ψ g`.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

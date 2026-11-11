@@ -4,14 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.CrowellExactSequence.Profinite.BlanchfieldLyndon
-import Nyll.ProCGroups.CrowellExactSequence.Profinite.ContinuousMagnus.All
-import Nyll.ProCGroups.CrowellExactSequence.Profinite.Exactness
-import Nyll.ProCGroups.CrowellExactSequence.Profinite.FreeExactness
-import Nyll.ProCGroups.CrowellExactSequence.Profinite.KernelBoundary
-import Nyll.ProCGroups.CrowellExactSequence.Profinite.KernelInjectivity
-import Nyll.ProCGroups.CrowellExactSequence.Profinite.MainTheorem
-import Nyll.ProCGroups.CrowellExactSequence.Profinite.SequenceMaps.All
+module
+
+public import Nyll.ProCGroups.CrowellExactSequence.Profinite.BlanchfieldLyndon
+public import Nyll.ProCGroups.CrowellExactSequence.Profinite.ContinuousMagnus.All
+public import Nyll.ProCGroups.CrowellExactSequence.Profinite.Exactness
+public import Nyll.ProCGroups.CrowellExactSequence.Profinite.FreeExactness
+public import Nyll.ProCGroups.CrowellExactSequence.Profinite.KernelBoundary
+public import Nyll.ProCGroups.CrowellExactSequence.Profinite.KernelInjectivity
+public import Nyll.ProCGroups.CrowellExactSequence.Profinite.MainTheorem
+public import Nyll.ProCGroups.CrowellExactSequence.Profinite.SequenceMaps.All
 
 /-!
 # Profinite Crowell exact sequence

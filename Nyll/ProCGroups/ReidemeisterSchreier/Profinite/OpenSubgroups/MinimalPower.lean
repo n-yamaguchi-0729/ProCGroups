@@ -4,7 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.BasisFiniteRank
+module
+
+public import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.BasisFiniteRank
+public import Nyll.ProCGroups.ProC.Category.Basic
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.BasisAtOne
+public import Nyll.ProCGroups.ReidemeisterSchreier.Schreier
 
 /-!
 # Pointed bases controlled by a minimal generator power
@@ -14,6 +19,8 @@ subgroup is nontrivial, this module constructs a finite converging-set basis
 containing that power and refines the finite-rank Schreier basis theorem while
 retaining the distinguished basis element.
 -/
+
+@[expose] public section
 
 open scoped Topology Pointwise
 

@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Module.NatInt
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.Module
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring.RingNF
+module
+
+public import Mathlib.Algebra.Module.NatInt
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.Module
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Ring.RingNF
 
 /-!
 # Add Comm Group apply zsmul add eq of forall cube
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

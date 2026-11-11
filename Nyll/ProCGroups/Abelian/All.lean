@@ -4,54 +4,79 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Abelian.AbelianModPower
-import Nyll.ProCGroups.Abelian.AddCommGroupApplyZsmulAddEq
-import Nyll.ProCGroups.Abelian.AddCommGroupBasisSmulEq
-import Nyll.ProCGroups.Abelian.AddCommGroupMemTorsionBySmulEq
-import Nyll.ProCGroups.Abelian.AddCommGroupFiniteNatCardTorsionByLe
-import Nyll.ProCGroups.Abelian.AddCommGroupNatCardPrimaryComponentKerAeval
-import Nyll.ProCGroups.Abelian.AddCommGroupNatCardTorsionByPowEqPow
-import Nyll.ProCGroups.Abelian.AddCommGroupBasisZmodPow
-import Nyll.ProCGroups.Abelian.AddMonoidHomNsmulEqZeroApplyEq
-import Nyll.ProCGroups.Abelian.AddMonoidHomMemRangeSmulEqZero
-import Nyll.ProCGroups.Abelian.AddMonoidHomNatCardKerCompEqMul
-import Nyll.ProCGroups.Abelian.CharacterCardinalityTorsionFree
-import Nyll.ProCGroups.Abelian.CharacterDetection
-import Nyll.ProCGroups.Abelian.FiniteBidual
-import Nyll.ProCGroups.Abelian.FiniteCharacterCriterion
-import Nyll.ProCGroups.Abelian.FiniteFixedCharacters
-import Nyll.ProCGroups.Abelian.FiniteInvariantQuotients
-import Nyll.ProCGroups.Abelian.FinsuppListEqSumSingleSubSingle
-import Nyll.ProCGroups.Abelian.FullTateCharacters
-import Nyll.ProCGroups.Abelian.FullTateModule
-import Nyll.ProCGroups.Abelian.FullTateModuleMap
-import Nyll.ProCGroups.Abelian.FullTateRestriction
-import Nyll.ProCGroups.Abelian.PowerQuotientAction
-import Nyll.ProCGroups.Abelian.PrimaryDetection
-import Nyll.ProCGroups.Abelian.PrimaryTorsion
-import Nyll.ProCGroups.Abelian.PrimeExponentCharacters
-import Nyll.ProCGroups.Abelian.PrimePowerCharacters
-import Nyll.ProCGroups.Abelian.PrimeQuotients
-import Nyll.ProCGroups.Abelian.ProfiniteBidual
-import Nyll.ProCGroups.Abelian.ProfiniteCharacterCriterion
-import Nyll.ProCGroups.Abelian.RestrictedTateModule
-import Nyll.ProCGroups.Abelian.RestrictedTatePairingWeights
-import Nyll.ProCGroups.Abelian.RestrictedTateTorsionFree
-import Nyll.ProCGroups.Abelian.RestrictedTateTransport
-import Nyll.ProCGroups.Abelian.RootsOfUnityCharacterCriterion
-import Nyll.ProCGroups.Abelian.SubgroupCommutator
-import Nyll.ProCGroups.Abelian.SubmoduleFiniteTorsionByPow
-import Nyll.ProCGroups.Abelian.SubmoduleNatCardTorsionByQuotientEqPowFinrank
-import Nyll.ProCGroups.Abelian.SubtractionMonoidZsmulEqPrime
-import Nyll.ProCGroups.Abelian.SubtractionMonoidZsmulEqPrimeNsmul
-import Nyll.ProCGroups.Abelian.TopologicalAbelianization
-import Nyll.ProCGroups.Abelian.TopologicalAbelianizationConjugationContinuity
-import Nyll.ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
-import Nyll.ProCGroups.Abelian.TopologicalAbelianizationKernel
-import Nyll.ProCGroups.Abelian.TopologicalAbelianizationLimits
-import Nyll.ProCGroups.Abelian.TopologicalAbelianizationQuotientFaithfulness
-import Nyll.ProCGroups.Abelian.Transfer
-import Nyll.ProCGroups.Abelian.CardTorsionMulDivisible
+module
+
+public import Nyll.ProCGroups.Abelian.AbelianModPower
+public import Nyll.ProCGroups.Abelian.AddCommGroupApplyZsmulAddEq
+public import Nyll.ProCGroups.Abelian.AddCommGroupBasisSmulEq
+public import Nyll.ProCGroups.Abelian.AddCommGroupMemTorsionBySmulEq
+public import Nyll.ProCGroups.Abelian.TorsionPresentation
+public import Nyll.ProCGroups.Abelian.AddCommGroupFiniteNatCardTorsionByLe
+public import Nyll.ProCGroups.Abelian.AddCommGroupNatCardPrimaryComponentKerAeval
+public import Nyll.ProCGroups.Abelian.AddCommGroupNatCardTorsionByPowEqPow
+public import Nyll.ProCGroups.Abelian.AddCommGroupBasisZmodPow
+public import Nyll.ProCGroups.Abelian.AddMonoidHomNsmulEqZeroApplyEq
+public import Nyll.ProCGroups.Abelian.AddMonoidHomMemRangeSmulEqZero
+public import Nyll.ProCGroups.Abelian.AddMonoidHomNatCardKerCompEqMul
+public import Nyll.ProCGroups.Abelian.CharacterCardinalityTorsionFree
+public import Nyll.ProCGroups.Abelian.CharacterDetection
+public import Nyll.ProCGroups.Abelian.FiniteBidual
+public import Nyll.ProCGroups.Abelian.FiniteCharacterCriterion
+public import Nyll.ProCGroups.Abelian.FiniteFixedCharacters
+public import Nyll.ProCGroups.Abelian.FiniteInvariantQuotients
+public import Nyll.ProCGroups.Abelian.FinsuppListEqSumSingleSubSingle
+public import Nyll.ProCGroups.Abelian.FullTateCharacters
+public import Nyll.ProCGroups.Abelian.FullTateModule
+public import Nyll.ProCGroups.Abelian.FullTateModuleMap
+public import Nyll.ProCGroups.Abelian.FullTateRestriction
+public import Nyll.ProCGroups.Abelian.PowerQuotientAction
+public import Nyll.ProCGroups.Abelian.PrimaryDetection
+public import Nyll.ProCGroups.Abelian.PrimaryTorsion
+public import Nyll.ProCGroups.Abelian.PrimeExponentCharacters
+public import Nyll.ProCGroups.Abelian.PrimePowerCharacters
+public import Nyll.ProCGroups.Abelian.PrimeQuotients
+public import Nyll.ProCGroups.Abelian.ProfiniteBidual
+public import Nyll.ProCGroups.Abelian.ProfiniteCharacterCriterion
+public import Nyll.ProCGroups.Abelian.RestrictedTateModule
+public import Nyll.ProCGroups.Abelian.RestrictedTatePadic
+public import Nyll.ProCGroups.Abelian.RestrictedTatePairingWeights
+public import Nyll.ProCGroups.Abelian.RestrictedTateTorsionFree
+public import Nyll.ProCGroups.Abelian.RestrictedTateTransport
+public import Nyll.ProCGroups.Abelian.RootsOfUnityCharacterCriterion
+public import Nyll.ProCGroups.Abelian.SubgroupCommutator
+public import Nyll.ProCGroups.Abelian.SubmoduleFiniteTorsionByPow
+public import Nyll.ProCGroups.Abelian.SubmoduleNatCardTorsionByQuotientEqPowFinrank
+public import Nyll.ProCGroups.Abelian.SubtractionMonoidZsmulEqPrime
+public import Nyll.ProCGroups.Abelian.SubtractionMonoidZsmulEqPrimeNsmul
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianization
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianizationConjugationContinuity
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianizationKernel
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianizationLimits
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianizationQuotientFaithfulness
+public import Nyll.ProCGroups.Abelian.Transfer
+public import Nyll.ProCGroups.Abelian.CardTorsionMulDivisible
+
+
+public import Nyll.ProCGroups.Abelian.AbelianizedGeometricPreimage
+public import Nyll.ProCGroups.Abelian.ArithmeticFirstQuotient
+public import Nyll.ProCGroups.Abelian.CharacterFixedQuotients
+public import Nyll.ProCGroups.Abelian.CoherentDisplacementFamilies
+public import Nyll.ProCGroups.Abelian.ConjugationDifferenceIntersection
+public import Nyll.ProCGroups.Abelian.ConstantAbelianizationDetection
+public import Nyll.ProCGroups.Abelian.FiniteTransferSquare
+public import Nyll.ProCGroups.Abelian.MarkedLocalDetection
+public import Nyll.ProCGroups.Abelian.MaximalAbelianProP
+public import Nyll.ProCGroups.Abelian.PrimaryFixedDetection
+public import Nyll.ProCGroups.Abelian.PrimaryQuotientSplitting
+public import Nyll.ProCGroups.Abelian.PrimeToAbelianRoots
+public import Nyll.ProCGroups.Abelian.PrimeToRootsDetection
+public import Nyll.ProCGroups.Abelian.SemilinearFixedCharacters
+public import Nyll.ProCGroups.Abelian.SplitProcyclicAbelianization
+public import Nyll.ProCGroups.Abelian.TopologicalTransferComparison
+public import Nyll.ProCGroups.Abelian.TopologicalTransferNaturality
+public import Nyll.ProCGroups.Abelian.TransferThroughCoverEquiv
+
 
 /-!
 # Abelian constructions

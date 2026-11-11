@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.InducedFunctions
-import Nyll.ProCGroups.FiniteGroups.StandardClasses
+module
+
+public import Nyll.ProCGroups.InducedFunctions
+public import Nyll.ProCGroups.FiniteGroups.StandardClasses
 
 /-!
 # Finite-class preservation for induced groups
@@ -14,6 +16,8 @@ The induced group is a subgroup of the finite product of copies of its
 coefficient group. This gives Sigma membership and preserves finite
 abelian exponent bounds without a choice of coset representatives.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.InducedFunctions
 

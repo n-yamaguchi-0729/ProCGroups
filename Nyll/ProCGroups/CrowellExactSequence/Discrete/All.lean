@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.CrowellExactSequence.Discrete.BlanchfieldLyndon
-import Nyll.ProCGroups.CrowellExactSequence.Discrete.Exactness
-import Nyll.ProCGroups.CrowellExactSequence.Discrete.MainTheorem
-import Nyll.ProCGroups.CrowellExactSequence.Discrete.SequenceMaps
+module
+
+public import Nyll.ProCGroups.CrowellExactSequence.Discrete.BlanchfieldLyndon
+public import Nyll.ProCGroups.CrowellExactSequence.Discrete.Exactness
+public import Nyll.ProCGroups.CrowellExactSequence.Discrete.MainTheorem
+public import Nyll.ProCGroups.CrowellExactSequence.Discrete.SequenceMaps
 
 /-!
 # Discrete Crowell exact sequence

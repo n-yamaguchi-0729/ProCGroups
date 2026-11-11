@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.CompletedGroupAlgebra.ProfiniteModules.Basic.Definitions
-import Nyll.ProCGroups.CompletedGroupAlgebra.ProfiniteModules.Basic.FiniteQuotients
-import Nyll.ProCGroups.CompletedGroupAlgebra.ProfiniteModules.Basic.Generators
-import Nyll.ProCGroups.CompletedGroupAlgebra.ProfiniteModules.Basic.OpenIdeals
-import Nyll.ProCGroups.CompletedGroupAlgebra.ProfiniteModules.Basic.OpenSubmodule
+module
+
+public import Nyll.ProCGroups.CompletedGroupAlgebra.ProfiniteModules.Basic.Definitions
+public import Nyll.ProCGroups.CompletedGroupAlgebra.ProfiniteModules.Basic.FiniteQuotients
+public import Nyll.ProCGroups.CompletedGroupAlgebra.ProfiniteModules.Basic.Generators
+public import Nyll.ProCGroups.CompletedGroupAlgebra.ProfiniteModules.Basic.OpenIdeals
+public import Nyll.ProCGroups.CompletedGroupAlgebra.ProfiniteModules.Basic.OpenSubmodule
 
 /-!
 # Basic theory of profinite modules

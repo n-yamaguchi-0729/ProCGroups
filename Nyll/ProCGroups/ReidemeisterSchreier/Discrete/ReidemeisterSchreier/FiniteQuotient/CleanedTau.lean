@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.CleanedSymbols
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.FreeGroupLift
+module
+
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.FiniteQuotient.CleanedSymbols
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.FreeGroupLift
 
 /-!
 # Reidemeister Schreier / Discrete / Reidemeister Schreier / Finite Quotient / Cleaned Tau
@@ -15,6 +17,8 @@ and proves that the cleaned rewriting respects reduction, multiplication, and
 the original tau evaluation.
 -/
 
+
+@[expose] public section
 
 namespace ReidemeisterSchreier.Discrete
 

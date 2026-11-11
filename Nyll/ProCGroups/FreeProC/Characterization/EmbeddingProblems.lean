@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FreeProC.Basic
-import Nyll.ProCGroups.TopologicalGroups
+module
+
+public import Nyll.ProCGroups.FreeProC.Basic
+public import Nyll.ProCGroups.TopologicalGroups
 
 /-!
 # Pro C Groups / Free pro-C / Characterization / Embedding Problems
@@ -13,6 +15,8 @@ import Nyll.ProCGroups.TopologicalGroups
 This module defines topological embedding problems, their weak and proper
 solutions, and the finite split lifting properties used in freeness criteria.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.FreeProC.Characterization
 
@@ -51,6 +55,23 @@ def ProperSolution (P : TopologicalEmbeddingProblem G) : Type u :=
 /-- The embedding problem is split: its epimorphism has a continuous section. -/
 def IsSplit (P : TopologicalEmbeddingProblem G) : Prop :=
   ∃ σ : P.B →ₜ* P.A, P.α.comp σ = ContinuousMonoidHom.id P.B
+
+/-- An embedding problem is nontrivial when its surjective covering map has nontrivial kernel. -/
+def IsNontrivial (P : TopologicalEmbeddingProblem G) : Prop :=
+  ¬ Function.Injective P.α
+
+/-- An injective covering map allows at most one proper solution. -/
+theorem properSolution_subsingleton_of_injective
+    (P : TopologicalEmbeddingProblem G) (hα : Function.Injective P.α) :
+    Subsingleton P.ProperSolution := by
+  refine ⟨?_⟩
+  intro ψ₁ ψ₂
+  apply Subtype.ext
+  apply ContinuousMonoidHom.ext
+  intro g
+  apply hα
+  exact (congrArg (fun f : G →ₜ* P.B => f g) ψ₁.2.2).trans
+    (congrArg (fun f : G →ₜ* P.B => f g) ψ₂.2.2).symm
 
 /--
 An embedding problem has at least \(\kappa\) different solutions if there is a family of

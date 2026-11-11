@@ -4,7 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Free.Rules
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Free.Rules
+public import Nyll.ProCGroups.FiniteGroups.AllFinite
+public import Nyll.ProCGroups.ProC.Category.Basic
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
 
 /-!
 # Fox differential: completed — continuous — chain rule — basic
@@ -20,6 +25,8 @@ The principal declarations in this module are:
 - `allFinite_freeProCZCCompletedFoxJacobianMatrixStage_apply`
   Evaluation of the finite-stage completed Fox-Jacobian matrix.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

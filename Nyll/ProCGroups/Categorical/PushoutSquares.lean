@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Category.Grp.Basic
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Defs
-import Mathlib.GroupTheory.Coprod.Basic
-import Nyll.ProCGroups.Profinite.Basic
-import Nyll.ProCGroups.Topologies.ContinuousMulEquiv
+module
+
+public import Mathlib.Algebra.Category.Grp.Basic
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Defs
+public import Mathlib.GroupTheory.Coprod.Basic
+public import Nyll.ProCGroups.Profinite.Basic
+public import Nyll.ProCGroups.Topologies.ContinuousMulEquiv
 
 /-!
 # Pro C Groups / Categorical / Pushout Squares
@@ -16,6 +18,8 @@ import Nyll.ProCGroups.Topologies.ContinuousMulEquiv
 This module constructs algebraic group pushouts from free products and normal
 closures, and develops algebraic and profinite-tested pushout universal properties.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.Categorical
 

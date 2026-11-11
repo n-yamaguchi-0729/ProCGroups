@@ -4,11 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.RepresentationTheory.Homological.GroupHomology.LongExactSequence
-import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.Basic
+module
+
+public import Mathlib.RepresentationTheory.Homological.GroupHomology.LongExactSequence
+public import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.Basic
 
 /-!
 # Fox differential: discrete — kernel boundary — homology
+
+The pure kernel-splitting equivalence and its equivariance allow independent
+universes for the source and target groups. The integral group-homology
+construction below uses the common universe required by the homology API.
 
 The principal declarations in this module are:
 
@@ -24,18 +30,19 @@ The principal declarations in this module are:
   and \(a\in \mathbb{Z}[H]\) to the tensor of the singleton at \(g\) with \(a\).
 -/
 
+@[expose] public section
+
 namespace FoxDifferential
 
 noncomputable section
 
 open CategoryTheory Limits Representation Rep TensorProduct MonoidalCategory
 
-variable {H G : Type} [Group H] [DecidableEq H] [Group G] [DecidableEq G]
+universe u v
 
-section KernelGroupRing
+section KernelSplit
 
-variable {H G : Type} [Group H] [DecidableEq H] [Group G] [DecidableEq G]
-
+variable {H : Type u} {G : Type v} [Group H] [Group G]
 variable (ψ : G →* H) (hψ : Function.Surjective ψ)
 
 /-- The kernel-boundary codomain carries the trivial multiplication action. -/
@@ -43,10 +50,6 @@ instance instMulActionKernelCodomainTrivial : MulAction ↥(ψ.ker) H where
   smul _ h := h
   one_smul _ := rfl
   mul_smul _ _ _ := rfl
-
-/-- The left-multiplication representation of \(\ker \psi\) on \(\mathbb{Z}[G]\). -/
-abbrev kernelGroupRingRep : Rep ℤ ↥(ψ.ker) :=
-  Rep.ofMulAction ℤ ↥(ψ.ker) G
 
 /-- A section-based decomposition G \(\simeq\) \(\ker \psi\) \(\times\) H. -/
 def kernelSplitEquiv : G ≃ ↥(ψ.ker) × H where
@@ -69,7 +72,6 @@ def kernelSplitEquiv : G ≃ ↥(ψ.ker) × H where
     · change ψ (n.1 * Function.surjInv hψ h) = h
       rw [map_mul, n.2, one_mul, Function.surjInv_eq hψ h]
 
-omit [DecidableEq H] [DecidableEq G] in
 /--
 The kernel-splitting equivalence is equivariant for the left action of \(\ker\psi\): acting by
 \(n\) before applying the equivalence is the same as acting by \(n\) afterward.
@@ -86,6 +88,20 @@ theorem kernelSplitEquiv_smul (n : ↥(ψ.ker)) (g : G) :
     simp only [mul_assoc]
   · change ψ (n.1 * g) = ψ g
     rw [map_mul, n.2, one_mul]
+
+end KernelSplit
+
+variable {H G : Type} [Group H] [DecidableEq H] [Group G] [DecidableEq G]
+
+section KernelGroupRing
+
+variable {H G : Type} [Group H] [DecidableEq H] [Group G] [DecidableEq G]
+
+variable (ψ : G →* H) (hψ : Function.Surjective ψ)
+
+/-- The left-multiplication representation of \(\ker \psi\) on \(\mathbb{Z}[G]\). -/
+abbrev kernelGroupRingRep : Rep ℤ ↥(ψ.ker) :=
+  Rep.ofMulAction ℤ ↥(ψ.ker) G
 
 /--
 The \(\ker \psi\)-representation on \(\mathbb{Z}[\ker \psi\] \otimes \mathbb{Z}[H]\) whose first

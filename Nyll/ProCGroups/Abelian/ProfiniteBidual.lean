@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Abelian.FiniteBidual
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Basic
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.BasisAtOne
-import Mathlib.Topology.Compactness.Compact
-import Mathlib.Topology.Homeomorph.Lemmas
+module
+
+public import Nyll.ProCGroups.Abelian.FiniteBidual
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Basic
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.BasisAtOne
+public import Mathlib.Topology.Compactness.Compact
+public import Mathlib.Topology.Homeomorph.Lemmas
 
 /-!
 # Pontryagin biduality for profinite abelian groups
@@ -19,6 +21,8 @@ therefore solves any finite set of evaluation equations. Compactness solves
 all of them simultaneously. Finite quotients also prove injectivity, giving
 the actual topological bidual isomorphism, including finite torsion.
 -/
+
+@[expose] public section
 
 noncomputable section
 

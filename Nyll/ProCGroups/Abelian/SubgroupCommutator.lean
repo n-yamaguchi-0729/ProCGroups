@@ -4,7 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FiniteStepSolvableQuotients.Commutators.DerivedSeriesAndQuotients
+module
+
+public import Nyll.ProCGroups.FiniteStepSolvableQuotients.Commutators.DerivedSeriesAndQuotients
+public import Nyll.ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
 
 /-!
 # Closed commutators of closed subgroups
@@ -13,6 +16,8 @@ For a closed subgroup, the image of its closed commutator under the
 subgroup inclusion is the topological closure of its commutator in the
 ambient group.
 -/
+
+@[expose] public section
 
 open scoped commutatorElement
 namespace ProCGroups.Abelian

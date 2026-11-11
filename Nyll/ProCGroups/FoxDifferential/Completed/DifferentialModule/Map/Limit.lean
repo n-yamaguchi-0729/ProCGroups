@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.Map.Stage
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.Map.Stage
 
 /-!
 # Fox differential: completed — differential module — map — limit
@@ -21,6 +23,8 @@ The principal declarations in this module are:
   The completed group-algebra map induced by a continuous homomorphism is continuous for the
   inverse-limit topologies.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

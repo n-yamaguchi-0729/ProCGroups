@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.InClass.System.Ring.Projection
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.InClass.System.Ring.Projection
 
 /-!
 # Fox differential: coefficient rings — prime-power completed group algebra — in class — map
@@ -23,6 +25,8 @@ The principal declarations in this module are:
   The class-indexed prime-power stage map transports a singleton coefficient to the singleton at its
   quotient image.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

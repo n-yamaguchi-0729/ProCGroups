@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.StageProjection
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.CofinalQuotientKernelBasis
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Limit.Semidirect
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.StageProjection
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.CofinalQuotientKernelBasis
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Limit.Semidirect
 
 /-!
 # Fox differential: completed — free pro-\(C\) — prime power stage projection
@@ -25,6 +27,8 @@ The principal declarations in this module are:
   The right coordinate of the prime-power completed Fox semidirect stage map is the selected target
   quotient map.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

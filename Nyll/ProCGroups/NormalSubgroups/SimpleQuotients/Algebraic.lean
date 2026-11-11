@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.NormalSubgroups.Framework
+module
+
+public import Nyll.ProCGroups.NormalSubgroups.Framework
 
 /-!
 # Algebraic properties of simple quotients
@@ -12,6 +14,8 @@ import Nyll.ProCGroups.NormalSubgroups.Framework
 This module translates simplicity of `G ⧸ K` into a dichotomy for normal subgroups above `K` and
 derives the intersection property needed for noncommutative simple quotients.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.NormalSubgroups
 

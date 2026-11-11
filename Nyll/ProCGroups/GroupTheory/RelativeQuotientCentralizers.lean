@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Separation
-import Mathlib.GroupTheory.Subgroup.Centralizer
-import Mathlib.GroupTheory.Commutator.Basic
+module
+
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Separation
+public import Mathlib.GroupTheory.Subgroup.Centralizer
+public import Mathlib.GroupTheory.Commutator.Basic
 
 /-!
 # Relative fixed points and quotient centralizers
@@ -15,6 +17,8 @@ Vanishing relative fixed points and detection of centralizers by open
 supergroups force an element centralizing an open subgroup modulo a
 quotient kernel to be trivial.
 -/
+
+@[expose] public section
 
 open scoped commutatorElement
 

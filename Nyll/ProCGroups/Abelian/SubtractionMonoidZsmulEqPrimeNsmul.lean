@@ -10,11 +10,15 @@ Upstream per-file ATTRIBUTION: https://github.com/anthropics/fermats-last-theore
 Repository maintainer: Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
 -/
 
-import Nyll.ProCGroups.Abelian.SubtractionMonoidZsmulEqPrime
+module
+
+public import Nyll.ProCGroups.Abelian.SubtractionMonoidZsmulEqPrime
 
 /-!
 # Subtraction Monoid exists zsmul eq of forall prime nsmul
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Completion.ProCInteger
-import Nyll.ProCGroups.Generation.Basic
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Basic
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Separation
-import Nyll.ProCGroups.Topologies.ContinuousMulEquiv
-import Mathlib.GroupTheory.SpecificGroups.Cyclic
+module
+
+public import Nyll.ProCGroups.Completion.ProCInteger
+public import Nyll.ProCGroups.Generation.Basic
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Basic
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Separation
+public import Nyll.ProCGroups.Topologies.ContinuousMulEquiv
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic
 
 /-!
 # Recognizing the full profinite integers
@@ -19,6 +21,8 @@ order is isomorphic to the actual inverse limit of all finite cyclic groups. Nor
 coefficient map at the generator proves its uniqueness and hence the compatibility of the
 independently chosen finite quotients.
 -/
+
+@[expose] public section
 
 noncomputable section
 

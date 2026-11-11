@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.CrowellExactSequence.Profinite.FreeExactness
-import Nyll.ProCGroups.FreeProC.FiniteBasis
+module
+
+public import Nyll.ProCGroups.CrowellExactSequence.Profinite.FreeExactness
+public import Nyll.ProCGroups.FreeProC.FiniteBasis
+public import Nyll.ProCGroups.Generation.Basic
 
 /-!
 # Crowell Exact Sequence / Profinite / Blanchfield Lyndon
@@ -14,6 +17,8 @@ This module gives the completed Blanchfield--Lyndon boundary maps and exact
 sequences in canonical lifted coordinates.  Concrete `Fin n` formulations are
 obtained by reindexing only at their public presentation boundary.
 -/
+
+@[expose] public section
 
 namespace CrowellExactSequence
 

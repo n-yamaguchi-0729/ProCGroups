@@ -4,10 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.InverseSystems.FiniteStageFactorization
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Basic
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.FilteredFamilies
-import Nyll.ProCGroups.Profinite.Basic
+module
+
+public import Nyll.ProCGroups.InverseSystems.FiniteStageFactorization
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Basic
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.FilteredFamilies
+public import Nyll.ProCGroups.Profinite.Basic
+public import Nyll.ProCGroups.InverseSystems.Basic
 
 /-!
 # The order structure on closed subgroups
@@ -15,6 +18,8 @@ import Nyll.ProCGroups.Profinite.Basic
 This module equips closed subgroups with basic lattice operations, develops continuous images and
 preimages, and relates order-theoretic constructions to finite quotients of profinite groups.
 -/
+
+@[expose] public section
 
 open Set
 open scoped Topology Pointwise BigOperators
@@ -134,12 +139,12 @@ theorem map_bot [CompactSpace G] [T1Space G] [T2Space K]
     change x ∈ (⊥ : Subgroup G) at hx
     change φ x ∈ (⊥ : Subgroup K)
     rw [Subgroup.mem_bot] at hx ⊢
-    simp [hx]
+    rw [hx, map_one]
   · intro hy
     change y ∈ (⊥ : Subgroup K) at hy
     refine ⟨1, by simp only [SetLike.mem_coe, one_mem], ?_⟩
     rw [Subgroup.mem_bot] at hy
-    simp [hy]
+    rw [hy, map_one]
 
 omit [IsTopologicalGroup K] in
 /-- The image of the top closed subgroup under a surjective homomorphism is top. -/
@@ -449,9 +454,8 @@ instance compatibleClosedSubgroupSystem_group
           ClosedSubgroup (S.X i)) : Subgroup (S.X i)) =
         (L i : Subgroup (S.X i)))
     (i : I) :
-    Group ((compatibleClosedSubgroupSystem (S := S) L hcompat).X i) := by
-  dsimp [compatibleClosedSubgroupSystem]
-  infer_instance
+    Group ((compatibleClosedSubgroupSystem (S := S) L hcompat).X i) :=
+  (inferInstance : Group (L i))
 
 /-- A compatible closed-subgroup system is a group-valued inverse system. -/
 instance compatibleClosedSubgroupSystem_isGroupSystem
@@ -491,9 +495,8 @@ def compatibleClosedSubgroupInclusion
         (L i : Subgroup (S.X i))) :
     (compatibleClosedSubgroupSystem (S := S) L hcompat).Morphism S where
   map := fun i => Subtype.val
-  continuous_map := fun i => by
-    dsimp [compatibleClosedSubgroupSystem]
-    exact continuous_subtype_val
+  continuous_map := fun i =>
+    (continuous_subtype_val : Continuous (fun x : L i => (x : S.X i)))
   comm := fun {i j} hij => by
     funext x
     rfl

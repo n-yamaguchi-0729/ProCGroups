@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Topology.Algebra.OpenSubgroup
-import Mathlib.Topology.Algebra.ContinuousMonoidHom
+module
+
+public import Mathlib.Topology.Algebra.OpenSubgroup
+public import Mathlib.Topology.Algebra.ContinuousMonoidHom
 
 /-!
 # The whole group as an open subgroup
@@ -13,6 +15,8 @@ import Mathlib.Topology.Algebra.ContinuousMonoidHom
 This file records the canonical continuous multiplicative equivalence between a topological group
 and the subtype of its top open subgroup, together with its forward and inverse formulas.
 -/
+
+@[expose] public section
 
 open scoped Topology
 

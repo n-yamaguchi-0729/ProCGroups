@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Derivative
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Derivative
 
 /-!
 # Fox differential: discrete — fox calculus — universal
@@ -23,6 +25,8 @@ The principal declarations in this module are:
   The coordinate-to-differential map sends a coordinate basis vector to the corresponding universal
   generator differential.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

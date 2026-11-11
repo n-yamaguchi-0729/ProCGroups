@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.GroupTheory.SemidirectProduct
-import Mathlib.Algebra.Group.Hom.Basic
+module
+
+public import Mathlib.GroupTheory.SemidirectProduct
+public import Mathlib.Algebra.Group.Hom.Basic
 
 /-!
 # A split homomorphism as its kernel semidirect product
@@ -14,6 +16,8 @@ The section acts on the actual kernel by conjugation. Multiplication of a
 kernel element by the image of the section reconstructs the original group.
 No commutativity or finiteness assumption is required.
 -/
+
+@[expose] public section
 
 namespace ProCGroups
 

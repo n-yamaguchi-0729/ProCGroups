@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.TargetQuotient.Basic
-import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.TargetQuotient.Fundamental
-import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.TargetQuotient.MulProjection
-import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.TargetQuotient.StageMap
-import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.TargetQuotient.Surjective
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.TargetQuotient.Basic
+public import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.TargetQuotient.Fundamental
+public import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.TargetQuotient.MulProjection
+public import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.TargetQuotient.StageMap
+public import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.TargetQuotient.Surjective
 
 /-!
 # Fox differential: completed — differential module — target quotient

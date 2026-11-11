@@ -4,14 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FreeProC.Characterization.AbelianKernelEmbeddingProblems
-import Nyll.ProCGroups.FreeProC.Characterization.OpenSubgroupFiniteQuotient
-import Nyll.ProCGroups.InducedFunctions
-import Nyll.ProCGroups.InducedSemidirect
-import Nyll.ProCGroups.GroupTheory.SplitSemidirect
-import Nyll.ProCGroups.GroupTheory.SemidirectSubgroups
-import Mathlib.Algebra.GroupWithZero.Action.End
-import Mathlib.Topology.Algebra.Group.Basic
+module
+
+public import Nyll.ProCGroups.FreeProC.Characterization.AbelianKernelEmbeddingProblems
+public import Nyll.ProCGroups.FreeProC.Characterization.OpenSubgroupFiniteQuotient
+public import Nyll.ProCGroups.InducedFunctions
+public import Nyll.ProCGroups.InducedSemidirect
+public import Nyll.ProCGroups.GroupTheory.SplitSemidirect
+public import Nyll.ProCGroups.GroupTheory.SemidirectSubgroups
+public import Mathlib.Algebra.GroupWithZero.Action.End
+public import Mathlib.Topology.Algebra.Group.Basic
 
 /-!
 # Split abelian-kernel solvability passes to open subgroups
@@ -21,6 +23,8 @@ ambient quotient. Inducing its kernel action gives a split problem for the
 ambient group. Its proper solution restricts surjectively to the required
 semidirect subgroup, and evaluation recovers the original problem.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.FreeProC.Characterization
 

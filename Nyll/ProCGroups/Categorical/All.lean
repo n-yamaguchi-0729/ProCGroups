@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Categorical.AlgebraicPullbacks
-import Nyll.ProCGroups.Categorical.ProfinitePullbacks
-import Nyll.ProCGroups.Categorical.PullbackComparison
-import Nyll.ProCGroups.Categorical.PushoutSquares
-import Nyll.ProCGroups.Categorical.QuotientPullbackEquivalences
+module
+
+public import Nyll.ProCGroups.Categorical.AlgebraicPullbacks
+public import Nyll.ProCGroups.Categorical.ProfinitePullbacks
+public import Nyll.ProCGroups.Categorical.PullbackComparison
+public import Nyll.ProCGroups.Categorical.PushoutSquares
+public import Nyll.ProCGroups.Categorical.QuotientPullbackEquivalences
 
 /-!
 # Pro C Groups / Categorical

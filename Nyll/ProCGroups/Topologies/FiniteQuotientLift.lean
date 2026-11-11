@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Limits
+module
+
+public import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Limits
 
 /-!
 # Continuous maps assembled from finite quotients
@@ -13,6 +15,8 @@ A compatible family of continuous homomorphisms to all finite quotients of
 a profinite group defines a continuous homomorphism to that group. If every
 finite coordinate is surjective, the assembled homomorphism has dense range.
 -/
+
+@[expose] public section
 
 noncomputable section
 

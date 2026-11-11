@@ -5,7 +5,9 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
 
-import Mathlib.GroupTheory.Sylow
+module
+
+public import Mathlib.GroupTheory.Sylow
 
 /-!
 # Lifting elements of finite p-group quotients
@@ -13,6 +15,8 @@ import Mathlib.GroupTheory.Sylow
 A surjection from a finite group onto a p-group admits lifts of p-power
 order for every element of the quotient.
 -/
+
+@[expose] public section
 
 namespace ProCGroups
 

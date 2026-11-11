@@ -4,13 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.GroupTheory.Coset.Basic
-import Mathlib.GroupTheory.GroupAction.Defs
-import Mathlib.GroupTheory.GroupAction.Hom
-import Mathlib.GroupTheory.GroupAction.SubMulAction
-import Mathlib.GroupTheory.PGroup
-import Mathlib.SetTheory.Cardinal.Finite
+module
+
+public import Mathlib.Data.Nat.Prime.Basic
+public import Mathlib.GroupTheory.Coset.Basic
+public import Mathlib.GroupTheory.GroupAction.Defs
+public import Mathlib.GroupTheory.GroupAction.Hom
+public import Mathlib.GroupTheory.GroupAction.SubMulAction
+public import Mathlib.GroupTheory.PGroup
+public import Mathlib.SetTheory.Cardinal.Finite
 
 /-!
 # Fixed lifts under coprime group actions
@@ -23,6 +25,8 @@ particular, this holds for a quotient of a finite `p`-group when `r ≠ p`.
 No finiteness assumption on the acting group is needed.  The fiber uses the
 canonical action on a `SubMulAction`; no action instance is installed here.
 -/
+
+@[expose] public section
 
 namespace ClassFieldTower.ProP
 

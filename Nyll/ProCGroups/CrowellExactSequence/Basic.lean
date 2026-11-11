@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Common.FiniteFamilyLinearMap
-import Mathlib.Topology.Basic
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Common.FiniteFamilyLinearMap
+public import Mathlib.Topology.Basic
 
 /-!
 # `ProCGroups.CrowellExactSequence.Basic`
@@ -16,6 +18,8 @@ This module contains the common four-term linear-sequence interface, exactness t
 lemmas, and the finite Blanchfield--Lyndon coordinate map used by the discrete and profinite
 theories.
 -/
+
+@[expose] public section
 
 namespace CrowellExactSequence
 

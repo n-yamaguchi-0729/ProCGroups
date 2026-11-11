@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Automation
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.KernelQuotient
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.All
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.All
+module
+
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Automation
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.KernelQuotient
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.All
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.All
 
 /-!
 # Presentation tools for Reidemeister--Schreier rewriting

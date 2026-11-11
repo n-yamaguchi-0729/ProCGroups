@@ -4,11 +4,25 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.MagnusComparison
-import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.Quotient
-import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Boundary
-import Nyll.ProCGroups.FoxDifferential.Completed.Comparison.DiscreteCompletion
-import Mathlib.Basic.Finite.Defs
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.MagnusComparison
+public import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.Quotient
+public import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Boundary
+public import Nyll.ProCGroups.FoxDifferential.Completed.Comparison.DiscreteCompletion
+public import Mathlib.Basic.Finite.Defs
+public import Nyll.ProCGroups.FiniteGroups.AllFinite
+public import Nyll.ProCGroups.FiniteGroups.Classes
+public import Nyll.ProCGroups.FiniteGroups.StandardClasses
+public import Nyll.ProCGroups.FoxDifferential.Completed.Comparison.FiniteStage
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Basic
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.MagnusQuotient
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Derivative.Lift
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Semidirect
+public import Nyll.ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.FreeGroup.Derivative
+public import Nyll.ProCGroups.FoxDifferential.Completed.Residue.Core
+public import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Derivative
+public import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Universal
 
 /-!
 # Fox Differential / Completed / Comparison / Magnus Kernel
@@ -16,6 +30,8 @@ import Mathlib.Basic.Finite.Defs
 This module transfers discrete Magnus-kernel criteria through finite algebraic stages and
 completed Fox differential coordinates.
 -/
+
+@[expose] public section
 
 namespace CrowellExactSequence
 

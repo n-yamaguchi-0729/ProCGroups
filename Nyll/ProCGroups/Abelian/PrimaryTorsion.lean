@@ -4,9 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Abelian.PrimaryDetection
+module
+
+public import Nyll.ProCGroups.Abelian.PrimaryDetection
+public import Nyll.ProCGroups.ProC.Quotients.ClosedNormal
+public import Nyll.ProCGroups.Profinite.Basic
 
 /-! # Prime torsion is detected by the corresponding primary quotient -/
+
+@[expose] public section
 
 namespace ProCGroups.ProC
 

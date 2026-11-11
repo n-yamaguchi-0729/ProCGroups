@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Common.All
-import Nyll.ProCGroups.FoxDifferential.Completed.All
-import Nyll.ProCGroups.FoxDifferential.Discrete.All
-import Nyll.ProCGroups.FoxDifferential.RightDerivative.All
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Common.All
+public import Nyll.ProCGroups.FoxDifferential.Completed.All
+public import Nyll.ProCGroups.FoxDifferential.Discrete.All
+public import Nyll.ProCGroups.FoxDifferential.RightDerivative.All
 
 /-!
 # Fox differential calculus

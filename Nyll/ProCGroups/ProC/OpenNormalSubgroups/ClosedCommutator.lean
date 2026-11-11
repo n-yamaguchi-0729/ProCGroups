@@ -4,9 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Abelian.TopologicalAbelianizationLimits
-import Nyll.ProCGroups.ProC.InverseLimits.FiniteQuotients
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.LimitPresentation
+module
+
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianizationLimits
+public import Nyll.ProCGroups.ProC.InverseLimits.FiniteQuotients
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.LimitPresentation
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianization
+public import Nyll.ProCGroups.ProC.Quotients.ClosedNormal
+public import Nyll.ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
 
 /-!
 # Detecting the closed commutator subgroup in finite quotients
@@ -16,11 +21,13 @@ in open-normal pro-\(C\) quotients. Equivalent formulations use quotient commuta
 families of open normal subgroups.
 -/
 
+@[expose] public section
+
 namespace ProCGroups.ProC
 
 open scoped Topology
 
-universe u
+universe u v
 
 variable {C : FiniteGroupClass.{u}}
 variable {G : Type u} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
@@ -29,7 +36,7 @@ variable [CompactSpace G] [T2Space G]
 /-- Every continuous homomorphism from the source to a finite discrete abelian group kills the
 kernel of `f`. -/
 def FiniteDiscreteAbelianMapsKillKernel
-    {Q : Type u} [Group Q] [TopologicalSpace Q]
+    {Q : Type v} [Group Q] [TopologicalSpace Q]
     (f : G →ₜ* Q) : Prop :=
   ∀ (A : Type u) [Finite A] [TopologicalSpace A] [CommGroup A] [DiscreteTopology A],
     ∀ φ : G →ₜ* A, f.ker ≤ φ.ker
@@ -41,7 +48,7 @@ the closed commutator subgroup.
 -/
 theorem ker_le_closedCommutator_of_finiteDiscreteAbelianMapsKillKernel
     [TotallyDisconnectedSpace G]
-    {Q : Type u} [Group Q] [TopologicalSpace Q]
+    {Q : Type v} [Group Q] [TopologicalSpace Q]
     (f : G →ₜ* Q) (hkill : FiniteDiscreteAbelianMapsKillKernel f) :
     f.ker ≤ Subgroup.closedCommutator G := by
   intro x hx
@@ -80,7 +87,7 @@ f n is in the ordinary commutator subgroup of K, and the kernel of f dies in the
 \(N/U\), then the image of n in \(N/U\) is in the ordinary commutator subgroup.
 -/
 theorem quotient_mk_mem_commutator_of_surjective_image_mem_commutator
-    {N K : Type u} [Group N] [Group K]
+    {N : Type u} {K : Type v} [Group N] [Group K]
     (f : N →* K) (hf : Function.Surjective f)
     (U : Subgroup N) [U.Normal] (hkerU : f.ker ≤ U)
     {n : N} (hn : f n ∈ commutator K) :

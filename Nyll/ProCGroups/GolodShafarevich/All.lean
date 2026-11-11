@@ -4,17 +4,19 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.GolodShafarevich.CountableRelatorTarget
-import Nyll.ProCGroups.GolodShafarevich.CountableRelators
-import Nyll.ProCGroups.GolodShafarevich.WeightedFiniteCriterion
-import Nyll.ProCGroups.GolodShafarevich.FiniteCriterion
-import Nyll.ProCGroups.GolodShafarevich.FiniteDimensions
-import Nyll.ProCGroups.GolodShafarevich.GeneratorGap
-import Nyll.ProCGroups.GolodShafarevich.GradedPieces
-import Nyll.ProCGroups.GolodShafarevich.NumericalCriterion
-import Nyll.ProCGroups.GolodShafarevich.TruncatedFoxMaps
-import Nyll.ProCGroups.GolodShafarevich.TruncatedFoxSequence
-import Nyll.ProCGroups.GolodShafarevich.TruncatedInequality
+module
+
+public import Nyll.ProCGroups.GolodShafarevich.CountableRelatorTarget
+public import Nyll.ProCGroups.GolodShafarevich.CountableRelators
+public import Nyll.ProCGroups.GolodShafarevich.WeightedFiniteCriterion
+public import Nyll.ProCGroups.GolodShafarevich.FiniteCriterion
+public import Nyll.ProCGroups.GolodShafarevich.FiniteDimensions
+public import Nyll.ProCGroups.GolodShafarevich.GeneratorGap
+public import Nyll.ProCGroups.GolodShafarevich.GradedPieces
+public import Nyll.ProCGroups.GolodShafarevich.NumericalCriterion
+public import Nyll.ProCGroups.GolodShafarevich.TruncatedFoxMaps
+public import Nyll.ProCGroups.GolodShafarevich.TruncatedFoxSequence
+public import Nyll.ProCGroups.GolodShafarevich.TruncatedInequality
 
 /-!
 # Golod--Shafarevich theory for pro-p groups

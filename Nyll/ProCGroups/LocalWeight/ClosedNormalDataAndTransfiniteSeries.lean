@@ -4,8 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Generation.WordProductsAndClosure
-import Nyll.ProCGroups.LocalWeight.MetrizabilityAndQuotients
+module
+
+public import Nyll.ProCGroups.FiniteGroups.Classes
+public import Nyll.ProCGroups.Generation.WordProductsAndClosure
+public import Nyll.ProCGroups.LocalWeight.MetrizabilityAndQuotients
+public import Nyll.ProCGroups.ProC.Quotients.ClosedNormal
 
 /-!
 # Closed normal chains and local weight
@@ -15,6 +19,8 @@ subgroups from local-weight bounds.  Successive quotients lie in a prescribed
 finite-group class, and the resulting series recovers the corresponding
 cardinal bound without external assumption packages.
 -/
+
+@[expose] public section
 
 open Set
 open TopologicalSpace
@@ -157,7 +163,8 @@ theorem closed_normal_subgroup_eq_inter_openNormal_of_finite_index
     have hxBot : QuotientGroup.mk' K x ∈ (⊥ : Subgroup (G ⧸ K)) := by
       have hxInf : QuotientGroup.mk' K x ∈ ((W : Subgroup (G ⧸ K)) ⊓ ψ.range) :=
         ⟨hxW, hxRange⟩
-      simpa [hWbot] using hxInf
+      rw [hWbot] at hxInf
+      exact hxInf
     have hxOne : QuotientGroup.mk' K x = 1 := by
       simpa using hxBot
     exact (QuotientGroup.eq_one_iff (N := K) x).1 hxOne
@@ -186,7 +193,7 @@ theorem localWeight_le_of_openNormal_family
       V₁.1 = f (chooseIdx V₁) := (hchoose V₁).symm
       _ = f (chooseIdx V₂) := by simp only [hEq]
       _ = V₂.1 := hchoose V₂
-  simpa [localWeight] using
+  change localWeightAt (X := G) (1 : G) ≤ κ
   calc
     localWeightAt (X := G) (1 : G) ≤ familyCardinal (X := G) (Set.range f) :=
       localWeightAt_le_familyCardinal_of_basis (X := G) (x := (1 : G)) hWbasis
@@ -484,57 +491,25 @@ theorem localWeight_split_over_closedNormalSubgroup
         exact max_le_iff.mpr ⟨hHle, hQle⟩
   exact le_antisymm hUpper hLower
 
-/-- Subadditivity of quotient local weight along a chain \(H \le K \le M\). -/
-theorem quotientLocalWeight_subadd_of_subgroup_chain
+/-- Enlarging `H` to `K` decreases the quotient local weight in `M`, so adding the
+nonnegative cardinal for `K / (H ∩ K)` preserves the upper bound. No inclusion `K ≤ M`
+is required. This is quotient monotonicity, not an upper bound on an extension. -/
+theorem quotientLocalWeight_le_add_of_subgroup_le
     (G : Type u) [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
     (H M K : ClosedNormalSubgroupData G)
     (hHK : H.toSubgroup ≤ K.toSubgroup) :
     quotientLocalWeight (G := ↥M.toSubgroup) (K.toSubgroup.subgroupOf M.toSubgroup) ≤
       quotientLocalWeight (G := ↥M.toSubgroup) (H.toSubgroup.subgroupOf M.toSubgroup) +
       quotientLocalWeight (G := ↥K.toSubgroup) (H.toSubgroup.subgroupOf K.toSubgroup) := by
-  let HM : Subgroup ↥M.toSubgroup := H.toSubgroup.subgroupOf M.toSubgroup
-  let KM : Subgroup ↥M.toSubgroup := K.toSubgroup.subgroupOf M.toSubgroup
-  have hHMK : HM ≤ KM := by
-    intro x hx
-    exact hHK hx
-  have hopen :
-      IsOpenMap (leftQuotientProjection HM KM hHMK : (↥M.toSubgroup ⧸ HM) → (↥M.toSubgroup ⧸ KM)) :=
-      by
-    intro U hU
-    have hpre :
-        IsOpen ((QuotientGroup.mk (s := HM)) ⁻¹' U) := by
-      exact ((QuotientGroup.isQuotientMap_mk HM).isOpen_preimage).2 hU
-    have himage :
-        leftQuotientProjection HM KM hHMK '' U =
-          (QuotientGroup.mk (s := KM)) '' ((QuotientGroup.mk (s := HM)) ⁻¹' U) := by
-      ext y
-      constructor
-      · rintro ⟨x, hxU, rfl⟩
-        revert hxU
-        refine Quotient.inductionOn x ?_
-        intro g hgU
-        refine ⟨g, hgU, ?_⟩
-        simp only [leftQuotientProjection_mk]
-      · rintro ⟨g, hgU, rfl⟩
-        refine ⟨QuotientGroup.mk (s := HM) g, hgU, ?_⟩
-        simp only [leftQuotientProjection_mk]
-    rw [himage]
-    exact (QuotientGroup.isOpenMap_coe (N := KM)) _ hpre
-  have hmon :
-      quotientLocalWeight (G := ↥M.toSubgroup) (K.toSubgroup.subgroupOf M.toSubgroup) ≤
-        quotientLocalWeight (G := ↥M.toSubgroup) (H.toSubgroup.subgroupOf M.toSubgroup) := by
-    have hle :=
-      localWeightAt_image_le_of_continuous_open
-        (X := (↥M.toSubgroup ⧸ HM)) (Y := (↥M.toSubgroup ⧸ KM))
-        (x := (1 : ↥M.toSubgroup ⧸ HM))
-        (f := leftQuotientProjection HM KM hHMK)
-        (continuous_leftQuotientProjection HM KM hHMK) hopen
-    have hmap_one :
-        leftQuotientProjection HM KM hHMK (1 : ↥M.toSubgroup ⧸ HM) = 1 := by
-      exact leftQuotientProjection_mk HM KM hHMK 1
-    rw [hmap_one] at hle
-    simpa [quotientLocalWeight, HM, KM] using hle
-  exact hmon.trans (self_le_add_right _ _)
+  have hHMK : H.toSubgroup.subgroupOf M.toSubgroup ≤
+      K.toSubgroup.subgroupOf M.toSubgroup := fun _ hx => hHK hx
+  exact (quotientLocalWeight_mono_of_le (G := ↥M.toSubgroup) hHMK).trans
+    (self_le_add_right _ _)
+
+/-- Historical name for quotient monotonicity with an added nonnegative cardinal.
+This statement does not assert an extension inequality or assume a chain through `M`. -/
+alias quotientLocalWeight_subadd_of_subgroup_chain :=
+  quotientLocalWeight_le_add_of_subgroup_le
 
 /--
 Forward direction: existence of a transfinite closed normal series from the local-weight bound.
@@ -543,13 +518,12 @@ theorem build_transfiniteClosedNormalSeries_of_localWeight_le
     (C : FiniteGroupClass.{u}) (G : Type u)
     [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
     [CompactSpace G] [T2Space G] [TotallyDisconnectedSpace G]
-    (μ : Ordinal) (hForm : FiniteGroupClass.Formation C)
+    (μ : Ordinal)
     (hNorm : FiniteGroupClass.NormalSubgroupClosed C) (hG : HasOpenNormalBasisInClass C G)
     (hμ : localWeight G ≤ μ.card) :
     Nonempty (TransfiniteClosedNormalSeries C G μ) := by
   classical
-  let hIso : FiniteGroupClass.IsomClosed C :=
-    FiniteGroupClass.Formation.isomClosed (C := C) hForm
+  let hIso : FiniteGroupClass.IsomClosed C := C.isomClosed
   rcases exists_openNormalNeighborhoodBasisAtOne_inClass_cardinal_le_localWeight
       (C := C) (G := G) hG with
     ⟨ι, W, hWC, hWbasis, hWcard0⟩

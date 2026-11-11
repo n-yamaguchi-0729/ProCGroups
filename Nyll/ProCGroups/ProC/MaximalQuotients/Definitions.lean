@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
+module
+
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
 
 /-!
 # Maximal pro-\(C\) quotients
@@ -13,6 +15,8 @@ import Nyll.ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
 a profinite group with a pro-\(C\) basis and that every continuous map to a
 pro-\(C\) target factors through it uniquely.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.ProC
 

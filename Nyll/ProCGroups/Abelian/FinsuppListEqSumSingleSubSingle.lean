@@ -10,19 +10,23 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Tactic.NormNum
-import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
-import Mathlib.Algebra.Group.Finsupp
-import Mathlib.Algebra.Order.BigOperators.Group.Finset
-import Mathlib.Tactic.Abel
-import Mathlib.Tactic.Linarith.Frontend
-import Mathlib.Tactic.Push
-import Mathlib.Tactic.Ring.RingNF
-import Mathlib.Tactic.Tauto
+module
+
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Algebra.BigOperators.Group.Finset.Piecewise
+public import Mathlib.Algebra.Group.Finsupp
+public import Mathlib.Algebra.Order.BigOperators.Group.Finset
+public import Mathlib.Tactic.Abel
+public import Mathlib.Tactic.Linarith.Frontend
+public import Mathlib.Tactic.Push
+public import Mathlib.Tactic.Ring.RingNF
+public import Mathlib.Tactic.Tauto
 
 /-!
 # Finsupp exists list eq sum single sub single of sum fibre eq zero
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

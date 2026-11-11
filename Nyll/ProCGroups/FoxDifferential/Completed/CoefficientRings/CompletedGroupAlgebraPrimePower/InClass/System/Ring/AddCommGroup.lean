@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.InClass.System.Basic
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.InClass.System.Basic
 
 /-!
 # Fox differential: in class — system — ring — add comm group
@@ -21,6 +23,8 @@ The principal declarations in this module are:
 - `coe_neg_primePowerCompletedGroupAlgebraInClass`
   The inclusion of the class-indexed prime-power completed group algebra preserves negation.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

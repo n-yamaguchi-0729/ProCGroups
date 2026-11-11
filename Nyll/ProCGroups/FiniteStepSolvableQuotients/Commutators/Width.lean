@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.GroupTheory.Rank
-import Nyll.ProCGroups.FiniteGeneration.CharacteristicChainsAndIndices
+module
+
+public import Mathlib.GroupTheory.Rank
+public import Nyll.ProCGroups.FiniteGeneration.CharacteristicChainsAndIndices
 
 /-!
 # Uniform commutator-width estimates
@@ -13,6 +15,8 @@ import Nyll.ProCGroups.FiniteGeneration.CharacteristicChainsAndIndices
 This module encodes products of commutators with prescribed factors and proves the functorial and
 rank-theoretic estimates used to obtain uniform width bounds.
 -/
+
+@[expose] public section
 
 open scoped Topology Pointwise commutatorElement
 

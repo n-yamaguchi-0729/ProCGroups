@@ -4,7 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.LocalWeight.ClosedNormalDataAndTransfiniteSeries
+module
+
+public import Nyll.ProCGroups.LocalWeight.ClosedNormalDataAndTransfiniteSeries
+public import Nyll.ProCGroups.InverseSystems.ProfiniteSpace
 
 /-!
 # Local weight from convergent generating sets
@@ -13,6 +16,8 @@ This file identifies local weight with the clopen invariant `rho` in the presenc
 generating set, and computes the cardinality of an infinite generating set that converges to the
 identity along open subgroups.
 -/
+
+@[expose] public section
 
 open Set
 open TopologicalSpace

@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.LocalWeight.CardinalInvariantsAndLocalWeight
-import Nyll.ProCGroups.LocalWeight.ClosedNormalDataAndTransfiniteSeries
-import Nyll.ProCGroups.LocalWeight.GeneratingSetsConvergingToOne
-import Nyll.ProCGroups.LocalWeight.LocalWeightTheorems
-import Nyll.ProCGroups.LocalWeight.MetrizabilityAndQuotients
-import Nyll.ProCGroups.LocalWeight.SubgroupChains
+module
+
+public import Nyll.ProCGroups.LocalWeight.CardinalInvariantsAndLocalWeight
+public import Nyll.ProCGroups.LocalWeight.ClosedNormalDataAndTransfiniteSeries
+public import Nyll.ProCGroups.LocalWeight.GeneratingSetsConvergingToOne
+public import Nyll.ProCGroups.LocalWeight.LocalWeightTheorems
+public import Nyll.ProCGroups.LocalWeight.MetrizabilityAndQuotients
+public import Nyll.ProCGroups.LocalWeight.SubgroupChains
 
 /-!
 # Local weight

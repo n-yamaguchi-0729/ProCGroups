@@ -3,8 +3,10 @@ Copyright (c) 2026 Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
-import Nyll.ProCGroups.Topologies.ArithmeticInnerCorrectionFiberTransport
-import Mathlib.FieldTheory.Galois.Basic
+module
+
+public import Nyll.ProCGroups.Topologies.ArithmeticInnerCorrectionFiberTransport
+public import Mathlib.FieldTheory.Galois.Basic
 
 /-! # Strict transport after the computed discrepancies fix the same field
 
@@ -13,6 +15,8 @@ An actual target-group lift removes their residual inner discrepancy. Its
 change to any equivariant fibre map is the explicit translation supplied by
 the imported correction theorem.
 -/
+@[expose] public section
+
 noncomputable section
 
 namespace ProCGroups

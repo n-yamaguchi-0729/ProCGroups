@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Limit.Basic
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Limit.Basic
 
 /-!
 # Fox differential: prime power — system — limit — mul
@@ -20,6 +22,8 @@ The principal declarations in this module are:
 - `foxAlgebraicStagePrimePowerTargetLimitToFamily_mul`
   The target-limit family map preserves multiplication.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

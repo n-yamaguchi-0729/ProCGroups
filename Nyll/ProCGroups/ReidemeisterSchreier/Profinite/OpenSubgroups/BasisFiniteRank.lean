@@ -4,9 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.BasisTheorems
-import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.RankBound
-import Mathlib.SetTheory.Cardinal.Finite
+module
+
+public import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.BasisTheorems
+public import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.RankBound
+public import Mathlib.SetTheory.Cardinal.Finite
+public import Nyll.ProCGroups.Completion.UniversalProperty
+public import Nyll.ProCGroups.FiniteGroups.Classes
+public import Nyll.ProCGroups.ProC.Category.Basic
+public import Nyll.ProCGroups.ReidemeisterSchreier.Schreier
 
 /-!
 # Finite-rank bases of open subgroups
@@ -17,6 +23,8 @@ padding lemma works on  so that its index lives in the ambient
 universe; its public generating-family wrapper is indexed by , while the
 bundled free basis used in the final rank argument retains the lifted carrier.
 -/
+
+@[expose] public section
 
 open scoped Topology Pointwise
 

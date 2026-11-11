@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FreeProC.Characterization.AbelianKernelOpenSubgroup
-import Nyll.ProCGroups.FreeProC.Characterization.AbelianKernelEmbeddingProblems
-import Nyll.ProCGroups.FreeProC.Characterization.OpenSubgroupFiniteQuotient
-import Nyll.ProCGroups.FreeProC.Characterization.EmbeddingProblems
-import Nyll.ProCGroups.FreeProC.Characterization.Quasifree
+module
+
+public import Nyll.ProCGroups.FreeProC.Characterization.AbelianKernelOpenSubgroup
+public import Nyll.ProCGroups.FreeProC.Characterization.AbelianKernelEmbeddingProblems
+public import Nyll.ProCGroups.FreeProC.Characterization.OpenSubgroupFiniteQuotient
+public import Nyll.ProCGroups.FreeProC.Characterization.EmbeddingProblems
+public import Nyll.ProCGroups.FreeProC.Characterization.Quasifree
 
 /-!
 # Pro C Groups / Free pro-C / Characterization

@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.DenseFreeModel
-import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.SchreierTransversals
+module
+
+public import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.DenseFreeModel
+public import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.SchreierTransversals
+public import Nyll.ProCGroups.Generation.Basic
 
 /-!
 # Exact right-Schreier generation
@@ -16,6 +19,8 @@ generate an open subgroup.  It also proves the finite-quotient lifting
 statements used to recognize the resulting dense abstract free group as the
 required pro-\(C\) completion.
 -/
+
+@[expose] public section
 
 open Set
 open scoped Topology Pointwise
@@ -86,9 +91,7 @@ theorem map_schreierGenerator_eq_cocycle
         change (π.comp φ) ↑(schreierGenerator (X := X) hT t x) ∈ K
         exact (schreierGenerator (X := X) hT t x).2⟩ := by
   classical
-  let τ := rightSchreierSectionOfComap π φ (π.comp φ) K rfl hβsurj hT
-  let hτ := rightSchreierSectionOfComap_spec π φ (π.comp φ) K rfl hβsurj hT
-  let Hc : Subgroup F := Subgroup.comap π K
+  intro τ hτ Hc
   let rep := schreierRepresentative (X := X) hT (t * FreeGroup.of x)
   have hτt :
       τ (Quotient.mk'' (φ t)) = φ t := by

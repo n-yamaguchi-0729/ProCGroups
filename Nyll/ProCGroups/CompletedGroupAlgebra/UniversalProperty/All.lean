@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.CompletedGroupAlgebra.UniversalProperty.Basic
-import Nyll.ProCGroups.CompletedGroupAlgebra.UniversalProperty.FiniteQuotient
-import Nyll.ProCGroups.CompletedGroupAlgebra.UniversalProperty.OpenSubmoduleQuotient
-import Nyll.ProCGroups.CompletedGroupAlgebra.UniversalProperty.ProfiniteModule
+module
+
+public import Nyll.ProCGroups.CompletedGroupAlgebra.UniversalProperty.Basic
+public import Nyll.ProCGroups.CompletedGroupAlgebra.UniversalProperty.FiniteQuotient
+public import Nyll.ProCGroups.CompletedGroupAlgebra.UniversalProperty.OpenSubmoduleQuotient
+public import Nyll.ProCGroups.CompletedGroupAlgebra.UniversalProperty.ProfiniteModule
 
 /-!
 # Universal properties of completed group algebras

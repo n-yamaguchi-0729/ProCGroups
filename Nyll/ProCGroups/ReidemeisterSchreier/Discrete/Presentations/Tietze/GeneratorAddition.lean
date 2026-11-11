@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.RelatorReplacement
+module
+
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.RelatorReplacement
 
 /-!
 # Reidemeister Schreier / Discrete / Presentations / Tietze / Generator Addition
@@ -13,6 +15,8 @@ This module formalizes adjoining generators with defining words.  It builds
 the inclusion and elimination homomorphisms, transforms the relators, and
 packages the resulting presented-group equivalence.
 -/
+
+@[expose] public section
 
 universe u v w
 

@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Boundary
-import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Coordinates
-import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Derivative
-import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Semidirect
-import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Universal
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Boundary
+public import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Coordinates
+public import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Derivative
+public import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Semidirect
+public import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Universal
 
 /-!
 # Fox differential: discrete — fox calculus

@@ -10,13 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.GroupTheory.Perm.Fin
-import Mathlib.Tactic.Conv
-import Mathlib.Tactic.Group
+module
+
+public import Mathlib.GroupTheory.Perm.Fin
+public import Mathlib.Tactic.Conv
+public import Mathlib.Tactic.Group
 
 /-!
 # Equiv Perm exists comp succ Above eq succ Above comp and sign eq
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

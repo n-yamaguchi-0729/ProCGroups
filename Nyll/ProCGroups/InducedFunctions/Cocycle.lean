@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.InducedFunctions
-import Mathlib.RepresentationTheory.Homological.GroupCohomology.LowDegree
+module
+
+public import Nyll.ProCGroups.InducedFunctions
+public import Mathlib.RepresentationTheory.Homological.GroupCohomology.LowDegree
 
 /-!
 # Explicit cocycle primitives for induced functions
@@ -15,6 +17,8 @@ restricts a cocycle to the subgroup. A primitive `b` of that restricted cocycle
 gives the induced primitive `x ↦ f(x)(1) * b`. The same formula preserves any
 pointwise integral subgroup when the cocycle values and `b` lie in it.
 -/
+
+@[expose] public section
 
 noncomputable section
 

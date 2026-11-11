@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Topology.Algebra.ProperAction.Basic
-import Nyll.ProCGroups.InverseSystems.CompatibilityAndSurjectivity
-import Nyll.ProCGroups.Topologies.QuotientMaps
+module
+
+public import Mathlib.Topology.Algebra.ProperAction.Basic
+public import Nyll.ProCGroups.InverseSystems.CompatibilityAndSurjectivity
+public import Nyll.ProCGroups.Topologies.QuotientMaps
 
 /-!
 # Quotients of group-valued inverse systems
@@ -16,6 +18,8 @@ groups and a canonical map from the original limit.  This module identifies its 
 under compact Hausdorff directed-surjective hypotheses, proves that quotienting the inverse
 limit agrees topologically and algebraically with taking the inverse limit of the stage quotients.
 -/
+
+@[expose] public section
 
 open scoped Topology
 
@@ -132,7 +136,7 @@ instance quotientInverseSystem_stageTopologicalGroup (i : I) :
   infer_instance
 
 /-- Fix the closed-subgroup boundary before using the quotient's canonical topology. -/
-private theorem quotientInverseSystem_stageT2Space (i : I) :
+theorem quotientInverseSystem_stageT2Space (i : I) :
     T2Space (Q.quotientInverseSystem.X i) := by
   change T2Space (S.X i ⧸ Q.N i)
   have : IsClosed (Q.N i : Set (S.X i)) := Q.closed i

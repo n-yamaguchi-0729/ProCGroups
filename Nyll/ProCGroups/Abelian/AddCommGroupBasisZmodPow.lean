@@ -10,11 +10,15 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.ProCGroups.Abelian.AddCommGroupBasisSmulEq
+module
+
+public import Nyll.ProCGroups.Abelian.AddCommGroupBasisSmulEq
 
 /-!
 # Add Comm Group nonempty basis zmod pow of card torsion By
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

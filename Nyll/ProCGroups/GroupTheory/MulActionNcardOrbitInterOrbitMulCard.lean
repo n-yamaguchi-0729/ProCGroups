@@ -10,15 +10,19 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.GroupTheory.GroupAction.Quotient
-import Mathlib.GroupTheory.Index
-import Mathlib.Data.Set.Card
-import Mathlib.Tactic.Group
-import Mathlib.Tactic.Ring
+module
+
+public import Mathlib.GroupTheory.GroupAction.Quotient
+public import Mathlib.GroupTheory.Index
+public import Mathlib.Data.Set.Card
+public import Mathlib.Tactic.Group
+public import Mathlib.Tactic.Ring
 
 /-!
 # Mul Action ncard orbit inter orbit mul card
 -/
+
+@[expose] public section
 
 section ProofImplementation
 
@@ -76,6 +80,39 @@ theorem card_smul_mem_eq [Finite G] (H : Subgroup G) (x : X) (B : Set X) :
       left_inv := fun y => rfl
       right_inv := fun o => rfl }
 
+/-- Count pairs of subgroup elements taking two points to the same point.
+Only the original finite group action is used; no transitivity or subgroup-product
+hypothesis is needed. -/
+theorem card_pair_set [Finite G] (H₁ H₂ : Subgroup G) (x₁ x₂ : X) :
+    Nat.card {p : H₁ × H₂ // (p.1 : G) • x₁ = (p.2 : G) • x₂} =
+      (orbit H₁ x₁ ∩ orbit H₂ x₂).ncard * Nat.card (stabilizer H₂ x₂)
+        * Nat.card (stabilizer H₁ x₁) := by
+  let M := {h₂ : H₂ // (h₂ : G) • x₂ ∈ orbit H₁ x₁}
+  have hM : Nat.card M = (orbit H₁ x₁ ∩ orbit H₂ x₂).ncard * Nat.card (stabilizer H₂ x₂) := by
+    rw [Set.inter_comm]; exact card_smul_mem_eq H₂ x₂ (orbit H₁ x₁)
+  rw [← hM]
+  refine card_eq_mul_of_card_fiber
+    (fun a : {p : H₁ × H₂ // (p.1 : G) • x₁ = (p.2 : G) • x₂} =>
+      (⟨a.1.2, ⟨a.1.1, a.2⟩⟩ : M)) _ ?_
+  rintro ⟨h₂, ⟨h₁, hh⟩⟩
+  have hh' : (h₁ : G) • x₁ = (h₂ : G) • x₂ := hh
+  rw [← card_fiber_smul_eq x₁ (h₁ : H₁)]
+  refine Nat.card_congr
+    { toFun := fun a => ⟨a.1.1.1, ?_⟩
+      invFun := fun h => ⟨⟨(h.1, h₂), ?_⟩, rfl⟩
+      left_inv := ?_
+      right_inv := ?_ }
+  · have e2 : a.1.1.2 = h₂ := congrArg (fun m : M => (m : H₂)) a.2
+    change ((a.1.1.1 : H₁) : G) • x₁ = ((h₁ : H₁) : G) • x₁
+    rw [hh']
+    exact a.1.2.trans (by rw [e2])
+  · change ((h.1 : H₁) : G) • x₁ = (h₂ : G) • x₂
+    rw [← hh']; exact h.2
+  · rintro ⟨⟨⟨a₁, a₂⟩, ha⟩, ha'⟩
+    have e2 : a₂ = h₂ := congrArg (fun m : M => (m : H₂)) ha'
+    subst e2; rfl
+  · intro h; rfl
+
 theorem card_fiber_psi_eq (H₁ H₂ : Subgroup G)
     (hprod : ∀ g : G, ∃ h₁ ∈ H₁, ∃ h₂ ∈ H₂, g = h₁ * h₂) (g : G) :
     Nat.card {p : H₁ × H₂ // (p.2 : G)⁻¹ * p.1 = g} = Nat.card (H₁ ⊓ H₂ : Subgroup G) := by
@@ -124,29 +161,8 @@ theorem ncard_orbit_inter_orbit_mul_card_eq [Finite G] [IsPretransitive G X] (H�
     exact Nat.card_congr (Equiv.subtypeEquivRight fun p => by
       simp only [Set.mem_ofPred_eq, mul_smul, inv_smul_eq_iff])
   have hA₂ : Nat.card A = (orbit H₁ x₁ ∩ orbit H₂ x₂).ncard * Nat.card (stabilizer H₂ x₂)
-      * Nat.card (stabilizer H₁ x₁) := by
-    let M := {h₂ : H₂ // (h₂ : G) • x₂ ∈ orbit H₁ x₁}
-    have hM : Nat.card M = (orbit H₁ x₁ ∩ orbit H₂ x₂).ncard * Nat.card (stabilizer H₂ x₂) := by
-      rw [Set.inter_comm]; exact card_smul_mem_eq H₂ x₂ (orbit H₁ x₁)
-    rw [← hM]
-    refine card_eq_mul_of_card_fiber (fun a : A => (⟨a.1.2, ⟨a.1.1, a.2⟩⟩ : M)) _ ?_
-    rintro ⟨h₂, ⟨h₁, hh⟩⟩
-    have hh' : (h₁ : G) • x₁ = (h₂ : G) • x₂ := hh
-    rw [← card_fiber_smul_eq x₁ (h₁ : H₁)]
-    refine Nat.card_congr
-      { toFun := fun a => ⟨a.1.1.1, ?_⟩
-        invFun := fun h => ⟨⟨(h.1, h₂), ?_⟩, rfl⟩
-        left_inv := ?_
-        right_inv := ?_ }
-    · have e2 : a.1.1.2 = h₂ := congrArg (fun m : M => (m : H₂)) a.2
-      change ((a.1.1.1 : H₁) : G) • x₁ = ((h₁ : H₁) : G) • x₁
-      rw [hh']; exact a.1.2.trans (by rw [e2])
-    · change ((h.1 : H₁) : G) • x₁ = (h₂ : G) • x₂
-      rw [← hh']; exact h.2
-    · rintro ⟨⟨⟨a₁, a₂⟩, ha⟩, ha'⟩
-      have e2 : a₂ = h₂ := congrArg (fun m : M => (m : H₂)) ha'
-      subst e2; rfl
-    · intro h; rfl
+      * Nat.card (stabilizer H₁ x₁) :=
+    card_pair_set H₁ H₂ x₁ x₂
   have hO₁ : (orbit H₁ x₁).ncard * Nat.card (stabilizer H₁ x₁) = Nat.card H₁ := by
     rw [← index_stabilizer H₁ x₁, mul_comm, Subgroup.card_mul_index]
   have hO₂ : (orbit H₂ x₂).ncard * Nat.card (stabilizer H₂ x₂) = Nat.card H₂ := by

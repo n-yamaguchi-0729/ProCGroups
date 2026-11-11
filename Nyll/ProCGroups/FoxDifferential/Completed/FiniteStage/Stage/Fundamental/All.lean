@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Fundamental.Derivative
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Fundamental.Formula
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Fundamental.Derivative
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Fundamental.Formula
 
 /-!
 # Fox differential: completed — finite stage — stage — fundamental

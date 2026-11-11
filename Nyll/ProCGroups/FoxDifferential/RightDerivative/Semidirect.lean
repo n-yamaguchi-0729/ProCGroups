@@ -4,7 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Discrete.GroupRing
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Discrete.GroupRing
+public import Nyll.ProCGroups.FoxDifferential.Discrete.DifferentialModule.Basic
 
 /-!
 # Fox differential: right derivative — semidirect
@@ -21,6 +24,8 @@ The principal declarations in this module are:
 - `one_left`
   The additive component of the identity semidirect element is zero.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 
@@ -46,7 +51,9 @@ theorem ext {x y : RightFoxSemidirect G}
     (hleft : x.left = y.left) (hright : x.right = y.right) : x = y := by
   cases x
   cases y
-  simp_all
+  cases hleft
+  cases hright
+  rfl
 
 /-- The unit of the right Fox semidirect product is the pair of identity components. -/
 instance instOneRightFoxSemidirect : One (RightFoxSemidirect G) where

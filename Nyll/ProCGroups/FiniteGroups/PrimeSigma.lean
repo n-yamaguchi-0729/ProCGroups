@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FiniteGroups.StandardClasses
-import Mathlib.GroupTheory.PGroup
-import Mathlib.Data.Nat.PrimeFin
+module
+
+public import Nyll.ProCGroups.FiniteGroups.StandardClasses
+public import Mathlib.GroupTheory.PGroup
+public import Mathlib.Data.Nat.PrimeFin
 
 /-!
 # Singleton Sigma classes are finite p-groups
@@ -14,6 +16,8 @@ import Mathlib.Data.Nat.PrimeFin
 The finite class equality identifies the actual residual cores and maximal
 quotients used by the singleton-Sigma and pro-p formulations.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.FiniteGroupClass
 

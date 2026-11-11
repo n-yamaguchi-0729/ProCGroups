@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Congruence
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Operations
+module
+
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Congruence
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Operations
 
 /-!
 # Reidemeister Schreier / Discrete / Presentations / Tietze / Relator Quotient Mutual Map Data
@@ -14,6 +16,8 @@ This module packages mutually inverse maps between relator quotients.  It
 provides reflexive, symmetric, and transitive composition together with a
 one-sided constructor when the inverse data can be derived.
 -/
+
+@[expose] public section
 
 universe u v w
 

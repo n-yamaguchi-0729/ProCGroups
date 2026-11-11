@@ -4,18 +4,23 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FiniteGroups.StandardClasses
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotientAction
-import Nyll.ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
-import Mathlib.Topology.Algebra.OpenSubgroup
+module
+
+public import Nyll.ProCGroups.FiniteGroups.StandardClasses
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotientAction
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
+public import Mathlib.Topology.Algebra.OpenSubgroup
 
 /-!
 # Abelianization faithfulness
 
-Every open subgroup acts faithfully on the topological abelianization of
-each open normal subgroup. The relative pro-Σ version uses the same
-quotient-conjugation action on the maximal pro-Σ quotient.
+For every open subgroup `H` and every open normal subgroup `N` of `H`,
+the quotient `H/N` acts faithfully on the topological abelianization of `N`.
+The relative pro-Σ version uses the same quotient-conjugation action on
+the maximal pro-Σ quotient.
 -/
+
+@[expose] public section
 
 open scoped Topology
 
@@ -25,8 +30,8 @@ open ProCGroups.ProC ProCGroups.Abelian
 
 universe u
 
-/-- Every open subgroup acts faithfully on the topological abelianization
-of each open normal subgroup. -/
+/-- For every open subgroup `H` and open normal subgroup `N` of `H`,
+the quotient `H/N` acts faithfully on the topological abelianization of `N`. -/
 def IsAbFaithful
     (G : Type u) [TopologicalSpace G] [Group G] [IsTopologicalGroup G] : Prop :=
   ∀ H : OpenSubgroup G,

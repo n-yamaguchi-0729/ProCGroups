@@ -4,9 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.Identity
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.MagnusQuotient
-import Nyll.ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.Naturality
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.Identity
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.MagnusQuotient
+public import Nyll.ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.Naturality
+public import Nyll.ProCGroups.Completion.ProCInteger
+public import Nyll.ProCGroups.FiniteGroups.Classes
 
 /-!
 # Fox differential: completed — comparison — finite stage
@@ -25,6 +29,8 @@ The principal declarations in this module are:
   Projecting the completed derivative vector to a finite pro-\(C\) stage recovers the finite Fox
   derivative vector, mapped to that stage.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

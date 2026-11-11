@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Common.FoxBoundary
-import Nyll.ProCGroups.FoxDifferential.Discrete.DifferentialModule.Boundary
-import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Universal
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Common.FoxBoundary
+public import Nyll.ProCGroups.FoxDifferential.Discrete.DifferentialModule.Boundary
+public import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Universal
 
 /-!
 # Fox differential: discrete — fox calculus — boundary
@@ -25,6 +27,8 @@ The principal declarations in this module are:
   Composing the universal boundary with the coordinate-to-differential map gives the pushed-forward
   Fox boundary.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Defs
-import Nyll.ProCGroups.ProC.Category.Basic
+module
+
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Defs
+public import Nyll.ProCGroups.ProC.Category.Basic
 
 /-!
 # Pro C Groups / pro-C / Category / Pushouts

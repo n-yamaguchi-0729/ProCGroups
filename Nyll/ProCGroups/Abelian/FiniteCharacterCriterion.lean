@@ -5,11 +5,14 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 https://github.com/n-yamaguchi-0729
 -/
 
-import Nyll.ProCGroups.Abelian.ProfiniteCharacterCriterion
-import Nyll.ProCGroups.Abelian.ProfiniteBidual
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Basic
-import Mathlib.Algebra.Group.Subgroup.Ker
-import Mathlib.Topology.Algebra.PontryaginDual
+module
+
+public import Nyll.ProCGroups.Abelian.ProfiniteCharacterCriterion
+public import Nyll.ProCGroups.Abelian.ProfiniteBidual
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Basic
+public import Mathlib.Algebra.Group.Subgroup.Ker
+public import Mathlib.Topology.Algebra.PontryaginDual
+public import Nyll.ProCGroups.Topologies.QuotientMaps
 
 /-!
 # Finite coefficient detection of profinite abelian isomorphisms
@@ -18,6 +21,8 @@ Every actual circle character has finite image. Thus bijectivity on characters
 with finite subgroup coefficients gives bijectivity on all circle characters,
 and consequently a topological group isomorphism of the original groups.
 -/
+
+@[expose] public section
 
 noncomputable section
 

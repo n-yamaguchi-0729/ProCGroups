@@ -4,9 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Completion.FiniteQuotientLifts
-import Nyll.ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
-import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.ExactRightSchreierGeneration
+module
+
+public import Nyll.ProCGroups.Completion.FiniteQuotientLifts
+public import Nyll.ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
+public import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.ExactRightSchreierGeneration
+public import Nyll.ProCGroups.Completion.UniversalProperty
+public import Nyll.ProCGroups.FiniteGeneration.Basic
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.BasisAtOne
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
+public import Nyll.ProCGroups.ProC.Subgroups.Closed
 
 /-!
 # From exact Schreier generators to free pro-\(C\) bases
@@ -16,6 +23,8 @@ and basis statements.  It isolates finite-quotient lifting, compares dense
 abstract free groups with their pro-\(C\) completions, and constructs compact
 pointed and converging-set bases for open subgroups.
 -/
+
+@[expose] public section
 
 open scoped Topology Pointwise
 

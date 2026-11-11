@@ -4,15 +4,20 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.CountableChains
+module
+
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.CountableChains
 
 /-!
-# Intersections of subgroup chains
+# Intersections of indexed subgroup families
 
-This file packages linearly ordered families of subgroups, defines their carrier union and
-intersection, and gives membership and trivial-intersection criteria used in transfinite
-closed-normal series arguments.
+This file packages arbitrary indexed families of subgroups, their set-theoretic union and
+intersection, and membership and trivial-intersection criteria. No order on the index or
+comparability of the subgroups is assumed. The historical `SubgroupChain` name is retained
+as a compatibility alias; actual descending transfinite series carry antitonicity separately.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.LocalWeight
 
@@ -24,32 +29,35 @@ section Chains
 variable {ι : Type v}
 variable {G : Type u} [Group G]
 
-/-- A family of subgroups forming a chain indexed for transfinite local-weight statements. -/
-abbrev SubgroupChain (ι : Type v) (G : Type u) [Group G] := ι → Subgroup G
+/-- An arbitrary indexed family of subgroups, with no comparability requirement. -/
+abbrev SubgroupFamily (ι : Type v) (G : Type u) [Group G] := ι → Subgroup G
 
-/-- The set-theoretic union of the members of a subgroup chain. -/
+/-- Historical name for an indexed subgroup family; it supplies no chain condition. -/
+abbrev SubgroupChain (ι : Type v) (G : Type u) [Group G] := SubgroupFamily ι G
+
+/-- The set-theoretic union of the members of an indexed subgroup family. -/
 def subgroupChainCarrier (c : SubgroupChain ι G) : Set G :=
   { g | ∃ i, g ∈ c i }
 
-/-- The infimum of all members of a subgroup chain. -/
+/-- The infimum of all members of an indexed subgroup family. -/
 def subgroupChainInf (c : SubgroupChain ι G) : Subgroup G :=
   sInf (Set.range c)
 
 /--
-Membership in the carrier of a subgroup chain is equivalent to the displayed coordinate
+Membership in the carrier of an indexed subgroup family is equivalent to the displayed coordinate
 condition.
 -/
 @[simp] theorem mem_subgroupChainCarrier_iff {c : SubgroupChain ι G} {g : G} :
     g ∈ subgroupChainCarrier c ↔ ∃ i, g ∈ c i :=
   Iff.rfl
 
-/-- The infimum of a subgroup chain is contained in each subgroup in the chain. -/
+/-- The infimum of an indexed subgroup family is contained in each member. -/
 theorem subgroupChainInf_le (c : SubgroupChain ι G) (i : ι) :
     subgroupChainInf c ≤ c i := by
   exact sInf_le (Set.mem_range_self i)
 
 /--
-Membership in the infimum of a subgroup chain is equivalent to the displayed coordinate
+Membership in the infimum of an indexed subgroup family is equivalent to the displayed coordinate
 condition.
 -/
 @[simp] theorem mem_subgroupChainInf_iff {c : SubgroupChain ι G} {g : G} :
@@ -58,7 +66,7 @@ condition.
       forall_apply_eq_imp_iff]
 
 /--
-The subgroup-chain infimum is trivial exactly when every nontrivial element is excluded at some
+The family infimum is trivial exactly when every nontrivial element is excluded at some
 stage.
 -/
 theorem subgroupChainInf_eq_bot_iff {c : SubgroupChain ι G} :
@@ -85,8 +93,8 @@ theorem subgroupChainInf_eq_bot_iff {c : SubgroupChain ι G} :
       exact (mem_subgroupChainInf_iff).2 (fun i => (c i).one_mem)
 
 /--
-The infimum of a subgroup chain is bottom exactly when every nontrivial element is excluded at
-some stage.
+The infimum of an indexed subgroup family is bottom exactly when every nontrivial element
+is excluded at some stage.
 -/
 theorem subgroupChainInf_eq_bot_iff_forall_ne_one {c : SubgroupChain ι G} :
     subgroupChainInf c = ⊥ ↔ ∀ g : G, g ≠ 1 → ∃ i, g ∉ c i := by

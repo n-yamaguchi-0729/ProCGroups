@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.SetTheory.Cardinal.Arithmetic
-import Nyll.ProCGroups.FiniteGeneration.CharacteristicChainsAndIndices
+module
+
+public import Mathlib.SetTheory.Cardinal.Arithmetic
+public import Nyll.ProCGroups.FiniteGeneration.CharacteristicChainsAndIndices
 
 /-!
 # Cardinal invariants and local weight
@@ -14,6 +16,8 @@ This file defines the cardinality of a family, topological weight, the clopen in
 and local weight. It compares these invariants using topological and neighborhood bases and proves
 that continuous homomorphisms are determined by a topological generating set.
 -/
+
+@[expose] public section
 
 open Set
 open TopologicalSpace
@@ -329,8 +333,7 @@ noncomputable def localWeight : Cardinal :=
 /-- The local weight of a topological group is bounded by its weight. -/
 theorem localWeight_le_weight :
     localWeight G ≤ weight G := by
-  simpa [localWeight] using
-    (localWeightAt_le_weight (X := G) (x := (1 : G)))
+  exact localWeightAt_le_weight (X := G) (x := (1 : G))
 
 /-- A clopen neighborhood basis of cardinal at most \(\rho\) bounds the local weight by \(\rho\). -/
 theorem localWeight_le_rho_of_exists_clopenNeighborhoodBasis

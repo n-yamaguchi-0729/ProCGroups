@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProC.InverseLimits.Predicates
+module
+
+public import Nyll.ProCGroups.ProC.InverseLimits.Predicates
 
 /-!
 # Abelian open-normal quotient bases
@@ -13,6 +15,8 @@ This file proves that a profinite group with an abelian open-normal quotient bas
 abelian. The proof tests commutators in all open normal quotients and then uses profinite
 separation.
 -/
+
+@[expose] public section
 
 open Set
 open scoped Topology Pointwise

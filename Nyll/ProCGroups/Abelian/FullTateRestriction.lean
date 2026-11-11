@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Abelian.RestrictedTateModule
-import Nyll.ProCGroups.Abelian.FullTateModuleMap
+module
+
+public import Nyll.ProCGroups.Abelian.RestrictedTateModule
+public import Nyll.ProCGroups.Abelian.FullTateModuleMap
 
 /-!
 # Restriction and detection of actual full Tate families
@@ -13,6 +15,8 @@ import Nyll.ProCGroups.Abelian.FullTateModuleMap
 Restriction retains the original coordinates. Vanishing on the powers of
 each positive integer detects vanishing of the full compatible family.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.FullTateModule
 

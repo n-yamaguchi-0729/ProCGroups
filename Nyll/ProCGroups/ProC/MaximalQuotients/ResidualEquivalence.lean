@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualCore
-import Nyll.ProCGroups.ProC.MaximalQuotients.UniversalProperty
-import Nyll.ProCGroups.Topologies.QuotientMaps
-import Mathlib.Topology.Algebra.ContinuousMonoidHom
+module
+
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualCore
+public import Nyll.ProCGroups.ProC.MaximalQuotients.UniversalProperty
+public import Nyll.ProCGroups.Topologies.QuotientMaps
+public import Mathlib.Topology.Algebra.ContinuousMonoidHom
 
 /-!
 # Continuous equivalences of actual residual quotients
@@ -16,6 +18,8 @@ A continuous group equivalence carries the pro-C residual core onto the
 corresponding core. Applying functoriality in both directions requires only
 hereditariness of C, so total disconnectedness is unnecessary.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.ProC
 

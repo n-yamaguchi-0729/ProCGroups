@@ -4,10 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
-import Nyll.ProCGroups.InverseSystems.Quotients
-import Nyll.ProCGroups.InverseSystems.StagewiseIso
-import Nyll.ProCGroups.ProC.Quotients.ClosedNormal
+module
+
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
+public import Nyll.ProCGroups.InverseSystems.Quotients
+public import Nyll.ProCGroups.InverseSystems.StagewiseIso
+public import Nyll.ProCGroups.ProC.Quotients.ClosedNormal
+public import Nyll.ProCGroups.ProC.Quotients.LeftQuotientProjectionSections
+public import Nyll.ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
 
 /-!
 # Topological abelianization and inverse limits
@@ -15,6 +19,8 @@ import Nyll.ProCGroups.ProC.Quotients.ClosedNormal
 This module applies topological abelianization stagewise to inverse systems and compares the
 resulting limit with the abelianization of the original limit.
 -/
+
+@[expose] public section
 
 open scoped Topology
 

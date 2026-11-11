@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Categorical.ProfinitePullbacks
+module
+
+public import Nyll.ProCGroups.Categorical.ProfinitePullbacks
 
 /-!
 # Pro C Groups / Categorical / Pullback Comparison
@@ -13,6 +15,8 @@ This module compares a profinite-tested continuous pullback square with its
 concrete fiber product and transports bijectivity and kernel criteria across
 the canonical comparison map.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.Categorical
 

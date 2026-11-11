@@ -4,8 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.Coordinates
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.ClosedGeneratedCycles
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.Coordinates
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.ClosedGeneratedCycles
+public import Nyll.ProCGroups.Completion.ProCInteger
+public import Nyll.ProCGroups.FreeProC.Basic
+public import Nyll.ProCGroups.Generation.Basic
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
 
 /-!
 # Fox differential: completed — free pro-\(C\) — fundamental formula
@@ -25,6 +31,8 @@ The principal declarations in this module are:
   The closed-generation fundamental formula implies closedness of the completed differential-module
   relation submodule.
 -/
+
+@[expose] public section
 
 namespace CrowellExactSequence
 
@@ -297,12 +305,7 @@ theorem freeProC_zcDiffModuleRelSubmoduleClosed_iff_closedGenCoord_inj
       Nonempty
         (ZCCompletedDifferentialModuleIndex
           C psi.toMonoidHom) :=
-    ⟨zcCompletedDifferentialModuleComapIndex
-      (C := C) (G := sourceData.carrier) (H := H)
-      hC.hereditary psi
-      ((ProCGroups.Completion.ProCIntegerIndex.terminal
-          (C := C) inferInstance),
-        zcCompletedGroupAlgebraTopIndex C H)⟩
+    nonempty_zcCompletedDifferentialModuleIndex C psi.toMonoidHom
   have hdir :
       Directed (· ≤ ·)
         (id :
@@ -312,8 +315,7 @@ theorem freeProC_zcDiffModuleRelSubmoduleClosed_iff_closedGenCoord_inj
               C psi.toMonoidHom) :=
     directed_zcCompletedDifferentialModuleIndex
       (C := C) (G := sourceData.carrier) (H := H)
-      (hC.melnikovFormation.formation)
-      hC.hereditary psi
+      psi.toMonoidHom hC.melnikovFormation.formation
   let family : ULift.{u} (Fin r) → sourceData.carrier :=
     freeProCChosenULiftFamilyOfBasisCard (C := C) sourceData hbasis
   let hfree :=

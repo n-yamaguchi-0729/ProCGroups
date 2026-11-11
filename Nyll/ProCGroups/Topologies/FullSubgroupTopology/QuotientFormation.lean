@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Topology.Algebra.Group.Basic
+module
+
+public import Mathlib.Topology.Algebra.Group.Basic
 
 /-!
 # Quotient formations and their subgroup topology
@@ -13,6 +15,8 @@ A quotient formation specifies admissible normal quotient kernels and their clos
 This file defines the induced open subgroups, pro-\(C\) closure, closed subgroups, and residuality,
 and proves their basic lattice and separation characterizations.
 -/
+
+@[expose] public section
 
 open Set
 open scoped Topology

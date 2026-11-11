@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.InverseSystems.CompatibilityAndSurjectivity
-import Nyll.ProCGroups.Topologies.ContinuousMulEquiv
+module
+
+public import Nyll.ProCGroups.InverseSystems.CompatibilityAndSurjectivity
+public import Nyll.ProCGroups.Topologies.ContinuousMulEquiv
 
 /-!
 # Stagewise isomorphisms and inverse-limit equivalences
@@ -14,6 +16,8 @@ A compatible family of continuous group isomorphisms defines morphisms in both d
 between two inverse systems.  The induced maps on their inverse limits are assembled into a
 canonical continuous multiplicative equivalence.
 -/
+
+@[expose] public section
 
 open scoped Topology
 

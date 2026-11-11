@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.TargetQuotient.StageMap
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.Source.Fundamental
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.Source.Mul
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.TargetQuotient.StageMap
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.Source.Fundamental
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.Source.Mul
 
 /-!
 # Fox differential: completed — differential module — target quotient — fundamental
@@ -20,6 +22,8 @@ The principal declarations in this module are:
   The completed Fox derivative of a product is computed by the crossed product rule after passage to
   the target quotient.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

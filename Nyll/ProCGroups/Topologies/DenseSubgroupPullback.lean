@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Topology.Algebra.OpenSubgroup
-import Mathlib.Topology.Continuous
+module
+
+public import Mathlib.Topology.Algebra.OpenSubgroup
+public import Mathlib.Topology.Continuous
 
 /-!
 # Dense homomorphisms detect open subgroup inclusions
@@ -14,6 +16,8 @@ Pulling back open subgroups along a homomorphism with dense image reflects
 their order. The closure of the image of each pullback contains the original
 open subgroup, and open subgroups are also closed.
 -/
+
+@[expose] public section
 
 namespace ProCGroups
 

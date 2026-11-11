@@ -4,12 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FiniteGroups.StandardClasses
-import Mathlib.Data.Nat.Factorization.Basic
+module
+
+public import Nyll.ProCGroups.FiniteGroups.StandardClasses
+public import Mathlib.Data.Nat.Factorization.Basic
 
 /-!
 # Prime-power detection in finite Sigma groups
 -/
+
+@[expose] public section
 
 namespace ProCGroups.FiniteGroupClass
 

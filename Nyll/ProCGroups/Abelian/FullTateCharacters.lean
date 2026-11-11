@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Abelian.FullTateModule
+module
+
+public import Nyll.ProCGroups.Abelian.FullTateModule
 
 /-!
 # Finite-exponent characters of the actual full Tate module
@@ -14,6 +16,8 @@ Division inside that kernel is given by shifting the compatible family to
 the levels multiplied by n. Thus every character killed by n factors
 through the actual n-torsion projection when that projection is surjective.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.FullTateModule
 

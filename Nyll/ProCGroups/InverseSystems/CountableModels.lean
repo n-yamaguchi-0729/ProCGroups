@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Data.Set.Countable
-import Mathlib.Topology.ClopenBox
-import Mathlib.Topology.DiscreteQuotient
-import Nyll.ProCGroups.InverseSystems.ProfiniteSpace
+module
+
+public import Mathlib.Data.Set.Countable
+public import Mathlib.Topology.ClopenBox
+public import Mathlib.Topology.DiscreteQuotient
+public import Nyll.ProCGroups.InverseSystems.ProfiniteSpace
 
 /-!
 # Countable inverse-system models of profinite spaces
@@ -16,6 +18,8 @@ A second-countable profinite space is represented as an inverse limit of a seque
 discrete spaces.  Conversely, the module characterizes second countability by the existence of
 a finite-discrete inverse-system presentation over a countable linear order.
 -/
+
+@[expose] public section
 
 open Set
 open scoped Topology

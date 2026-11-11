@@ -10,14 +10,18 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.GroupTheory.GroupAction.Quotient
-import Mathlib.GroupTheory.Index
-import Mathlib.Data.Set.Card
-import Mathlib.Tactic.Group
+module
+
+public import Mathlib.GroupTheory.GroupAction.Quotient
+public import Mathlib.GroupTheory.Index
+public import Mathlib.Data.Set.Card
+public import Mathlib.Tactic.Group
 
 /-!
 # Subgroup exists eq mul of index inf eq
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

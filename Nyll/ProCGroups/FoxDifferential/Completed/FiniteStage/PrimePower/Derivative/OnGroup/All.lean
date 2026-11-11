@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.OnGroup.Coefficient
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.OnGroup.Projection
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.OnGroup.Scalar
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.OnGroup.Vector
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.OnGroup.Coefficient
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.OnGroup.Projection
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.OnGroup.Scalar
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.OnGroup.Vector
 
 /-!
 # Fox differential: finite stage — prime power — derivative — on group

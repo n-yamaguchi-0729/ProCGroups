@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Discrete.Jacobian.Automorphism
-import Nyll.ProCGroups.FoxDifferential.Discrete.Jacobian.Basic
-import Nyll.ProCGroups.FoxDifferential.Discrete.Jacobian.ChainRule
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Discrete.Jacobian.Automorphism
+public import Nyll.ProCGroups.FoxDifferential.Discrete.Jacobian.Basic
+public import Nyll.ProCGroups.FoxDifferential.Discrete.Jacobian.ChainRule
 
 /-!
 # Fox differential: discrete — jacobian

@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.InClass.System.Ring.Projection
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraPrimePower.InClass.System.Ring.Projection
 
 /-!
 # Fox differential: in class — system — ring — group like
@@ -22,6 +24,8 @@ The principal declarations in this module are:
   The canonical map to the class-indexed prime-power completed group algebra preserves
   multiplication.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

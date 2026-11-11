@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.InverseSystems.Basic
-import Mathlib.Topology.Category.TopCat.Limits.Basic
-import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Limits
+module
+
+public import Nyll.ProCGroups.InverseSystems.Basic
+public import Mathlib.Topology.Category.TopCat.Limits.Basic
+public import Mathlib.Topology.Algebra.Category.ProfiniteGrp.Limits
 
 /-!
 # Categorical inverse limits
@@ -16,6 +18,8 @@ mathlib's categorical limit API.  Since the index and the stages may live in unr
 each stage is moved to their common universe with `ULift`; the public comparison formulas make
 that lift explicit.
 -/
+
+@[expose] public section
 
 open CategoryTheory CategoryTheory.Limits Opposite
 open scoped Topology
@@ -73,7 +77,7 @@ def topCatCone : Cone S.topCatDiagram where
         exact (S.projection_compatible x (unop j) (unop i) (leOfHom f.unop)).symm }
 
 /-- A categorical cone supplies a compatible family of maps into the original, unlifted stages. -/
-private theorem compatibleMapsOfTopCatCone (c : Cone S.topCatDiagram) :
+theorem compatibleMapsOfTopCatCone (c : Cone S.topCatDiagram) :
     S.CompatibleMaps (fun i (x : c.pt) => (c.π.app (op i) x).down) := by
   intro i j hij
   funext x
@@ -188,7 +192,7 @@ def profiniteGrpCone : Cone S.profiniteGrpDiagram where
         exact (S.projection_compatible x (unop j) (unop i) (leOfHom f.unop)).symm }
 
 /-- A cone in `ProfiniteGrp` supplies compatible maps into the original, unlifted stages. -/
-private theorem compatibleMapsOfProfiniteGrpCone (c : Cone S.profiniteGrpDiagram) :
+theorem compatibleMapsOfProfiniteGrpCone (c : Cone S.profiniteGrpDiagram) :
     S.CompatibleMaps (fun i (x : c.pt) => (c.π.app (op i) x).down) := by
   intro i j hij
   funext x

@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Discrete.Absolute
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Discrete.Absolute
 
 /-!
 # Fox differential: discrete — jacobian — basic
@@ -25,6 +27,8 @@ The principal declarations in this module are:
   The usual relative Fox Jacobian is the coefficient-generic free crossed-differential Jacobian
   specialized to the group-ring coefficient homomorphism.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

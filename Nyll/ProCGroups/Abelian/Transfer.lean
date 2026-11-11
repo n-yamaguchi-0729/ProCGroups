@@ -4,10 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
-import Nyll.ProCGroups.ProC.Quotients.OpenSubgroupSections
+module
+
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
+public import Nyll.ProCGroups.ProC.Quotients.OpenSubgroupSections
+public import Nyll.ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
 
 /-! # Continuous transfer for open normal subgroups -/
+
+@[expose] public section
 
 namespace ProCGroups.FiniteStepSolvableQuotients
 open ProCGroups.Abelian ProCGroups.ProC
@@ -292,12 +297,12 @@ theorem openNormalCharacterTransfer_apply_of_mem
     {A : Type v} [TopologicalSpace A] [CommGroup A] [T1Space A]
     (N : OpenNormalSubgroup G) [Finite (G ⧸ (N : Subgroup G))]
     (χ : (N : Subgroup G) →ₜ* A) (n : (N : Subgroup G)) :
-    letI : Fintype (G ⧸ (N : Subgroup G)) := Fintype.ofFinite _
+    let : Fintype (G ⧸ (N : Subgroup G)) := Fintype.ofFinite _
     openNormalCharacterTransfer N χ n =
       ∏ q : G ⧸ (N : Subgroup G),
         χ (MulAut.conjNormal ((quotientOpenSubgroupSection (N : Subgroup G) q)⁻¹) n) := by
   classical
-  let : Fintype (G ⧸ (N : Subgroup G)) := Fintype.ofFinite _
+  intro sharedOwner1
   change TopologicalAbelianization.lift χ
     (∏ q : G ⧸ (N : Subgroup G),
       TopologicalAbelianization.mk (N : Subgroup G) (openNormalTransferTerm N q n)) = _

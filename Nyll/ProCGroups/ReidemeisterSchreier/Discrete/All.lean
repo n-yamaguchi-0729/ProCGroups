@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.OpenSubgroups.All
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.All
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.All
+module
+
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.OpenSubgroups.All
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.All
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.ReidemeisterSchreier.All
 
 /-!
 # Reidemeister Schreier / Discrete

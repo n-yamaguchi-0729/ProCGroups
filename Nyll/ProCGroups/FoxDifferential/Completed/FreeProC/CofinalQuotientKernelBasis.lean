@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.QuotientKernelBasis
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.QuotientKernelBasis
 
 /-!
 # Fox differential: completed — free pro-\(C\) — cofinal quotient kernel basis
@@ -26,6 +28,8 @@ The principal declarations in this module are:
   A factorization of each refined quotient through an original quotient gives the kernel inclusion
   needed to reindex a left-neighborhood quotient-kernel basis.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Free.Rules
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Free.Rules
 
 /-!
 # Fox differential: completed — continuous — naturality
@@ -20,6 +22,8 @@ The principal declarations in this module are:
 - `zcCompletedGroupAlgebraMap_surjective_of_surjective`
   A surjective target homomorphism induces a surjective completed group-algebra map.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

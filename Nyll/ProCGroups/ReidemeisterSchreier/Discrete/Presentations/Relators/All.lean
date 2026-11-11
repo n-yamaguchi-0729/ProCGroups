@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Basic
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Congruence
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.FreeGroupLift
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Operations
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Presentation
+module
+
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Basic
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Congruence
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.FreeGroupLift
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Operations
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Presentation
 
 /-!
 # Relator toolkit

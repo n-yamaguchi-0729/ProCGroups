@@ -4,13 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Topology.Algebra.IsUniformGroup.Basic
-import Mathlib.Topology.Metrizable.Uniformity
-import Nyll.ProCGroups.FiniteGeneration.CharacteristicChainsAndIndices
-import Nyll.ProCGroups.Generation.QuotientGeneratorConvergingPairs
-import Nyll.ProCGroups.LocalWeight.CardinalInvariantsAndLocalWeight
-import Nyll.ProCGroups.LocalWeight.SubgroupChains
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.BasisAtOne
+module
+
+public import Mathlib.Topology.Algebra.IsUniformGroup.Basic
+public import Mathlib.Topology.Metrizable.Uniformity
+public import Nyll.ProCGroups.FiniteGeneration.CharacteristicChainsAndIndices
+public import Nyll.ProCGroups.Generation.QuotientGeneratorConvergingPairs
+public import Nyll.ProCGroups.LocalWeight.CardinalInvariantsAndLocalWeight
+public import Nyll.ProCGroups.LocalWeight.SubgroupChains
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.BasisAtOne
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.CountableChains
 
 /-!
 # Local weight, quotients, and metrizability
@@ -19,6 +22,8 @@ This file develops local weight for quotients and open subgroups, relates counta
 to descending open-normal chains, and characterizes metrizability of profinite groups. It also
 records consequences of topological finite generation.
 -/
+
+@[expose] public section
 
 open Set
 open TopologicalSpace

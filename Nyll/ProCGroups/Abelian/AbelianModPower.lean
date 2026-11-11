@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Abelian.TopologicalAbelianization
-import Nyll.ProCGroups.Topologies.QuotientMaps
-import Mathlib.GroupTheory.QuotientGroup.Basic
-import Mathlib.Topology.Algebra.Group.Quotient
+module
+
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianization
+public import Nyll.ProCGroups.Topologies.QuotientMaps
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+public import Mathlib.Topology.Algebra.Group.Quotient
 
 /-!
 # Abelianization modulo a power
@@ -17,6 +19,8 @@ then by the subgroup of `q`-th powers. Continuous homomorphisms descend to
 this quotient, and maps to commutative groups of exponent dividing `q` factor
 through it.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.Abelian
 

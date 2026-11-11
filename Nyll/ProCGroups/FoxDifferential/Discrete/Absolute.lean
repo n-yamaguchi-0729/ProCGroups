@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Discrete.Naturality
-import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Boundary
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Discrete.Naturality
+public import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Boundary
 
 /-!
 # Fox differential: discrete — absolute
@@ -22,6 +24,8 @@ The principal declarations in this module are:
 - `freeGroupFoxDerivative_mul`
   Product rule for the absolute Fox derivative.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

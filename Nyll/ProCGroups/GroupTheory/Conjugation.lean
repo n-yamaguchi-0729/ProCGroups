@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.GroupTheory.QuotientGroup.Basic
+module
+
+public import Mathlib.GroupTheory.QuotientGroup.Basic
 
 /-!
 # Conjugation on characteristic quotients
@@ -12,6 +14,8 @@ import Mathlib.GroupTheory.QuotientGroup.Basic
 This module constructs the automorphism induced on a characteristic quotient and uses it to
 descend conjugation by a normal subgroup to an action of the ambient quotient.
 -/
+
+@[expose] public section
 
 namespace ProCGroups
 

@@ -4,14 +4,23 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.GroupTheory.IsPerfect
-import Nyll.ProCGroups.FiniteGroups.StandardClasses
-import Nyll.ProCGroups.FiniteGroups.Solvable
-import Nyll.ProCGroups.FiniteStepSolvableQuotients.Commutators.DerivedSeriesAndQuotients
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotient
-import Nyll.ProCGroups.ProC.MaximalQuotients.UniversalProperty
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.ClosedCommutator
-import Nyll.ProCGroups.ProC.Quotients.ClosedNormal
+module
+
+public import Mathlib.GroupTheory.IsPerfect
+public import Nyll.ProCGroups.FiniteGroups.StandardClasses
+public import Nyll.ProCGroups.FiniteGroups.Solvable
+public import Nyll.ProCGroups.FiniteStepSolvableQuotients.Commutators.DerivedSeriesAndQuotients
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotient
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualFiniteDescent
+public import Nyll.ProCGroups.ProC.MaximalQuotients.UniversalProperty
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.ClosedCommutator
+public import Nyll.ProCGroups.ProC.Quotients.ClosedNormal
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualCore
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Basic
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
+public import Nyll.ProCGroups.Profinite.OpenSubgroups
+public import Nyll.ProCGroups.Topologies.QuotientMaps
+public import Nyll.ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
 
 /-!
 # A local-abelianization criterion for prosolvable quotients
@@ -22,16 +31,19 @@ normal subgroups admits a unique factorization of every finite solvable quotient
 It then identifies the concrete prosolvable residual quotients of source and target.
 -/
 
+@[expose] public section
+
 open scoped ProCGroupsSolvableQuotients
 
 namespace ProCGroups.FiniteStepSolvableQuotients
 
-universe u
+universe u v w
 
 /-- The local abelianization maps over all open normal subgroups are injective.  Surjectivity of
 these maps follows from surjectivity of the original homomorphism. -/
 def OpenNormalAbelianizationInjective
-    {G Q : Type u} [TopologicalSpace G] [Group G] [IsTopologicalGroup G]
+    {G : Type u} {Q : Type v}
+    [TopologicalSpace G] [Group G] [IsTopologicalGroup G]
     [TopologicalSpace Q] [Group Q] [IsTopologicalGroup Q]
     (f : G →ₜ* Q) : Prop :=
   ∀ H : OpenNormalSubgroup Q,
@@ -42,7 +54,8 @@ def OpenNormalAbelianizationInjective
 /-- On every open normal subgroup of the target, all finite discrete abelian representations of
 its preimage kill the kernel of the restricted map. -/
 def OpenNormalFiniteDiscreteAbelianMapsKillKernel
-    {G Q : Type u} [TopologicalSpace G] [Group G] [IsTopologicalGroup G]
+    {G : Type u} {Q : Type v}
+    [TopologicalSpace G] [Group G] [IsTopologicalGroup G]
     [TopologicalSpace Q] [Group Q] [IsTopologicalGroup Q]
     (f : G →ₜ* Q) : Prop :=
   ∀ H : OpenNormalSubgroup Q,
@@ -52,7 +65,7 @@ def OpenNormalFiniteDiscreteAbelianMapsKillKernel
 /-- A surjection whose kernel is killed by every finite discrete abelian representation induces
 an injective map on topological abelianizations. -/
 theorem injective_topMaxSolvQuotMap_one_of_finiteDiscreteAbelianMapsKillKernel
-    {G Q : Type u}
+    {G : Type u} {Q : Type v}
     [TopologicalSpace G] [Group G] [IsTopologicalGroup G]
     [CompactSpace G] [T2Space G] [TotallyDisconnectedSpace G]
     [TopologicalSpace Q] [Group Q] [IsTopologicalGroup Q] [T2Space Q]
@@ -84,7 +97,7 @@ theorem injective_topMaxSolvQuotMap_one_of_finiteDiscreteAbelianMapsKillKernel
 /-- Finite discrete abelian representations on all open-normal preimages supply the local
 abelianization hypothesis used by the prosolvable quotient criterion. -/
 theorem openNormalAbelianizationInjective_of_finiteDiscreteAbelianMapsKillKernel
-    {G Q : Type u}
+    {G : Type u} {Q : Type v}
     [TopologicalSpace G] [Group G] [IsTopologicalGroup G]
     [CompactSpace G] [T2Space G] [TotallyDisconnectedSpace G]
     [TopologicalSpace Q] [Group Q] [IsTopologicalGroup Q] [T2Space Q]
@@ -112,7 +125,8 @@ theorem openNormalAbelianizationInjective_of_finiteDiscreteAbelianMapsKillKernel
 /-- Injectivity on a preimage abelianization puts the kernel of the restricted map in the first
 closed derived subgroup. -/
 theorem restrictPreimage_ker_le_topDerived_one
-    {G Q : Type u} [TopologicalSpace G] [Group G] [IsTopologicalGroup G]
+    {G : Type u} {Q : Type v}
+    [TopologicalSpace G] [Group G] [IsTopologicalGroup G]
     [TopologicalSpace Q] [Group Q] [IsTopologicalGroup Q]
     {f : G →ₜ* Q} (hAb : OpenNormalAbelianizationInjective f)
     (H : OpenNormalSubgroup Q) :
@@ -141,7 +155,7 @@ theorem restrictPreimage_ker_le_topDerived_one
 topological isomorphism on the abelianization over every open normal
 subgroup. -/
 noncomputable def openNormalAbelianizationContinuousMulEquiv
-    {G Q : Type u}
+    {G : Type u} {Q : Type v}
     [TopologicalSpace G] [Group G] [IsTopologicalGroup G] [CompactSpace G]
     [TopologicalSpace Q] [Group Q] [IsTopologicalGroup Q] [T2Space Q]
     (f : G →ₜ* Q) (hf : Function.Surjective f)
@@ -180,8 +194,10 @@ noncomputable def openNormalAbelianizationContinuousMulEquiv
           f (H : Subgroup Q)) 1).continuous_toFun
       e.bijective
 
-private noncomputable def factorThroughOfSurjective
-    {G Q A : Type u} [TopologicalSpace G] [Group G] [CompactSpace G]
+/-- Factor a continuous homomorphism through a compact-to-Hausdorff epimorphism. -/
+noncomputable def factorThroughOfSurjective
+    {G : Type u} {Q : Type v} {A : Type w}
+    [TopologicalSpace G] [Group G] [CompactSpace G]
     [TopologicalSpace Q] [Group Q] [T2Space Q]
     [TopologicalSpace A] [Group A]
     (f : G →ₜ* Q) (hf : Function.Surjective f)
@@ -202,8 +218,10 @@ private noncomputable def factorThroughOfSurjective
   funext x
   exact MonoidHom.ext_iff.mp hcomp x
 
-private theorem factorThroughOfSurjective_comp
-    {G Q A : Type u} [TopologicalSpace G] [Group G] [CompactSpace G]
+/-- The factorization recovers the original continuous homomorphism. -/
+theorem factorThroughOfSurjective_comp
+    {G : Type u} {Q : Type v} {A : Type w}
+    [TopologicalSpace G] [Group G] [CompactSpace G]
     [TopologicalSpace Q] [Group Q] [T2Space Q]
     [TopologicalSpace A] [Group A]
     (f : G →ₜ* Q) (hf : Function.Surjective f)
@@ -217,7 +235,7 @@ private theorem factorThroughOfSurjective_comp
 /-- Under the open-normal abelianization hypothesis, the kernel of `f` is killed by every
 surjective continuous finite solvable quotient of the source. -/
 theorem ker_le_ker_finite_solvable_quotient
-    {G Q S : Type u}
+    {G : Type u} {Q : Type v} {S : Type w}
     [TopologicalSpace G] [Group G] [IsTopologicalGroup G]
     [CompactSpace G]
     [TopologicalSpace Q] [Group Q] [IsTopologicalGroup Q]
@@ -298,7 +316,7 @@ theorem ker_le_ker_finite_solvable_quotient
 /-- Every surjective continuous finite solvable quotient of the source factors uniquely through
 `f`.  This is the operational finite-quotient form of the prosolvable criterion. -/
 theorem finite_solvable_quotient_existsUnique_factorization
-    {G Q S : Type u}
+    {G : Type u} {Q : Type v} {S : Type w}
     [TopologicalSpace G] [Group G] [IsTopologicalGroup G]
     [CompactSpace G]
     [TopologicalSpace Q] [Group Q] [IsTopologicalGroup Q]
@@ -322,7 +340,7 @@ theorem finite_solvable_quotient_existsUnique_factorization
 
 /-- The kernel of `f` lies in the prosolvable residual core of the source. -/
 theorem ker_le_prosolvableResidualCore
-    {G Q : Type u}
+    {G : Type u} {Q : Type v}
     [TopologicalSpace G] [Group G] [IsTopologicalGroup G]
     [CompactSpace G]
     [TopologicalSpace Q] [Group Q] [IsTopologicalGroup Q] [T2Space Q]
@@ -361,7 +379,7 @@ theorem ker_le_prosolvableResidualCore
 /-- A local isomorphism on all open-normal abelianizations induces an equivalence on the
 prosolvable residual quotients. -/
 noncomputable def prosolvableResidualQuotientContinuousMulEquiv
-    {G Q : Type u}
+    {G : Type u} {Q : Type v}
     [TopologicalSpace G] [Group G] [IsTopologicalGroup G]
     [CompactSpace G] [T2Space G] [TotallyDisconnectedSpace G]
     [TopologicalSpace Q] [Group Q] [IsTopologicalGroup Q] [T2Space Q]
@@ -380,14 +398,60 @@ noncomputable def prosolvableResidualQuotientContinuousMulEquiv
     simpa [RG] using
       (ProCGroups.ProC.proCResidualCoreQuotient_hasOpenNormalBasisInClass
         (G := G) FiniteGroupClass.solvable_formation)
+  have hRGclosed : IsClosed (RG : Set G) := by
+    simpa [RG] using
+      ProCGroups.ProC.proCResidualCore_isClosed FiniteGroupClass.solvable G
   have hmap : RG.map f.toMonoidHom = RQ := by
-    simpa [RG, RQ] using
-      (ProCGroups.ProC.map_proCResidualCore_eq_of_surjective
-        (C := FiniteGroupClass.solvable)
-        FiniteGroupClass.solvable_fullFormation f.toMonoidHom f.continuous_toFun hf hRGbasis)
+    apply le_antisymm
+    · change RG.map f.toMonoidHom ≤
+        ProCGroups.ProC.proCResidualCore FiniteGroupClass.solvable Q
+      rw [ProCGroups.ProC.proCResidualCore]
+      refine le_sInf ?_
+      rintro _ ⟨N, rfl⟩
+      have : IsClosed (N.toSubgroup : Set Q) := N.isClosed'
+      let α : G →ₜ* Q ⧸ N.toSubgroup :=
+        { toMonoidHom := (QuotientGroup.mk' N.toSubgroup).comp f.toMonoidHom
+          continuous_toFun := continuous_quotient_mk'.comp f.continuous_toFun }
+      have hkill : RG ≤ α.ker :=
+        ProCGroups.ProC.prosolvableResidualCore_le_ker_of_continuousMonoidHom_to_prosolvable
+          α N.quotient_hasOpenNormalBasisInClass
+      rintro _ ⟨x, hx, rfl⟩
+      exact (QuotientGroup.eq_one_iff (N := N.toSubgroup) (f x)).1
+        (MonoidHom.mem_ker.mp (hkill hx))
+    · let qG : G →ₜ* G ⧸ RG :=
+        { toMonoidHom := QuotientGroup.mk' RG
+          continuous_toFun := continuous_quotient_mk' }
+      have hker_qG : f.ker ≤ qG.ker := by
+        intro x hx
+        exact MonoidHom.mem_ker.mpr ((QuotientGroup.eq_one_iff (N := RG) x).2 (hker hx))
+      let r : Q →ₜ* G ⧸ RG := factorThroughOfSurjective f hf qG hker_qG
+      have hrf : r.comp f = qG := factorThroughOfSurjective_comp f hf qG hker_qG
+      have hkill : RQ ≤ r.ker :=
+        ProCGroups.ProC.prosolvableResidualCore_le_ker_of_continuousMonoidHom_to_prosolvable
+          r hRGbasis
+      intro y hy
+      obtain ⟨x, rfl⟩ := hf y
+      refine ⟨x, ?_, rfl⟩
+      apply (QuotientGroup.eq_one_iff (N := RG) x).1
+      change qG x = 1
+      rw [← DFunLike.congr_fun hrf x]
+      exact MonoidHom.mem_ker.mp (hkill hy)
   have hRQclosed : IsClosed (RQ : Set Q) := by
     simpa [RQ] using
       ProCGroups.ProC.proCResidualCore_isClosed FiniteGroupClass.solvable Q
   exact QuotientGroup.mapContinuousMulEquivOfSurjective f hf hmap hker
+
+/-- The residual equivalence uses the original map on representatives, also across universes. -/
+@[simp] theorem prosolvableResidualQuotientContinuousMulEquiv_apply_mk
+    {G : Type u} {Q : Type v}
+    [TopologicalSpace G] [Group G] [IsTopologicalGroup G]
+    [CompactSpace G] [T2Space G] [TotallyDisconnectedSpace G]
+    [TopologicalSpace Q] [Group Q] [IsTopologicalGroup Q] [T2Space Q]
+    (f : G →ₜ* Q) (hf : Function.Surjective f)
+    (hAb : OpenNormalAbelianizationInjective f) (x : G) :
+    prosolvableResidualQuotientContinuousMulEquiv f hf hAb
+        (QuotientGroup.mk' (ProCGroups.ProC.proCResidualCore FiniteGroupClass.solvable G) x) =
+      QuotientGroup.mk' (ProCGroups.ProC.proCResidualCore FiniteGroupClass.solvable Q) (f x) := by
+  rfl
 
 end ProCGroups.FiniteStepSolvableQuotients

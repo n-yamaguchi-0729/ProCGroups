@@ -4,10 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProC.Quotients.ClosedSubgroupNeighborhoods
-import Nyll.ProCGroups.Topologies.ContinuousMonoidHom
+module
+
+public import Nyll.ProCGroups.ProC.Quotients.ClosedSubgroupNeighborhoods
+public import Nyll.ProCGroups.Topologies.ContinuousMonoidHom
 
 /-! # Extending discrete characters to an open normal supergroup -/
+
+@[expose] public section
 
 namespace ProCGroups
 

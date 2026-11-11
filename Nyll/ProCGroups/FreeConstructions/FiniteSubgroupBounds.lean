@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.SetTheory.Cardinal.NatCard
-import Nyll.ProCGroups.FreeConstructions.Framework
+module
+
+public import Mathlib.SetTheory.Cardinal.NatCard
+public import Nyll.ProCGroups.FreeConstructions.Framework
 
 /-!
 # Generator bounds from finite subgroup families
@@ -14,6 +16,8 @@ Independent generating tuples for finitely many subgroups can be concatenated.
 The two theorems below turn that elementary construction into explicit
 ambient-group rank bounds.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.FreeConstructions
 

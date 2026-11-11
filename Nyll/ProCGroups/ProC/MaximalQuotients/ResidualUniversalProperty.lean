@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProC.MaximalQuotients.Definitions
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualCore
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotient
-import Nyll.ProCGroups.ProC.MaximalQuotients.UniversalProperty
-import Nyll.ProCGroups.ProC.Quotients.ClosedNormal
+module
+
+public import Nyll.ProCGroups.ProC.MaximalQuotients.Definitions
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualCore
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotient
+public import Nyll.ProCGroups.ProC.MaximalQuotients.UniversalProperty
+public import Nyll.ProCGroups.ProC.Quotients.ClosedNormal
 
 /-!
 # The canonical residual quotient is maximal pro-C
@@ -18,13 +20,16 @@ map to a pro-C group factors through its residual core, and surjectivity of
 the quotient projection gives uniqueness of this factorization.
 -/
 
+@[expose] public section
+
 namespace ProCGroups.ProC
 
 universe u
 
 attribute [local instance] proCResidualCore_isClosed
 
-private theorem residualQuotient_totallyDisconnectedSpace
+/-- The residual quotient inherits total disconnectedness from the compact source. -/
+theorem residualQuotient_totallyDisconnectedSpace
     {C : FiniteGroupClass.{u}}
     {G : Type u} [Group G] [TopologicalSpace G] [IsTopologicalGroup G]
     [CompactSpace G] [T2Space G] [TotallyDisconnectedSpace G] :

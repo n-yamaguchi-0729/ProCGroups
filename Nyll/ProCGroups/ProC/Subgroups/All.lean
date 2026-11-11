@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProC.Subgroups.Closed
-import Nyll.ProCGroups.ProC.Subgroups.Products
+module
+
+public import Nyll.ProCGroups.ProC.Subgroups.Closed
+public import Nyll.ProCGroups.ProC.Subgroups.Products
 
 /-!
 # Subgroups and products of pro-\(C\) groups

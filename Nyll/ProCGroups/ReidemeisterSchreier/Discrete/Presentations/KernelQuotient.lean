@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.GroupTheory.Complement
-import Mathlib.GroupTheory.GroupAction.ConjAct
-import Mathlib.GroupTheory.QuotientGroup.Basic
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.Script
+module
+
+public import Mathlib.GroupTheory.Complement
+public import Mathlib.GroupTheory.GroupAction.ConjAct
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.Script
 
 /-!
 # Reidemeister Schreier / Discrete / Presentations / Kernel Quotient
@@ -16,6 +18,8 @@ This module identifies a presented free-group kernel with its relator
 quotient.  It packages the canonical surjection, computes its kernel, and
 derives quotient equivalences for the conjugate and transversal relators.
 -/
+
+@[expose] public section
 
 namespace ReidemeisterSchreier.Discrete.Presentations
 

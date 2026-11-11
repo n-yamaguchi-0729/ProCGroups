@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FreeProC.Characterization.EmbeddingProblems
-import Nyll.ProCGroups.FiniteGroups.Classes
+module
+
+public import Nyll.ProCGroups.FreeProC.Characterization.EmbeddingProblems
+public import Nyll.ProCGroups.FiniteGroups.Classes
 
 /-!
 # Split embedding problems with a condition on the abelian kernel
@@ -15,6 +17,8 @@ Only the kernel of the covering epimorphism belongs to the specified class.
 For the Sigma group class this is exactly the split abelian Sigma-kernel
 solvability condition; the elementary class gives its elementary variant.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.FreeProC.Characterization
 

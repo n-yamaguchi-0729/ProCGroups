@@ -4,15 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.CoefficientRings.All
-import Nyll.ProCGroups.FoxDifferential.Completed.Comparison.All
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.All
-import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.All
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.All
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.All
-import Nyll.ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.All
-import Nyll.ProCGroups.FoxDifferential.Completed.Residue.All
-import Nyll.ProCGroups.FoxDifferential.Completed.Semidirect
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.CoefficientRings.All
+public import Nyll.ProCGroups.FoxDifferential.Completed.Comparison.All
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.All
+public import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.All
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.All
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.All
+public import Nyll.ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.All
+public import Nyll.ProCGroups.FoxDifferential.Completed.Residue.All
+public import Nyll.ProCGroups.FoxDifferential.Completed.Semidirect
 
 /-!
 # Fox Differential / Completed

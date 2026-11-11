@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.NormalSubgroups.SimpleQuotients.Algebraic
+module
+
+public import Nyll.ProCGroups.NormalSubgroups.SimpleQuotients.Algebraic
 
 /-!
 # Finite intersections above a simple-quotient kernel
@@ -12,6 +14,8 @@ import Nyll.ProCGroups.NormalSubgroups.SimpleQuotients.Algebraic
 This module proves normality of indexed intersections and shows that finite intersections retain
 the full-product property with the kernel of a noncommutative simple quotient.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.NormalSubgroups
 

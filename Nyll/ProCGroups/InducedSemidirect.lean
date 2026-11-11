@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.InducedFunctions
-import Mathlib.Algebra.Group.Action.End
-import Mathlib.GroupTheory.SemidirectProduct
+module
+
+public import Nyll.ProCGroups.InducedFunctions
+public import Mathlib.Algebra.Group.Action.End
+public import Mathlib.GroupTheory.SemidirectProduct
 
 /-!
 # Evaluation on induced semidirect products
@@ -15,6 +17,8 @@ The subgroup action on the induced group is the restriction of its ambient
 translation action. Evaluation at the identity therefore induces an actual
 surjective homomorphism of semidirect products.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.InducedFunctions
 

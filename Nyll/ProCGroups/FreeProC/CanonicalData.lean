@@ -4,9 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Completion.ProCIntegerPrimePower
-import Nyll.ProCGroups.FreeProC.Basic
-import Nyll.ProCGroups.ProC.InverseLimits.Predicates
+module
+
+public import Nyll.ProCGroups.Completion.ProCIntegerPrimePower
+public import Nyll.ProCGroups.FreeProC.Basic
+public import Nyll.ProCGroups.ProC.InverseLimits.Predicates
+public import Nyll.ProCGroups.FiniteGroups.AllFinite
+public import Nyll.ProCGroups.FiniteGroups.Classes
+public import Nyll.ProCGroups.FiniteGroups.StandardClasses
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
 
 /-!
 # Pro C Groups / Free pro-C / Canonical Data
@@ -14,6 +20,8 @@ import Nyll.ProCGroups.ProC.InverseLimits.Predicates
 This module supplies canonical basis maps and proves the rank-one free
 pro-\(p\) description of the pro-\(p\) integers.
 -/
+
+@[expose] public section
 
 open Set
 open scoped Topology

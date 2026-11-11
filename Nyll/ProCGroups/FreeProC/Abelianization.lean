@@ -4,10 +4,16 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Topology.Constructions
-import Mathlib.Topology.Instances.ZMod
-import Nyll.ProCGroups.Abelian.TopologicalAbelianization
-import Nyll.ProCGroups.FreeProC.Basic
+module
+
+public import Mathlib.Topology.Constructions
+public import Mathlib.Topology.Instances.ZMod
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianization
+public import Nyll.ProCGroups.FreeProC.Basic
+public import Nyll.ProCGroups.FiniteGroups.Classes
+public import Nyll.ProCGroups.FiniteGroups.StandardClasses
+public import Nyll.ProCGroups.ProC.InverseLimits.FiniteQuotients
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
 
 /-!
 # Pro C Groups / Free pro-C / Abelianization
@@ -15,6 +21,8 @@ import Nyll.ProCGroups.FreeProC.Basic
 This module identifies the topological abelianization of a free pro-\(C\)
 group through its universal property and finite abelian targets.
 -/
+
+@[expose] public section
 
 open scoped Topology
 

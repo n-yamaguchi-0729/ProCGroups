@@ -5,7 +5,9 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
 
-import Mathlib.GroupTheory.QuotientGroup.Basic
+module
+
+public import Mathlib.GroupTheory.QuotientGroup.Basic
 
 /-!
 # Automorphism actions on quotients by powers
@@ -13,6 +15,8 @@ import Mathlib.GroupTheory.QuotientGroup.Basic
 Multiplicative automorphisms preserve the subgroup of powers and induce
 automorphisms of the corresponding quotient, with explicit evaluation.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.Abelian
 

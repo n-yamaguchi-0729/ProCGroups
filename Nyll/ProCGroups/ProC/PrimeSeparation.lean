@@ -5,10 +5,12 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
 
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
-import Nyll.ProCGroups.FiniteGroups.PGroupFormation
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotient
-import Nyll.ProCGroups.ProC.Subgroups.Closed
+module
+
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
+public import Nyll.ProCGroups.FiniteGroups.PGroupFormation
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotient
+public import Nyll.ProCGroups.ProC.Subgroups.Closed
 
 /-!
 # Separating distinct pro-prime group classes
@@ -17,6 +19,8 @@ Finite quotients of a group that is both pro-p and pro-q have trivial
 order at distinct primes. Applying this to the actual residual quotient
 shows that the maximal pro-q quotient of a pro-p group is trivial.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.ProC
 universe u

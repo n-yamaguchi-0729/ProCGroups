@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Boundary
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Boundary
 
 /-!
 # Fox differential: discrete — fox calculus — coordinates
@@ -19,6 +21,8 @@ The principal declarations in this module are:
 - `relativeFreeFoxCoordinatesLinearMap_comp_relativeDifferentialToFreeFoxCoordinates`
   The coordinate-to-differential map is a left inverse to the differential-to-coordinate map.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

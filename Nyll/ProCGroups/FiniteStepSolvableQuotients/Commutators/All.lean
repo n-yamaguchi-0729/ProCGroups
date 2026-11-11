@@ -4,10 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FiniteStepSolvableQuotients.Commutators.Basic
-import Nyll.ProCGroups.FiniteStepSolvableQuotients.Commutators.ClosureFromFiniteQuotients
-import Nyll.ProCGroups.FiniteStepSolvableQuotients.Commutators.DerivedSeriesAndQuotients
-import Nyll.ProCGroups.FiniteStepSolvableQuotients.Commutators.Width
+module
+
+public import Nyll.ProCGroups.FiniteStepSolvableQuotients.Commutators.Basic
+public import Nyll.ProCGroups.FiniteStepSolvableQuotients.Commutators.ClosureFromFiniteQuotients
+public import Nyll.ProCGroups.FiniteStepSolvableQuotients.Commutators.DerivedSeriesAndQuotients
+public import Nyll.ProCGroups.FiniteStepSolvableQuotients.Commutators.Width
 
 /-!
 # Closed commutators and their width

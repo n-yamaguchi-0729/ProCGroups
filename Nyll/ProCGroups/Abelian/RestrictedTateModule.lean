@@ -4,8 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Abelian.FullTateModule
-import Mathlib.Algebra.Group.Submonoid.Defs
+module
+
+public import Nyll.ProCGroups.Abelian.FullTateModule
+public import Mathlib.Algebra.Group.Submonoid.Defs
+public import Nyll.ProCGroups.FiniteGroups.StandardClasses
+public import Mathlib.Algebra.CharP.Defs
+public import Mathlib.RingTheory.LocalRing.ResidueField.Basic
 
 /-!
 # Compatible actual torsion families on a multiplicative set of indices
@@ -15,9 +20,42 @@ the actual multiplication transitions. Each coordinate is an actual torsion
 point, and the topology is the subspace topology of discrete torsion levels.
 -/
 
+@[expose] public section
+
 namespace ProCGroups
 
 universe u
+
+/-- Positive integers whose prime divisors lie in `sigma`, as the native
+multiplicative index set for the restricted Tate module. -/
+def sigmaTorsionIndices (sigma : Set ℕ) : Submonoid ℕ+ where
+  carrier := {n | FiniteGroupClass.IsSigmaNumber sigma (n : ℕ)}
+  one_mem' := by
+    intro p hp _ h
+    exact hp.ne_one (Nat.dvd_one.mp h)
+  mul_mem' := by
+    intro a b ha hb
+    exact FiniteGroupClass.IsSigmaNumber.mul ha hb
+
+/-- Membership uses the existing finite Sigma-number condition. -/
+@[simp] theorem mem_sigmaTorsionIndices (sigma : Set ℕ) (n : ℕ+) :
+    n ∈ sigmaTorsionIndices sigma ↔ FiniteGroupClass.IsSigmaNumber sigma (n : ℕ) := Iff.rfl
+
+/-- Every Sigma-index is invertible in a local ring whose residue
+characteristic lies outside Sigma. The residue field may also have characteristic zero. -/
+theorem sigmaTorsionIndices.isUnit_natCast
+    {R : Type*} [CommRing R] [IsLocalRing R]
+    (p : ℕ) [CharP (IsLocalRing.ResidueField R) p]
+    (sigma : Set ℕ) (hp : p ∉ sigma) (n : sigmaTorsionIndices sigma) :
+    IsUnit ((n.val : ℕ) : R) := by
+  apply (IsLocalRing.residue_ne_zero_iff_isUnit _).mp
+  rw [map_natCast]
+  intro hz
+  have hdiv := (CharP.cast_eq_zero_iff (IsLocalRing.ResidueField R) p (n.val : ℕ)).mp hz
+  rcases CharP.char_is_prime_or_zero (IsLocalRing.ResidueField R) p with hprime | rfl
+  · exact n.property p hprime hp hdiv
+  · obtain ⟨m, hm⟩ := hdiv
+    exact (Nat.ne_of_gt n.val.property) (hm.trans (zero_mul m))
 
 variable (M : Type u) [AddCommGroup M] (S : Submonoid ℕ+)
 

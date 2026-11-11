@@ -4,6 +4,8 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
+module
+
 /-!
 # Reidemeister Schreier / Discrete / Presentations / Automation
 
@@ -11,6 +13,9 @@ This module defines the small proof automation used in relator calculations:
 it closes elementary `RelatorEquivalent` goals and reduces normal-closure
 membership goals to the standard closure lemmas.
 -/
+
+
+@[expose] public section
 
 namespace ReidemeisterSchreier.Discrete.Presentations
 

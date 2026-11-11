@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraModN.InClass.Basic
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.CoefficientRings.CompletedGroupAlgebraModN.InClass.Basic
 
 /-!
 # Fox differential: coefficient rings — mod-\(n\) completed group algebra — in class — add
@@ -25,6 +27,8 @@ The principal declarations in this module are:
   The inclusion of the \(C\)-indexed mod-\(n\) completed group algebra into the ambient completed
   group algebra preserves subtraction.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

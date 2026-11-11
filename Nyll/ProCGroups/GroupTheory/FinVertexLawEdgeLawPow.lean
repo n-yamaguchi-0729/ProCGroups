@@ -10,24 +10,28 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Nyll.ProCGroups.GroupTheory.FinSubSubModEqFlowSumMulModEqZero
-import Mathlib.Algebra.EuclideanDomain.Int
-import Mathlib.Data.Int.ModEq
-import Mathlib.Data.Fintype.Card
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.RingTheory.Noetherian.Defs
-import Mathlib.RingTheory.Noetherian.Basic
-import Mathlib.RingTheory.PrincipalIdealDomain
-import Mathlib.Tactic.Ring.RingNF
-import Mathlib.Tactic.Linarith.Frontend
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.SplitIfs
-import Mathlib.Tactic.Choose
+module
+
+public import Nyll.ProCGroups.GroupTheory.FinSubSubModEqFlowSumMulModEqZero
+public import Mathlib.Algebra.EuclideanDomain.Int
+public import Mathlib.Data.Int.ModEq
+public import Mathlib.Data.Fintype.Card
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.RingTheory.Noetherian.Defs
+public import Mathlib.RingTheory.Noetherian.Basic
+public import Mathlib.RingTheory.PrincipalIdealDomain
+public import Mathlib.Tactic.Ring.RingNF
+public import Mathlib.Tactic.Linarith.Frontend
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.SplitIfs
+public import Mathlib.Tactic.Choose
 
 /-!
 # Fin exists forall vertex Law and edge Law pow of pow add of mod Eq of forall flow sum mul
 eq
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

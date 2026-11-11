@@ -4,9 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.NaturalTopology
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Magnus.KernelClosedCommutator
-import Nyll.ProCGroups.FreeProC.FiniteBasis
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.NaturalTopology
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Magnus.KernelClosedCommutator
+public import Nyll.ProCGroups.FreeProC.FiniteBasis
+public import Nyll.ProCGroups.Completion.ProCInteger
+public import Nyll.ProCGroups.FreeProC.Basic
+public import Nyll.ProCGroups.Generation.Basic
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
 
 /-!
 # Fox differential: completed — free pro-\(C\) — coordinates
@@ -25,6 +31,8 @@ The principal declarations in this module are:
   The separated coordinate map sends the separated universal differential to the closed-generated
   Fox derivative vector.
 -/
+
+@[expose] public section
 
 namespace CrowellExactSequence
 
@@ -144,12 +152,7 @@ def freeProCChosenULift_sepCoordinateMap
       Nonempty
         (ZCCompletedDifferentialModuleIndex
           C psi.toMonoidHom) :=
-    ⟨zcCompletedDifferentialModuleComapIndex
-      (C := C) (G := sourceData.carrier) (H := H)
-      hC.hereditary psi
-      ((ProCGroups.Completion.ProCIntegerIndex.terminal
-          (C := C) inferInstance),
-        zcCompletedGroupAlgebraTopIndex C H)⟩
+    nonempty_zcCompletedDifferentialModuleIndex C psi.toMonoidHom
   have hdir :
       Directed (· ≤ ·)
         (id :
@@ -159,8 +162,7 @@ def freeProCChosenULift_sepCoordinateMap
               C psi.toMonoidHom) :=
     directed_zcCompletedDifferentialModuleIndex
       (C := C) (G := sourceData.carrier) (H := H)
-      (hC.melnikovFormation.formation)
-      hC.hereditary psi
+      psi.toMonoidHom hC.melnikovFormation.formation
   let family : ULift.{u} (Fin r) → sourceData.carrier :=
     freeProCChosenULiftFamilyOfBasisCard (C := C) sourceData hbasis
   let hfree :=
@@ -227,12 +229,7 @@ theorem freeProCChosenULift_sepCoordinateMap_universal
       Nonempty
         (ZCCompletedDifferentialModuleIndex
           C psi.toMonoidHom) :=
-    ⟨zcCompletedDifferentialModuleComapIndex
-      (C := C) (G := sourceData.carrier) (H := H)
-      hC.hereditary psi
-      ((ProCGroups.Completion.ProCIntegerIndex.terminal
-          (C := C) inferInstance),
-        zcCompletedGroupAlgebraTopIndex C H)⟩
+    nonempty_zcCompletedDifferentialModuleIndex C psi.toMonoidHom
   have hdir :
       Directed (· ≤ ·)
         (id :
@@ -242,8 +239,7 @@ theorem freeProCChosenULift_sepCoordinateMap_universal
               C psi.toMonoidHom) :=
     directed_zcCompletedDifferentialModuleIndex
       (C := C) (G := sourceData.carrier) (H := H)
-      (hC.melnikovFormation.formation)
-      hC.hereditary psi
+      psi.toMonoidHom hC.melnikovFormation.formation
   let family : ULift.{u} (Fin r) → sourceData.carrier :=
     freeProCChosenULiftFamilyOfBasisCard (C := C) sourceData hbasis
   let hfree :=
@@ -294,12 +290,7 @@ def freeProCChosenULift_sepCoordinateEquiv
       Nonempty
         (ZCCompletedDifferentialModuleIndex
           C psi.toMonoidHom) :=
-    ⟨zcCompletedDifferentialModuleComapIndex
-      (C := C) (G := sourceData.carrier) (H := H)
-      hC.hereditary psi
-      ((ProCGroups.Completion.ProCIntegerIndex.terminal
-          (C := C) inferInstance),
-        zcCompletedGroupAlgebraTopIndex C H)⟩
+    nonempty_zcCompletedDifferentialModuleIndex C psi.toMonoidHom
   have hdir :
       Directed (· ≤ ·)
         (id :
@@ -309,8 +300,7 @@ def freeProCChosenULift_sepCoordinateEquiv
               C psi.toMonoidHom) :=
     directed_zcCompletedDifferentialModuleIndex
       (C := C) (G := sourceData.carrier) (H := H)
-      (hC.melnikovFormation.formation)
-      hC.hereditary psi
+      psi.toMonoidHom hC.melnikovFormation.formation
   let family : ULift.{u} (Fin r) → sourceData.carrier :=
     freeProCChosenULiftFamilyOfBasisCard (C := C) sourceData hbasis
   let hfree :=

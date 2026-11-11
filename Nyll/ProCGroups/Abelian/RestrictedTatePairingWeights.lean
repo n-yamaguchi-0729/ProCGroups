@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Abelian.FiniteFixedCharacters
-import Nyll.ProCGroups.Abelian.RestrictedTateTorsionFree
+module
+
+public import Nyll.ProCGroups.Abelian.FiniteFixedCharacters
+public import Nyll.ProCGroups.Abelian.RestrictedTateTorsionFree
 
 /-!
 # Scalar eigenvectors detected by finite-level pairings
@@ -16,6 +18,8 @@ annihilates the whole compatible family, which is torsion-free. Pairings need
 not be compatible across levels, and the common cardinal need not be an
 allowed index.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.FiniteFixedCharacters
 

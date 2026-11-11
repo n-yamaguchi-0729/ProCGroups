@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProC.Category.Basic
-import Nyll.ProCGroups.ProC.Category.Pullbacks
-import Nyll.ProCGroups.ProC.Category.Pushouts
+module
+
+public import Nyll.ProCGroups.ProC.Category.Basic
+public import Nyll.ProCGroups.ProC.Category.Pullbacks
+public import Nyll.ProCGroups.ProC.Category.Pushouts
 
 /-!
 # Pro C Groups / pro-C / Category

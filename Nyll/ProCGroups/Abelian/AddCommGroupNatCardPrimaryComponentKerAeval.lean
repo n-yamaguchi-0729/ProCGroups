@@ -10,50 +10,54 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.GroupTheory.Torsion
-import Mathlib.GroupTheory.OrderOfElement
-import Mathlib.GroupTheory.Perm.Cycle.Type
-import Mathlib.GroupTheory.Coset.Card
-import Mathlib.GroupTheory.QuotientGroup.Defs
-import Mathlib.Algebra.Group.Subgroup.Defs
-import Mathlib.Algebra.Group.Subgroup.Lattice
-import Mathlib.Algebra.Group.Subgroup.Ker
-import Mathlib.Algebra.Module.LinearMap.Defs
-import Mathlib.Algebra.Module.LinearMap.End
-import Mathlib.Algebra.Algebra.Defs
-import Mathlib.Algebra.Algebra.Basic
-import Mathlib.Algebra.CharP.Defs
-import Mathlib.Data.Nat.Factorization.Defs
-import Mathlib.Data.Nat.Factorization.Basic
-import Mathlib.Data.Int.Basic
-import Mathlib.Data.Int.Cast.Lemmas
-import Mathlib.Data.ZMod.Basic
-import Mathlib.SetTheory.Cardinal.Finite
-import Mathlib.Data.Set.Finite.Basic
-import Mathlib.Algebra.Polynomial.AlgebraMap
-import Mathlib.Algebra.Polynomial.Basic
-import Mathlib.Algebra.Polynomial.Eval.Defs
-import Mathlib.Algebra.Polynomial.Degree.Defs
-import Mathlib.Algebra.Polynomial.Degree.Operations
-import Mathlib.Algebra.Polynomial.Degree.Lemmas
-import Mathlib.Algebra.Polynomial.Monic
-import Mathlib.RingTheory.Polynomial.Resultant.Basic
-import Mathlib.FieldTheory.IsAlgClosed.Basic
-import Mathlib.Analysis.Complex.Polynomial.Basic
-import Mathlib.Algebra.BigOperators.Ring.Multiset
-import Mathlib.Data.Finset.Defs
-import Mathlib.Tactic.Ext
-import Mathlib.Tactic.Push
-import Mathlib.Tactic.Ring.RingNF
-import Mathlib.Tactic.LinearCombination
-import Mathlib.Tactic.Linarith.Frontend
-import Mathlib.Algebra.Polynomial.Roots
-import Mathlib.Data.Finset.Dedup
+module
+
+public import Mathlib.GroupTheory.Torsion
+public import Mathlib.GroupTheory.OrderOfElement
+public import Mathlib.GroupTheory.Perm.Cycle.Type
+public import Mathlib.GroupTheory.Coset.Card
+public import Mathlib.GroupTheory.QuotientGroup.Defs
+public import Mathlib.Algebra.Group.Subgroup.Defs
+public import Mathlib.Algebra.Group.Subgroup.Lattice
+public import Mathlib.Algebra.Group.Subgroup.Ker
+public import Mathlib.Algebra.Module.LinearMap.Defs
+public import Mathlib.Algebra.Module.LinearMap.End
+public import Mathlib.Algebra.Algebra.Defs
+public import Mathlib.Algebra.Algebra.Basic
+public import Mathlib.Algebra.CharP.Defs
+public import Mathlib.Data.Nat.Factorization.Defs
+public import Mathlib.Data.Nat.Factorization.Basic
+public import Mathlib.Data.Int.Basic
+public import Mathlib.Data.Int.Cast.Lemmas
+public import Mathlib.Data.ZMod.Basic
+public import Mathlib.SetTheory.Cardinal.Finite
+public import Mathlib.Data.Set.Finite.Basic
+public import Mathlib.Algebra.Polynomial.AlgebraMap
+public import Mathlib.Algebra.Polynomial.Basic
+public import Mathlib.Algebra.Polynomial.Eval.Defs
+public import Mathlib.Algebra.Polynomial.Degree.Defs
+public import Mathlib.Algebra.Polynomial.Degree.Operations
+public import Mathlib.Algebra.Polynomial.Degree.Lemmas
+public import Mathlib.Algebra.Polynomial.Monic
+public import Mathlib.RingTheory.Polynomial.Resultant.Basic
+public import Mathlib.FieldTheory.IsAlgClosed.Basic
+public import Mathlib.Analysis.Complex.Polynomial.Basic
+public import Mathlib.Algebra.BigOperators.Ring.Multiset
+public import Mathlib.Data.Finset.Defs
+public import Mathlib.Tactic.Ext
+public import Mathlib.Tactic.Push
+public import Mathlib.Tactic.Ring.RingNF
+public import Mathlib.Tactic.LinearCombination
+public import Mathlib.Tactic.Linarith.Frontend
+public import Mathlib.Algebra.Polynomial.Roots
+public import Mathlib.Data.Finset.Dedup
 
 /-!
 # Add Comm Group nat Card primary Component ker aeval of forall nat Card ker aeval eq nat
 Abs resultant
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

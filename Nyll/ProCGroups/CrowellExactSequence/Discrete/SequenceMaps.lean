@@ -4,10 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.CrowellExactSequence.Basic
-import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.Quotient
-import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.MagnusKernel
-import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Coordinates
+module
+
+public import Nyll.ProCGroups.CrowellExactSequence.Basic
+public import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.Quotient
+public import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.MagnusKernel
+public import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Coordinates
+public import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Derivative
+public import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Universal
 
 /-!
 # Discrete Crowell sequence maps
@@ -16,6 +20,8 @@ This file constructs the maps in the discrete presentation sequence: the middle 
 equivalence, the augmentation-generator tail map, and the relative-derivative head map. It also
 records their formulas on free generators.
 -/
+
+@[expose] public section
 
 namespace CrowellExactSequence
 

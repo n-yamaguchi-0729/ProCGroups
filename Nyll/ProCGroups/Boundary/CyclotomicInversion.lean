@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.GroupTheory.OrderOfElement
+module
+
+public import Mathlib.Data.Nat.Prime.Basic
+public import Mathlib.GroupTheory.OrderOfElement
 
 /-!
 # The abelian consequence of cyclotomic inversion
@@ -15,6 +17,8 @@ quotient has order dividing two.  Consequently an odd-order image is
 trivial.  This is the group-theoretic step used in the residue-
 characteristic-two boundary argument.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.Boundary
 

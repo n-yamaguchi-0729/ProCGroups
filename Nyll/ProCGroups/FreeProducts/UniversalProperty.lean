@@ -4,7 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProC.InverseLimits.Predicates
+module
+
+public import Nyll.ProCGroups.ProC.InverseLimits.Predicates
+public import Nyll.ProCGroups.ProC.InverseLimits.ContinuousExtensions
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
 
 /-!
 # Pro C Groups / Free Products / Universal Property
@@ -14,14 +18,16 @@ comparison maps and equivalences.
 -/
 
 
+@[expose] public section
+
 namespace ProCGroups.FreeProducts
-universe u
+universe u v w u₁ u₂
 
 
 section FreeProCProducts
 
 variable {C : ProCGroups.FiniteGroupClass}
-variable {G₁ : Type u} {G₂ : Type u} {F : Type u}
+variable {G₁ : Type u₁} {G₂ : Type u₂} {F : Type u}
 variable [Group G₁] [TopologicalSpace G₁]
 variable [Group G₂] [TopologicalSpace G₂]
 variable [Group F] [TopologicalSpace F] [IsTopologicalGroup F]
@@ -54,6 +60,127 @@ namespace IsFreeProCProduct
 
 variable [CompactSpace F] [T2Space F] [TotallyDisconnectedSpace F]
 variable {ι₁ : G₁ →ₜ* F} {ι₂ : G₂ →ₜ* F}
+
+omit [IsTopologicalGroup F] in
+/-- The native binary free-product property supplies unique extension to a pro-C target in
+an independent universe. The finite-stage problem keeps both prescribed factor maps. -/
+theorem existsUnique_liftAcrossUniverses (hF : IsFreeProCProduct (C := C) ι₁ ι₂)
+    {K : Type v} [Group K] [TopologicalSpace K] [IsTopologicalGroup K]
+    [CompactSpace K] [T2Space K] [TotallyDisconnectedSpace K]
+    (hK : ProCGroups.ProC.HasOpenNormalBasisInClassAcrossUniverses C K)
+    (φ₁ : G₁ →ₜ* K) (φ₂ : G₂ →ₜ* K) :
+    ∃! f : F →ₜ* K, f.comp ι₁ = φ₁ ∧ f.comp ι₂ = φ₂ := by
+  have hext := ProCGroups.ProC.existsUnique_continuousExtension_of_finiteQuotients
+    (C := C) (Sum.elim (ι₁ : G₁ → F) (ι₂ : G₂ → F)) hK
+    (Sum.elim (φ₁ : G₁ → K) (φ₂ : G₂ → K)) (by
+      intro H _ _ _ _ hH q
+      have hHbasis := ProCGroups.ProC.HasOpenNormalBasisInClass.of_finite_discrete_mem hH
+      obtain ⟨f, ⟨hf₁, hf₂⟩, huniq⟩ :=
+        hF.existsUnique_lift hHbasis (q.comp φ₁) (q.comp φ₂)
+      refine ⟨f, ?_, ?_⟩
+      · intro x
+        cases x with
+        | inl x => exact DFunLike.congr_fun hf₁ x
+        | inr x => exact DFunLike.congr_fun hf₂ x
+      · intro g hg
+        apply huniq g
+        constructor
+        · ext x
+          exact hg (Sum.inl x)
+        · ext x
+          exact hg (Sum.inr x))
+  obtain ⟨f, hf, huniq⟩ := hext
+  refine ⟨f, ⟨?_, ?_⟩, ?_⟩
+  · ext x
+    exact hf (Sum.inl x)
+  · ext x
+    exact hf (Sum.inr x)
+  · intro g hg
+    apply huniq g
+    intro x
+    cases x with
+    | inl x => exact DFunLike.congr_fun hg.1 x
+    | inr x => exact DFunLike.congr_fun hg.2 x
+
+/-- Extend the two factor maps into an independent target universe. -/
+noncomputable def liftAcrossUniverses (hF : IsFreeProCProduct (C := C) ι₁ ι₂)
+    {K : Type v} [Group K] [TopologicalSpace K] [IsTopologicalGroup K]
+    [CompactSpace K] [T2Space K] [TotallyDisconnectedSpace K]
+    (hK : ProCGroups.ProC.HasOpenNormalBasisInClassAcrossUniverses C K)
+    (φ₁ : G₁ →ₜ* K) (φ₂ : G₂ →ₜ* K) : F →ₜ* K :=
+  Classical.choose (ExistsUnique.exists (hF.existsUnique_liftAcrossUniverses hK φ₁ φ₂))
+
+omit [IsTopologicalGroup F] in
+/-- The cross-universe extension has both prescribed composites. -/
+theorem liftAcrossUniverses_spec (hF : IsFreeProCProduct (C := C) ι₁ ι₂)
+    {K : Type v} [Group K] [TopologicalSpace K] [IsTopologicalGroup K]
+    [CompactSpace K] [T2Space K] [TotallyDisconnectedSpace K]
+    (hK : ProCGroups.ProC.HasOpenNormalBasisInClassAcrossUniverses C K)
+    (φ₁ : G₁ →ₜ* K) (φ₂ : G₂ →ₜ* K) :
+    (hF.liftAcrossUniverses hK φ₁ φ₂).comp ι₁ = φ₁ ∧
+      (hF.liftAcrossUniverses hK φ₁ φ₂).comp ι₂ = φ₂ :=
+  Classical.choose_spec (ExistsUnique.exists (hF.existsUnique_liftAcrossUniverses hK φ₁ φ₂))
+
+omit [IsTopologicalGroup F] in
+/-- Left factor formula for extension into an independent universe. -/
+@[simp] theorem liftAcrossUniverses_left (hF : IsFreeProCProduct (C := C) ι₁ ι₂)
+    {K : Type v} [Group K] [TopologicalSpace K] [IsTopologicalGroup K]
+    [CompactSpace K] [T2Space K] [TotallyDisconnectedSpace K]
+    (hK : ProCGroups.ProC.HasOpenNormalBasisInClassAcrossUniverses C K)
+    (φ₁ : G₁ →ₜ* K) (φ₂ : G₂ →ₜ* K) :
+    (hF.liftAcrossUniverses hK φ₁ φ₂).comp ι₁ = φ₁ :=
+  (hF.liftAcrossUniverses_spec hK φ₁ φ₂).1
+
+omit [IsTopologicalGroup F] in
+/-- Right factor formula for extension into an independent universe. -/
+@[simp] theorem liftAcrossUniverses_right (hF : IsFreeProCProduct (C := C) ι₁ ι₂)
+    {K : Type v} [Group K] [TopologicalSpace K] [IsTopologicalGroup K]
+    [CompactSpace K] [T2Space K] [TotallyDisconnectedSpace K]
+    (hK : ProCGroups.ProC.HasOpenNormalBasisInClassAcrossUniverses C K)
+    (φ₁ : G₁ →ₜ* K) (φ₂ : G₂ →ₜ* K) :
+    (hF.liftAcrossUniverses hK φ₁ φ₂).comp ι₂ = φ₂ :=
+  (hF.liftAcrossUniverses_spec hK φ₁ φ₂).2
+
+omit [IsTopologicalGroup F] in
+/-- The two factor formulas determine the independent-universe extension uniquely. -/
+theorem liftAcrossUniverses_unique (hF : IsFreeProCProduct (C := C) ι₁ ι₂)
+    {K : Type v} [Group K] [TopologicalSpace K] [IsTopologicalGroup K]
+    [CompactSpace K] [T2Space K] [TotallyDisconnectedSpace K]
+    (hK : ProCGroups.ProC.HasOpenNormalBasisInClassAcrossUniverses C K)
+    (φ₁ : G₁ →ₜ* K) (φ₂ : G₂ →ₜ* K)
+    {f : F →ₜ* K} (hf : f.comp ι₁ = φ₁ ∧ f.comp ι₂ = φ₂) :
+    f = hF.liftAcrossUniverses hK φ₁ φ₂ :=
+  (hF.existsUnique_liftAcrossUniverses hK φ₁ φ₂).unique hf
+    (hF.liftAcrossUniverses_spec hK φ₁ φ₂)
+
+omit [IsTopologicalGroup F] in
+/-- Homomorphisms into an independent pro-C target agree if they agree on both factors. -/
+theorem hom_extAcrossUniverses (hF : IsFreeProCProduct (C := C) ι₁ ι₂)
+    {K : Type v} [Group K] [TopologicalSpace K] [IsTopologicalGroup K]
+    [CompactSpace K] [T2Space K] [TotallyDisconnectedSpace K]
+    (hK : ProCGroups.ProC.HasOpenNormalBasisInClassAcrossUniverses C K)
+    {f g : F →ₜ* K} (h₁ : f.comp ι₁ = g.comp ι₁) (h₂ : f.comp ι₂ = g.comp ι₂) : f = g :=
+  (hF.existsUnique_liftAcrossUniverses hK (f.comp ι₁) (f.comp ι₂)).unique
+    ⟨rfl, rfl⟩ ⟨h₁.symm, h₂.symm⟩
+
+omit [IsTopologicalGroup F] in
+/-- Independent-universe extension commutes with continuous postcomposition. -/
+theorem liftAcrossUniverses_comp (hF : IsFreeProCProduct (C := C) ι₁ ι₂)
+    {K : Type v} [Group K] [TopologicalSpace K] [IsTopologicalGroup K]
+    [CompactSpace K] [T2Space K] [TotallyDisconnectedSpace K]
+    {L : Type w} [Group L] [TopologicalSpace L] [IsTopologicalGroup L]
+    [CompactSpace L] [T2Space L] [TotallyDisconnectedSpace L]
+    (hK : ProCGroups.ProC.HasOpenNormalBasisInClassAcrossUniverses C K)
+    (hL : ProCGroups.ProC.HasOpenNormalBasisInClassAcrossUniverses C L)
+    (φ₁ : G₁ →ₜ* K) (φ₂ : G₂ →ₜ* K) (q : K →ₜ* L) :
+    q.comp (hF.liftAcrossUniverses hK φ₁ φ₂) =
+      hF.liftAcrossUniverses hL (q.comp φ₁) (q.comp φ₂) := by
+  apply hF.liftAcrossUniverses_unique
+  constructor
+  · change q.comp ((hF.liftAcrossUniverses hK φ₁ φ₂).comp ι₁) = q.comp φ₁
+    rw [hF.liftAcrossUniverses_left]
+  · change q.comp ((hF.liftAcrossUniverses hK φ₁ φ₂).comp ι₂) = q.comp φ₂
+    rw [hF.liftAcrossUniverses_right]
 
 /-- The universal property selects a descent morphism from a binary free product object. -/
 noncomputable def lift (hF : IsFreeProCProduct (C := C) ι₁ ι₂)
@@ -105,6 +232,18 @@ theorem lift_unique (hF : IsFreeProCProduct (C := C) ι₁ ι₂)
   exact
     (hF.existsUnique_lift hK φ₁ φ₂).unique hψ
       (hF.lift_spec hK φ₁ φ₂)
+
+omit [IsTopologicalGroup F] in
+/-- The independent-universe construction recovers the original native lift. -/
+theorem liftAcrossUniverses_eq_lift (hF : IsFreeProCProduct (C := C) ι₁ ι₂)
+    {K : Type u} [Group K] [TopologicalSpace K] [IsTopologicalGroup K]
+    [CompactSpace K] [T2Space K] [TotallyDisconnectedSpace K]
+    (hK : ProCGroups.ProC.HasOpenNormalBasisInClass C K)
+    (φ₁ : G₁ →ₜ* K) (φ₂ : G₂ →ₜ* K) :
+    hF.liftAcrossUniverses
+        (ProCGroups.ProC.hasOpenNormalBasisInClassAcrossUniverses_iff.mpr hK) φ₁ φ₂ =
+      hF.lift hK φ₁ φ₂ :=
+  hF.lift_unique hK φ₁ φ₂ (hF.liftAcrossUniverses_spec _ φ₁ φ₂)
 
 /-- The distinguished descent map from a free product object to itself is the identity. -/
 @[simp] theorem lift_self (hF : IsFreeProCProduct (C := C) ι₁ ι₂) :
@@ -158,6 +297,23 @@ prescribed right leg.
     (hF' : IsFreeProCProduct (C := C) ι₁' ι₂') :
     (hF.compare hF').comp ι₂ = ι₂' :=
   hF.lift_right hF'.hasOpenNormalBasisInClass ι₁' ι₂'
+
+omit [IsTopologicalGroup F] in
+/-- Comparing native free products commutes with their independent-target extensions. -/
+theorem liftAcrossUniverses_compare (hF : IsFreeProCProduct (C := C) ι₁ ι₂)
+    (hF' : IsFreeProCProduct (C := C) ι₁' ι₂')
+    {K : Type v} [Group K] [TopologicalSpace K] [IsTopologicalGroup K]
+    [CompactSpace K] [T2Space K] [TotallyDisconnectedSpace K]
+    (hK : ProCGroups.ProC.HasOpenNormalBasisInClassAcrossUniverses C K)
+    (φ₁ : G₁ →ₜ* K) (φ₂ : G₂ →ₜ* K) :
+    (hF'.liftAcrossUniverses hK φ₁ φ₂).comp (hF.compare hF') =
+      hF.liftAcrossUniverses hK φ₁ φ₂ := by
+  apply hF.liftAcrossUniverses_unique
+  constructor
+  · change (hF'.liftAcrossUniverses hK φ₁ φ₂).comp ((hF.compare hF').comp ι₁) = φ₁
+    rw [hF.compare_left, hF'.liftAcrossUniverses_left]
+  · change (hF'.liftAcrossUniverses hK φ₁ φ₂).comp ((hF.compare hF').comp ι₂) = φ₂
+    rw [hF.compare_right, hF'.liftAcrossUniverses_right]
 
 /-- The canonical comparison map from a free product object to itself is the identity. -/
 @[simp 900] theorem compare_self (hF : IsFreeProCProduct (C := C) ι₁ ι₂) :

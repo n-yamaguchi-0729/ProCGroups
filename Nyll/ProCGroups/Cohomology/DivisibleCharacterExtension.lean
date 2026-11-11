@@ -4,10 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Cohomology.FiniteCharacterExtension
-import Mathlib.Algebra.Category.Grp.Injective
+module
+
+public import Nyll.ProCGroups.Cohomology.FiniteCharacterExtension
+public import Mathlib.Algebra.Category.Grp.Injective
 
 /-! # Extending finite characters into divisible groups -/
+
+@[expose] public section
 
 namespace ProCGroups
 

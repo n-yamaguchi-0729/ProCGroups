@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.Source.SpecialValues
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.Source.SpecialValues
 
 /-!
 # Fox differential: prime power — derivative — source — mul
@@ -22,6 +24,8 @@ The principal declarations in this module are:
   Product rule for the completed-target Fox derivative when the source product is written in the
   completed group algebra.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

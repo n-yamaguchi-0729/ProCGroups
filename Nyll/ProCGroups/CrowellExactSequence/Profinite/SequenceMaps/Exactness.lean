@@ -4,10 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.CrowellExactSequence.Basic
-import Nyll.ProCGroups.CrowellExactSequence.Profinite.SequenceMaps.Basic
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.ClosedGeneratedCoordinates.Topology
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.TailExactness
+module
+
+public import Nyll.ProCGroups.CrowellExactSequence.Basic
+public import Nyll.ProCGroups.CrowellExactSequence.Profinite.SequenceMaps.Basic
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.ClosedGeneratedCoordinates.Topology
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.TailExactness
+public import Nyll.ProCGroups.FoxDifferential.Common.FoxBoundary
+public import Nyll.ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.FreeGroup.Coordinates
 
 /-!
 # Exactness criteria for profinite Crowell sequence maps
@@ -16,6 +20,8 @@ This file identifies the completed map with the boundary expressed in closed-gen
 coordinates and transfers exactness between finite-family, completed, and separated sequences.
 It gives topological-generation and basis criteria and computes the maps on kernel elements.
 -/
+
+@[expose] public section
 
 namespace CrowellExactSequence
 

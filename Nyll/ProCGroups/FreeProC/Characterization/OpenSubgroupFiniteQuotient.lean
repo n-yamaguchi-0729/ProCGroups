@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Basic
-import Mathlib.Algebra.Group.Subgroup.Basic
+module
+
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Basic
+public import Mathlib.Algebra.Group.Subgroup.Basic
 
 /-!
 # Extending a finite quotient layer beyond an open subgroup
@@ -14,6 +16,8 @@ The kernel of a discrete quotient of an open subgroup is open in the
 ambient compact group. Its normal core gives an actual finite ambient
 quotient whose subgroup image still maps onto the prescribed quotient.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.FreeProC.Characterization
 

@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.WreathProducts
-import Mathlib.Algebra.BigOperators.Group.Finset.Basic
-import Mathlib.Algebra.Group.Pi.Lemmas
+module
+
+public import Nyll.ProCGroups.WreathProducts
+public import Mathlib.Algebra.BigOperators.Group.Finset.Basic
+public import Mathlib.Algebra.Group.Pi.Lemmas
 
 /-!
 # Quotients of regular wreath modules
@@ -15,6 +17,8 @@ Restriction to a finite subgroup followed by multiplication along the fibers
 of a quotient is equivariant and surjective. This produces regular wreath
 quotients after restricting the right factor to the subgroup.
 -/
+
+@[expose] public section
 
 namespace ProCGroups
 

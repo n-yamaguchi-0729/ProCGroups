@@ -3,9 +3,11 @@ Copyright (c) 2026 Naganori Yamaguchi (https://github.com/n-yamaguchi-0729).
 Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
-import Mathlib.Topology.Algebra.ContinuousMonoidHom
-import Mathlib.Topology.Algebra.Group.Basic
-import Mathlib.GroupTheory.GroupAction.Basic
+module
+
+public import Mathlib.Topology.Algebra.ContinuousMonoidHom
+public import Mathlib.Topology.Algebra.Group.Basic
+public import Mathlib.GroupTheory.GroupAction.Basic
 
 /-! # Explicit inner correction of a group map and its same fibre map
 
@@ -14,6 +16,8 @@ covering group. The resulting fibre equivalence is explicitly translated by
 that same lift. Thus neither the group map nor its selected fibre point is
 silently treated as unchanged.
 -/
+@[expose] public section
+
 noncomputable section
 
 namespace ProCGroups

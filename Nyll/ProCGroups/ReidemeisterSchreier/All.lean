@@ -4,13 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.All
-import Nyll.ProCGroups.ReidemeisterSchreier.FreeGroup.All
-import Nyll.ProCGroups.ReidemeisterSchreier.Groupoid
-import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.All
-import Nyll.ProCGroups.ReidemeisterSchreier.Quiver
-import Nyll.ProCGroups.ReidemeisterSchreier.RightQuotient
-import Nyll.ProCGroups.ReidemeisterSchreier.Schreier
+module
+
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.All
+public import Nyll.ProCGroups.ReidemeisterSchreier.FreeGroup.All
+public import Nyll.ProCGroups.ReidemeisterSchreier.Groupoid
+public import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.All
+public import Nyll.ProCGroups.ReidemeisterSchreier.Quiver
+public import Nyll.ProCGroups.ReidemeisterSchreier.RightQuotient
+public import Nyll.ProCGroups.ReidemeisterSchreier.Schreier
 
 /-!
 # Reidemeister--Schreier theory

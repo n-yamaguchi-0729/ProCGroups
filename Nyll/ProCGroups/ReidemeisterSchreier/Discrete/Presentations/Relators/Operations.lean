@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Tactic.Group
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Basic
+module
+
+public import Mathlib.Tactic.Group
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Basic
 
 /-!
 # Operations on relator normal closures
@@ -14,6 +16,8 @@ This module proves invariance and closure lemmas for changing relator sets,
 conjugating and cyclically rotating words, products of lists, and ordered
 finite products.
 -/
+
+@[expose] public section
 
 namespace ReidemeisterSchreier.Discrete.Presentations
 

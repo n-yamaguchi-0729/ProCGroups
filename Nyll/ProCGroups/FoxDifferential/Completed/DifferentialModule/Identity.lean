@@ -4,7 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Bifiltered.InverseSystem
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Bifiltered.InverseSystem
+public import Nyll.ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.Index
+public import Nyll.ProCGroups.FiniteGroups.AllFinite
 
 /-!
 # Fox differential: completed — differential module — identity
@@ -21,6 +25,8 @@ The principal declarations in this module are:
 - `openNormalSubgroupInClassProj_identityCompletedGroupAlgebraIndex_injective`
   The projection to the identity completed stage is injective on group elements.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

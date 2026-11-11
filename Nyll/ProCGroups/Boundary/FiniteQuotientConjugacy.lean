@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Separation
+module
+
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Separation
 
 /-!
 # Detecting conjugacy in finite quotients
@@ -13,6 +15,8 @@ In a profinite group, a conjugacy class is compact and hence closed.  Thus two
 elements are conjugate exactly when their images are conjugate in every
 open-normal quotient.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.Boundary
 

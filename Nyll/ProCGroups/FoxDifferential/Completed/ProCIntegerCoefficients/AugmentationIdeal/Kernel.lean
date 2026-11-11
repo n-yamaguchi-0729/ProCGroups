@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Naturality
-import Nyll.ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.AugmentationIdeal.Closure
-import Nyll.ProCGroups.ProC.Kernels
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Naturality
+public import Nyll.ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.AugmentationIdeal.Closure
+public import Nyll.ProCGroups.ProC.Kernels
 
 /-!
 # Fox differential: completed — \(\mathbb{Z}_C\) coefficients — augmentation ideal — kernel
@@ -22,6 +24,8 @@ The principal declarations in this module are:
 - `groupAlgebra_mapDomainRingHom_smul`
   The domain group-algebra map is compatible with scalar multiplication.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Topology.Algebra.ContinuousMonoidHom
-import Nyll.ProCGroups.InverseSystems.CompatibilityAndSurjectivity
+module
+
+public import Mathlib.Topology.Algebra.ContinuousMonoidHom
+public import Nyll.ProCGroups.InverseSystems.CompatibilityAndSurjectivity
 
 /-!
 # Exact sequences of group-valued inverse systems
@@ -15,6 +17,8 @@ induced homomorphisms on inverse limits.  For compact Hausdorff directed systems
 transitions, it lifts stagewise kernel-image exactness to exactness of the inverse-limit maps.
 -/
 
+@[expose] public section
+
 universe u v
 
 namespace ProCGroups
@@ -23,13 +27,6 @@ namespace InverseSystems.InverseSystem
 
 variable {I : Type u} [Preorder I]
 variable {S T U : InverseSystems.InverseSystem (I := I)}
-attribute [local instance] InverseSystems.InverseSystem.topologicalSpace
-/-- Use the topology stored by the source inverse system at stage `i`. -/
-instance instTopologicalSpaceS (i : I) : TopologicalSpace (S.X i) := S.topologicalSpace i
-/-- Use the topology stored by the middle inverse system at stage `i`. -/
-instance instTopologicalSpaceT (i : I) : TopologicalSpace (T.X i) := T.topologicalSpace i
-/-- Use the topology stored by the target inverse system at stage `i`. -/
-instance instTopologicalSpaceU (i : I) : TopologicalSpace (U.X i) := U.topologicalSpace i
 variable [∀ i, Group (S.X i)] [∀ i, Group (T.X i)] [∀ i, Group (U.X i)]
 
 /-- A morphism of group-valued inverse systems with homomorphism laws bundled componentwise. -/
@@ -154,9 +151,7 @@ homomorphism after projection.
     [InverseSystems.IsGroupSystem S] [InverseSystems.IsGroupSystem T]
     (i : I) (x : S.inverseLimit) :
     T.projection i (Θ.limMapMonoidHom x) = Θ.map i (S.projection i x) := by
-  simpa [GroupMorphism.limMapMonoidHom,
-    ProCGroups.InverseSystems.InverseSystem.limMapMonoidHom] using
-    congrFun (S.π_comp_limMap (Θ := Θ.toMorphism) i) x
+  exact S.π_limMap_apply Θ.toMorphism i x
 
 /--
 If the componentwise composite \(\Psi_i \circ \Theta_i\) is trivial, then the induced morphisms
@@ -192,7 +187,7 @@ theorem limMapMonoidHom_comp_eq_one
         ((limMapMonoidHom (S := T) (T := U) Ψ hΨ_one hΨ_mul)
           ((limMapMonoidHom (S := S) (T := T) Θ hΘ_one hΘ_mul) x))
         = Ψ.map i (T.projection i (S.limMap Θ x)) := by
-            simpa [limMapMonoidHom] using hπΨ'
+            exact hπΨ'
     _ = Ψ.map i (Θ.map i (S.projection i x)) := by rw [hπΘ']
     _ = 1 := hcomp'
     _ = U.projection i (1 : U.inverseLimit) := rfl
@@ -232,7 +227,7 @@ theorem limMap_exact
   constructor
   · rintro ⟨x, rfl⟩
     change limMapMonoidHom (S := T) (T := U) Ψ hΨ_one hΨ_mul (S.limMap Θ x) = 1
-    simpa [Function.comp, limMapMonoidHom] using congrFun hcomp_lim x
+    exact congrFun hcomp_lim x
   · intro hy
     have hy' :
         limMapMonoidHom (S := T) (T := U) Ψ hΨ_one hΨ_mul y = 1 := by

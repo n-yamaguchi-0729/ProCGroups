@@ -4,7 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.Basic
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.Basic
+public import Nyll.ProCGroups.FoxDifferential.Discrete.GroupRing
 
 /-!
 # Fox differential: discrete — kernel boundary — quotient
@@ -22,6 +25,8 @@ The principal declarations in this module are:
   For the identity map, composing the identity differential module with the augmentation-ideal map
   gives the expected augmentation boundary.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

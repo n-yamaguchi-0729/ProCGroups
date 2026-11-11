@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Magnus.KernelClosedCommutator
-import Nyll.ProCGroups.CrowellExactSequence.Profinite.KernelInjectivity
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Magnus.KernelClosedCommutator
+public import Nyll.ProCGroups.CrowellExactSequence.Profinite.KernelInjectivity
 
 /-!
 # Crowell Exact Sequence / Profinite / Continuous Magnus / Injectivity
@@ -14,6 +16,8 @@ This module proves injectivity of the completed Magnus map on the
 abelianized presentation kernel, using the closed-commutator kernel
 calculation and the general kernel-injectivity criterion.
 -/
+
+@[expose] public section
 
 namespace CrowellExactSequence
 

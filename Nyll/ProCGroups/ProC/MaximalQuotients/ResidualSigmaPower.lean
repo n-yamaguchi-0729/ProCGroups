@@ -4,9 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FiniteGroups.StandardClasses
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotient
-import Nyll.ProCGroups.Abelian.TopologicalAbelianization
+module
+
+public import Nyll.ProCGroups.FiniteGroups.StandardClasses
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotient
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianization
+public import Nyll.ProCGroups.ProC.Quotients.ClosedNormal
+public import Nyll.ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
 
 /-!
 # Prime-to-Sigma powers on actual residual abelianizations
@@ -14,6 +18,8 @@ import Nyll.ProCGroups.Abelian.TopologicalAbelianization
 Finite Sigma quotients have order coprime to every excluded prime. Their
 power maps are injective, and separation transfers this to a pro-Sigma group.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.ProC
 

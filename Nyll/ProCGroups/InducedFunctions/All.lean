@@ -4,5 +4,7 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.InducedFunctions
-import Nyll.ProCGroups.InducedFunctions.Cocycle
+module
+
+public import Nyll.ProCGroups.InducedFunctions
+public import Nyll.ProCGroups.InducedFunctions.Cocycle

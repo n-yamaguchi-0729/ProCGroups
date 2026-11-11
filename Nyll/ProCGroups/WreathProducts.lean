@@ -4,15 +4,19 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.GroupTheory.SemidirectProduct
-import Nyll.ProCGroups.ProC.Subgroups.Products
-import Nyll.ProCGroups.ReidemeisterSchreier.RightQuotient
+module
+
+public import Mathlib.GroupTheory.SemidirectProduct
+public import Nyll.ProCGroups.ProC.Subgroups.Products
+public import Nyll.ProCGroups.ReidemeisterSchreier.RightQuotient
 
 /-!
 # Pro C Groups / Wreath Products
 
 This module formalizes permutational wreath products.
 -/
+
+@[expose] public section
 
 open scoped Pointwise
 

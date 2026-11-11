@@ -11,13 +11,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Field.Subfield.Basic
-import Mathlib.Algebra.Group.Units.Hom
-import Mathlib.Algebra.GroupWithZero.Units.Basic
+module
+
+public import Mathlib.Algebra.Field.Subfield.Basic
+public import Mathlib.Algebra.Group.Units.Hom
+public import Mathlib.Algebra.GroupWithZero.Units.Basic
 
 /-!
 # Monoid Hom exists subfield units coe eq
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

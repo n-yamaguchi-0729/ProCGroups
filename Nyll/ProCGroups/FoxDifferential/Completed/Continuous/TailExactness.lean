@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.AugmentationIdeal.Closure
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.AugmentationIdeal.Closure
 
 /-!
 # Fox differential: completed — continuous — tail exactness
@@ -18,6 +20,8 @@ The principal declarations in this module are:
   In the sequence, the first map is injective, its image is the kernel of the second map, and the
   second map is surjective.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

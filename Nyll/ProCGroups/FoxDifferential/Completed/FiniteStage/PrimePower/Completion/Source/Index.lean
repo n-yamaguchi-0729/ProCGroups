@@ -4,7 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Completion.Target
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Completion.Target
+public import Nyll.ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.Index
+public import Nyll.ProCGroups.FiniteGroups.AllFinite
 
 /-!
 # Fox differential: prime power — completion — source — index
@@ -22,6 +26,8 @@ The principal declarations in this module are:
 - `foxAlgebraicStagePrimePowerSourceCompletedIndex_subgroup`
   The source completed index has the expected underlying commutator-power subgroup.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.CrowellExactSequence.Discrete.Exactness
+module
+
+public import Nyll.ProCGroups.CrowellExactSequence.Discrete.Exactness
 
 /-!
 # Crowell Exact Sequence / Discrete / Main Theorem
@@ -12,6 +14,8 @@ import Nyll.ProCGroups.CrowellExactSequence.Discrete.Exactness
 This module develops the Crowell--Blanchfield--Lyndon exact sequence and its completed
 coordinate forms.
 -/
+
+@[expose] public section
 
 namespace CrowellExactSequence
 

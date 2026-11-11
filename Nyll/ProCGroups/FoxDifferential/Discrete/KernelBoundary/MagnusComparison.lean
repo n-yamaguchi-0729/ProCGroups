@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.MagnusKernel
-import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Boundary
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.MagnusKernel
+public import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Boundary
+public import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Universal
 
 /-!
 # Fox Differential / Discrete / Kernel Boundary / Magnus Comparison
@@ -13,6 +16,8 @@ import Nyll.ProCGroups.FoxDifferential.Discrete.FoxCalculus.Boundary
 This module compares the relative free Fox derivative with the universal differential and
 deduces the discrete Magnus-kernel criterion in relative Fox coordinates.
 -/
+
+@[expose] public section
 
 namespace CrowellExactSequence
 

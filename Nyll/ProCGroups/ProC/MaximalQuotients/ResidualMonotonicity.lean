@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualCore
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
-import Nyll.ProCGroups.Topologies.QuotientMaps
-import Mathlib.GroupTheory.QuotientGroup.Basic
-import Mathlib.Topology.Algebra.ContinuousMonoidHom
+module
+
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualCore
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.ProCGroup
+public import Nyll.ProCGroups.Topologies.QuotientMaps
+public import Mathlib.GroupTheory.QuotientGroup.Basic
+public import Mathlib.Topology.Algebra.ContinuousMonoidHom
 
 /-!
 # Residual quotients under inclusion of finite-group classes
@@ -19,6 +21,8 @@ larger-class residual quotient onto the smaller-class residual quotient.
 This follows directly from the defining families of kernels and requires
 neither a formation hypothesis nor compactness.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.ProC
 

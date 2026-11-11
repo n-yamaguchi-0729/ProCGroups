@@ -10,13 +10,17 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Group.Basic
-import Mathlib.Data.Nat.Prime.Defs
-import Mathlib.Tactic.Linarith
+module
+
+public import Mathlib.Algebra.Group.Basic
+public import Mathlib.Data.Nat.Prime.Defs
+public import Mathlib.Tactic.Linarith
 
 /-!
 # Subtraction Monoid exists zsmul eq of forall prime
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

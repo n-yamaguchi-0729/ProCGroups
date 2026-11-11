@@ -4,11 +4,20 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FiniteStepSolvableQuotients.Faithful
-import Nyll.ProCGroups.FiniteStepSolvableQuotients.AbTorsionFree
-import Nyll.ProCGroups.Abelian.Transfer
-import Nyll.ProCGroups.GroupTheory.CentralizerNormalizerCommensurator
-import Nyll.ProCGroups.ProC.GroupPredicates.Abelian
+module
+
+public import Nyll.ProCGroups.FiniteStepSolvableQuotients.Faithful
+public import Nyll.ProCGroups.FiniteStepSolvableQuotients.AbTorsionFree
+public import Nyll.ProCGroups.Abelian.Transfer
+public import Nyll.ProCGroups.GroupTheory.CentralizerNormalizerCommensurator
+public import Nyll.ProCGroups.ProC.GroupPredicates.Abelian
+public import Nyll.ProCGroups.FiniteStepSolvableQuotients.Commutators.DerivedSeriesAndQuotients
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.FilteredFamilies
+public import Nyll.ProCGroups.ProC.Quotients.ClosedNormal
+public import Nyll.ProCGroups.ProC.Quotients.ClosedSubgroupNeighborhoods
+public import Nyll.ProCGroups.ProC.Quotients.LeftQuotientProjectionSections
+public import Nyll.ProCGroups.Topologies.QuotientMaps
+public import Nyll.ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
 
 /-!
 # Slimness and torsion from abelianization actions
@@ -16,6 +25,8 @@ import Nyll.ProCGroups.ProC.GroupPredicates.Abelian
 This module defines torsion-free, slim, slim-modulo, and relatively slim groups, and derives
 slimness and torsion consequences from faithful conjugation actions on abelianizations.
 -/
+
+@[expose] public section
 
 open scoped Topology commutatorElement
 
@@ -110,11 +121,11 @@ theorem isTorsionFreeGroup_of_isMulTorsionFree
   exact (not_isOfFinOrder_of_isMulTorsionFree hne) hg
 
 /--
-An automorphism of a torsion-free group that is trivial on a finite-index subgroup is trivial
-everywhere.
+An automorphism of a group with unique roots that is trivial on a finite-index subgroup is
+trivial everywhere.
 -/
 theorem eq_one_mulAut_of_forall_mem_subgroup
-    {A : Type u} [Group A] [IsMulTorsionFree A]
+    {A : Type u} [Group A] [HasUniqueRoots A]
     (φ : MulAut A) (B : Subgroup A) [B.FiniteIndex]
     (hφ : ∀ b : A, b ∈ B → φ b = b) :
     φ = 1 := by
@@ -129,7 +140,7 @@ theorem eq_one_mulAut_of_forall_mem_subgroup
     calc
       (φ a) ^ C.index = φ (a ^ C.index) := by simp only [map_pow]
       _ = a ^ C.index := hφ _ ((Subgroup.normalCore_le B) haC)
-  exact IsMulTorsionFree.pow_left_injective (M := A) hidx hpow
+  exact HasUniqueRoots.pow_left_injective (M := A) hidx hpow
 
 /--
 A nontrivial class in the topological abelianization of a closed subgroup remains nontrivial in
@@ -693,6 +704,10 @@ theorem mem_openNormal_of_action_trivial_on_finiteIndexSubgroup
       (Q ⧸ (U : Subgroup Q)) →*
         MulAut (TopologicalAbelianization ↥(U : Subgroup Q)) :=
     quotientConjugationTopologicalAbelianizationMap (G := Q) (N := (U : Subgroup Q))
+  have : HasUniqueRoots (TopologicalAbelianization ↥(U : Subgroup Q)) := by
+    constructor
+    intro n hn a b hab
+    exact eq_of_pow_eq_pow_of_commute hn (Commute.all a b) hab
   have hρc : ρ (QuotientGroup.mk' (U : Subgroup Q) c) = 1 := by
     exact
       eq_one_mulAut_of_forall_mem_subgroup
@@ -920,8 +935,8 @@ theorem fixedPoint_eq_one_of_openNormal_torsionFreeAb
         (1 : TopologicalAbelianization ↥(N : Subgroup G)) ^ Nat.card (G ⧸ (N : Subgroup G)) := by
     simpa using hpow1
   exact
-    (IsMulTorsionFree.pow_left_injective
-      (M := TopologicalAbelianization ↥(N : Subgroup G)) hcard) hpowEq
+    eq_of_pow_eq_pow_of_commute
+      (M := TopologicalAbelianization ↥(N : Subgroup G)) hcard (Commute.all _ _) hpowEq
 
 /--
 A nontrivial class in \(\operatorname{Ab}(K)\) survives in the abelianization of some open

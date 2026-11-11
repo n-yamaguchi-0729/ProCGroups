@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.CompletedSource
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.CompletedSource
 
 /-!
 # Fox differential: finite stage — prime power — derivative — completed target
@@ -22,6 +24,8 @@ The principal declarations in this module are:
 - `ppCompletedGAFoxDerivToTarget_fundFormula_proj`
   The completed-target fundamental formula after projection to one completed target stage.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

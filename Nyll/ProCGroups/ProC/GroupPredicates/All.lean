@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProC.GroupPredicates.Abelian
+module
+
+public import Nyll.ProCGroups.ProC.GroupPredicates.Abelian
 
 /-!
 # Group predicates for pro-\(C\) groups

@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.GeneratorDeletion
+module
+
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.GeneratorDeletion
 
 /-!
 # Verified Tietze move scripts
@@ -19,6 +21,8 @@ Semantic equivalence constructors live in the Tietze core and operation
 modules.  They are not re-exported here as a parallel family of “script”
 wrappers.
 -/
+
+@[expose] public section
 
 universe u
 
@@ -294,7 +298,7 @@ def cost {P Q : Presentation.{u}}
     {P Q R : Presentation.{u}} (head : ElementaryTietzeMove P Q)
     (tail : VerifiedTietzeScript Q R) :
     (VerifiedTietzeScript.cons head tail).moveCount = tail.moveCount + 1 := by
-  simp [moveCount, trace, Nat.add_comm]
+  simp only [moveCount, trace, List.length_cons, Nat.add_comm]
 
 /-- A singleton verified script contains one move. -/
 @[simp] theorem moveCount_singleton
@@ -307,9 +311,9 @@ def cost {P Q : Presentation.{u}}
     (t : VerifiedTietzeScript Q R) :
     (s.trans t).moveCount = s.moveCount + t.moveCount := by
   induction s with
-  | nil => simp [trans, moveCount, trace]
+  | nil => simp only [moveCount, trans, trace, List.length_nil, zero_add]
   | cons head tail ih =>
-      simp [trans, ih, Nat.add_assoc, Nat.add_comm]
+      simp only [trans, moveCount_cons, ih, Nat.add_comm, Nat.add_assoc]
 
 /-- The empty verified script has zero cost for every weighting. -/
 @[simp] theorem cost_nil
@@ -329,7 +333,7 @@ def cost {P Q : Presentation.{u}}
     (weight : ElementaryTietzeMove.Kind → ℕ)
     {P Q : Presentation.{u}} (move : ElementaryTietzeMove P Q) :
     (singleton move).cost weight = weight move.kind := by
-  simp [singleton]
+  simp only [singleton, cost_cons, cost_nil, add_zero]
 
 end VerifiedTietzeScript
 

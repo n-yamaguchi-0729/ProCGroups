@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.RelationIdealPrimitive
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.RelationIdealPrimitive
 
 /-!
 # Fox differential: completed — finite stage — source cycle reduction
@@ -24,6 +26,8 @@ The principal declarations in this module are:
   submodule, because elements of the left relation-augmentation submodule have explicit
   relation-compatible primitives.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

@@ -5,8 +5,10 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
 
-import Nyll.ProCGroups.Profinite.Basic
-import Mathlib.Topology.Compactness.Compact
+module
+
+public import Nyll.ProCGroups.Profinite.Basic
+public import Mathlib.Topology.Compactness.Compact
 
 /-!
 # Central elements from profinite quotient lifts
@@ -14,6 +16,8 @@ import Mathlib.Topology.Compactness.Compact
 Compatible finite-quotient central lifts that survive a fixed open quotient
 yield a nonidentity element of the profinite center.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.ProfiniteGrp
 

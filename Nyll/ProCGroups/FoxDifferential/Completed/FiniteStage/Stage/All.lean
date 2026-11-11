@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Derivative.All
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Fundamental.All
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.KernelIdeal
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Naturality
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Semidirect
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Source
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Derivative.All
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Fundamental.All
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.KernelIdeal
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Naturality
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Semidirect
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Source
 
 /-!
 # Fox differential: completed — finite stage — stage

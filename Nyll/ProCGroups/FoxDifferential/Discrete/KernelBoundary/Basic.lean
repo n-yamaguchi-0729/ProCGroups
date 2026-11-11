@@ -4,7 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.IdentityAugmentation
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.IdentityAugmentation
+public import Nyll.ProCGroups.FoxDifferential.Discrete.DifferentialModule.Boundary
 
 /-!
 # Fox differential: discrete — kernel boundary — basic
@@ -20,6 +23,8 @@ The principal declarations in this module are:
 - `augmentation_surjective`
   The augmentation map \(\mathbb{Z}[H] \to \mathbb{Z}\) is surjective.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 
@@ -369,10 +374,11 @@ omit [DecidableEq H] [DecidableEq G] in
 @[simp]
 theorem kernelAbelianizationBoundaryAdd_commOfSurjective
     (ψ : G →* H) (hψ : Function.Surjective ψ) (h : H) (x : KernelAbelianizationAdd ψ) :
-    letI := kernelAbelianizationModuleOfSurjective ψ hψ
+    let : Module (GroupRing H) (KernelAbelianizationAdd ψ) :=
+      kernelAbelianizationModuleOfSurjective ψ hψ
     kernelAbelianizationBoundaryAdd ψ ((MonoidAlgebra.of ℤ H h : GroupRing H) • x) =
       (MonoidAlgebra.of ℤ H h : GroupRing H) • kernelAbelianizationBoundaryAdd ψ x := by
-  let := kernelAbelianizationModuleOfSurjective ψ hψ
+  intro sharedModule
   change kernelAbelianizationBoundaryAdd ψ
       ((kernelAbelianizationActionRingHomOfSurjective ψ hψ (MonoidAlgebra.of ℤ H h)) x) =
     (MonoidAlgebra.of ℤ H h : GroupRing H) • kernelAbelianizationBoundaryAdd ψ x
@@ -387,9 +393,10 @@ surjective.
 -/
 def kernelAbelianizationBoundaryLinearOfSurjective
     (ψ : G →* H) (hψ : Function.Surjective ψ) :
-    letI := kernelAbelianizationModuleOfSurjective ψ hψ
+    let : Module (GroupRing H) (KernelAbelianizationAdd ψ) :=
+      kernelAbelianizationModuleOfSurjective ψ hψ
     KernelAbelianizationAdd ψ →ₗ[GroupRing H] DifferentialModule ψ := by
-  letI := kernelAbelianizationModuleOfSurjective ψ hψ
+  intro sharedModule
   let f : KernelAbelianizationAdd ψ →ₗ[ℤ] DifferentialModule ψ :=
     (kernelAbelianizationBoundaryAdd ψ).toIntLinearMap
   exact MonoidAlgebra.equivariantOfLinearOfComm f

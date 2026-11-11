@@ -10,11 +10,15 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.Module.Torsion.Basic
+module
+
+public import Mathlib.Algebra.Module.Torsion.Basic
 
 /-!
 # Submodule finite torsion By pow of finite torsion By
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

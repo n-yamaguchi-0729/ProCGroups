@@ -10,11 +10,15 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.LinearAlgebra.FreeModule.ModN
+module
+
+public import Mathlib.LinearAlgebra.FreeModule.ModN
 
 /-!
 # Submodule nat Card torsion By quotient eq pow finrank
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Group.Subgroup.Basic
-import Mathlib.Algebra.BigOperators.Group.List.Basic
-import Mathlib.Data.Finset.Sort
-import Mathlib.GroupTheory.FreeGroup.Reduce
-import Mathlib.GroupTheory.QuotientGroup.Defs
+module
+
+public import Mathlib.Algebra.Group.Subgroup.Basic
+public import Mathlib.Algebra.BigOperators.Group.List.Basic
+public import Mathlib.Data.Finset.Sort
+public import Mathlib.GroupTheory.FreeGroup.Reduce
+public import Mathlib.GroupTheory.QuotientGroup.Defs
 
 /-!
 # Relator equivalence
@@ -17,6 +19,8 @@ This module defines equality modulo a relator normal closure and proves its
 elementary equivalence, congruence, inversion, multiplication, and quotient
 characterizations.
 -/
+
+@[expose] public section
 
 namespace ReidemeisterSchreier.Discrete.Presentations
 

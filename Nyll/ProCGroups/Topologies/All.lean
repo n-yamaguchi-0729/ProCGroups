@@ -4,18 +4,20 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Topologies.DenseSubgroupPullback
-import Nyll.ProCGroups.Topologies.FiniteQuotientLift
-import Nyll.ProCGroups.Topologies.Conjugation
-import Nyll.ProCGroups.Topologies.ContinuousMonoidHom
-import Nyll.ProCGroups.Topologies.ContinuousMulEquiv
-import Nyll.ProCGroups.Topologies.FullSubgroupTopology.All
-import Nyll.ProCGroups.Topologies.OpenSubgroup
-import Nyll.ProCGroups.Topologies.QuotientMaps
-import Nyll.ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
-import Nyll.ProCGroups.Topologies.OpenActionKernel
-import Nyll.ProCGroups.Topologies.ArithmeticInnerCorrectionFiberTransport
-import Nyll.ProCGroups.Topologies.FixedFieldConjugatorStrictTransport
+module
+
+public import Nyll.ProCGroups.Topologies.DenseSubgroupPullback
+public import Nyll.ProCGroups.Topologies.FiniteQuotientLift
+public import Nyll.ProCGroups.Topologies.Conjugation
+public import Nyll.ProCGroups.Topologies.ContinuousMonoidHom
+public import Nyll.ProCGroups.Topologies.ContinuousMulEquiv
+public import Nyll.ProCGroups.Topologies.FullSubgroupTopology.All
+public import Nyll.ProCGroups.Topologies.OpenSubgroup
+public import Nyll.ProCGroups.Topologies.QuotientMaps
+public import Nyll.ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
+public import Nyll.ProCGroups.Topologies.OpenActionKernel
+public import Nyll.ProCGroups.Topologies.ArithmeticInnerCorrectionFiberTransport
+public import Nyll.ProCGroups.Topologies.FixedFieldConjugatorStrictTransport
 
 /-!
 # Topological-group infrastructure

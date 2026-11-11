@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Discrete.DifferentialModule.Basic
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Discrete.DifferentialModule.Basic
 
 /-!
 # Fox differential: discrete — fox calculus — semidirect
@@ -18,6 +20,8 @@ The principal declarations in this module are:
 - `RelativeFoxAction`
   The canonical group-ring scalar action of `H` on relative Fox-coordinate vectors.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

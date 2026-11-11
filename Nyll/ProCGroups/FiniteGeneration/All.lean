@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FiniteGeneration.OpenSubgroups
-import Nyll.ProCGroups.FiniteGeneration.Basic
-import Nyll.ProCGroups.FiniteGeneration.CharacteristicChainsAndIndices
+module
+
+public import Nyll.ProCGroups.FiniteGeneration.OpenSubgroups
+public import Nyll.ProCGroups.FiniteGeneration.Basic
+public import Nyll.ProCGroups.FiniteGeneration.CharacteristicChainsAndIndices
 
 /-!
 # Topological finite generation

@@ -4,16 +4,18 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Cohomology.ContinuousMapFiniteStage
-import Nyll.ProCGroups.Cohomology.FiniteInvariantCharacter
-import Nyll.ProCGroups.Cohomology.FreeProPProjective
-import Nyll.ProCGroups.Cohomology.InvariantCharacterFiniteFamily
-import Nyll.ProCGroups.Cohomology.InvariantCharacterFiniteStage
-import Nyll.ProCGroups.Cohomology.RelativeNakayama
+module
 
-import Nyll.ProCGroups.Cohomology.FiniteCharacterExtension
+public import Nyll.ProCGroups.Cohomology.ContinuousMapFiniteStage
+public import Nyll.ProCGroups.Cohomology.FiniteInvariantCharacter
+public import Nyll.ProCGroups.Cohomology.FreeProPProjective
+public import Nyll.ProCGroups.Cohomology.InvariantCharacterFiniteFamily
+public import Nyll.ProCGroups.Cohomology.InvariantCharacterFiniteStage
+public import Nyll.ProCGroups.Cohomology.RelativeNakayama
 
-import Nyll.ProCGroups.Cohomology.DivisibleCharacterExtension
+public import Nyll.ProCGroups.Cohomology.FiniteCharacterExtension
+
+public import Nyll.ProCGroups.Cohomology.DivisibleCharacterExtension
 
 /-!
 # Pro-C group cohomology foundations

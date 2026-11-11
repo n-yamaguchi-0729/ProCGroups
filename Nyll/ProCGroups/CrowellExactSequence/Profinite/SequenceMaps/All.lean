@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.CrowellExactSequence.Profinite.SequenceMaps.Basic
-import Nyll.ProCGroups.CrowellExactSequence.Profinite.SequenceMaps.Exactness
+module
+
+public import Nyll.ProCGroups.CrowellExactSequence.Profinite.SequenceMaps.Basic
+public import Nyll.ProCGroups.CrowellExactSequence.Profinite.SequenceMaps.Exactness
 
 /-!
 # Crowell Exact Sequence / Profinite / Sequence Maps

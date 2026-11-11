@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FreeProC.Basic
-import Nyll.ProCGroups.FiniteStepSolvableQuotients.Commutators.DerivedSeriesAndQuotients
+module
+
+public import Nyll.ProCGroups.FreeProC.Basic
+public import Nyll.ProCGroups.FiniteStepSolvableQuotients.Commutators.DerivedSeriesAndQuotients
 
 /-!
 # Pro C Groups / Free pro-C / Solvable Quotients
@@ -13,6 +15,8 @@ import Nyll.ProCGroups.FiniteStepSolvableQuotients.Commutators.DerivedSeriesAndQ
 This module transports free pro-\(C\) data to finite-step solvable quotients
 and their derived-series constructions.
 -/
+
+@[expose] public section
 
 open scoped Topology
 

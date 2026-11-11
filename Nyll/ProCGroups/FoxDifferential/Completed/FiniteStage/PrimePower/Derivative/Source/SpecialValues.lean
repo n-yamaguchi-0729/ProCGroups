@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.Source.GroupLike
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.Source.GroupLike
 
 /-!
 # Fox differential: prime power — derivative — source — special values
@@ -22,6 +24,8 @@ The principal declarations in this module are:
 - `foxAlgebraicStagePrimePowerDerivativeLimit_sourceOf_toFamily`
   Family-level projection formula for the derivative limit of a group-like source element.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

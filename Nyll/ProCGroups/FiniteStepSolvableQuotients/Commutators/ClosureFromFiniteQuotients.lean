@@ -4,9 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FiniteStepSolvableQuotients.Commutators.Basic
-import Nyll.ProCGroups.Generation.WordProductsAndClosure
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Separation
+module
+
+public import Nyll.ProCGroups.FiniteStepSolvableQuotients.Commutators.Basic
+public import Nyll.ProCGroups.Generation.WordProductsAndClosure
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Separation
+public import Nyll.ProCGroups.Generation.Basic
+public import Nyll.ProCGroups.Profinite.OpenSubgroups
 
 /-!
 # Detecting closed commutator subgroups in finite quotients
@@ -14,6 +18,8 @@ import Nyll.ProCGroups.ProC.OpenNormalSubgroups.Separation
 This module relates bounded commutator width to bounded word products and lifts uniform
 finite-quotient bounds to closedness of the commutator subgroup.
 -/
+
+@[expose] public section
 
 open scoped Topology Pointwise commutatorElement
 

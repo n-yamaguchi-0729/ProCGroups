@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ReidemeisterSchreier.FreeGroup.Automorphisms
-import Nyll.ProCGroups.ReidemeisterSchreier.FreeGroup.PrefixParent
+module
+
+public import Nyll.ProCGroups.ReidemeisterSchreier.FreeGroup.Automorphisms
+public import Nyll.ProCGroups.ReidemeisterSchreier.FreeGroup.PrefixParent
 
 /-!
 # Reidemeister Schreier / Free Group

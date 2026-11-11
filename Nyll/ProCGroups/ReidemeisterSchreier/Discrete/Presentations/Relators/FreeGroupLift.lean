@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Basic
+module
+
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Relators.Basic
 
 /-!
 # Free-group lifts modulo relators
@@ -13,6 +15,8 @@ This module relates reduced words and FreeGroup.mk, then proves that lifts
 whose generator images agree modulo a relator normal closure agree on every
 free-group word.
 -/
+
+@[expose] public section
 
 namespace ReidemeisterSchreier.Discrete.Presentations
 

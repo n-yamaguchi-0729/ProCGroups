@@ -4,14 +4,19 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProC.MaximalQuotients.UniversalProperty
-import Nyll.ProCGroups.FiniteGroups.SigmaPowerDetection
-import Nyll.ProCGroups.Profinite.Basic
-import Nyll.ProCGroups.Topologies.ContinuousMonoidHom
+module
+
+public import Nyll.ProCGroups.ProC.MaximalQuotients.UniversalProperty
+public import Nyll.ProCGroups.FiniteGroups.SigmaPowerDetection
+public import Nyll.ProCGroups.Profinite.Basic
+public import Nyll.ProCGroups.Topologies.ContinuousMonoidHom
+public import Nyll.ProCGroups.ProC.Quotients.ClosedNormal
 
 /-!
 # Primary quotients separate profinite abelian groups
 -/
+
+@[expose] public section
 
 namespace ProCGroups.ProC
 universe u

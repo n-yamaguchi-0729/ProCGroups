@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.GroupTheory.PresentedGroup
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.GeneratorMap
+module
+
+public import Mathlib.GroupTheory.PresentedGroup
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.Presentations.Tietze.GeneratorMap
 
 /-!
 # Semantic equivalence of presentations
@@ -18,6 +20,8 @@ the resulting semantic certificates.
 Concrete, inspectable move sequences are defined separately in
 `Tietze.Script`.
 -/
+
+@[expose] public section
 
 universe u v w
 

@@ -4,8 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.TargetQuotient.Basic
-import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.Map.GroupLike
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.TargetQuotient.Basic
+public import Nyll.ProCGroups.FoxDifferential.Completed.DifferentialModule.Map.GroupLike
+public import Nyll.ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.Index
+public import Nyll.ProCGroups.FiniteGroups.AllFinite
 
 /-!
 # Fox differential: completed — differential module — target quotient — stage map
@@ -23,6 +27,8 @@ The principal declarations in this module are:
   The target-quotient prime-power map sends a group-like basis element to the basis element
   supported at its target-quotient image.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

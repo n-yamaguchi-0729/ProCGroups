@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Discrete.Jacobian.Basic
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Discrete.Jacobian.Basic
 
 /-!
 # Fox differential: discrete — jacobian — chain rule
@@ -21,6 +23,8 @@ The principal declarations in this module are:
 - `freeGroupHomFoxJacobian_id`
   The relative Fox Jacobian of the identity homomorphism is the coordinate identity family.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

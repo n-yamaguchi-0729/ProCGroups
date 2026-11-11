@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Derivative.Rules
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Derivative.Relators
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Derivative.Rules
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.Stage.Derivative.Relators
 
 /-!
 # Fox differential: completed — finite stage — magnus quotient
@@ -22,6 +24,8 @@ The principal declarations in this module are:
   Zero of a finite-stage Fox derivative vector is invariant under reindexing the free basis.
 -/
 
+@[expose] public section
+
 namespace FoxDifferential
 
 noncomputable section
@@ -35,7 +39,6 @@ variable {X : Type u}
 section Reindex
 
 variable {Y : Type v}
-variable [DecidableEq X] [DecidableEq Y]
 
 /-- Reindex the finite-stage Fox semidirect target along an equivalence of free bases. -/
 def foxAlgebraicStageSemidirectReindexHom
@@ -96,6 +99,30 @@ def foxAlgebraicStageSemidirectReindexHom
         · simp only [FoxAlgebraicStageSemidirect.mul_right, map_mul, MulEquiv.toMonoidHom_eq_coe,
   MonoidAlgebra.mapDomainRingHom_apply, MonoidHom.coe_ofClass]}
 
+/-- The left component of the actual finite-stage reindexing homomorphism. -/
+theorem foxAlgebraicStageSemidirectReindexHom_left
+    (e : X ≃ Y)
+    (N : Subgroup (FreeGroup X)) [N.Normal]
+    (M : Subgroup (FreeGroup Y)) [M.Normal]
+    (hM : N.map (FreeGroup.freeGroupCongr e).toMonoidHom = M)
+    (n : ℕ) (a : FoxAlgebraicStageSemidirect (X := X) N n) (y : Y) :
+    (foxAlgebraicStageSemidirectReindexHom (X := X) (Y := Y) e N M hM n a).left y =
+      MonoidAlgebra.mapDomainRingHom (ModNCompletedCoeff n)
+        (QuotientGroup.congr N M (FreeGroup.freeGroupCongr e) hM).toMonoidHom
+        (a.left (e.symm y)) := rfl
+
+/-- The right component of the actual finite-stage reindexing homomorphism. -/
+theorem foxAlgebraicStageSemidirectReindexHom_right
+    (e : X ≃ Y)
+    (N : Subgroup (FreeGroup X)) [N.Normal]
+    (M : Subgroup (FreeGroup Y)) [M.Normal]
+    (hM : N.map (FreeGroup.freeGroupCongr e).toMonoidHom = M)
+    (n : ℕ) (a : FoxAlgebraicStageSemidirect (X := X) N n) :
+    (foxAlgebraicStageSemidirectReindexHom (X := X) (Y := Y) e N M hM n a).right =
+      (QuotientGroup.congr N M (FreeGroup.freeGroupCongr e) hM) a.right := rfl
+
+variable [DecidableEq X] [DecidableEq Y]
+
 /-- The reindexing hom carries the finite-stage lift to the finite-stage lift. -/
 theorem foxAlgebraicStageSemidirectReindexHom_lift
     (e : X ≃ Y)
@@ -123,10 +150,10 @@ theorem foxAlgebraicStageSemidirectReindexHom_lift
     · funext y
       by_cases hy : y = e x
       · subst hy
-        simp only [foxAlgebraicStageSemidirectReindexHom, MulEquiv.toMonoidHom_eq_coe,
+        simp only [foxAlgebraicStageSemidirectReindexHom_left, MulEquiv.toMonoidHom_eq_coe,
   MonoidAlgebra.mapDomainRingHom_apply, MonoidHom.coe_ofClass, foxAlgebraicStageLift,
       QuotientGroup.mk'_apply,
-  MonoidHom.coe_comp, MonoidHom.coe_mk, OneHom.coe_mk, Function.comp_apply, FreeGroup.lift_apply_of,
+  MonoidHom.coe_comp, Function.comp_apply, FreeGroup.lift_apply_of,
   FreeGroup.freeGroupCongr_apply, FreeGroup.map.of, Pi.single_eq_same,
       f₁, f₂, φ]
         rw [e.symm_apply_apply, Pi.single_eq_same]
@@ -134,13 +161,17 @@ theorem foxAlgebraicStageSemidirectReindexHom_lift
       · have hne : e.symm y ≠ x := by
           intro h
           exact hy ((e.apply_symm_apply y).symm.trans (by simp only [h]))
-        simp only [foxAlgebraicStageSemidirectReindexHom, MulEquiv.toMonoidHom_eq_coe,
+        simp only [foxAlgebraicStageSemidirectReindexHom_left, MulEquiv.toMonoidHom_eq_coe,
   MonoidAlgebra.mapDomainRingHom_apply, MonoidHom.coe_ofClass, foxAlgebraicStageLift,
       QuotientGroup.mk'_apply,
-  MonoidHom.coe_comp, MonoidHom.coe_mk, OneHom.coe_mk, Function.comp_apply, FreeGroup.lift_apply_of,
+  MonoidHom.coe_comp, Function.comp_apply, FreeGroup.lift_apply_of,
   FreeGroup.freeGroupCongr_apply, FreeGroup.map.of, Pi.single_eq_of_ne hne,
   MonoidAlgebra.mapDomain_zero, Pi.single_eq_of_ne hy, f₁, f₂, φ]
     · change
+        (foxAlgebraicStageSemidirectReindexHom (X := X) (Y := Y) e N M hM n
+          (foxAlgebraicStageLift (X := X) N n (FreeGroup.of x))).right = _
+      rw [foxAlgebraicStageSemidirectReindexHom_right]
+      change
         (QuotientGroup.congr N M (FreeGroup.freeGroupCongr e) hM)
             (QuotientGroup.mk' N (FreeGroup.of x)) =
           QuotientGroup.mk' M (FreeGroup.of (e x))

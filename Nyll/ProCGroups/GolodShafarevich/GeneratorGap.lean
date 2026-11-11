@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Data.Nat.Basic
+module
+
+public import Mathlib.Data.Nat.Basic
 
 /-!
 # The numerical Golod--Shafarevich gap used by the Martinet seed
@@ -13,6 +15,8 @@ This is the arithmetic step that turns a 3-class rank of at least six and the
 Shafarevich upper bound `r <= d + 2` into the non-strict inequality needed to
 contradict the finite Golod--Shafarevich bound.
 -/
+
+@[expose] public section
 
 namespace ClassFieldTower.Martinet
 

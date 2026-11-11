@@ -4,8 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Discrete.GroupRing
-import Mathlib.Algebra.Ring.GeomSum
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Discrete.GroupRing
+public import Mathlib.Algebra.Ring.GeomSum
+public import Nyll.ProCGroups.FoxDifferential.Discrete.DifferentialModule.Basic
 
 /-!
 # Fox differential: right derivative — geometric series
@@ -21,6 +24,8 @@ The principal declarations in this module are:
 - `geomSeries_one`
   The geometric series of length one is one.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

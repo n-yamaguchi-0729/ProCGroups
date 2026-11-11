@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FiniteGroups.StandardClasses
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualCore
+module
+
+public import Nyll.ProCGroups.FiniteGroups.StandardClasses
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualCore
 
 /-!
 # Pro-p subgroups in the Sigma residual core
@@ -15,6 +17,8 @@ open-normal p-group basis to a Hausdorff group with a Sigma-group basis is
 trivial. Thus every pro-p subgroup lies in the actual Sigma residual core.
 The subgroup need not be closed or normal, and no compactness is required.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.ProC
 

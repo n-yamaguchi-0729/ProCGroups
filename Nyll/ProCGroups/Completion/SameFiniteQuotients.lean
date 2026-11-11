@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.GroupTheory.Finiteness
-import Nyll.ProCGroups.FiniteGeneration.CharacteristicChainsAndIndices
-import Nyll.ProCGroups.ProC.OpenNormalSubgroups.LimitPresentation
+module
+
+public import Mathlib.GroupTheory.Finiteness
+public import Nyll.ProCGroups.FiniteGeneration.CharacteristicChainsAndIndices
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.LimitPresentation
 
 /-!
 # Pro C Groups / Completion / Same Finite Quotients
@@ -14,6 +16,8 @@ import Nyll.ProCGroups.ProC.OpenNormalSubgroups.LimitPresentation
 This module compares abstract finite quotients with continuous finite discrete
 quotients and constructs maps between profinite completions from that comparison.
 -/
+
+@[expose] public section
 
 open scoped Topology
 

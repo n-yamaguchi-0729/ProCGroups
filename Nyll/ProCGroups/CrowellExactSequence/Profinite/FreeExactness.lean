@@ -4,9 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.CrowellExactSequence.Profinite.ContinuousMagnus.Injectivity
-import Nyll.ProCGroups.CrowellExactSequence.Profinite.Exactness
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.FundamentalFormula
+module
+
+public import Nyll.ProCGroups.CrowellExactSequence.Profinite.ContinuousMagnus.Injectivity
+public import Nyll.ProCGroups.CrowellExactSequence.Profinite.Exactness
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.FundamentalFormula
+public import Nyll.ProCGroups.FreeProC.Basic
+public import Nyll.ProCGroups.Generation.Basic
 
 /-!
 # Free pro-C Crowell exactness
@@ -15,6 +19,8 @@ For a free pro-\(C\) source, this file combines continuous Magnus injectivity, t
 boundary calculation, and bifiltered finite-stage exactness. The resulting theorems assemble the
 presented and separated Crowell exact sequences under a surjective presentation map.
 -/
+
+@[expose] public section
 
 namespace CrowellExactSequence
 

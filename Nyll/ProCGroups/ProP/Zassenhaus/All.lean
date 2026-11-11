@@ -4,17 +4,19 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProP.Zassenhaus.OpenNormal
-import Nyll.ProCGroups.ProP.Zassenhaus.AugmentationFiltration
-import Nyll.ProCGroups.ProP.Zassenhaus.Basic
-import Nyll.ProCGroups.ProP.Zassenhaus.DegreeTwo
-import Nyll.ProCGroups.ProP.Zassenhaus.Depth
-import Nyll.ProCGroups.ProP.Zassenhaus.FiniteAugmentationSquare
-import Nyll.ProCGroups.ProP.Zassenhaus.FiniteDegreeOne
-import Nyll.ProCGroups.ProP.Zassenhaus.FiniteLinearization
-import Nyll.ProCGroups.ProP.Zassenhaus.Functoriality
-import Nyll.ProCGroups.ProP.Zassenhaus.GroupLike
-import Nyll.ProCGroups.ProP.Zassenhaus.Laws
+module
+
+public import Nyll.ProCGroups.ProP.Zassenhaus.OpenNormal
+public import Nyll.ProCGroups.ProP.Zassenhaus.AugmentationFiltration
+public import Nyll.ProCGroups.ProP.Zassenhaus.Basic
+public import Nyll.ProCGroups.ProP.Zassenhaus.DegreeTwo
+public import Nyll.ProCGroups.ProP.Zassenhaus.Depth
+public import Nyll.ProCGroups.ProP.Zassenhaus.FiniteAugmentationSquare
+public import Nyll.ProCGroups.ProP.Zassenhaus.FiniteDegreeOne
+public import Nyll.ProCGroups.ProP.Zassenhaus.FiniteLinearization
+public import Nyll.ProCGroups.ProP.Zassenhaus.Functoriality
+public import Nyll.ProCGroups.ProP.Zassenhaus.GroupLike
+public import Nyll.ProCGroups.ProP.Zassenhaus.Laws
 
 /-!
 # Zassenhaus filtration

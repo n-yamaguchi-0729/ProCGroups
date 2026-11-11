@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Basic
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.System.Basic
 
 /-!
 # Fox differential: finite stage — prime power — system — semidirect
@@ -20,6 +22,8 @@ The principal declarations in this module are:
 - `foxAlgebraicStagePrimePowerSemidirectTransition_right`
   The right coordinate of the finite-stage semidirect point is the corresponding quotient component.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

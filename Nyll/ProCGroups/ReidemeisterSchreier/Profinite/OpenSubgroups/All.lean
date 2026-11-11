@@ -4,15 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.BasisFiniteRank
-import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.BasisTheorems
-import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.DenseFreeModel
-import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.ExactRightSchreierGeneration
-import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.FinitePermutationTargets
-import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.MinimalPower
-import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.RankBound
-import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.RightQuotient
-import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.SchreierTransversals
+module
+
+public import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.BasisFiniteRank
+public import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.BasisTheorems
+public import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.DenseFreeModel
+public import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.ExactRightSchreierGeneration
+public import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.FinitePermutationTargets
+public import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.MinimalPower
+public import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.RankBound
+public import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.RightQuotient
+public import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.SchreierTransversals
 
 /-!
 # Profinite open-subgroup Reidemeister--Schreier theory

@@ -4,7 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.LocalWeight.LocalWeightTheorems
+module
+
+public import Nyll.ProCGroups.LocalWeight.LocalWeightTheorems
+public import Nyll.ProCGroups.ProC.OpenNormalSubgroups.CountableChains
 
 /-!
 # Generating sets converging to one
@@ -13,6 +16,8 @@ Countable descending open-normal bases are characterized by generating sets that
 identity along open subgroups. For nonempty profinite groups this yields a characterization of
 metrizability by a countable convergent generating set.
 -/
+
+@[expose] public section
 
 open Set
 open TopologicalSpace

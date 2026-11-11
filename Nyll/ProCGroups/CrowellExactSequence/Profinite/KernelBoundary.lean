@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.CrowellExactSequence.Profinite.SequenceMaps.Basic
-import Nyll.ProCGroups.CrowellExactSequence.Profinite.SequenceMaps.Exactness
-import Nyll.ProCGroups.ProC.Kernels
+module
+
+public import Nyll.ProCGroups.CrowellExactSequence.Profinite.SequenceMaps.Basic
+public import Nyll.ProCGroups.CrowellExactSequence.Profinite.SequenceMaps.Exactness
+public import Nyll.ProCGroups.ProC.Kernels
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianization
 
 /-!
 # Boundary maps from the profinite kernel
@@ -16,6 +19,8 @@ presentation. It proves that these maps kill commutators and gives continuity cr
 that they kill the closure of the commutator subgroup, hence factor through topological
 abelianization.
 -/
+
+@[expose] public section
 
 namespace CrowellExactSequence
 

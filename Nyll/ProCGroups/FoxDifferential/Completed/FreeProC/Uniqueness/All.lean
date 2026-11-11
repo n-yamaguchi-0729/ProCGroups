@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.Uniqueness.Derivative
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.Uniqueness.Existence
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.Uniqueness.Lift
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.Uniqueness.Morphism
-import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.Uniqueness.SemidirectHom
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.Uniqueness.Derivative
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.Uniqueness.Existence
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.Uniqueness.Lift
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.Uniqueness.Morphism
+public import Nyll.ProCGroups.FoxDifferential.Completed.FreeProC.Uniqueness.SemidirectHom
 
 /-!
 # Fox differential: completed — free pro-\(C\) — uniqueness

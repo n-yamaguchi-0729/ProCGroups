@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.CompletedTarget
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.PrimePower.Derivative.CompletedTarget
 
 /-!
 # Fox differential: finite stage — prime power — derivative — vector
@@ -16,6 +18,8 @@ The principal declarations in this module are:
 - `primePowerCompletedGroupAlgebraFreeFoxDerivativeVectorToCompletedTarget_apply`
   Evaluation of the completed-target derivative vector at a coordinate.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

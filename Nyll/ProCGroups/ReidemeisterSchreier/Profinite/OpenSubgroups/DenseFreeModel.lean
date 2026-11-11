@@ -4,9 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.WreathProducts
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.OpenSubgroups.FreeBasis
-import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.FinitePermutationTargets
+module
+
+public import Nyll.ProCGroups.WreathProducts
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.OpenSubgroups.FreeBasis
+public import Nyll.ProCGroups.ReidemeisterSchreier.Profinite.OpenSubgroups.FinitePermutationTargets
+public import Nyll.ProCGroups.Generation.Basic
+public import Nyll.ProCGroups.ReidemeisterSchreier.Schreier
 
 /-!
 # Dense abstract free models of open subgroups
@@ -16,6 +20,8 @@ proves that the preimage of an open subgroup remains dense, and applies the
 discrete Nielsen--Schreier basis theorem to compute the abstract preimage
 rank.  The result feeds the later pro-\(C\) completion argument.
 -/
+
+@[expose] public section
 
 open Set
 open scoped Topology Pointwise

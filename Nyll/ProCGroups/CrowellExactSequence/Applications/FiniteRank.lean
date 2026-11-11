@@ -4,10 +4,20 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.CrowellExactSequence.Profinite.BlanchfieldLyndon
-import Nyll.ProCGroups.FreeProC.FiniteRankSourceData
-import Nyll.ProCGroups.FiniteStepSolvableQuotients.Abelianization
-import Nyll.ProCGroups.ProC.InverseLimits.Predicates
+module
+
+public import Nyll.ProCGroups.CrowellExactSequence.Profinite.BlanchfieldLyndon
+public import Nyll.ProCGroups.FreeProC.FiniteRankSourceData
+public import Nyll.ProCGroups.FiniteStepSolvableQuotients.Abelianization
+public import Nyll.ProCGroups.ProC.InverseLimits.Predicates
+public import Nyll.ProCGroups.FiniteGroups.Classes
+public import Nyll.ProCGroups.FiniteGroups.StandardClasses
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Universal.NaturalTopology
+public import Nyll.ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.Core
+public import Nyll.ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.FreeGroup.Derivative
+public import Nyll.ProCGroups.ProC.Kernels
+public import Nyll.ProCGroups.ProC.Quotients.ClosedNormal
+public import Nyll.ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
 
 /-!
 # `ProCGroups.CrowellExactSequence.Applications.FiniteRank`
@@ -17,6 +27,8 @@ Crowell exact sequences / Applications / Finite Rank.
 This module develops the Crowell--Blanchfield--Lyndon exact sequence and its completed
 coordinate forms.
 -/
+
+@[expose] public section
 
 open scoped Topology
 
@@ -38,14 +50,22 @@ noncomputable def finiteRank_topologicalAbelianization_sepCoordinateMap
     {sigma : Set ℕ} {r : ℕ} (X : Fin r → F)
     (hFree : ProCGroups.FreeProC.IsEpimorphicallyFreeProCGroupOnConvergingSet
       (C := (ProCGroups.FiniteGroupClass.sigmaGroup.{u} sigma))
-      (Fin r) F X) := by
-  letI :
-      ProCGroups.FiniteGroupClass.ContainsTrivialQuotients
+      (Fin r) F X) :
+    let _ : ProCGroups.FiniteGroupClass.ContainsTrivialQuotients
         (ProCGroups.FiniteGroupClass.sigmaGroup sigma) :=
-    (ProCGroups.FiniteGroupClass.sigmaGroup_fullFormation sigma).containsTrivialQuotients
-  letI : TotallyDisconnectedSpace (TopologicalAbelianization F) :=
-    ProCGroups.totallyDisconnectedSpace_quotient_closedNormal
-      (Subgroup.closedCommutator F) (Subgroup.isClosed_closedCommutator F)
+      (ProCGroups.FiniteGroupClass.sigmaGroup_fullFormation sigma).containsTrivialQuotients
+    let _ : TotallyDisconnectedSpace (TopologicalAbelianization F) :=
+      ProCGroups.totallyDisconnectedSpace_quotient_closedNormal
+        (Subgroup.closedCommutator F) (Subgroup.isClosed_closedCommutator F)
+    FoxDifferential.ZCSeparatedCompletedDifferentialModule
+        (ProCGroups.FiniteGroupClass.sigmaGroup sigma)
+        (TopologicalAbelianization.mkₜ F).toMonoidHom →ₗ[
+      FoxDifferential.ZCCompletedGroupAlgebra
+        (ProCGroups.FiniteGroupClass.sigmaGroup sigma) (TopologicalAbelianization F)]
+      FoxDifferential.ZCFreeFoxCoordinates
+        (ProCGroups.FiniteGroupClass.sigmaGroup sigma)
+        (X := ULift.{u} (Fin r)) (H := TopologicalAbelianization F) := by
+  intro hTrivial hDisconnected
   exact
     freeProCChosenULift_sepCoordinateMap
       (H := TopologicalAbelianization F)

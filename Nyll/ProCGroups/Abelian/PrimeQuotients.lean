@@ -4,13 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.GroupTheory.FiniteAbelian.Basic
-import Mathlib.Data.Nat.Prime.Basic
-import Mathlib.Algebra.BigOperators.Associated
+module
+
+public import Mathlib.GroupTheory.FiniteAbelian.Basic
+public import Mathlib.Data.Nat.Prime.Basic
+public import Mathlib.Algebra.BigOperators.Associated
 
 /-!
 # Prime-order quotients of finite abelian groups
 -/
+
+@[expose] public section
 
 namespace ProCGroups.Abelian
 

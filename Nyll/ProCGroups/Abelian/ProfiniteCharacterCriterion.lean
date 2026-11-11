@@ -5,9 +5,11 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 https://github.com/n-yamaguchi-0729
 -/
 
-import Nyll.ProCGroups.Abelian.ProfiniteBidual
-import Mathlib.Topology.Algebra.PontryaginDual
-import Mathlib.Topology.Homeomorph.Lemmas
+module
+
+public import Nyll.ProCGroups.Abelian.ProfiniteBidual
+public import Mathlib.Topology.Algebra.PontryaginDual
+public import Mathlib.Topology.Homeomorph.Lemmas
 
 /-!
 # Detecting isomorphisms of profinite abelian groups by actual characters
@@ -17,6 +19,8 @@ bijectivity of the original homomorphism. Surjectivity uses the actual
 profinite biduality theorem and the continuity of the inverse between the
 discrete character groups.
 -/
+
+@[expose] public section
 
 noncomputable section
 

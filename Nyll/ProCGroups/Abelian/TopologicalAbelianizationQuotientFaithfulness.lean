@@ -5,7 +5,9 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
 
-import Nyll.ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
+module
+
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
 
 /-!
 # Faithfulness pulled back from quotient abelianizations
@@ -13,6 +15,8 @@ import Nyll.ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
 Trivial conjugation descends along a continuous homomorphism. Consequently,
 faithfulness on the image pulls back for normal subgroups containing its kernel.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.Abelian
 

@@ -4,15 +4,17 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotientAction
-import Nyll.ProCGroups.ProC.MaximalQuotients.ConjugationComparison
-import Nyll.ProCGroups.ProC.MaximalQuotients.UniversalProperty
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotient
-import Nyll.ProCGroups.Topologies.QuotientMaps
-import Nyll.ProCGroups.Abelian.TopologicalAbelianization
-import Mathlib.Algebra.Group.Subgroup.Basic
-import Mathlib.Topology.Algebra.ContinuousMonoidHom
-import Mathlib.Topology.Homeomorph.Defs
+module
+
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotientAction
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ConjugationComparison
+public import Nyll.ProCGroups.ProC.MaximalQuotients.UniversalProperty
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotient
+public import Nyll.ProCGroups.Topologies.QuotientMaps
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianization
+public import Mathlib.Algebra.Group.Subgroup.Basic
+public import Mathlib.Topology.Algebra.ContinuousMonoidHom
+public import Mathlib.Topology.Homeomorph.Defs
 
 /-!
 # Transport of residual quotient conjugation
@@ -22,6 +24,8 @@ intrinsic residual quotient. The induced equivalence on topological
 abelianizations intertwines actual conjugation, so the corresponding
 quotient actions are faithful simultaneously.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.ProC
 
@@ -33,7 +37,8 @@ variable {C : FiniteGroupClass.{u}}
 variable {G H : Type u} [Group G] [Group H]
   [TopologicalSpace G] [TopologicalSpace H]
 
-private def subgroupMapContinuousMulEquiv (e : G ≃ₜ* H) (N : Subgroup G) :
+/-- The restriction of an ambient continuous equivalence to a subgroup and its image. -/
+def subgroupMapContinuousMulEquiv (e : G ≃ₜ* H) (N : Subgroup G) :
     N ≃ₜ* N.map e.toMulEquiv.toMonoidHom where
   toMulEquiv := e.toMulEquiv.subgroupMap N
   continuous_toFun := by
@@ -43,11 +48,13 @@ private def subgroupMapContinuousMulEquiv (e : G ≃ₜ* H) (N : Subgroup G) :
     apply Continuous.subtype_mk
     exact e.symm.continuous_toFun.comp continuous_subtype_val
 
-private theorem subgroupMap_normal (e : G ≃ₜ* H) (N : Subgroup G) [h : N.Normal] :
+/-- An ambient equivalence carries a normal subgroup to a normal subgroup. -/
+theorem subgroupMap_normal (e : G ≃ₜ* H) (N : Subgroup G) [h : N.Normal] :
     (N.map e.toMulEquiv.toMonoidHom).Normal :=
   h.map e.toMulEquiv.toMonoidHom e.surjective
 
-private theorem subgroupMap_isClosed (e : G ≃ₜ* H) (N : Subgroup G)
+/-- An ambient continuous equivalence carries a closed subgroup to a closed subgroup. -/
+theorem subgroupMap_isClosed (e : G ≃ₜ* H) (N : Subgroup G)
     (hN : IsClosed (N : Set G)) :
     IsClosed ((N.map e.toMulEquiv.toMonoidHom : Subgroup H) : Set H) :=
   e.toHomeomorph.isClosedMap N hN

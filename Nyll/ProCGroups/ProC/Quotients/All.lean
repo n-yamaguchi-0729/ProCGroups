@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProC.Quotients.ClosedNormal
-import Nyll.ProCGroups.ProC.Quotients.ClosedSubgroupNeighborhoods
-import Nyll.ProCGroups.ProC.Quotients.DescendingClosedSubgroupQuotients
-import Nyll.ProCGroups.ProC.Quotients.LeftQuotientMaps
-import Nyll.ProCGroups.ProC.Quotients.LeftQuotientProjectionSections
-import Nyll.ProCGroups.ProC.Quotients.OpenSubgroupSections
+module
+
+public import Nyll.ProCGroups.ProC.Quotients.ClosedNormal
+public import Nyll.ProCGroups.ProC.Quotients.ClosedSubgroupNeighborhoods
+public import Nyll.ProCGroups.ProC.Quotients.DescendingClosedSubgroupQuotients
+public import Nyll.ProCGroups.ProC.Quotients.LeftQuotientMaps
+public import Nyll.ProCGroups.ProC.Quotients.LeftQuotientProjectionSections
+public import Nyll.ProCGroups.ProC.Quotients.OpenSubgroupSections
 
 /-!
 # Quotients and sections of pro-\(C\) groups

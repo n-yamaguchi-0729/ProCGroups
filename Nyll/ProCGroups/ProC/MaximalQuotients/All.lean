@@ -4,27 +4,29 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualOrdinaryFaithfulness
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualProGroupFaithfulness
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualAbelianizationMonotonicity
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualMonotonicity
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualEquivalence
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotientTransport
-import Nyll.ProCGroups.ProC.MaximalQuotients.ConjugationComparison
-import Nyll.ProCGroups.ProC.MaximalQuotients.Definitions
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualCore
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualIdempotence
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotient
-import Nyll.ProCGroups.ProC.MaximalQuotients.SubgroupComparison
-import Nyll.ProCGroups.ProC.MaximalQuotients.UniversalProperty
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualUniversalProperty
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotientAction
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualPrimeExclusion
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualSigmaPower
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualAbelianizationPrimePowers
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualPowerDetection
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualFiniteDescent
-import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualPrimeToDescent
+module
+
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualOrdinaryFaithfulness
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualProGroupFaithfulness
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualAbelianizationMonotonicity
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualMonotonicity
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualEquivalence
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotientTransport
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ConjugationComparison
+public import Nyll.ProCGroups.ProC.MaximalQuotients.Definitions
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualCore
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualIdempotence
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotient
+public import Nyll.ProCGroups.ProC.MaximalQuotients.SubgroupComparison
+public import Nyll.ProCGroups.ProC.MaximalQuotients.UniversalProperty
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualUniversalProperty
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualQuotientAction
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualPrimeExclusion
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualSigmaPower
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualAbelianizationPrimePowers
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualPowerDetection
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualFiniteDescent
+public import Nyll.ProCGroups.ProC.MaximalQuotients.ResidualPrimeToDescent
 
 /-!
 # Maximal pro-\(C\) quotients

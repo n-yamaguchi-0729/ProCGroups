@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.Basic
-import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.Homology
-import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.IdentityAugmentation
-import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.MagnusComparison
-import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.MagnusKernel
-import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.Quotient
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.Basic
+public import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.Homology
+public import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.IdentityAugmentation
+public import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.MagnusComparison
+public import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.MagnusKernel
+public import Nyll.ProCGroups.FoxDifferential.Discrete.KernelBoundary.Quotient
 
 /-!
 # Fox differential: discrete — kernel boundary

@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.Residue.FreeGroup.Basic
-import Nyll.ProCGroups.FoxDifferential.Completed.Residue.FreeGroup.Boundary
-import Nyll.ProCGroups.FoxDifferential.Completed.Residue.FreeGroup.Coordinates
-import Nyll.ProCGroups.FoxDifferential.Completed.Residue.FreeGroup.Fundamental
-import Nyll.ProCGroups.FoxDifferential.Completed.Residue.FreeGroup.Universal
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.Residue.FreeGroup.Basic
+public import Nyll.ProCGroups.FoxDifferential.Completed.Residue.FreeGroup.Boundary
+public import Nyll.ProCGroups.FoxDifferential.Completed.Residue.FreeGroup.Coordinates
+public import Nyll.ProCGroups.FoxDifferential.Completed.Residue.FreeGroup.Fundamental
+public import Nyll.ProCGroups.FoxDifferential.Completed.Residue.FreeGroup.Universal
 
 /-!
 # Fox differential: completed — residue — free group

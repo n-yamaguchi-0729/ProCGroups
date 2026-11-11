@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
-import Nyll.ProCGroups.FiniteStepSolvableQuotients.Commutators.Basic
-import Nyll.ProCGroups.ProC.Kernels
+module
+
+public import Nyll.ProCGroups.Abelian.TopologicalAbelianizationFunctoriality
+public import Nyll.ProCGroups.FiniteStepSolvableQuotients.Commutators.Basic
+public import Nyll.ProCGroups.ProC.Kernels
+public import Nyll.ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
 
 /-!
 # Abelianizations inside finite-step solvable quotients
@@ -14,6 +17,8 @@ import Nyll.ProCGroups.ProC.Kernels
 This module studies the last closed-derived subgroup of a maximal solvable quotient and formulates
 torsion-freeness and containment conditions using abelianizations of its open subgroups.
 -/
+
+@[expose] public section
 
 open scoped Topology
 
@@ -179,8 +184,7 @@ theorem topologicalAbelianization_kernel_closedDerivedSeries_one_map_subtype_eq_
       ProCGroups.ProC.ProfiniteKernelSubgroup (TopologicalAbelianization.mkₜ G)
     (closedDerivedSeries (G := N) (⊤ : Subgroup N) 1).map N.subtype =
       topDerivedTop G 2 := by
-  let N : Subgroup G :=
-    ProCGroups.ProC.ProfiniteKernelSubgroup (TopologicalAbelianization.mkₜ G)
+  intro N
   have hN_eq : N = topDerivedTop G 1 :=
     topologicalAbelianization_profiniteKernelSubgroup_eq_topDerivedTop_one G
   have hNmap : (⊤ : Subgroup N).map N.subtype = topDerivedTop G 1 := by

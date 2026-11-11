@@ -4,11 +4,13 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.Algebra.Group.Subgroup.Basic
-import Mathlib.Algebra.Group.Torsion
-import Mathlib.Data.PNat.Basic
-import Mathlib.Topology.Algebra.Group.Subgroup
-import Mathlib.Topology.Connected.TotallyDisconnected
+module
+
+public import Mathlib.Algebra.Group.Subgroup.Basic
+public import Mathlib.Algebra.Group.Torsion
+public import Mathlib.Data.PNat.Basic
+public import Mathlib.Topology.Algebra.Group.Subgroup
+public import Mathlib.Topology.Connected.TotallyDisconnected
 
 /-!
 # The full Tate module of an additive commutative group
@@ -22,6 +24,8 @@ Each torsion level is given the discrete topology. The induced product
 subspace topology on the limit is Hausdorff and totally disconnected, and
 is compact when every actual torsion subgroup is finite.
 -/
+
+@[expose] public section
 
 namespace ProCGroups
 
@@ -123,8 +127,8 @@ theorem eq_zero_of_nsmul_eq_zero (x : FullTateModule M) {n : ℕ}
   exact (evaluation_compatible x k np).symm.trans hCoordinate
 
 instance : IsAddTorsionFree (FullTateModule M) where
-  nsmul_right_injective := by
-    intro n hn x y hxy
+  eq_of_nsmul_eq_nsmul_of_addCommute := by
+    intro n hn x y _ hxy
     change n • x = n • y at hxy
     apply sub_eq_zero.mp
     apply eq_zero_of_nsmul_eq_zero (x - y) (Nat.pos_of_ne_zero hn)

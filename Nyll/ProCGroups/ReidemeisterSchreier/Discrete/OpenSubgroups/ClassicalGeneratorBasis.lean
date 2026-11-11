@@ -4,7 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.OpenSubgroups.FreeBasis
+module
+
+public import Nyll.ProCGroups.ReidemeisterSchreier.Discrete.OpenSubgroups.FreeBasis
+public import Nyll.ProCGroups.ReidemeisterSchreier.Groupoid
 
 /-!
 # Reidemeister Schreier / Discrete / Open Subgroups / Classical Generator Basis
@@ -13,6 +16,8 @@ This module identifies the classical Schreier generators with the free basis
 obtained from complement edges, including the inverse-basis convention needed
 for the standard generator formula.
 -/
+
+@[expose] public section
 
 universe u
 
@@ -27,7 +32,7 @@ There is an inverse-valued Schreier-basis equivalence sending the standard free 
 represented by \(z\) to \(z^{-1}\) in the subgroup; the positive-valued compatibility theorem is
 exposed separately.
 -/
-private theorem IsRightSchreierTransversal.exists_inverseSchreierBasisEquiv
+theorem IsRightSchreierTransversal.exists_inverseSchreierBasisEquiv
     {X : Type u} [DecidableEq X] {L : Subgroup (FreeGroup X)} {T : Set (FreeGroup X)}
     (hT : IsRightSchreierTransversal (X := X) L T) :
     ∃ e : FreeGroup ↥(schreierGeneratorSet (X := X) hT) ≃* L,
@@ -79,9 +84,9 @@ private theorem IsRightSchreierTransversal.exists_inverseSchreierBasisEquiv
     let loop := ReidemeisterSchreier.Groupoid.rootLoopOfHom (schreierPrefixTree (X := X) hT)
       (IsFreeGroupoid.of i.1.hom)
     have hrootEq : (schreierRootEndMulEquiv (X := X) hT loop : L) =
-        (schreierLabelFunctor (X := X) hT).map loop := by
+        (schreierLabelFunctor (X := X) hT).map loop.asHom := by
       apply Subtype.ext
-      change loop.1 = (1 : FreeGroup X) * loop.1 * (1 : FreeGroup X)⁻¹
+      change loop.asHom.1 = (1 : FreeGroup X) * loop.asHom.1 * (1 : FreeGroup X)⁻¹
       simp only [one_mul, inv_one, mul_one]
     exact hrootEq.trans <| hloop.trans <| schreierLabelFunctor_map_of (X := X) hT i.1.hom
   have hto_inj : Function.Injective toSch := by

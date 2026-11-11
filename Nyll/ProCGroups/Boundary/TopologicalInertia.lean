@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Boundary.CyclotomicInversion
-import Nyll.ProCGroups.Generation.Basic
+module
+
+public import Nyll.ProCGroups.Boundary.CyclotomicInversion
+public import Nyll.ProCGroups.Generation.Basic
 
 /-!
 # Topologically cyclic inertia and cyclotomic inversion
@@ -15,6 +17,8 @@ inversion to a statement about an entire topologically cyclic inertia group.
 The generator is killed by inversion and oddness, and continuity then kills
 the whole restriction.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.Boundary
 

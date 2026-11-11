@@ -10,18 +10,22 @@ Local adaptation and maintenance: Naganori Yamaguchi (https://github.com/n-yamag
 AI assistance in local adaptation and maintenance: OpenAI Codex.
 -/
 
-import Mathlib.Algebra.BigOperators.Ring.Finset
-import Mathlib.Data.Fintype.BigOperators
-import Mathlib.Data.Int.ModEq
-import Mathlib.Tactic.Linarith.Frontend
-import Mathlib.Tactic.NormNum
-import Mathlib.Tactic.Ring.RingNF
-import Mathlib.Tactic.SimpRw
-import Mathlib.Tactic.SplitIfs
+module
+
+public import Mathlib.Algebra.BigOperators.Ring.Finset
+public import Mathlib.Data.Fintype.BigOperators
+public import Mathlib.Data.Int.ModEq
+public import Mathlib.Tactic.Linarith.Frontend
+public import Mathlib.Tactic.NormNum
+public import Mathlib.Tactic.Ring.RingNF
+public import Mathlib.Tactic.SimpRw
+public import Mathlib.Tactic.SplitIfs
 
 /-!
 # Fin exists forall sub sub mod Eq of forall flow sum mul mod Eq zero
 -/
+
+@[expose] public section
 
 section ProofImplementation
 

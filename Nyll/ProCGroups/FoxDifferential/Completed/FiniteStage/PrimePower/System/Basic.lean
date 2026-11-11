@@ -4,7 +4,9 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.CoeffMap.BoundaryCycles
+module
+
+public import Nyll.ProCGroups.FoxDifferential.Completed.FiniteStage.CoeffMap.BoundaryCycles
 
 /-!
 # Fox differential: finite stage — prime power — system — basic
@@ -21,6 +23,8 @@ The principal declarations in this module are:
 - `foxAlgebraicStagePrimePowerSourceProjection_of`
   Evaluation of the source projection on a group-like free-group algebra element.
 -/
+
+@[expose] public section
 
 namespace FoxDifferential
 

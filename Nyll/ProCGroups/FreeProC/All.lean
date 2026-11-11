@@ -4,17 +4,19 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.FreeProC.Abelianization
-import Nyll.ProCGroups.FreeProC.Basic
-import Nyll.ProCGroups.FreeProC.CanonicalData
-import Nyll.ProCGroups.FreeProC.Characterization.All
-import Nyll.ProCGroups.FreeProC.Criteria.All
-import Nyll.ProCGroups.FreeProC.FiniteBasis
-import Nyll.ProCGroups.FreeProC.FiniteRankSourceData
-import Nyll.ProCGroups.FreeProC.FinitelyGenerated
-import Nyll.ProCGroups.FreeProC.SolvableQuotients
-import Nyll.ProCGroups.FreeProC.Universe
-import Nyll.ProCGroups.FreeProC.Construction
+module
+
+public import Nyll.ProCGroups.FreeProC.Abelianization
+public import Nyll.ProCGroups.FreeProC.Basic
+public import Nyll.ProCGroups.FreeProC.CanonicalData
+public import Nyll.ProCGroups.FreeProC.Characterization.All
+public import Nyll.ProCGroups.FreeProC.Criteria.All
+public import Nyll.ProCGroups.FreeProC.FiniteBasis
+public import Nyll.ProCGroups.FreeProC.FiniteRankSourceData
+public import Nyll.ProCGroups.FreeProC.FinitelyGenerated
+public import Nyll.ProCGroups.FreeProC.SolvableQuotients
+public import Nyll.ProCGroups.FreeProC.Universe
+public import Nyll.ProCGroups.FreeProC.Construction
 
 /-!
 # Free pro-`C` groups

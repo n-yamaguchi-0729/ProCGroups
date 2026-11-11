@@ -4,12 +4,14 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.Carrier
-import Nyll.ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.Index
-import Nyll.ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.Projections
-import Nyll.ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.Ring
-import Nyll.ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.Stage
-import Nyll.ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.Topology
+module
+
+public import Nyll.ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.Carrier
+public import Nyll.ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.Index
+public import Nyll.ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.Projections
+public import Nyll.ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.Ring
+public import Nyll.ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.Stage
+public import Nyll.ProCGroups.CompletedGroupAlgebra.Basic.AllFinite.Topology
 
 /-!
 # Completed Group Algebra / Basic / All Finite

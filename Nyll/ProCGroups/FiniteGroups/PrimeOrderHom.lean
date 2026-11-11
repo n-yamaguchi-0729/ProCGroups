@@ -4,8 +4,10 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.GroupTheory.Perm.Cycle.Type
-import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
+module
+
+public import Mathlib.GroupTheory.Perm.Cycle.Type
+public import Mathlib.GroupTheory.SpecificGroups.Cyclic.Subgroup
 
 /-!
 # Homomorphisms from finite groups of prime order
@@ -13,6 +15,8 @@ import Mathlib.GroupTheory.SpecificGroups.Cyclic.Basic
 These elementary group-theoretic facts are shared by the ab-faithfulness
 criterion and by Galois-theoretic character arguments.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.FiniteStepSolvableQuotients
 

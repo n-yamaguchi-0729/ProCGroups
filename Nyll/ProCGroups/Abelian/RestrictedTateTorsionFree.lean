@@ -4,9 +4,11 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Abelian.RestrictedTateModule
-import Mathlib.GroupTheory.OrderOfElement
-import Mathlib.Data.Nat.Factorization.Induction
+module
+
+public import Nyll.ProCGroups.Abelian.RestrictedTateModule
+public import Mathlib.GroupTheory.OrderOfElement
+public import Mathlib.Data.Nat.Factorization.Induction
 
 /-!
 # Torsion-freeness for every restricted Tate module
@@ -15,6 +17,8 @@ No saturation condition on the multiplicative index set is needed. For prime
 torsion, a coordinate is killed using its square index if the prime divides
 its index, and coprimality otherwise. Prime induction handles every annihilator.
 -/
+
+@[expose] public section
 
 namespace ProCGroups.RestrictedTateModule
 
@@ -53,15 +57,16 @@ theorem eq_zero_of_nsmul_eq_zero (x : RestrictedTateModule M S) {n : ℕ}
     · intro y _ hy
       simpa only [one_nsmul] using hy
     · intro p a hp ih y hpa hy
-      have ha : 0 < a := Nat.pos_of_ne_zero (fun h => by simp [h] at hpa)
+      have ha : 0 < a := Nat.pos_of_ne_zero (fun h => by simp only [h, mul_zero,
+        lt_self_iff_false] at hpa)
       apply ih y ha
       apply eq_zero_of_prime_nsmul_eq_zero (a • y) hp
       rwa [← mul_smul]
   exact hall n x hn hx
 
 instance : IsAddTorsionFree (RestrictedTateModule M S) where
-  nsmul_right_injective := by
-    intro n hn x y hxy
+  eq_of_nsmul_eq_nsmul_of_addCommute := by
+    intro n hn x y _ hxy
     change n • x = n • y at hxy
     apply sub_eq_zero.mp
     apply eq_zero_of_nsmul_eq_zero (x - y) (Nat.pos_of_ne_zero hn)

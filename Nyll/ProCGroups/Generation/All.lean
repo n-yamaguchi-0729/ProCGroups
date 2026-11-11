@@ -4,13 +4,15 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.Generation.Basic
-import Nyll.ProCGroups.Generation.Convergence
-import Nyll.ProCGroups.Generation.GeneratorConvergingPairs
-import Nyll.ProCGroups.Generation.QuotientCriteria
-import Nyll.ProCGroups.Generation.QuotientGeneratorConvergingPairs
-import Nyll.ProCGroups.Generation.WordProductsAndClosure
-import Nyll.ProCGroups.Generation.Procyclic
+module
+
+public import Nyll.ProCGroups.Generation.Basic
+public import Nyll.ProCGroups.Generation.Convergence
+public import Nyll.ProCGroups.Generation.GeneratorConvergingPairs
+public import Nyll.ProCGroups.Generation.QuotientCriteria
+public import Nyll.ProCGroups.Generation.QuotientGeneratorConvergingPairs
+public import Nyll.ProCGroups.Generation.WordProductsAndClosure
+public import Nyll.ProCGroups.Generation.Procyclic
 
 /-!
 # Topological generation

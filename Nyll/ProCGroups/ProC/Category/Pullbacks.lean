@@ -4,9 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Defs
-import Nyll.ProCGroups.Categorical.ProfinitePullbacks
-import Nyll.ProCGroups.ProC.Category.Basic
+module
+
+public import Mathlib.CategoryTheory.Limits.Shapes.Pullback.IsPullback.Defs
+public import Nyll.ProCGroups.Categorical.ProfinitePullbacks
+public import Nyll.ProCGroups.ProC.Category.Basic
+public import Nyll.ProCGroups.FiniteGroups.AllFinite
 
 /-!
 # Pro C Groups / pro-C / Category / Pullbacks
@@ -15,6 +18,8 @@ This module relates mathlib's `CategoryTheory.IsPullback` predicate in
 `ProCGrp C` to the concrete universal property tested against profinite
 source groups.
 -/
+
+@[expose] public section
 
 open CategoryTheory
 open CategoryTheory.Limits

@@ -4,7 +4,12 @@ Released under Apache 2.0 license as described in the file LICENSE.
 Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 -/
 
-import Nyll.ProCGroups.CrowellExactSequence.Profinite.KernelBoundary
+module
+
+public import Nyll.ProCGroups.CrowellExactSequence.Profinite.KernelBoundary
+public import Nyll.ProCGroups.FoxDifferential.Completed.Continuous.Universal.NaturalTopology
+public import Nyll.ProCGroups.FoxDifferential.Completed.ProCIntegerCoefficients.Core
+public import Nyll.ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
 
 /-!
 # Injectivity criteria from the profinite kernel
@@ -13,6 +18,8 @@ This file factors the completed Crowell boundary through the topological abelian
 kernel. It proves that the resulting boundary is annihilated by the completed differential map
 and records the Magnus-kernel criteria used to establish injectivity in the profinite sequence.
 -/
+
+@[expose] public section
 
 namespace CrowellExactSequence
 
