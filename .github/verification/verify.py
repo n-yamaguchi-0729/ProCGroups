@@ -17,9 +17,9 @@ import sys
 import time
 import generate_manifest
 
-LEAN = "leanprover/lean4:v4.35.0"
-LEAN_COMMIT = "eb6cafb7290e8bd5f2937522d8d804f58f02bafc"
-EXPORT_COMMIT = "5a9a355dc6c5fd82b69058d433e2ae2e8dfbf8fe"
+LEAN = "leanprover/lean4:v4.36.0"
+LEAN_COMMIT = "611c117bfaf7b7ae1cfcf246ce6fba31e8f509e9"
+EXPORT_COMMIT = "df81913eee5519d5a88ae5b0fd701b5298cc29ab"
 NANODA_COMMIT = "4c544ed4099c8227f07d5de77ad1e69fb0740a27"
 ALLOWED = {"propext", "Classical.choice", "Quot.sound"}
 ALLOWED_PARTS = {(("str", "propext"),), (("str", "Classical"), ("str", "choice")),
@@ -227,7 +227,7 @@ class Pipeline:
         # Bind all built exporter olean parts, including server/private companions.
         self.paths += sorted(core_dir.rglob("*.olean*"))
         version = self.capture(["lake", "env", "lean", "--version"])
-        require("version 4.35.0," in version and LEAN_COMMIT in version, "Active Lean version mismatch")
+        require("version 4.36.0," in version and LEAN_COMMIT in version, "Active Lean version mismatch")
         prefix = Path(self.capture(["lake", "env", "lean", "--print-prefix"])).resolve()
         self.lean = prefix / "bin/lean"
         require(self.lean.is_file(), "Missing active Lean executable")
@@ -361,7 +361,7 @@ class Pipeline:
         require(self.coverage["allSelectedPresent"], "Export omitted selected declarations")
         require(not self.coverage["unexpectedAxiomNameParts"], "Export has unpermitted structural axiom")
         lean = self.coverage["metadata"]["lean"]
-        require(lean["version"] == "4.35.0" and lean["githash"] == LEAN_COMMIT, "Exporter version mismatch")
+        require(lean["version"] == "4.36.0" and lean["githash"] == LEAN_COMMIT, "Exporter version mismatch")
         return {"completeSafeUnion": True, "selectedRootCount": len(self.selectors)}
 
     def check_nanoda(self):
@@ -381,7 +381,7 @@ class Pipeline:
         imports = [r for r in records if r.get("phase") == "inventory"]
         require(len(completed) == len(imports) == 1 and completed[0].get("result") == "PASS",
                 "Missing official kernel replay completion")
-        require(completed[0].get("kernel") == "official Lean 4.35.0", "Replay kernel identity mismatch")
+        require(completed[0].get("kernel") == "official Lean 4.36.0", "Replay kernel identity mismatch")
         require(imports[0]["roots"] == self.manifest["roots"], "Replay root mismatch")
         require(set(self.manifest["moduleRows"]) <= set(imports[0]["loaded_modules"]),
                 "Replay omitted physical manifest modules")
