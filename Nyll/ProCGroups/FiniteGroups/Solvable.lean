@@ -37,13 +37,13 @@ private theorem isSolvable_pi_of_fintype
   intro x hx
   apply Subgroup.mem_bot.mpr
   funext i
-  have hxi : x i ∈ derivedSeries (G i) N := by
-    exact (map_derivedSeries_le_derivedSeries (Pi.evalMonoidHom G i) N) ⟨x, hx, rfl⟩
+  have hxi : x i ∈ Subgroup.derivedSeries (G i) N := by
+    exact (Subgroup.map_derivedSeries_le_derivedSeries (Pi.evalMonoidHom G i) N) ⟨x, hx, rfl⟩
   have hni : n i ≤ N := by
     dsimp [N]
     exact Finset.single_le_sum (fun j _ => Nat.zero_le (n j)) (Finset.mem_univ i)
-  have hxi' : x i ∈ derivedSeries (G i) (n i) :=
-    (derivedSeries_antitone (G i) hni) hxi
+  have hxi' : x i ∈ Subgroup.derivedSeries (G i) (n i) :=
+    (Subgroup.derivedSeries_antitone (G i) hni) hxi
   rw [hn i] at hxi'
   exact Subgroup.mem_bot.mp hxi'
 

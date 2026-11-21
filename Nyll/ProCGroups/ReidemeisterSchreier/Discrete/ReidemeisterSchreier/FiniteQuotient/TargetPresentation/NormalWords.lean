@@ -24,6 +24,8 @@ and kernel equivalence.
 
 namespace ReidemeisterSchreier.Discrete
 
+open SchreierRewriting (relatorSubgroup)
+
 open ReidemeisterSchreier.Discrete.Presentations
 
 variable {X Q : Type*} [Group Q] [Fintype Q]
@@ -143,7 +145,7 @@ noncomputable def targetPresentedGroupEquivKernel
     (C : D.CleanedReidemeisterSchreierTargetPresentationNormalWordData R Y)
     (hR : Subgroup.normalClosure R ≤ D.kernel) :
     PresentedGroup C.targetRelators ≃*
-      D.kernel ⧸ relatorSubgroup D R :=
+      D.kernel ⧸ relatorSubgroup (L := D.kernel) R :=
   C.presentedEquiv.symm.trans (D.cleanedPresentationPresentedGroupEquiv hR)
 
 /-- The normal-word cleaned target presentation data yields the corresponding Tietze script. -/

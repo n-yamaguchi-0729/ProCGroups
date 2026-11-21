@@ -31,6 +31,8 @@ The principal declarations in this module are:
 
 namespace FoxDifferential
 
+open _root_.CompletedGroupAlgebra (CompletedGroupAlgebraQuotientInClass)
+
 noncomputable section
 
 open ProCGroups.ProC

@@ -538,7 +538,7 @@ theorem build_transfiniteClosedNormalSeries_of_localWeight_le
       exact (Cardinal.lift_le).2 hWcard
     have hWcardLift :
         Cardinal.lift.{u + 1} (Cardinal.mk ι) ≤ Cardinal.lift.{u} #(Set.Iio μ) := by
-      simpa [Cardinal.mk_Iio_ordinal, Cardinal.lift_lift] using hWcardLift0
+      simpa [Ordinal.cardinalMk_Iio, Cardinal.lift_lift] using hWcardLift0
     exact Cardinal.lift_mk_le'.mp hWcardLift
   let e : ι ↪ Set.Iio μ := Classical.choice hEmb
   let σ : Set.Iio μ → ι := Function.invFun e

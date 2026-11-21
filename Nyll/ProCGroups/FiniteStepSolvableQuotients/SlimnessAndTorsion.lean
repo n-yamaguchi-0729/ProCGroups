@@ -1206,7 +1206,7 @@ theorem noFixedPoints_of_torsionFree_on_openNormalSupergroups
       exact
         (QuotientGroup.eq_one_iff
           (N := Subgroup.closedCommutator G) x.1).2
-          (by simpa [topDerivedTop] using hK x.2)
+          (topDerivedTop_one_eq_closedCommutator G ▸ hK x.2)
     change
       TopologicalAbelianization.map
         { toMonoidHom := (H : Subgroup G).subtype

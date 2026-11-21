@@ -248,10 +248,10 @@ If the abelianization class of a kernel element is an \(n\)-th power, then the e
 theorem mem_foxCommutatorPowerSubgroup_of_abelianization_eq_pow
     (N : Subgroup F) (n : ℕ) {w : F} (hw : w ∈ N) (a : N)
     (hclass :
-      Abelianization.of ⟨w, hw⟩ = (Abelianization.of a) ^ n) :
+      Group.Abelianization.of ⟨w, hw⟩ = (Group.Abelianization.of a) ^ n) :
     w ∈ foxCommutatorPowerSubgroup (F := F) N n := by
   have hclass' :
-      Abelianization.of (a ^ n) = Abelianization.of ⟨w, hw⟩ := by
+      Group.Abelianization.of (a ^ n) = Group.Abelianization.of ⟨w, hw⟩ := by
     simpa using hclass.symm
   have hcommN : (a ^ n)⁻¹ * ⟨w, hw⟩ ∈ commutator N :=
     QuotientGroup.eq.mp hclass'

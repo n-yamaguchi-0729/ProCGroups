@@ -84,7 +84,7 @@ variable {K V : Type*} [Field K] [AddCommGroup V] [Module K V]
 
 theorem pow_add_apply (ν : V →ₗ[K] V) (n m : ℕ) (x : V) : (ν ^ (n + m)) x = (ν ^ m) ((ν ^ n) x) :=
   by
-  rw [add_comm, pow_add, Module.End.mul_apply]
+  rw [add_comm, pow_add, mul_apply_eq_comp]
 
 theorem ker_pow_mono (ν : V →ₗ[K] V) {n m : ℕ} (h : n ≤ m) :
     LinearMap.ker (ν ^ n) ≤ LinearMap.ker (ν ^ m) := by
@@ -105,12 +105,12 @@ theorem ker_pow_eq_of_ker_pow_eq (ν : V →ₗ[K] V) {n : ℕ}
       have h1 : ν x ∈ LinearMap.ker (ν ^ (n + m)) := by
         rw [LinearMap.mem_ker]
         have : (ν ^ (n + m + 1)) x = (ν ^ (n + m)) (ν x) := by
-          rw [pow_succ, Module.End.mul_apply]
+          rw [pow_succ, mul_apply_eq_comp]
         rw [← this]
         exact hx
       rw [ih, LinearMap.mem_ker] at h1
       have h2 : x ∈ LinearMap.ker (ν ^ (n + 1)) := by
-        rw [LinearMap.mem_ker, pow_succ, Module.End.mul_apply, h1]
+        rw [LinearMap.mem_ker, pow_succ, mul_apply_eq_comp, h1]
       rw [← h] at h2
       exact h2
     · exact ker_pow_mono ν (by omega)
@@ -266,7 +266,7 @@ theorem finite_L_one (r : ℕ)
   have hTcoe : ∀ x : (L A ℓ 1), T x = τL ℓ τ 1 x := fun x => rfl
   have hTpow : ∀ (m : ℕ) (x : (L A ℓ 1)), (((T ^ m) x : (L A ℓ 1)) : A) = (⇑τ)^[m] x := by
     intro m x
-    rw [Module.End.pow_apply]
+    rw [pow_apply_eq_iterate]
     have : (⇑T)^[m] x = (⇑(τL ℓ τ 1))^[m] x := by
       induction m generalizing x with
       | zero => rfl
@@ -280,7 +280,7 @@ theorem finite_L_one (r : ℕ)
     rw [hνdef, sub_pow_char_pow_of_commute ℓ k (Commute.one_right T), one_pow]
   have hker : ∀ (k : ℕ) (x : (L A ℓ 1)), (ν ^ ℓ ^ k) x = 0 ↔ (⇑τ)^[ℓ ^ k] (x : A) = x := by
     intro k x
-    rw [hνpow, LinearMap.sub_apply, Module.End.one_apply, sub_eq_zero, ← hTpow]
+    rw [hνpow, LinearMap.sub_apply, one_apply_eq_self, sub_eq_zero, ← hTpow]
     exact ⟨fun h => congrArg Subtype.val h, fun h => Subtype.ext h⟩
   have hcardK : Nat.card (ZMod ℓ) = ℓ := Nat.card_zmod ℓ
   refine finite_of_exhaust_ker_pow (K := ZMod ℓ) ν r c ?_ ?_ ?_

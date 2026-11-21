@@ -73,7 +73,6 @@ theorem card_smul_mem_eq [Finite G] (H : Subgroup G) (x : X) (B : Set X) :
     (Nat.card (stabilizer H x)) hfib {o | (o : X) ∈ B}
   rw [← Nat.card_coe_set_eq]
   convert this using 2
-  · rfl
   exact Nat.card_congr
     { toFun := fun y => ⟨⟨y.1, y.2.1⟩, y.2.2⟩
       invFun := fun o => ⟨o.1.1, o.1.2, o.2⟩

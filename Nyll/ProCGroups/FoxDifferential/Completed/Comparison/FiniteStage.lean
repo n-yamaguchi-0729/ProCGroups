@@ -34,6 +34,8 @@ The principal declarations in this module are:
 
 namespace FoxDifferential
 
+open _root_.CompletedGroupAlgebra (CompletedGroupAlgebraIndexInClass)
+
 noncomputable section
 
 open scoped BigOperators

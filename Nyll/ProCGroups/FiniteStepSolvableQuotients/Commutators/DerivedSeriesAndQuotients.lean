@@ -846,7 +846,8 @@ def topMaxSolvQuotMap
     {Q : Type v} [TopologicalSpace Q] [Group Q] [IsTopologicalGroup Q]
     (f : G →ₜ* Q) (m : ℕ) :
     (G^ₘ m) →ₜ* (Q^ₘ m) := by
-  exact QuotientGroup.mapₜ (G⟦m⟧ₜ) (Q⟦m⟧ₜ) f (topDerivedTop_le_comap (f := f) m)
+  exact QuotientGroup.mapContinuousMonoidHom (N := G⟦m⟧ₜ) (M := Q⟦m⟧ₜ) f
+    (topDerivedTop_le_comap (f := f) m)
 
 scoped[ProCGroupsSolvableQuotients] notation f "⟪" m "⟫" =>
   ProCGroups.FiniteStepSolvableQuotients.topMaxSolvQuotMap f m

@@ -18,6 +18,7 @@ public import Nyll.ProCGroups.Abelian.AddCommGroupBasisZmodPow
 public import Nyll.ProCGroups.Abelian.AddMonoidHomNsmulEqZeroApplyEq
 public import Nyll.ProCGroups.Abelian.AddMonoidHomMemRangeSmulEqZero
 public import Nyll.ProCGroups.Abelian.AddMonoidHomNatCardKerCompEqMul
+public import Nyll.ProCGroups.Abelian.AvoidFiniteFibers
 public import Nyll.ProCGroups.Abelian.CharacterCardinalityTorsionFree
 public import Nyll.ProCGroups.Abelian.CharacterDetection
 public import Nyll.ProCGroups.Abelian.FiniteBidual
@@ -55,6 +56,7 @@ public import Nyll.ProCGroups.Abelian.TopologicalAbelianizationKernel
 public import Nyll.ProCGroups.Abelian.TopologicalAbelianizationLimits
 public import Nyll.ProCGroups.Abelian.TopologicalAbelianizationQuotientFaithfulness
 public import Nyll.ProCGroups.Abelian.Transfer
+public import Nyll.ProCGroups.Abelian.OpenSubgroupTransfer
 public import Nyll.ProCGroups.Abelian.CardTorsionMulDivisible
 
 

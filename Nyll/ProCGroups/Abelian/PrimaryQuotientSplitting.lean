@@ -74,9 +74,9 @@ theorem primary_primeTo_residualCore_sup_eq_top :
   have hMdisconnected : TotallyDisconnectedSpace (A ⧸ M) :=
     ProCGroups.totallyDisconnectedSpace_quotient_closedNormal M hMclosed
   let fN : A ⧸ N →ₜ* A ⧸ K :=
-    QuotientGroup.mapₜ N K (ContinuousMonoidHom.id A) le_sup_left
+    QuotientGroup.mapContinuousMonoidHom (N := N) (M := K) (ContinuousMonoidHom.id A) le_sup_left
   let fM : A ⧸ M →ₜ* A ⧸ K :=
-    QuotientGroup.mapₜ M K (ContinuousMonoidHom.id A) le_sup_right
+    QuotientGroup.mapContinuousMonoidHom (N := M) (M := K) (ContinuousMonoidHom.id A) le_sup_right
   have hfN : Function.Surjective fN := by
     intro x
     obtain ⟨a, rfl⟩ := QuotientGroup.mk'_surjective K x

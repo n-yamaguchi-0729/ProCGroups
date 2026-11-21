@@ -51,11 +51,10 @@ theorem _root_.Tuple.succAbove_sort_comp_succAbove_eq
       change u (i.succAbove (τ a)) ≤ u (i.succAbove (τ b))
       rw [hτ, hτ]
       exact Tuple.monotone_sort u ((Fin.strictMono_succAbove p).monotone hab)
-    · intro a b hab h
-      exfalso
+    · intro a b _ h
       have h' : i.succAbove (τ a) = i.succAbove (τ b) := hu h
       rw [hτ, hτ, s.apply_eq_iff_eq] at h'
-      exact absurd (Fin.succAbove_right_injective h') hab.ne
+      exact (congrArg τ (Fin.succAbove_right_injective h')).le
   rw [← key, hτ]
 end AlgebraicCurves.Foundations.Algebra.Proofs.Tuple_succAbove_sort_comp_succAbove_eq
 end ProofImplementation

@@ -16,10 +16,9 @@ The original continuous transfer uses a normalized section of the finite
 coset space. Its image is an actual left transversal. Reindexing the
 defining product identifies this transfer with Mathlib's transfer.
 
-The original surjection identifies the two coset spaces and transports an
-actual transversal. Comparing the defining products proves character-valued
-quotient naturality directly. No reciprocity map or class-field-theoretic
-transfer theorem occurs in these group-theoretic constructions.
+A homomorphism which identifies the two coset spaces transports an actual
+transversal. Comparing the defining products gives character-valued transfer
+naturality, including the case of a surjective quotient.
 -/
 
 @[expose] public section
@@ -123,52 +122,53 @@ namespace ClassFormation
 
 variable {P Q A : Type*} [Group P] [Group Q] [CommGroup A]
 
-/-- Character-valued transfer commutes with an actual surjective quotient
-whose kernel is contained in the finite-index subgroup. -/
-theorem transfer_character_natural_of_surjective
-    (f : P →* Q) (hf : Function.Surjective f)
-    (H : Subgroup P) (hker : f.ker ≤ H) [H.FiniteIndex]
-    (χ : H.map f →* A) (p : P) :
-    let _ : (H.map f).FiniteIndex :=
-      Subgroup.FiniteIndex.map_of_surjective (H := H) (f := f) hf
-    MonoidHom.transfer (χ.comp (f.subgroupMap H)) p =
+/-- Character-valued transfer commutes with a homomorphism inducing a
+bijection of the left coset spaces. -/
+theorem transfer_character_natural_of_coset_surjective
+    (f : P →* Q) (H : Subgroup P) (J : Subgroup Q)
+    (hcomap : J.comap f = H) [H.FiniteIndex] [J.FiniteIndex]
+    (hquot : ∀ q : Q, ∃ p : P, (f p : Q ⧸ J) = (q : Q ⧸ J))
+    (χ : J →* A) (p : P) :
+    MonoidHom.transfer (χ.comp ((f.comp H.subtype).codRestrict J
+      (fun x => show (x : P) ∈ J.comap f from hcomap.symm ▸ x.property))) p =
       MonoidHom.transfer χ (f p) := by
-  intro hindex
   classical
-  let qf : P ⧸ H → Q ⧸ H.map f :=
+  let qf : P ⧸ H → Q ⧸ J :=
     Quotient.map' f (fun x y hxy => by
       rw [QuotientGroup.leftRel_apply, ← f.map_inv, ← f.map_mul]
-      exact ⟨x⁻¹ * y, QuotientGroup.leftRel_apply.mp hxy, rfl⟩)
+      change x⁻¹ * y ∈ J.comap f
+      rw [hcomap]
+      exact QuotientGroup.leftRel_apply.mp hxy)
   have hqf : Function.Bijective qf := by
     constructor
     · refine Quotient.ind' (fun x => ?_)
       refine Quotient.ind' (fun y hxy => ?_)
       apply Quotient.sound'
       rw [QuotientGroup.leftRel_apply]
-      have hrel : QuotientGroup.leftRel (H.map f) (f x) (f y) :=
+      have hrel : QuotientGroup.leftRel J (f x) (f y) :=
         Quotient.eq''.mp hxy
-      have hmap : f (x⁻¹ * y) ∈ H.map f := by
+      have hmap : f (x⁻¹ * y) ∈ J := by
         rw [f.map_mul, f.map_inv]
         exact QuotientGroup.leftRel_apply.mp hrel
-      have hcomap : x⁻¹ * y ∈ (H.map f).comap f := hmap
-      rwa [Subgroup.comap_map_eq_self hker] at hcomap
+      have hmem : x⁻¹ * y ∈ J.comap f := hmap
+      rwa [hcomap] at hmem
     · refine Quotient.ind' (fun q => ?_)
-      obtain ⟨x, rfl⟩ := hf q
-      exact ⟨QuotientGroup.mk x, rfl⟩
-  let e : P ⧸ H ≃ Q ⧸ H.map f := Equiv.ofBijective qf hqf
+      obtain ⟨x, hx⟩ := hquot q
+      exact ⟨QuotientGroup.mk x, hx⟩
+  let e : P ⧸ H ≃ Q ⧸ J := Equiv.ofBijective qf hqf
   have he (x : P) : e (QuotientGroup.mk x) = QuotientGroup.mk (f x) := rfl
   have hsmul (x : P) (q : P ⧸ H) : e (x • q) = f x • e q := by
     refine Quotient.inductionOn' q ?_
     intro y
     simp only [MulAction.Quotient.smul_mk, he, smul_eq_mul, map_mul]
   let T : H.LeftTransversal := default
-  let ρ : Q ⧸ H.map f → Q := fun q =>
+  let ρ : Q ⧸ J → Q := fun q =>
     f (T.property.leftQuotientEquiv (e.symm q) : P)
-  have hρ (q : Q ⧸ H.map f) : (ρ q : Q ⧸ H.map f) = q := by
+  have hρ (q : Q ⧸ J) : (ρ q : Q ⧸ J) = q := by
     change e (QuotientGroup.mk (T.property.leftQuotientEquiv (e.symm q) : P)) = q
     exact (congrArg e (T.property.leftQuotientEquiv.symm_apply_apply (e.symm q))).trans
       (e.apply_symm_apply q)
-  let T' : (H.map f).LeftTransversal :=
+  let T' : J.LeftTransversal :=
     ⟨Set.range ρ, Subgroup.isComplement_range_left hρ⟩
   have hrep (q : P ⧸ H) :
       (T'.property.leftQuotientEquiv (e q) : Q) =
@@ -178,7 +178,7 @@ theorem transfer_character_natural_of_surjective
     change f (T.property.leftQuotientEquiv (e.symm (e q)) : P) = _
     rw [e.symm_apply_apply]
   let : Fintype (P ⧸ H) := H.fintypeQuotientOfFiniteIndex
-  let : Fintype (Q ⧸ H.map f) := (H.map f).fintypeQuotientOfFiniteIndex
+  let : Fintype (Q ⧸ J) := J.fintypeQuotientOfFiniteIndex
   rw [MonoidHom.transfer_def _ T p, MonoidHom.transfer_def χ T' (f p)]
   simp only [Subgroup.leftTransversals.diff]
   rw [← e.prod_comp]
@@ -193,6 +193,31 @@ theorem transfer_character_natural_of_surjective
   simp only [Subgroup.smul_apply_eq_smul_apply_inv_smul, smul_eq_mul]
   rw [← f.map_inv p, ← hsmul (p⁻¹) q, hrep q, hrep (p⁻¹ • q)]
   simp only [map_mul, map_inv]
+
+/-- Character-valued transfer commutes with an actual surjective quotient
+whose kernel is contained in the finite-index subgroup. -/
+theorem transfer_character_natural_of_surjective
+    (f : P →* Q) (hf : Function.Surjective f)
+    (H : Subgroup P) (hker : f.ker ≤ H) [H.FiniteIndex]
+    (χ : H.map f →* A) (p : P) :
+    let _ : (H.map f).FiniteIndex :=
+      Subgroup.FiniteIndex.map_of_surjective (H := H) (f := f) hf
+    MonoidHom.transfer (χ.comp (f.subgroupMap H)) p =
+      MonoidHom.transfer χ (f p) := by
+  intro hindex
+  have hcomap := Subgroup.comap_map_eq_self hker
+  have hquot (q : Q) : ∃ x : P, (f x : Q ⧸ H.map f) = (q : Q ⧸ H.map f) := by
+    obtain ⟨x, rfl⟩ := hf q
+    exact ⟨x, rfl⟩
+  have hmap : (f.comp H.subtype).codRestrict (H.map f)
+      (fun x => show (x : P) ∈ (H.map f).comap f from hcomap.symm ▸ x.property) =
+        f.subgroupMap H := by
+    apply MonoidHom.ext
+    intro x
+    apply Subtype.ext
+    rfl
+  have h := transfer_character_natural_of_coset_surjective f H (H.map f) hcomap hquot χ p
+  rwa [hmap] at h
 
 end ClassFormation
 

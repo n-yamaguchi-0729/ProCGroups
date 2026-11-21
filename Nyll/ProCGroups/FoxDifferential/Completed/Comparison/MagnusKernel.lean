@@ -156,27 +156,27 @@ theorem mem_foxCommutatorPowerSubgroup_of_residueUniversalDifferential_eq_zero
   let nw : ψ.ker := ⟨w, hwker⟩
   have hboundary_class :
       kernelAbelianizationBoundaryLinearOfSurjective ψ hψ
-          (Additive.ofMul (Abelianization.of nw)) =
+          (Additive.ofMul (Group.Abelianization.of nw)) =
         n • kernelAbelianizationBoundaryLinearOfSurjective ψ hψ a := by
     calc
       kernelAbelianizationBoundaryLinearOfSurjective ψ hψ
-          (Additive.ofMul (Abelianization.of nw)) =
+          (Additive.ofMul (Group.Abelianization.of nw)) =
           universalDifferential ψ w := by
             rw [kernelAbelianizationBoundaryLinearOfSurjective_of]
       _ = n • Y := hd_nY
       _ = n • kernelAbelianizationBoundaryLinearOfSurjective ψ hψ a := by
             simp only [ha]
   have hclassAdd :
-      (Additive.ofMul (Abelianization.of nw) : KernelAbelianizationAdd ψ) = n • a := by
+      (Additive.ofMul (Group.Abelianization.of nw) : KernelAbelianizationAdd ψ) = n • a := by
     apply kernelAbelianizationBoundaryLinearOfSurjective_injective
       (H := Hq) (ψ := ψ) hψ
     simpa using hboundary_class
   obtain ⟨a0, ha0⟩ := QuotientGroup.mk_surjective (Additive.toMul a)
-  have ha0' : Abelianization.of a0 = Additive.toMul a := by
+  have ha0' : Group.Abelianization.of a0 = Additive.toMul a := by
     change QuotientGroup.mk a0 = Additive.toMul a
     exact ha0
   have hclassMul :
-      Abelianization.of nw = (Abelianization.of a0) ^ n := by
+      Group.Abelianization.of nw = (Group.Abelianization.of a0) ^ n := by
     have hmul := congrArg Additive.toMul hclassAdd
     simpa [ha0'] using hmul
   have hmemKer :

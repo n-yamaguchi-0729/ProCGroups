@@ -394,7 +394,7 @@ theorem allFinite_freeProCZCCompletedFoxDerivativeVector_comp
   all_goals
     simp [f, h, beta, gamma, L, DY, DX, ρY, ρX, φX,
       allFinite_freeProCZCCompletedFoxJacobianLinearMap]
-  all_goals rfl
+  rfl
 
 /-- Completed pro-\(C\) Fox chain rule in component form. -/
 theorem allFinite_freeProCZCCompletedFoxDerivativeVector_comp_apply

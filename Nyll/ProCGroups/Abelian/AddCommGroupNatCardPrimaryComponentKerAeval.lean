@@ -410,7 +410,7 @@ theorem aeval_add_C_apply {G : ℤ[X]} {N : ℕ} {c : ℤ} {x : M} (hx : N • x
     aeval (R := ℤ) T.toIntLinearMap (G + C ((N : ℤ) * c)) x = aeval (R := ℤ) T.toIntLinearMap G x
       := by
   rw [map_add, aeval_C, LinearMap.add_apply, Algebra.algebraMap_eq_smul_one, LinearMap.smul_apply,
-    Module.End.one_apply, mul_comm, mul_smul, natCast_zsmul, hx, smul_zero, add_zero]
+    one_apply_eq_self, mul_comm, mul_smul, natCast_zsmul, hx, smul_zero, add_zero]
 
 variable (ℓ : ℕ) [hℓ : Fact ℓ.Prime]
 
@@ -450,7 +450,7 @@ theorem natCard_level (G : ℤ[X]) (m : ℕ) (c : ℤ) :
 omit hℓ in
 theorem kerG_one : kerG T (1 : ℤ[X]) = ⊥ := by
   ext x
-  rw [mem_kerG, map_one, Module.End.one_apply, AddSubgroup.mem_bot]
+  rw [mem_kerG, map_one, one_apply_eq_self, AddSubgroup.mem_bot]
 omit hℓ in
 theorem resultant_one_left (P : ℤ[X]) : (1 : ℤ[X]).resultant P = 1 := by
   rw [show (1 : ℤ[X]) = C 1 from C_1.symm]

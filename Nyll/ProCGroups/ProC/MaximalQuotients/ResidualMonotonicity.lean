@@ -54,7 +54,7 @@ inclusion of finite-group classes. -/
 noncomputable def residualQuotientMapOfClassInclusion
     (hCD : ∀ {Q : Type u} [Group Q], C Q → D Q) :
     G ⧸ proCResidualCore D G →ₜ* G ⧸ proCResidualCore C G :=
-  QuotientGroup.mapₜ (proCResidualCore D G) (proCResidualCore C G)
+  QuotientGroup.mapContinuousMonoidHom (N := proCResidualCore D G) (M := proCResidualCore C G)
     (ContinuousMonoidHom.id G) (by
       intro x hx
       exact proCResidualCore_antitone hCD hx)

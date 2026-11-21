@@ -84,13 +84,13 @@ theorem freeGroupPresentationRelativeDerivativeHeadMap_of
     (n : ψ.ker) :
     letI := kernelAbelianizationModuleOfSurjective ψ hψ
     freeGroupPresentationRelativeDerivativeHeadMap (H := H) r ψ hψ
-        (Additive.ofMul (Abelianization.of n)) =
+        (Additive.ofMul (Group.Abelianization.of n)) =
       FoxDifferential.FoxCalculus.relativeFreeGroupFoxDerivative (H := H) (Fin r) ψ n.1 := by
   let := kernelAbelianizationModuleOfSurjective ψ hψ
   change
     (freeGroupPresentationMiddleCoordinateEquiv (H := H) r ψ).toLinearMap
         (kernelAbelianizationBoundaryLinearOfSurjective ψ hψ
-          (Additive.ofMul (Abelianization.of n))) =
+          (Additive.ofMul (Group.Abelianization.of n))) =
       FoxDifferential.FoxCalculus.relativeFreeGroupFoxDerivative (H := H) (Fin r) ψ n.1
   rw [kernelAbelianizationBoundaryLinearOfSurjective_of]
   change

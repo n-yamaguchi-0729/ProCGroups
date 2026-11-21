@@ -21,6 +21,8 @@ symbols, and conjugated original relators.
 
 namespace ReidemeisterSchreier.Discrete
 
+open SchreierRewriting (relatorSubgroup)
+
 open ReidemeisterSchreier.Discrete.Presentations
 
 variable {X Q : Type*} [Group Q] [Fintype Q]
@@ -328,11 +330,11 @@ finite Schreier presentation relators.
 noncomputable def tauRelatorSubgroupPresentationQuotientHom
     {R : Set (FreeGroup X)}
     (hR : Subgroup.normalClosure R ≤ D.kernel) :
-    D.kernel ⧸ D.relatorSubgroup R →*
+    D.kernel ⧸ relatorSubgroup (L := D.kernel) R →*
       FreeGroup (FiniteSchreierSymbol X Q) ⧸
         Subgroup.normalClosure (D.presentationRelators R) :=
   QuotientGroup.lift
-    (D.relatorSubgroup R)
+    (relatorSubgroup (L := D.kernel) R)
     (D.tauKernelPresentationQuotientHom R)
     (by
       intro k hk
@@ -403,11 +405,11 @@ presentation quotient.
 noncomputable def tauRelatorSubgroupAugmentedPresentationQuotientHom
     {R : Set (FreeGroup X)}
     (hR : Subgroup.normalClosure R ≤ D.kernel) :
-    D.kernel ⧸ D.relatorSubgroup R →*
+    D.kernel ⧸ relatorSubgroup (L := D.kernel) R →*
       FreeGroup (FiniteSchreierSymbol X Q) ⧸
         Subgroup.normalClosure (D.augmentedPresentationRelators R) :=
   QuotientGroup.lift
-    (D.relatorSubgroup R)
+    (relatorSubgroup (L := D.kernel) R)
     (D.tauKernelAugmentedPresentationQuotientHom R)
     (by
       intro k hk
@@ -596,7 +598,7 @@ theorem symbolEvalSubgroupHom_mem_relatorSubgroup_of_mem_normalClosure_schreierR
     (hR : Subgroup.normalClosure R ≤ D.kernel)
     {q : FreeGroup (FiniteSchreierSymbol X Q)}
     (hq : q ∈ Subgroup.normalClosure (D.schreierRelators R)) :
-    D.symbolEvalSubgroupHom q ∈ D.relatorSubgroup R := by
+    D.symbolEvalSubgroupHom q ∈ relatorSubgroup (L := D.kernel) R := by
   change D.symbolEvalHom q ∈ Subgroup.normalClosure R
   exact eval_mem_normalClosure_of_mem_normalClosure_schreierRelators (D := D) hR hq
 
@@ -609,7 +611,7 @@ theorem symbolEvalSubgroupHom_mem_relatorSubgroup_of_mem_normalClosure_presentat
     (hR : Subgroup.normalClosure R ≤ D.kernel)
     {q : FreeGroup (FiniteSchreierSymbol X Q)}
     (hq : q ∈ Subgroup.normalClosure (D.presentationRelators R)) :
-    D.symbolEvalSubgroupHom q ∈ D.relatorSubgroup R := by
+    D.symbolEvalSubgroupHom q ∈ relatorSubgroup (L := D.kernel) R := by
   change D.symbolEvalHom q ∈ Subgroup.normalClosure R
   exact eval_mem_normalClosure_of_mem_normalClosure_presentationRelators (D := D) hR hq
 
@@ -622,7 +624,7 @@ theorem symbolEvalSubgroupHom_mem_relatorSubgroup_of_mem_normalClosure
     (hR : Subgroup.normalClosure R ≤ D.kernel)
     {q : FreeGroup (FiniteSchreierSymbol X Q)}
     (hq : q ∈ Subgroup.normalClosure (D.augmentedPresentationRelators R)) :
-    D.symbolEvalSubgroupHom q ∈ D.relatorSubgroup R := by
+    D.symbolEvalSubgroupHom q ∈ relatorSubgroup (L := D.kernel) R := by
   change D.symbolEvalHom q ∈ Subgroup.normalClosure R
   exact eval_mem_normalClosure_of_mem_normalClosure_augmentedPresentationRelators (D := D) hR hq
 
@@ -635,16 +637,16 @@ noncomputable def symbolEvalQuotientHom
     (hR : Subgroup.normalClosure R ≤ D.kernel) :
     FreeGroup (FiniteSchreierSymbol X Q) ⧸
         Subgroup.normalClosure (D.schreierRelators R) →*
-      D.kernel ⧸ D.relatorSubgroup R :=
+      D.kernel ⧸ relatorSubgroup (L := D.kernel) R :=
   QuotientGroup.lift
     (Subgroup.normalClosure (D.schreierRelators R))
-    ((QuotientGroup.mk' (D.relatorSubgroup R)).comp
+    ((QuotientGroup.mk' (relatorSubgroup (L := D.kernel) R)).comp
       D.symbolEvalSubgroupHom)
     (by
       intro q hq
       rw [MonoidHom.mem_ker]
       exact (QuotientGroup.eq_one_iff
-        (N := D.relatorSubgroup R)
+        (N := relatorSubgroup (L := D.kernel) R)
         (D.symbolEvalSubgroupHom q)).2
         (symbolEvalSubgroupHom_mem_relatorSubgroup_of_mem_normalClosure_schreierRelators
           (D := D) hR hq))
@@ -658,19 +660,19 @@ theorem symbolEvalQuotientHom_tauKernelQuotientHom
     (hR : Subgroup.normalClosure R ≤ D.kernel)
     (k : D.kernel) :
     D.symbolEvalQuotientHom hR (D.tauKernelQuotientHom R k) =
-      QuotientGroup.mk' (D.relatorSubgroup R) k := by
+      QuotientGroup.mk' (relatorSubgroup (L := D.kernel) R) k := by
   change D.symbolEvalQuotientHom hR
       (QuotientGroup.mk'
         (Subgroup.normalClosure (D.schreierRelators R))
         (D.tau 1 (k : FreeGroup X))) =
-    QuotientGroup.mk' (D.relatorSubgroup R) k
+    QuotientGroup.mk' (relatorSubgroup (L := D.kernel) R) k
   simp only [symbolEvalQuotientHom, QuotientGroup.mk'_apply, QuotientGroup.lift_mk,
       MonoidHom.coe_comp,
   QuotientGroup.coe_mk', Function.comp_apply]
   have hsub :
       D.symbolEvalSubgroupHom (D.tau 1 (k : FreeGroup X)) = k :=
     Subtype.ext (D.symbolEvalHom_tau_of_mem_kernel k.property)
-  simpa using congrArg (QuotientGroup.mk' (D.relatorSubgroup R)) hsub
+  exact congrArg (QuotientGroup.mk' (relatorSubgroup (L := D.kernel) R)) hsub
 
 /-- The Schreier-relator quotient evaluation map is surjective. -/
 theorem symbolEvalQuotientHom_surjective
@@ -678,7 +680,7 @@ theorem symbolEvalQuotientHom_surjective
     (hR : Subgroup.normalClosure R ≤ D.kernel) :
     Function.Surjective (D.symbolEvalQuotientHom hR) := by
   intro y
-  rcases QuotientGroup.mk'_surjective (D.relatorSubgroup R) y with ⟨l, rfl⟩
+  rcases QuotientGroup.mk'_surjective (relatorSubgroup (L := D.kernel) R) y with ⟨l, rfl⟩
   exact ⟨D.tauKernelQuotientHom R l,
     D.symbolEvalQuotientHom_tauKernelQuotientHom hR l⟩
 
@@ -691,16 +693,16 @@ noncomputable def symbolEvalPresentationQuotientHom
     (hR : Subgroup.normalClosure R ≤ D.kernel) :
     FreeGroup (FiniteSchreierSymbol X Q) ⧸
         Subgroup.normalClosure (D.presentationRelators R) →*
-      D.kernel ⧸ D.relatorSubgroup R :=
+      D.kernel ⧸ relatorSubgroup (L := D.kernel) R :=
   QuotientGroup.lift
     (Subgroup.normalClosure (D.presentationRelators R))
-    ((QuotientGroup.mk' (D.relatorSubgroup R)).comp
+    ((QuotientGroup.mk' (relatorSubgroup (L := D.kernel) R)).comp
       D.symbolEvalSubgroupHom)
     (by
       intro q hq
       rw [MonoidHom.mem_ker]
       exact (QuotientGroup.eq_one_iff
-        (N := D.relatorSubgroup R)
+        (N := relatorSubgroup (L := D.kernel) R)
         (D.symbolEvalSubgroupHom q)).2
         (symbolEvalSubgroupHom_mem_relatorSubgroup_of_mem_normalClosure_presentationRelators
           (D := D) hR hq))
@@ -714,16 +716,16 @@ noncomputable def symbolEvalAugmentedPresentationQuotientHom
     (hR : Subgroup.normalClosure R ≤ D.kernel) :
     FreeGroup (FiniteSchreierSymbol X Q) ⧸
         Subgroup.normalClosure (D.augmentedPresentationRelators R) →*
-      D.kernel ⧸ D.relatorSubgroup R :=
+      D.kernel ⧸ relatorSubgroup (L := D.kernel) R :=
   QuotientGroup.lift
     (Subgroup.normalClosure (D.augmentedPresentationRelators R))
-    ((QuotientGroup.mk' (D.relatorSubgroup R)).comp
+    ((QuotientGroup.mk' (relatorSubgroup (L := D.kernel) R)).comp
       D.symbolEvalSubgroupHom)
     (by
       intro q hq
       rw [MonoidHom.mem_ker]
       exact (QuotientGroup.eq_one_iff
-        (N := D.relatorSubgroup R)
+        (N := relatorSubgroup (L := D.kernel) R)
         (D.symbolEvalSubgroupHom q)).2
         (symbolEvalSubgroupHom_mem_relatorSubgroup_of_mem_normalClosure
           (D := D) hR hq))
@@ -738,29 +740,28 @@ theorem symbolEvalPresentationQuotientHom_tauKernelPresentationQuotientHom
     (k : D.kernel) :
     D.symbolEvalPresentationQuotientHom hR
         (D.tauKernelPresentationQuotientHom R k) =
-      QuotientGroup.mk' (D.relatorSubgroup R) k := by
+      QuotientGroup.mk' (relatorSubgroup (L := D.kernel) R) k := by
   change D.symbolEvalPresentationQuotientHom hR
       (QuotientGroup.mk'
         (Subgroup.normalClosure (D.presentationRelators R))
         (D.tau 1 (k : FreeGroup X))) =
-    QuotientGroup.mk' (D.relatorSubgroup R) k
+    QuotientGroup.mk' (relatorSubgroup (L := D.kernel) R) k
   simp only [symbolEvalPresentationQuotientHom, QuotientGroup.mk'_apply, QuotientGroup.lift_mk,
   MonoidHom.coe_comp, QuotientGroup.coe_mk', Function.comp_apply]
   have hsub :
       D.symbolEvalSubgroupHom (D.tau 1 (k : FreeGroup X)) = k :=
     Subtype.ext (D.symbolEvalHom_tau_of_mem_kernel k.property)
-  simpa using congrArg (QuotientGroup.mk' (D.relatorSubgroup R)) hsub
+  exact congrArg (QuotientGroup.mk' (relatorSubgroup (L := D.kernel) R)) hsub
 
 /-- The symbol-evaluation map is inverse to the \(\tau\)-map on the relator-subgroup quotient. -/
 theorem symbolEvalPresentationQuotientHom_tauRelatorSubgroupPresentationQuotientHom
     {R : Set (FreeGroup X)}
     (hR : Subgroup.normalClosure R ≤ D.kernel)
-    (y : D.kernel ⧸ D.relatorSubgroup R) :
+    (y : D.kernel ⧸ relatorSubgroup (L := D.kernel) R) :
     D.symbolEvalPresentationQuotientHom hR
         (D.tauRelatorSubgroupPresentationQuotientHom hR y) = y := by
-  rcases QuotientGroup.mk'_surjective (D.relatorSubgroup R) y with ⟨k, rfl⟩
-  simpa [tauRelatorSubgroupPresentationQuotientHom] using
-    D.symbolEvalPresentationQuotientHom_tauKernelPresentationQuotientHom hR k
+  rcases QuotientGroup.mk'_surjective (relatorSubgroup (L := D.kernel) R) y with ⟨k, rfl⟩
+  exact D.symbolEvalPresentationQuotientHom_tauKernelPresentationQuotientHom hR k
 
 /--
 Evaluating the \(\tau\)-image of a kernel element recovers its class in the corresponding
@@ -772,19 +773,19 @@ theorem symbolEvalAugmentedPresentationQuotientHom_tauKernelAugmentedPresentatio
     (k : D.kernel) :
     D.symbolEvalAugmentedPresentationQuotientHom hR
         (D.tauKernelAugmentedPresentationQuotientHom R k) =
-      QuotientGroup.mk' (D.relatorSubgroup R) k := by
+      QuotientGroup.mk' (relatorSubgroup (L := D.kernel) R) k := by
   change D.symbolEvalAugmentedPresentationQuotientHom hR
       (QuotientGroup.mk'
         (Subgroup.normalClosure (D.augmentedPresentationRelators R))
         (D.tau 1 (k : FreeGroup X))) =
-    QuotientGroup.mk' (D.relatorSubgroup R) k
+    QuotientGroup.mk' (relatorSubgroup (L := D.kernel) R) k
   simp only [symbolEvalAugmentedPresentationQuotientHom, QuotientGroup.mk'_apply,
       QuotientGroup.lift_mk,
   MonoidHom.coe_comp, QuotientGroup.coe_mk', Function.comp_apply]
   have hsub :
       D.symbolEvalSubgroupHom (D.tau 1 (k : FreeGroup X)) = k :=
     Subtype.ext (D.symbolEvalHom_tau_of_mem_kernel k.property)
-  simpa using congrArg (QuotientGroup.mk' (D.relatorSubgroup R)) hsub
+  exact congrArg (QuotientGroup.mk' (relatorSubgroup (L := D.kernel) R)) hsub
 
 /--
 Evaluating after the \(\tau\)-relator quotient map returns the original relator quotient class.
@@ -792,12 +793,11 @@ Evaluating after the \(\tau\)-relator quotient map returns the original relator 
 theorem symbolEvalQuotHom_tauRelatorQuotHom
     {R : Set (FreeGroup X)}
     (hR : Subgroup.normalClosure R ≤ D.kernel)
-    (y : D.kernel ⧸ D.relatorSubgroup R) :
+    (y : D.kernel ⧸ relatorSubgroup (L := D.kernel) R) :
     D.symbolEvalAugmentedPresentationQuotientHom hR
         (D.tauRelatorSubgroupAugmentedPresentationQuotientHom hR y) = y := by
-  rcases QuotientGroup.mk'_surjective (D.relatorSubgroup R) y with ⟨k, rfl⟩
-  simpa [tauRelatorSubgroupAugmentedPresentationQuotientHom] using
-    D.symbolEvalAugmentedPresentationQuotientHom_tauKernelAugmentedPresentationQuotientHom hR k
+  rcases QuotientGroup.mk'_surjective (relatorSubgroup (L := D.kernel) R) y with ⟨k, rfl⟩
+  exact D.symbolEvalAugmentedPresentationQuotientHom_tauKernelAugmentedPresentationQuotientHom hR k
 
 /--
 Applying the \(\tau\)-relator quotient map after symbol evaluation returns the original
@@ -813,7 +813,7 @@ theorem tauRelatorQuotHom_symbolEvalQuotHom
   rcases QuotientGroup.mk'_surjective
       (Subgroup.normalClosure (D.augmentedPresentationRelators R)) y with ⟨z, rfl⟩
   change D.tauRelatorSubgroupAugmentedPresentationQuotientHom hR
-      (QuotientGroup.mk' (D.relatorSubgroup R)
+      (QuotientGroup.mk' (relatorSubgroup (L := D.kernel) R)
         (D.symbolEvalSubgroupHom z)) =
     QuotientGroup.mk'
       (Subgroup.normalClosure (D.augmentedPresentationRelators R)) z
@@ -831,7 +831,7 @@ noncomputable def augmentedPresentationQuotientEquiv
     (hR : Subgroup.normalClosure R ≤ D.kernel) :
     FreeGroup (FiniteSchreierSymbol X Q) ⧸
         Subgroup.normalClosure (D.augmentedPresentationRelators R) ≃*
-      D.kernel ⧸ D.relatorSubgroup R where
+      D.kernel ⧸ relatorSubgroup (L := D.kernel) R where
   toFun := D.symbolEvalAugmentedPresentationQuotientHom hR
   invFun := D.tauRelatorSubgroupAugmentedPresentationQuotientHom hR
   left_inv :=
@@ -845,7 +845,7 @@ noncomputable def augmentedPresentedGroupEquiv
     {R : Set (FreeGroup X)}
     (hR : Subgroup.normalClosure R ≤ D.kernel) :
     PresentedGroup (D.augmentedPresentationRelators R) ≃*
-      D.kernel ⧸ D.relatorSubgroup R :=
+      D.kernel ⧸ relatorSubgroup (L := D.kernel) R :=
   D.augmentedPresentationQuotientEquiv hR
 
 /--
@@ -896,7 +896,7 @@ noncomputable def presentationQuotientEquivOfQuotientSectionRelators
           Subgroup.normalClosure (D.presentationRelators R)) :
     FreeGroup (FiniteSchreierSymbol X Q) ⧸
         Subgroup.normalClosure (D.presentationRelators R) ≃*
-      D.kernel ⧸ D.relatorSubgroup R :=
+      D.kernel ⧸ relatorSubgroup (L := D.kernel) R :=
   (QuotientGroup.congr
     (Subgroup.normalClosure (D.presentationRelators R))
     (Subgroup.normalClosure (D.augmentedPresentationRelators R))
@@ -917,7 +917,7 @@ noncomputable def presentationPresentedGroupEquivOfQuotientSectionRelators
         D.tau 1 (D.quotientSection q) ∈
           Subgroup.normalClosure (D.presentationRelators R)) :
     PresentedGroup (D.presentationRelators R) ≃*
-      D.kernel ⧸ D.relatorSubgroup R :=
+      D.kernel ⧸ relatorSubgroup (L := D.kernel) R :=
   D.presentationQuotientEquivOfQuotientSectionRelators hR hsection
 
 /--
@@ -930,7 +930,7 @@ noncomputable def presentationQuotientEquivOfIsPrefixClosedQuotientSection
     (hprefix : D.IsPrefixClosedQuotientSection) :
     FreeGroup (FiniteSchreierSymbol X Q) ⧸
         Subgroup.normalClosure (D.presentationRelators R) ≃*
-      D.kernel ⧸ D.relatorSubgroup R :=
+      D.kernel ⧸ relatorSubgroup (L := D.kernel) R :=
   D.presentationQuotientEquivOfQuotientSectionRelators hR
     (fun q =>
       D.tau_quotientSection_mem_normalClosure_presentationRelators_of_isPrefixClosed
@@ -945,7 +945,7 @@ noncomputable def presentationPresentedGroupEquivOfIsPrefixClosedQuotientSection
     (hR : Subgroup.normalClosure R ≤ D.kernel)
     (hprefix : D.IsPrefixClosedQuotientSection) :
     PresentedGroup (D.presentationRelators R) ≃*
-      D.kernel ⧸ D.relatorSubgroup R :=
+      D.kernel ⧸ relatorSubgroup (L := D.kernel) R :=
   D.presentationQuotientEquivOfIsPrefixClosedQuotientSection hR hprefix
 
 /--
@@ -958,7 +958,7 @@ noncomputable def augmentedPresentationRelatorFinsetPresentedGroupEquiv [Fintype
     PresentedGroup
         ({z | z ∈ D.augmentedPresentationRelatorFinset R} :
           Set (FreeGroup (FiniteSchreierSymbol X Q))) ≃*
-      D.kernel ⧸ D.relatorSubgroup ({r | r ∈ R} : Set (FreeGroup X)) :=
+      D.kernel ⧸ relatorSubgroup (L := D.kernel) ({r | r ∈ R} : Set (FreeGroup X)) :=
   (QuotientGroup.congr
     (Subgroup.normalClosure
       ({z | z ∈ D.augmentedPresentationRelatorFinset R} :
@@ -983,7 +983,7 @@ noncomputable def presentationRelatorFinsetPresentedGroupEquivOfIsPrefixClosedQu
     PresentedGroup
         ({z | z ∈ D.presentationRelatorFinset R} :
           Set (FreeGroup (FiniteSchreierSymbol X Q))) ≃*
-      D.kernel ⧸ D.relatorSubgroup ({r | r ∈ R} : Set (FreeGroup X)) :=
+      D.kernel ⧸ relatorSubgroup (L := D.kernel) ({r | r ∈ R} : Set (FreeGroup X)) :=
   (QuotientGroup.congr
     (Subgroup.normalClosure
       ({z | z ∈ D.presentationRelatorFinset R} :
@@ -1002,7 +1002,7 @@ theorem symbolEvalPresentationQuotientHom_surjective
     (hR : Subgroup.normalClosure R ≤ D.kernel) :
     Function.Surjective (D.symbolEvalPresentationQuotientHom hR) := by
   intro y
-  rcases QuotientGroup.mk'_surjective (D.relatorSubgroup R) y with ⟨l, rfl⟩
+  rcases QuotientGroup.mk'_surjective (relatorSubgroup (L := D.kernel) R) y with ⟨l, rfl⟩
   exact ⟨D.tauKernelPresentationQuotientHom R l,
     D.symbolEvalPresentationQuotientHom_tauKernelPresentationQuotientHom hR l⟩
 
@@ -1012,7 +1012,7 @@ theorem symbolEvalAugmentedPresentationQuotientHom_surjective
     (hR : Subgroup.normalClosure R ≤ D.kernel) :
     Function.Surjective (D.symbolEvalAugmentedPresentationQuotientHom hR) := by
   intro y
-  rcases QuotientGroup.mk'_surjective (D.relatorSubgroup R) y with ⟨l, rfl⟩
+  rcases QuotientGroup.mk'_surjective (relatorSubgroup (L := D.kernel) R) y with ⟨l, rfl⟩
   exact ⟨D.tauKernelAugmentedPresentationQuotientHom R l,
     D.symbolEvalAugmentedPresentationQuotientHom_tauKernelAugmentedPresentationQuotientHom hR l⟩
 

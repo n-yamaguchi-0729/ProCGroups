@@ -155,7 +155,7 @@ Its descent condition follows from functoriality of the residual core. -/
 noncomputable def residualQuotientMap
     (hC : FiniteGroupClass.Hereditary C) (f : G →ₜ* H) :
     G ⧸ proCResidualCore C G →ₜ* H ⧸ proCResidualCore C H :=
-  QuotientGroup.mapₜ (proCResidualCore C G) (proCResidualCore C H) f (by
+  QuotientGroup.mapContinuousMonoidHom (N := proCResidualCore C G) (M := proCResidualCore C H) f (by
     intro x hx
     exact map_proCResidualCore_le_of_continuousMonoidHom hC f ⟨x, hx, rfl⟩)
 
@@ -164,7 +164,7 @@ noncomputable def residualQuotientMap
     (hC : FiniteGroupClass.Hereditary C) (f : G →ₜ* H) (x : G) :
     residualQuotientMap hC f (QuotientGroup.mk' (proCResidualCore C G) x) =
       QuotientGroup.mk' (proCResidualCore C H) (f x) :=
-  QuotientGroup.mapₜ_apply_mk _ _ _ _ x
+  QuotientGroup.mapContinuousMonoidHom_apply_mk f _ x
 
 /-- The map induced on residual quotients by a continuous epimorphism is
 surjective. -/

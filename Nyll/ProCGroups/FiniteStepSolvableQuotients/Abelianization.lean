@@ -106,10 +106,10 @@ injective.
 -/
 theorem injective_topologicalAbelianizationMk_of_topologicalCommutator_eq_bot
     {G : Type u} [TopologicalSpace G] [Group G] [IsTopologicalGroup G]
-    (hcomm : topologicalCommutator G = ⊥) :
+    (hcomm : Subgroup.closedCommutator G = ⊥) :
     Function.Injective (TopologicalAbelianization.mk G) := by
   rw [← MonoidHom.ker_eq_bot_iff, TopologicalAbelianization.ker_mk]
-  simpa [topologicalCommutator] using hcomm
+  exact hcomm
 
 /--
 Trivial first closed derived subgroup makes the natural map to topological abelianization
@@ -120,7 +120,7 @@ theorem injective_topologicalAbelianizationMk_of_topDerivedTop_one_eq_bot
     (hder : topDerivedTop G 1 = ⊥) :
     Function.Injective (TopologicalAbelianization.mk G) :=
   injective_topologicalAbelianizationMk_of_topologicalCommutator_eq_bot (G := G) <| by
-    simpa using hder
+    exact (topDerivedTop_one_eq_closedCommutator G).symm.trans hder
 
 /--
 If the first closed derived subgroup of a closed subgroup vanishes in the ambient group, then
@@ -171,8 +171,7 @@ theorem topologicalAbelianization_profiniteKernelSubgroup_eq_topDerivedTop_one
   ext y
   change TopologicalAbelianization.mk G y = 1 ↔ y ∈ topDerivedTop G 1
   rw [TopologicalAbelianization.mk_eq_one_iff]
-  simp only [Subgroup.closedCommutator, topologicalCommutator_eq_closedCommutator_top_top,
-    closedCommutator, topDerivedTop, closedDerivedSeries]
+  rw [topDerivedTop_one_eq_closedCommutator]
 
 /--
 Mapping the first closed derived subgroup of the topological abelianization kernel back into the
@@ -236,7 +235,7 @@ theorem mem_topDerivedTop_two_iff_mem_closedCommutator_topologicalAbelianization
   have hclosed :
       closedDerivedSeries (G := N) (⊤ : Subgroup N) 1 =
         Subgroup.closedCommutator N :=
-    closedDerivedSeries_top_one_eq_closedCommutator N
+    topDerivedTop_one_eq_closedCommutator N
   constructor
   · intro ha
     have ha_map :

@@ -130,9 +130,9 @@ variable {H : Type u} [Group H] [TopologicalSpace H] [IsTopologicalGroup H]
 /-- A continuous homomorphism induces the map of the two actual quotient groups. -/
 noncomputable def map (f : G →ₜ* H) :
     AbelianProPQuotient p G →ₜ* AbelianProPQuotient p H :=
-  QuotientGroup.mapₜ
-    (proCResidualCore (FiniteGroupClass.pGroup p) (TopologicalAbelianization G))
-    (proCResidualCore (FiniteGroupClass.pGroup p) (TopologicalAbelianization H))
+  QuotientGroup.mapContinuousMonoidHom
+    (N := proCResidualCore (FiniteGroupClass.pGroup p) (TopologicalAbelianization G))
+    (M := proCResidualCore (FiniteGroupClass.pGroup p) (TopologicalAbelianization H))
     (TopologicalAbelianization.map f)
     (Subgroup.map_le_iff_le_comap.mp
       (map_proCResidualCore_le_of_continuousMonoidHom

@@ -218,7 +218,7 @@ theorem indBottomKernelUnderlyingEquiv_mk (g : ↥(ψ.ker)) (a : H →₀ ℤ) :
             ext y
             have : x = (1 : (⊥ : Subgroup ↥(ψ.ker))) := Subsingleton.elim _ _
             subst this
-            simp only [map_one, LinearMap.id_comp, Module.End.one_apply,
+            simp only [map_one, LinearMap.id_comp, one_apply_eq_self,
               LinearMap.id_coe, id_eq]))
         (Representation.Coinvariants.mk _
           ((MonoidAlgebra.single g 1 : GroupRing ↥(ψ.ker)) ⊗ₜ[ℤ] a)) = _
@@ -354,12 +354,12 @@ abbrev groupAugmentationIdealRep : Rep ℤ G :=
             exact map_smul ((groupRingRep (G := G)).ρ g) m x.1 }
       map_one' := by
         ext x h
-        simp only [groupRingRep, map_one, Module.End.one_apply, Subtype.coe_eta,
+        simp only [groupRingRep, map_one, one_apply_eq_self, Subtype.coe_eta,
           LinearMap.coe_mk, AddHom.coe_mk]
       map_mul' := by
         intro g₁ g₂
         ext x h
-        simp only [groupRingRep, map_mul, Module.End.mul_apply, LinearMap.coe_mk,
+        simp only [groupRingRep, map_mul, mul_apply_eq_comp, LinearMap.coe_mk,
           AddHom.coe_mk]}
 
 /-- The kernel-restricted action of \(\ker \psi\) on the augmentation ideal \(I(\mathbb{Z}[G])\). -/
@@ -381,12 +381,12 @@ abbrev kernelAugmentationIdealRep : Rep ℤ ↥(ψ.ker) :=
             exact map_smul ((kernelGroupRingRep (ψ := ψ)).ρ n) m x.1 }
       map_one' := by
         ext x g
-        simp only [kernelGroupRingRep, map_one, Module.End.one_apply, Subtype.coe_eta,
+        simp only [kernelGroupRingRep, map_one, one_apply_eq_self, Subtype.coe_eta,
           LinearMap.coe_mk, AddHom.coe_mk]
       map_mul' := by
         intro n₁ n₂
         ext x g
-        simp only [kernelGroupRingRep, map_mul, Module.End.mul_apply, LinearMap.coe_mk,
+        simp only [kernelGroupRingRep, map_mul, mul_apply_eq_comp, LinearMap.coe_mk,
           AddHom.coe_mk]}
 
 /--
@@ -498,9 +498,9 @@ The standard low-degree identification \(H_1(\ker \psi, \mathbb{Z}) \simeq (\ker
 -/
 def kernelTrivialH1AddEquivAbelianization :
     groupHomology (kernelTrivialIntRep (ψ := ψ)) 1 ≃+
-      Additive (Abelianization ψ.ker) :=
+      Additive (Group.Abelianization ψ.ker) :=
   (groupHomology.H1AddEquivOfIsTrivial (kernelTrivialIntRep (ψ := ψ))).trans
-    (TensorProduct.rid ℤ (Additive (Abelianization ψ.ker))).toAddEquiv
+    (TensorProduct.rid ℤ (Additive (Group.Abelianization ψ.ker))).toAddEquiv
 
 omit [DecidableEq H] [DecidableEq G] in
 /--
@@ -510,7 +510,7 @@ The inverse of the \(H_1\)-abelianization equivalence sends the abelianization c
 @[simp]
 theorem kernelTrivialH1AddEquivAbelianization_symm_of (n : ψ.ker) :
     (kernelTrivialH1AddEquivAbelianization (ψ := ψ)).symm
-        (Additive.ofMul (Abelianization.of n)) =
+        (Additive.ofMul (Group.Abelianization.of n)) =
       groupHomology.H1π (kernelTrivialIntRep (ψ := ψ))
         ((groupHomology.cycles₁IsoOfIsTrivial (kernelTrivialIntRep (ψ := ψ))).inv
           (Finsupp.single n 1)) := by
@@ -580,7 +580,7 @@ theorem kernelAugmentationConnecting_H0Iso_of (n : ψ.ker) :
     (groupHomology.H0Iso (kernelAugmentationIdealRep (ψ := ψ))).hom.hom
       ((kernelAugmentationConnecting (ψ := ψ)).hom
         ((kernelTrivialH1AddEquivAbelianization (ψ := ψ)).symm
-          (Additive.ofMul (Abelianization.of n)))) =
+          (Additive.ofMul (Group.Abelianization.of n)))) =
       -Representation.Coinvariants.mk ((kernelAugmentationIdealRep (ψ := ψ)).ρ)
           (augmentationGeneratorSubtype (H := G) n.1) := by
   rw [kernelTrivialH1AddEquivAbelianization_symm_of (ψ := ψ) n]
@@ -734,7 +734,7 @@ def kernelAugmentationIdealCoinvariantsEndOfSurjective
         _ = Representation.Coinvariants.mk ((kernelAugmentationIdealRep (ψ := ψ)).ρ)
               (((groupAugmentationIdealRep (G := G)).ρ (n'.1 * s)) x) := by
                 congr 1
-                simp only [MonoidHom.coe_mk, OneHom.coe_mk, map_mul, Module.End.mul_apply,
+                simp only [MonoidHom.coe_mk, OneHom.coe_mk, map_mul, mul_apply_eq_comp,
                     LinearMap.coe_mk,
   AddHom.coe_mk, mul_assoc, inv_mul_cancel, mul_one, s, n']
         _ = Representation.Coinvariants.mk ((kernelAugmentationIdealRep (ψ := ψ)).ρ)
@@ -845,7 +845,7 @@ def kernelAugmentationIdealCoinvariantsModuleEndOfSurjective
               congr 1
               simp only [mul_assoc, inv_mul_cancel, mul_one, MonoidHom.coe_mk, OneHom.coe_mk,
                   map_mul,
-  Module.End.mul_apply, LinearMap.coe_mk, AddHom.coe_mk, s₁, s₂, s₁₂, n]
+  mul_apply_eq_comp, LinearMap.coe_mk, AddHom.coe_mk, s₁, s₂, s₁₂, n]
       _ = Representation.Coinvariants.mk ((kernelAugmentationIdealRep (ψ := ψ)).ρ)
             (((groupAugmentationIdealRep (G := G)).ρ s₁)
               (((groupAugmentationIdealRep (G := G)).ρ s₂) x)) := by
@@ -970,8 +970,8 @@ def kernelCoinvariantsBoundary (ψ : G →* H) :
 
 /-- The map \(n \mapsto [n-1]\) factors through the abelianization of \(\ker \psi\). -/
 def kernelAbelianizationToCoinvariants (ψ : G →* H) :
-    Abelianization ψ.ker →* Multiplicative (KernelAugmentationIdealCoinvariants (ψ := ψ)) :=
-  Abelianization.lift (kernelCoinvariantsBoundary (ψ := ψ))
+    Group.Abelianization ψ.ker →* Multiplicative (KernelAugmentationIdealCoinvariants (ψ := ψ)) :=
+  Group.Abelianization.lift (kernelCoinvariantsBoundary (ψ := ψ))
 
 /-- Additive form of the map \((\ker \psi)^{\mathrm{ab}} \to H_0(\ker \psi, I(\mathbb{Z}[G]))\). -/
 def kernelAbelianizationToCoinvariantsAdd (ψ : G →* H) :
@@ -990,12 +990,12 @@ class.
 @[simp]
 theorem kernelAbelianizationToCoinvariantsAdd_of (n : ψ.ker) :
     kernelAbelianizationToCoinvariantsAdd (ψ := ψ)
-        (Additive.ofMul (Abelianization.of n)) =
+        (Additive.ofMul (Group.Abelianization.of n)) =
       Representation.Coinvariants.mk ((kernelAugmentationIdealRep (ψ := ψ)).ρ)
         (augmentationGeneratorSubtype (H := G) n.1) := by
   simp only [kernelAbelianizationToCoinvariantsAdd, kernelAbelianizationToCoinvariants,
   kernelCoinvariantsBoundary, AddMonoidHom.coe_mk, ZeroHom.coe_mk, toMul_ofMul,
-      Abelianization.lift_apply_of,
+      Group.Abelianization.lift_apply_of,
   MonoidHom.coe_mk, OneHom.coe_mk, toAdd_ofAdd]
 
 /--
@@ -1041,14 +1041,14 @@ augmentation-coinvariant class.
 @[simp]
 theorem kernelAbelianizationToCoinvariantsViaConnectingAdd_of (n : ψ.ker) :
     kernelAbelianizationToCoinvariantsViaConnectingAdd (ψ := ψ)
-        (Additive.ofMul (Abelianization.of n)) =
+        (Additive.ofMul (Group.Abelianization.of n)) =
       Representation.Coinvariants.mk ((kernelAugmentationIdealRep (ψ := ψ)).ρ)
         (augmentationGeneratorSubtype (H := G) n.1) := by
   change
     -((groupHomology.H0Iso (kernelAugmentationIdealRep (ψ := ψ))).hom.hom
       ((kernelAugmentationConnecting (ψ := ψ)).hom
         ((kernelTrivialH1AddEquivAbelianization (ψ := ψ)).symm
-          (Additive.ofMul (Abelianization.of n))))) =
+          (Additive.ofMul (Group.Abelianization.of n))))) =
       Representation.Coinvariants.mk ((kernelAugmentationIdealRep (ψ := ψ)).ρ)
         (augmentationGeneratorSubtype (H := G) n.1)
   rw [kernelAugmentationConnecting_H0Iso_of]
@@ -1059,11 +1059,11 @@ omit [DecidableEq H] [DecidableEq G] in
 @[simp]
 theorem kernelAbelianizationToCoinvariantsViaConnectingLinear_of (n : ψ.ker) :
     kernelAbelianizationToCoinvariantsViaConnectingLinear (ψ := ψ)
-        (Additive.ofMul (Abelianization.of n)) =
+        (Additive.ofMul (Group.Abelianization.of n)) =
       Representation.Coinvariants.mk ((kernelAugmentationIdealRep (ψ := ψ)).ρ)
         (augmentationGeneratorSubtype (H := G) n.1) := by
   change kernelAbelianizationToCoinvariantsViaConnectingAdd (ψ := ψ)
-      (Additive.ofMul (Abelianization.of n)) = _
+      (Additive.ofMul (Group.Abelianization.of n)) = _
   exact kernelAbelianizationToCoinvariantsViaConnectingAdd_of (ψ := ψ) n
 
 omit [DecidableEq H] [DecidableEq G] in
@@ -1078,22 +1078,22 @@ theorem kernelAbelianizationToCoinvariantsLinear_eq_viaConnecting
   apply LinearMap.ext
   intro x
   change
-    (fun y : Abelianization ψ.ker =>
+    (fun y : Group.Abelianization ψ.ker =>
       kernelAbelianizationToCoinvariantsLinear (ψ := ψ) (Additive.ofMul y) =
         kernelAbelianizationToCoinvariantsViaConnectingLinear (ψ := ψ) (Additive.ofMul y))
       (Additive.toMul x)
   refine QuotientGroup.induction_on (Additive.toMul x) ?_
   intro n
   calc
-    kernelAbelianizationToCoinvariantsLinear (ψ := ψ) (Additive.ofMul (Abelianization.of n))
+    kernelAbelianizationToCoinvariantsLinear (ψ := ψ) (Additive.ofMul (Group.Abelianization.of n))
       = kernelAbelianizationToCoinvariantsAdd (ψ := ψ)
-          (Additive.ofMul (Abelianization.of n)) := by
+          (Additive.ofMul (Group.Abelianization.of n)) := by
             rfl
     _ = Representation.Coinvariants.mk ((kernelAugmentationIdealRep (ψ := ψ)).ρ)
           (augmentationGeneratorSubtype (H := G) n.1) := by
             rw [kernelAbelianizationToCoinvariantsAdd_of]
     _ = kernelAbelianizationToCoinvariantsViaConnectingLinear (ψ := ψ)
-          (Additive.ofMul (Abelianization.of n)) := by
+          (Additive.ofMul (Group.Abelianization.of n)) := by
             rw [kernelAbelianizationToCoinvariantsViaConnectingLinear_of]
 
 omit [DecidableEq H] [DecidableEq G] in
@@ -1293,7 +1293,7 @@ theorem differentialToKernelAugmentationIdealCoinvariantsLinearOfSurjective_boun
   let := kernelAbelianizationModuleOfSurjective ψ hψ
   let := kernelAugmentationIdealCoinvariantsModuleOfSurjective (ψ := ψ) hψ
   change
-    (fun y : Abelianization ψ.ker =>
+    (fun y : Group.Abelianization ψ.ker =>
       differentialToKernelAugmentationIdealCoinvariantsLinearOfSurjective (ψ := ψ) hψ
           (kernelAbelianizationBoundaryAdd ψ (Additive.ofMul y)) =
         kernelAbelianizationToCoinvariantsAdd (ψ := ψ) (Additive.ofMul y))
@@ -1302,7 +1302,7 @@ theorem differentialToKernelAugmentationIdealCoinvariantsLinearOfSurjective_boun
   intro n
   calc
     differentialToKernelAugmentationIdealCoinvariantsLinearOfSurjective (ψ := ψ) hψ
-        ((kernelAbelianizationBoundaryAdd ψ) (Additive.ofMul (Abelianization.of n))) =
+        ((kernelAbelianizationBoundaryAdd ψ) (Additive.ofMul (Group.Abelianization.of n))) =
       differentialToKernelAugmentationIdealCoinvariantsLinearOfSurjective (ψ := ψ) hψ
         (universalDifferential ψ n.1) := by
           exact congrArg
@@ -1312,7 +1312,8 @@ theorem differentialToKernelAugmentationIdealCoinvariantsLinearOfSurjective_boun
     _ = kernelAugmentationIdealCoinvariantsGeneratorOfSurjective (ψ := ψ) n.1 := by
           exact differentialToKernelAugmentationIdealCoinvariantsLinearOfSurjective_d
             (ψ := ψ) hψ n.1
-    _ = kernelAbelianizationToCoinvariantsAdd (ψ := ψ) (Additive.ofMul (Abelianization.of n)) := by
+    _ = kernelAbelianizationToCoinvariantsAdd (ψ := ψ)
+        (Additive.ofMul (Group.Abelianization.of n)) := by
           symm
           simp only [kernelAbelianizationToCoinvariantsAdd_of,
   kernelAugmentationIdealCoinvariantsGeneratorOfSurjective]

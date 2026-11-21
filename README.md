@@ -1,4 +1,4 @@
-# ProCGroups (Lean 4.35.0)
+# ProCGroups (Lean 4.36.0)
 
 [![Lean](https://github.com/n-yamaguchi-0729/ProCGroups/actions/workflows/lean.yml/badge.svg)](https://github.com/n-yamaguchi-0729/ProCGroups/actions/workflows/lean.yml)
 [![License](https://img.shields.io/badge/license-Apache--2.0-blue.svg)](LICENSE)
@@ -19,7 +19,7 @@ and selected theorems, with links to their proofs.
 
 ## Public API
 
-Use [leanprover/lean4:v4.35.0](lean-toolchain) and the Mathlib revision pinned in
+Use [leanprover/lean4:v4.36.0](lean-toolchain) and the Mathlib revision pinned in
 [lake-manifest.json](lake-manifest.json). Add this dependency to your project’s
 lakefile.toml:
 

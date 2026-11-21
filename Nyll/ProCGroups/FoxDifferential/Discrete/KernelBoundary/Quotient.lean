@@ -90,16 +90,16 @@ theorem toIdentityDifferentialModule_kernelAbelianizationBoundaryLinearOfSurject
   let := kernelAbelianizationModuleOfSurjective ψ hψ
   rw [kernelAbelianizationBoundaryLinearOfSurjective_apply]
   change
-    (fun y : Abelianization ψ.ker =>
+    (fun y : Group.Abelianization ψ.ker =>
       toIdentityDifferentialModule ψ (kernelAbelianizationBoundaryAdd ψ (Additive.ofMul y)) = 0)
       (Additive.toMul x)
   refine QuotientGroup.induction_on (Additive.toMul x) ?_
   intro n
   change toIdentityDifferentialModule ψ
-      (kernelAbelianizationBoundaryAdd ψ (Additive.ofMul (Abelianization.of n))) = 0
+      (kernelAbelianizationBoundaryAdd ψ (Additive.ofMul (Group.Abelianization.of n))) = 0
   have hinner :
       toIdentityDifferentialModule ψ
-          (kernelAbelianizationBoundaryAdd ψ (Additive.ofMul (Abelianization.of n))) =
+          (kernelAbelianizationBoundaryAdd ψ (Additive.ofMul (Group.Abelianization.of n))) =
         toIdentityDifferentialModule ψ (universalDifferential ψ n.1) := by
     exact congrArg (toIdentityDifferentialModule ψ) (kernelAbelianizationBoundaryAdd_of ψ n)
   rw [hinner, toIdentityDifferentialModule_d, n.2, universalDifferential_one]

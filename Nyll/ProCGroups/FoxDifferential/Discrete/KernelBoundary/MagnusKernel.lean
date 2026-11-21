@@ -74,15 +74,15 @@ theorem mem_commutator_ker_of_d_eq_zero_of_surjective
   let := kernelAbelianizationModuleOfSurjective ψ hψ
   have hboundary_zero :
       kernelAbelianizationBoundaryLinearOfSurjective ψ hψ
-          (Additive.ofMul (Abelianization.of n)) =
+          (Additive.ofMul (Group.Abelianization.of n)) =
         kernelAbelianizationBoundaryLinearOfSurjective ψ hψ 0 := by
     rw [kernelAbelianizationBoundaryLinearOfSurjective_of, hn]
     simp only [map_zero]
   have hclass_zero :
-      (Additive.ofMul (Abelianization.of n) : KernelAbelianizationAdd ψ) = 0 :=
+      (Additive.ofMul (Group.Abelianization.of n) : KernelAbelianizationAdd ψ) = 0 :=
     (FoxDifferential.KernelAugmentation.kernelAbelianizationBoundaryLinearOfSurjective_injective
       (H := H) (ψ := ψ) hψ) hboundary_zero
-  have hclass_one : Abelianization.of n = 1 := by
+  have hclass_one : Group.Abelianization.of n = 1 := by
     simpa using congrArg Additive.toMul hclass_zero
   exact (QuotientGroup.eq_one_iff (N := commutator ψ.ker) n).1 hclass_one
 

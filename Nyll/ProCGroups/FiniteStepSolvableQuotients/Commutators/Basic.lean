@@ -27,48 +27,19 @@ namespace ProCGroups.FiniteStepSolvableQuotients
 
 universe u
 
-/-- The topological closure of the abstract commutator subgroup. -/
-abbrev topologicalCommutator
-    (G : Type u) [TopologicalSpace G] [Group G] [IsTopologicalGroup G] : Subgroup G :=
-  (commutator G).topologicalClosure
-
-/--
-The topological commutator subgroup agrees with the closed commutator of the top subgroup with
-itself.
--/
-@[simp] theorem topologicalCommutator_eq_closedCommutator_top_top
+/-- The first top-derived subgroup is the closed commutator subgroup. -/
+@[simp] theorem topDerivedTop_one_eq_closedCommutator
     (G : Type u) [TopologicalSpace G] [Group G] [IsTopologicalGroup G] :
-    topologicalCommutator G = closedCommutator (⊤ : Subgroup G) ⊤ := by
-  simp only [topologicalCommutator, commutator, closedCommutator]
+    topDerivedTop G 1 = Subgroup.closedCommutator G :=
+  rfl
 
-/-- The first top-derived subgroup is the topological commutator subgroup. -/
-@[simp] theorem topDerivedTop_one_eq_topologicalCommutator
-    (G : Type u) [TopologicalSpace G] [Group G] [IsTopologicalGroup G] :
-    topDerivedTop G 1 = topologicalCommutator G := by
-  simp only [topDerivedTop, closedDerivedSeries, closedCommutator, topologicalCommutator,
-      commutator]
-
-/-- The first closed derived subgroup of the whole group is the closed commutator subgroup. -/
-theorem closedDerivedSeries_top_one_eq_closedCommutator
-    (G : Type u) [TopologicalSpace G] [Group G] [IsTopologicalGroup G] :
-    closedDerivedSeries (G := G) (⊤ : Subgroup G) 1 =
-      Subgroup.closedCommutator G := by
-  calc
-    closedDerivedSeries (G := G) (⊤ : Subgroup G) 1 = topDerivedTop G 1 := rfl
-    _ = topologicalCommutator G := topDerivedTop_one_eq_topologicalCommutator G
-    _ = Subgroup.closedCommutator G := rfl
-
-/--
-When the ordinary commutator subgroup is closed, it agrees with the topological commutator
-subgroup.
--/
-@[simp] theorem topologicalCommutator_eq_commutator_of_isClosed
+/-- If the abstract commutator subgroup is closed, it equals the closed commutator subgroup. -/
+@[simp] theorem closedCommutator_eq_commutator_of_isClosed
     (G : Type u) [TopologicalSpace G] [Group G] [IsTopologicalGroup G]
     (hclosed : IsClosed ((commutator G : Subgroup G) : Set G)) :
-    topologicalCommutator G = commutator G := by
-  ext x
-  change x ∈ closure ((commutator G : Set G)) ↔ x ∈ (commutator G : Set G)
-  rw [closure_eq_iff_isClosed.mpr hclosed]
+    Subgroup.closedCommutator G = commutator G :=
+  le_antisymm (Subgroup.topologicalClosure_minimal _ le_rfl hclosed)
+    (Subgroup.commutator_le_closedCommutator G)
 
 /-- In a compact Hausdorff topological group, the set of individual commutators is closed. -/
 theorem isClosed_commutatorSet
@@ -89,32 +60,14 @@ theorem isClosed_commutatorSet
       exact ⟨(x, y), by simp only [Set.mem_univ], rfl⟩
   simpa [himage] using (isCompact_univ.image hf).isClosed
 
-/-- Every algebraic commutator lies in the topological commutator subgroup. -/
-theorem commutator_subset_topologicalCommutator
-    (G : Type u) [TopologicalSpace G] [Group G] [IsTopologicalGroup G] :
-    commutator G ≤ topologicalCommutator G :=
-  Subgroup.le_topologicalClosure _
-
-/-- The topological commutator subgroup of a commutative group is trivial. -/
-@[simp] theorem topologicalCommutator_eq_bot_of_commGroup
-    (G : Type u) [TopologicalSpace G] [CommGroup G] [IsTopologicalGroup G] [T1Space G] :
-    topologicalCommutator G = ⊥ := by
-  have hcomm : commutator G = ⊥ := by
-    rw [commutator_eq_bot_iff_center_eq_top, CommGroup.center_eq_top]
-  rw [topologicalCommutator, hcomm]
-  ext x
-  change x ∈ closure ({(1 : G)} : Set G) ↔ x ∈ (⊥ : Subgroup G)
-  rw [closure_singleton]
-  simp only [Set.mem_singleton_iff, Subgroup.mem_bot]
-
 /-- A commutative topological group has trivial positive closed derived stages. -/
 theorem topDerivedTop_eq_bot_of_commGroup
     {G : Type u} [TopologicalSpace G] [CommGroup G] [IsTopologicalGroup G] [T1Space G]
     {m : ℕ} (hm : 1 ≤ m) :
     topDerivedTop G m = ⊥ := by
   have h1 : topDerivedTop G 1 = (⊥ : Subgroup G) := by
-    rw [topDerivedTop_one_eq_topologicalCommutator]
-    exact topologicalCommutator_eq_bot_of_commGroup G
+    rw [topDerivedTop_one_eq_closedCommutator]
+    exact Subgroup.closedCommutator_eq_bot_of_commGroup_t1 G
   have hle : topDerivedTop G m ≤ topDerivedTop G 1 :=
     (topDerivedTop_antitone (G := G)) hm
   have hlebot : topDerivedTop G m ≤ (⊥ : Subgroup G) := by

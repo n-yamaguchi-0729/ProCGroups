@@ -35,7 +35,7 @@ variable {H G : Type*} [Group H] [DecidableEq H] [Group G] [DecidableEq G]
 
 /-- Additive form of the kernel abelianization map. -/
 abbrev KernelAbelianizationAdd (ψ : G →* H) : Type _ :=
-  Additive (Abelianization ψ.ker)
+  Additive (Group.Abelianization ψ.ker)
 
 omit [DecidableEq H] [DecidableEq G] in
 /-- The Crowell boundary map lands in the kernel of the augmentation map. -/
@@ -85,12 +85,12 @@ def kernelBoundary (ψ : G →* H) : ψ.ker →* Multiplicative (DifferentialMod
 
 /-- The kernel boundary factors through the abelianization of \(\ker \psi\). -/
 def kernelAbelianizationBoundary (ψ : G →* H) :
-    Abelianization ψ.ker →* Multiplicative (DifferentialModule ψ) :=
-  Abelianization.lift (kernelBoundary ψ)
+    Group.Abelianization ψ.ker →* Multiplicative (DifferentialModule ψ) :=
+  Group.Abelianization.lift (kernelBoundary ψ)
 
 /-- The additive kernel-boundary map sends a kernel element to its abelianization boundary class. -/
 def kernelAbelianizationBoundaryAdd (ψ : G →* H) :
-    Additive (Abelianization ψ.ker) →+ DifferentialModule ψ where
+    Additive (Group.Abelianization ψ.ker) →+ DifferentialModule ψ where
   toFun x := Multiplicative.toAdd (kernelAbelianizationBoundary ψ (Additive.toMul x))
   map_zero' := by
     simp only [toMul_zero, map_one, toAdd_one]
@@ -101,7 +101,7 @@ omit [DecidableEq H] [DecidableEq G] in
 /-- The additive kernel-boundary map has the stated value on a kernel element. -/
 @[simp 900]
 theorem kernelAbelianizationBoundaryAdd_of (ψ : G →* H) (g : ψ.ker) :
-    kernelAbelianizationBoundaryAdd ψ (Additive.ofMul (Abelianization.of g)) =
+    kernelAbelianizationBoundaryAdd ψ (Additive.ofMul (Group.Abelianization.of g)) =
         universalDifferential ψ g.1 := by
   change Multiplicative.toAdd (Multiplicative.ofAdd (universalDifferential ψ g.1)) =
       universalDifferential ψ g.1
@@ -109,7 +109,7 @@ theorem kernelAbelianizationBoundaryAdd_of (ψ : G →* H) (g : ψ.ker) :
 
 /-- Conjugation by G on \(\ker \psi\), transported to the abelianization of \(\ker \psi\). -/
 def kernelAbelianizationConj (ψ : G →* H) :
-    G →* MulAut (Abelianization ψ.ker) where
+    G →* MulAut (Group.Abelianization ψ.ker) where
   toFun g := (MulAut.conjNormal (H := ψ.ker) g).abelianizationCongr
   map_one' := by
     ext x
@@ -131,14 +131,14 @@ def kernelAbelianizationConj (ψ : G →* H) :
       simp only [map_mul, MulAut.mul_apply, MulAut.conjNormal_apply, mul_assoc, e₁, e₂]
     rw [hconj]
     calc
-      (e₁ * e₂).abelianizationCongr (Abelianization.of n)
-          = Abelianization.of ((e₁ * e₂) n) := by
-              exact abelianizationCongr_of (e := e₁ * e₂) n
-      _ = e₁.abelianizationCongr (Abelianization.of (e₂ n)) := by
-            exact (abelianizationCongr_of (e := e₁) (e₂ n)).symm
-      _ = e₁.abelianizationCongr (e₂.abelianizationCongr (Abelianization.of n)) := by
-            rw [abelianizationCongr_of (e := e₂) n]
-      _ = (e₁.abelianizationCongr * e₂.abelianizationCongr) (Abelianization.of n) := by
+      (e₁ * e₂).abelianizationCongr (Group.Abelianization.of n)
+          = Group.Abelianization.of ((e₁ * e₂) n) := by
+              exact Group.abelianizationCongr_of (e := e₁ * e₂) n
+      _ = e₁.abelianizationCongr (Group.Abelianization.of (e₂ n)) := by
+            exact (Group.abelianizationCongr_of (e := e₁) (e₂ n)).symm
+      _ = e₁.abelianizationCongr (e₂.abelianizationCongr (Group.Abelianization.of n)) := by
+            rw [Group.abelianizationCongr_of (e := e₂) n]
+      _ = (e₁.abelianizationCongr * e₂.abelianizationCongr) (Group.Abelianization.of n) := by
             rfl
 
 omit [DecidableEq H] [DecidableEq G] in
@@ -148,8 +148,8 @@ formula.
 -/
 @[simp]
 theorem kernelAbelianizationConj_of (ψ : G →* H) (g : G) (n : ψ.ker) :
-    kernelAbelianizationConj ψ g (Abelianization.of n) =
-      Abelianization.of (MulAut.conjNormal (H := ψ.ker) g n) := by
+    kernelAbelianizationConj ψ g (Group.Abelianization.of n) =
+      Group.Abelianization.of (MulAut.conjNormal (H := ψ.ker) g n) := by
   rfl
 
 omit [DecidableEq H] [DecidableEq G] in
@@ -161,12 +161,12 @@ theorem kernelAbelianizationConj_eq_one_of_mem_ker (ψ : G →* H) (n : ψ.ker) 
   refine QuotientGroup.induction_on x ?_
   intro k
   calc
-    kernelAbelianizationConj ψ n (Abelianization.of k)
-        = Abelianization.of ((MulAut.conjNormal (H := ψ.ker) (n : G)) k) := by
-            exact abelianizationCongr_of (e := MulAut.conjNormal (H := ψ.ker) (n : G)) k
-    _ = Abelianization.of (n * k * n⁻¹) := by
+    kernelAbelianizationConj ψ n (Group.Abelianization.of k)
+        = Group.Abelianization.of ((MulAut.conjNormal (H := ψ.ker) (n : G)) k) := by
+            exact Group.abelianizationCongr_of (e := MulAut.conjNormal (H := ψ.ker) (n : G)) k
+    _ = Group.Abelianization.of (n * k * n⁻¹) := by
           congr 1
-    _ = Abelianization.of k := by
+    _ = Group.Abelianization.of k := by
           simp only [mul_assoc, map_mul, map_inv, mul_inv_cancel_comm_assoc]
 
 omit [DecidableEq H] [DecidableEq G] in
@@ -184,7 +184,7 @@ theorem ker_le_kernelAbelianizationConj_ker (ψ : G →* H) :
 The conjugation action on the abelianization of \(\ker \psi\) factors through \(G/\ker \psi\).
 -/
 def quotientKernelAbelianizationConj (ψ : G →* H) :
-    G ⧸ ψ.ker →* MulAut (Abelianization ψ.ker) :=
+    G ⧸ ψ.ker →* MulAut (Group.Abelianization ψ.ker) :=
   QuotientGroup.lift ψ.ker (kernelAbelianizationConj ψ) (ker_le_kernelAbelianizationConj_ker ψ)
 
 omit [DecidableEq H] [DecidableEq G] in
@@ -194,7 +194,7 @@ expressed directly as an action of H.
 -/
 def kernelAbelianizationConjOfSurjective
     (ψ : G →* H) (hψ : Function.Surjective ψ) :
-    H →* MulAut (Abelianization ψ.ker) :=
+    H →* MulAut (Group.Abelianization ψ.ker) :=
   (quotientKernelAbelianizationConj ψ).comp
     (QuotientGroup.quotientKerEquivOfSurjective (φ := ψ) hψ).symm.toMonoidHom
 
@@ -223,7 +223,7 @@ theorem kernelAbelianizationConjOfSurjective_eq_surjInv
         kernelAbelianizationConj ψ g₁ *
             (kernelAbelianizationConj ψ g₂)⁻¹ = 1 := by
       simpa [map_mul] using htriv
-    have hmul' := congrArg (fun u : MulAut (Abelianization ψ.ker) =>
+    have hmul' := congrArg (fun u : MulAut (Group.Abelianization ψ.ker) =>
         u * kernelAbelianizationConj ψ g₂) hmul
     simpa [mul_assoc] using hmul'
   change quotientKernelAbelianizationConj ψ
@@ -246,7 +246,7 @@ as an additive automorphism action.
 def kernelAbelianizationAddAutOfSurjective
     (ψ : G →* H) (hψ : Function.Surjective ψ) :
     H →* Multiplicative (AddAut (KernelAbelianizationAdd ψ)) :=
-  (AddAutAdditive (Abelianization ψ.ker)).symm.toAddMonoidHom.toMultiplicativeRight.comp
+  (AddAutAdditive (Group.Abelianization ψ.ker)).symm.toAddMonoidHom.toMultiplicativeRight.comp
     (kernelAbelianizationConjOfSurjective ψ hψ)
 
 omit [DecidableEq H] [DecidableEq G] in
@@ -304,8 +304,8 @@ def kernelAbelianizationActionRingHomOfSurjective
     (kernelAbelianizationModuleEndOfSurjective ψ hψ) (by
       intro z h
       ext x
-      simp only [eq_intCast, Module.End.mul_apply, kernelAbelianizationModuleEndOfSurjective_apply,
-  kernelAbelianizationConjOfSurjective_eq_surjInv, Module.End.intCast_apply, toMul_zsmul,
+      simp only [eq_intCast, mul_apply_eq_comp, kernelAbelianizationModuleEndOfSurjective_apply,
+  kernelAbelianizationConjOfSurjective_eq_surjInv, intCast_apply_eq_smul, toMul_zsmul,
       toMul_ofMul, map_smul])
 
 omit [DecidableEq H] [DecidableEq G] in
@@ -323,9 +323,9 @@ theorem kernelAbelianizationActionRingHomOfSurjective_of
   have hcomm : ∀ z h, Commute (f z) (g h) := by
     intro z h
     ext x
-    simp only [f, g, eq_intCast, Module.End.mul_apply,
+    simp only [f, g, eq_intCast, mul_apply_eq_comp,
       kernelAbelianizationModuleEndOfSurjective_apply,
-      kernelAbelianizationConjOfSurjective_eq_surjInv, Module.End.intCast_apply,
+      kernelAbelianizationConjOfSurjective_eq_surjInv, intCast_apply_eq_smul,
       toMul_zsmul, toMul_ofMul, map_smul]
   change
     MonoidAlgebra.liftNCRingHom f g hcomm (MonoidAlgebra.single h 1) = g h
@@ -350,7 +350,7 @@ action with scalar multiplication by the corresponding group-ring basis element.
 -/
 @[simp]
 theorem kernelAbelianizationBoundaryAdd_conjOfSurjective
-    (ψ : G →* H) (hψ : Function.Surjective ψ) (h : H) (x : Abelianization ψ.ker) :
+    (ψ : G →* H) (hψ : Function.Surjective ψ) (h : H) (x : Group.Abelianization ψ.ker) :
     kernelAbelianizationBoundaryAdd ψ
         (Additive.ofMul (kernelAbelianizationConjOfSurjective ψ hψ h x)) =
       (MonoidAlgebra.of ℤ H h : GroupRing H) •
@@ -361,9 +361,9 @@ theorem kernelAbelianizationBoundaryAdd_conjOfSurjective
   intro n
   rw [kernelAbelianizationConjOfSurjective_eq_surjInv]
   change kernelAbelianizationBoundaryAdd ψ
-      (Additive.ofMul (kernelAbelianizationConj ψ g (Abelianization.of n))) =
+      (Additive.ofMul (kernelAbelianizationConj ψ g (Group.Abelianization.of n))) =
     (MonoidAlgebra.of ℤ H h : GroupRing H) •
-      kernelAbelianizationBoundaryAdd ψ (Additive.ofMul (Abelianization.of n))
+      kernelAbelianizationBoundaryAdd ψ (Additive.ofMul (Group.Abelianization.of n))
   rw [kernelAbelianizationConj_of, kernelAbelianizationBoundaryAdd_of,
     kernelAbelianizationBoundaryAdd_of]
   simpa [g, hg, MulAut.conjNormal_apply, mul_assoc] using universalDifferential_conj_of_mem_ker
@@ -411,9 +411,9 @@ The linear kernel-boundary map in the surjective case has the stated value on a 
 theorem kernelAbelianizationBoundaryLinearOfSurjective_of
     (ψ : G →* H) (hψ : Function.Surjective ψ) (n : ψ.ker) :
     kernelAbelianizationBoundaryLinearOfSurjective ψ hψ
-        (Additive.ofMul (Abelianization.of n)) = universalDifferential ψ n.1 := by
+        (Additive.ofMul (Group.Abelianization.of n)) = universalDifferential ψ n.1 := by
   let := kernelAbelianizationModuleOfSurjective ψ hψ
-  change kernelAbelianizationBoundaryAdd ψ (Additive.ofMul (Abelianization.of n)) =
+  change kernelAbelianizationBoundaryAdd ψ (Additive.ofMul (Group.Abelianization.of n)) =
     universalDifferential ψ n.1
   exact kernelAbelianizationBoundaryAdd_of ψ n
 

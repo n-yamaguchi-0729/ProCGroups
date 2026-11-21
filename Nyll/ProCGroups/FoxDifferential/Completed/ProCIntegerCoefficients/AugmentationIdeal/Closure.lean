@@ -150,8 +150,7 @@ theorem closure_zcCompletedGroupAlgebraStandardAugmentationIdeal_eq_augmentation
           ⟨zcCompletedGroupAlgebraProjection C H i z, hzi⟩ with
         ⟨y, hy, hyproj⟩
       refine ⟨y, subset_closure ?_, ?_⟩
-      · convert hy using 1
-        rfl
+      · exact hy
       exact hyproj
     convert hzClosureS using 1 <;> rfl
 

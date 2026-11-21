@@ -29,13 +29,13 @@ theorem exists_prime_power_order_lift_of_surjective
   classical
   let P : Sylow p G := Classical.choice Sylow.nonempty
   have htop : (P.mapSurjective hf : Subgroup H) = ⊤ :=
-    ((P.mapSurjective hf).is_maximal' (hH.to_subgroup ⊤) le_top).symm
+    (P.mapSurjective hf).maximal_isPGroup.eq_of_le (hH.to_subgroup ⊤) le_top
   have hy : y ∈ (P : Subgroup G).map f := by
     change y ∈ (P.mapSurjective hf : Subgroup H)
     rw [htop]
     exact Subgroup.mem_top y
   obtain ⟨x, hx, hxy⟩ := hy
-  obtain ⟨n, hn⟩ := P.isPGroup' ⟨x, hx⟩
+  obtain ⟨n, hn⟩ := P.isPGroup ⟨x, hx⟩
   exact ⟨x, hxy, n, congrArg (fun z : P => (z : G)) hn⟩
 
 end ProCGroups

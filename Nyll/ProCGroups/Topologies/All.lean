@@ -11,8 +11,10 @@ public import Nyll.ProCGroups.Topologies.FiniteQuotientLift
 public import Nyll.ProCGroups.Topologies.Conjugation
 public import Nyll.ProCGroups.Topologies.ContinuousMonoidHom
 public import Nyll.ProCGroups.Topologies.ContinuousMulEquiv
+public import Nyll.ProCGroups.Topologies.ContinuousQuotientEquiv
 public import Nyll.ProCGroups.Topologies.FullSubgroupTopology.All
-public import Nyll.ProCGroups.Topologies.OpenSubgroup
+public import Nyll.ProCGroups.Topologies.OpenFiniteIndexSubgroup
+import Nyll.ProCGroups.Topologies.OpenSubgroup
 public import Nyll.ProCGroups.Topologies.QuotientMaps
 public import Nyll.ProCGroups.Topologies.TopologicallyCharacteristicSubgroups
 public import Nyll.ProCGroups.Topologies.OpenActionKernel

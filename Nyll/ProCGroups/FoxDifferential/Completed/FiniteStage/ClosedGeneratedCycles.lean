@@ -28,6 +28,8 @@ The principal declarations in this module are:
 
 namespace CrowellExactSequence
 
+open _root_.CompletedGroupAlgebra (CompletedGroupAlgebraQuotientInClass)
+
 noncomputable section
 
 open FoxDifferential

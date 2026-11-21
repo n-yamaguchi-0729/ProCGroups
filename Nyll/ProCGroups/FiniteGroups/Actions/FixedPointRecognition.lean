@@ -208,7 +208,7 @@ theorem exists_equiv_of_card_fixedPoints_eq [Finite G] [Finite X] [Finite Y]
     aux (Nat.card X) X Y rfl hmarks
   intro n
   induction n using Nat.strong_induction_on with
-  | h n ih =>
+  | ind n ih =>
     intro A B aA aB fA fB hcard hm
     rcases isEmpty_or_nonempty A with hA | hA
     · have hAB : Nat.card A = Nat.card B :=

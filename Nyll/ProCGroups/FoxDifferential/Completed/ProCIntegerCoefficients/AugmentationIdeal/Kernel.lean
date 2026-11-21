@@ -29,6 +29,9 @@ The principal declarations in this module are:
 
 namespace FoxDifferential
 
+open _root_.CompletedGroupAlgebra
+  (CompletedGroupAlgebraIndexInClass CompletedGroupAlgebraQuotientInClass)
+
 noncomputable section
 
 open ProCGroups.ProC
@@ -828,8 +831,7 @@ theorem closure_zcCompletedGAKernelAugmentationIdealMul_eq_ker_map_of_openMap_su
           C hC hForm psi hpsi hfopen i x (by simpa [K] using hx) with
         ⟨y, hy, hyproj⟩
       refine ⟨y, subset_closure ?_, ?_⟩
-      · convert hy using 1
-        rfl
+      · exact hy
       exact hyproj
     convert hxClosureS using 1 <;>
       rfl

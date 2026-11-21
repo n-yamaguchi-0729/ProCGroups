@@ -86,10 +86,10 @@ theorem card_fixedPoints_eq_of_card_orbits_eq_of_isCyclic
       Nat.card (fixedPoints K X) = Nat.card (fixedPoints K Y) := by
     intro n
     induction n using Nat.strong_induction_on with
-    | h n ih =>
+    | ind n ih =>
       intro K hcard hK
       let _ : Fintype K := Fintype.ofFinite K
-      obtain ⟨g, hg⟩ := K.isCyclic_iff_exists_zpowers_eq_top.mp hK
+      obtain ⟨g, hg⟩ := K.isCyclic_iff_exists_zpowers_eq.mp hK
       have hgm : g ∈ K := hg ▸ Subgroup.mem_zpowers g
       have hsum : (∑ h : K, Nat.card (fixedBy X (h : G))) =
           ∑ h : K, Nat.card (fixedBy Y (h : G)) := by

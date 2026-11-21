@@ -142,7 +142,7 @@ private theorem map_sigmaResidualCore_eq_of_surjective
       ((proCResidualCore_isClosed (FiniteGroupClass.sigmaGroup sigma) G).isCompact.image
         f.continuous_toFun).isClosed
     have hRN : R ≤ N.comap f.toMonoidHom := fun x hx => ⟨x, hx, rfl⟩
-    let q := QuotientGroup.mapₜ R N f hRN
+    let q := QuotientGroup.mapContinuousMonoidHom (N := R) (M := N) f hRN
     have hq : Function.Surjective q :=
       QuotientGroup.map_surjective_of_surjective R N f.toMonoidHom
         ((QuotientGroup.mk'_surjective N).comp hf) hRN

@@ -6,6 +6,7 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ProCGroups.GroupTheory.Exactness
 public import Nyll.ProCGroups.GroupTheory.CentralizerNormalizerCommensurator
 public import Nyll.ProCGroups.GroupTheory.CommutatorDifference
 public import Nyll.ProCGroups.GroupTheory.Conjugation

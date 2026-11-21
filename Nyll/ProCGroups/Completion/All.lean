@@ -6,6 +6,10 @@ Authors: Naganori Yamaguchi (assisted by OpenAI Codex)
 
 module
 
+public import Nyll.ProCGroups.Completion.TopologicalBasic
+public import Nyll.ProCGroups.Completion.Topological
+public import Nyll.ProCGroups.Completion.TopologicalCriteria
+public import Nyll.ProCGroups.Completion.Abstract
 public import Nyll.ProCGroups.Completion.FiniteQuotientLifts
 public import Nyll.ProCGroups.Completion.ProCInteger
 public import Nyll.ProCGroups.Completion.ProCIntegerPrimePower

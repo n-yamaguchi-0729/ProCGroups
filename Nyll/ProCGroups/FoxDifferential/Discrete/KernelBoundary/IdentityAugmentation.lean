@@ -56,7 +56,7 @@ def coinvariantsLEquivOfSubsingleton
     ext x
     have : g = (1 : G) := Subsingleton.elim _ _
     subst this
-    simp only [map_one, LinearMap.id_comp, Module.End.one_apply, LinearMap.id_coe, id_eq]
+    simp only [map_one, LinearMap.id_comp, one_apply_eq_self, LinearMap.id_coe, id_eq]
   · ext x
     simp only [Coinvariants.lift_comp_mk, LinearMap.id_coe, id_eq]
   · apply Representation.Coinvariants.hom_ext
@@ -83,13 +83,13 @@ def rightRegularRepresentation : Representation ℤ H (GroupRing H) where
     ext x
     simp only [inv_one, MonoidAlgebra.of_apply, LinearMap.coe_comp, LinearMap.coe_mk, AddHom.coe_mk,
   Function.comp_apply, MonoidAlgebra.lsingle_apply, MonoidAlgebra.single_mul_single, mul_one,
-      Module.End.one_apply]
+      one_apply_eq_self]
   map_mul' g₁ g₂ := by
     ext x
     simp only [mul_inv_rev, MonoidAlgebra.of_apply, LinearMap.coe_comp, LinearMap.coe_mk,
         AddHom.coe_mk,
   Function.comp_apply, MonoidAlgebra.lsingle_apply, MonoidAlgebra.single_mul_single, mul_one,
-      Module.End.mul_apply,
+      mul_apply_eq_comp,
   mul_assoc]
 
 omit [DecidableEq H] in
@@ -396,7 +396,7 @@ theorem indBottomTrivialUnderlyingEquiv_mk (h : H) (n : ℤ) :
             ext y
             have : x = (1 : (⊥ : Subgroup H)) := Subsingleton.elim _ _
             subst this
-            simp only [map_one, LinearMap.id_comp, Module.End.one_apply, LinearMap.id_coe,
+            simp only [map_one, LinearMap.id_comp, one_apply_eq_self, LinearMap.id_coe,
               id_eq]))
         (Representation.Coinvariants.mk _ (MonoidAlgebra.single h 1 ⊗ₜ[ℤ] n))) = _
   rw [Representation.Coinvariants.lift_mk]

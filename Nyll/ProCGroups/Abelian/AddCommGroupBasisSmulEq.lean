@@ -36,47 +36,17 @@ namespace P2mLwLift
 
 open Module Submodule Function
 
-/-- A presentation of the subgroup killed by `n` as the image of an injective additive map. -/
-abbrev Pres (M : Type*) [AddCommGroup M] (n : ℕ) (V : Type*) [AddCommGroup V] :=
-  ProCGroups.Abelian.TorsionPresentation M n V
+open ProCGroups.Abelian (TorsionPresentation)
 
-namespace Pres
-
-export ProCGroups.Abelian.TorsionPresentation (mk ι hι hιr)
-
-variable {M : Type*} [AddCommGroup M] {n : ℕ} {V : Type*} [AddCommGroup V]
-
-theorem nsmul_ι (P : Pres M n V) (v : V) :
-    n • ProCGroups.Abelian.TorsionPresentation.ι P v = 0 :=
-  ProCGroups.Abelian.TorsionPresentation.nsmul_ι P v
-
-theorem nsmul_self (P : Pres M n V) (v : V) : n • v = 0 :=
-  ProCGroups.Abelian.TorsionPresentation.nsmul_self P v
-
-theorem exists_eq (P : Pres M n V) {x : M} (hx : n • x = 0) :
-    ∃ v, ProCGroups.Abelian.TorsionPresentation.ι P v = x :=
-  ProCGroups.Abelian.TorsionPresentation.exists_eq P hx
-
-theorem mem_torsionBy (P : Pres M n V) (v : V) :
-    ProCGroups.Abelian.TorsionPresentation.ι P v ∈ torsionBy ℤ M ((n : ℕ) : ℤ) :=
-  ProCGroups.Abelian.TorsionPresentation.mem_torsionBy P v
-
-/-- The equivalence between the presented group and the subgroup killed by `n`. -/
-noncomputable def equiv (P : Pres M n V) : V ≃ torsionBy ℤ M ((n : ℕ) : ℤ) :=
-  ProCGroups.Abelian.TorsionPresentation.equiv P
-
-theorem natCard_eq (P : Pres M n V) : Nat.card V = Nat.card (torsionBy ℤ M ((n : ℕ) : ℤ)) :=
-  ProCGroups.Abelian.TorsionPresentation.natCard_eq P
-
-theorem zmod_smul_eq_cast_zsmul {W : Type*} [AddCommGroup W] [Module (ZMod n) W] (a : ZMod n)
+private theorem zmod_smul_eq_cast_zsmul {n : ℕ} {W : Type*} [AddCommGroup W] [Module (ZMod n) W]
+      (a : ZMod n)
     (w : W) : a • w = (ZMod.cast a : ℤ) • w := by
   conv_lhs => rw [← ZMod.intCast_zmod_cast a]
   rw [Int.cast_smul_eq_zsmul]
 
-end Pres
 
 theorem nonempty_basis_of_prime {M : Type*} [AddCommGroup M] {N : ℕ} (hN : N.Prime) {r : ℕ}
-    {W : Type*} [AddCommGroup W] [Module (ZMod N) W] (P : Pres M N W)
+    {W : Type*} [AddCommGroup W] [Module (ZMod N) W] (P : TorsionPresentation M N W)
     (hcard : Nat.card (torsionBy ℤ M ((N : ℕ) : ℤ)) = N ^ r) :
     Nonempty (Basis (Fin r) (ZMod N) W) := by
   have := Fact.mk hN
@@ -100,9 +70,9 @@ structure LiftData (M : Type*) [AddCommGroup M] (ℓ r m : ℕ)
     (V : Type*) [AddCommGroup V] [Module (ZMod (ℓ ^ m)) V]
     (V' : Type*) [AddCommGroup V'] [Module (ZMod (ℓ ^ (m + 1))) V'] where
   /-- The presentation at torsion level `ℓ ^ m`. -/
-  P : Pres M (ℓ ^ m) V
+  P : TorsionPresentation M (ℓ ^ m) V
   /-- The presentation at the next torsion level. -/
-  P' : Pres M (ℓ ^ (m + 1)) V'
+  P' : TorsionPresentation M (ℓ ^ (m + 1)) V'
   /-- The torsion base is positive. -/
   hℓ : 0 < ℓ
   /-- The cardinality of the first torsion level. -/
@@ -213,7 +183,7 @@ theorem exists_mem_N_add_smul (D : LiftData M ℓ r m V V') (hm0 : 0 < m) (z : V
     have : ∀ i, ℓ • ProCGroups.Abelian.TorsionPresentation.ι D.P' (k i • D.v' i) =
         ProCGroups.Abelian.TorsionPresentation.ι D.P (D.c.repr v i • D.c i) := by
       intro i
-      rw [map_zsmul, smul_comm, D.ι_v', Pres.zmod_smul_eq_cast_zsmul, map_zsmul]
+      rw [map_zsmul, smul_comm, D.ι_v', zmod_smul_eq_cast_zsmul, map_zsmul]
     rw [Finset.sum_congr rfl fun i _ => this i, ← map_sum, D.c.sum_repr]
   have hzu : ℓ • (z - u) = 0 := by
     apply ProCGroups.Abelian.TorsionPresentation.hι D.P'
